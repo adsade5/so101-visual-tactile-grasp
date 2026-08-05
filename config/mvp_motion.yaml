@@ -1,24 +1,36 @@
 motion:
   mode: sequential_joint
   control_rate_hz: 20.0
+
   fixed_joint_speed_rad_s: 0.08
   maximum_joint_speed_rad_s: 0.10
-  command_timeout_s: 20.0
-  use_acceleration_planning: false
 
-grasp:
-  pregrasp_height_m: 0.055
-  grasp_height_m: 0.015
+  fixed_joint_acceleration_rad_s2: 0.20
+  maximum_joint_acceleration_rad_s2: 0.25
+
+  joint_order:
+    - shoulder_pan
+    - shoulder_lift
+    - elbow_flex
+    - wrist_flex
+    - wrist_roll
+
+  minimum_motion_rad: 0.001
+  settle_time_between_joints_s: 0.20
+  maximum_total_duration_s: 120.0
+
+trajectory_demo:
+  object_position_base_m: [0.18, -0.04, 0.025]
+  pregrasp_height_m: 0.080
+  descend_height_m: 0.055
   lift_height_m: 0.080
-  fixed_place_position_base_m: [0.20, -0.10, 0.08]
-  fixed_wrist_roll_rad: 0.0
+  place_position_base_m: [0.20, -0.08, 0.080]
 
 safety:
-  use_calibration_joint_limits_only: true
+  use_urdf_joint_limits_offline: true
+  use_calibration_joint_limits_during_hardware: true
   enable_collision_checking: false
   enable_workspace_path_checking: false
   enable_command_gate: false
   enable_shadow_execution: false
   enable_plan_hash: false
-  manual_stop_enabled: true
-

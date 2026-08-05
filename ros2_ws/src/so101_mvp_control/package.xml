@@ -2,7 +2,7 @@
 <package format="3">
   <name>so101_mvp_control</name>
   <version>0.1.0</version>
-  <description>SO-101 MVP control skeleton nodes.</description>
+  <description>SO-101 MVP disabled control nodes and offline trajectory helpers.</description>
   <maintainer email="maintainer@example.com">so101_visual_tactile_grasp</maintainer>
   <license>Apache-2.0</license>
   <buildtool_depend>ament_python</buildtool_depend>
@@ -13,4 +13,3 @@
     <build_type>ament_python</build_type>
   </export>
 </package>
-

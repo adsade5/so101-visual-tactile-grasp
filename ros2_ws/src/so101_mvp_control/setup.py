@@ -19,7 +19,7 @@ setup(
     zip_safe=False,
     maintainer="so101_visual_tactile_grasp",
     maintainer_email="maintainer@example.com",
-    description="SO-101 MVP control skeleton nodes.",
+    description="SO-101 MVP disabled control nodes and offline trajectory helpers.",
     license="Apache-2.0",
     entry_points={
         "console_scripts": [
@@ -28,4 +28,3 @@ setup(
         ],
     },
 )
-
