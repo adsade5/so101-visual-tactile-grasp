@@ -1,0 +1,49 @@
+# SO-101 workspace camera intrinsic calibration
+# Generated from ChArUco images.
+
+camera_name: workspace_camera
+
+image_width: 640
+image_height: 480
+
+camera_matrix:
+  rows: 3
+  cols: 3
+  data: [308.972301968, 0, 297.08638217, 0, 309.456204061, 253.571983987, 0, 0, 1]
+
+distortion_model: plumb_bob
+
+distortion_coefficients:
+  rows: 1
+  cols: 5
+  data: [-0.165896399855, 0.0346031630243, -0.00815872628011, 0.00150141891773, 0.000584095553577]
+
+optimal_new_camera_matrix:
+  rows: 3
+  cols: 3
+  data: [246.020195022, 0, 300.551177197, 0, 249.277638834, 242.992413297, 0, 0, 1]
+
+valid_roi:
+  x: 18
+  y: 19
+  width: 607
+  height: 430
+
+calibration_quality:
+  rms_reprojection_error_px: 0.110465872569
+  mean_per_view_error_px: 0.109605510494
+  maximum_per_view_error_px: 0.139349269257
+  valid_image_count: 25
+
+capture:
+  session: "E:/PycharmProjects/Embodied_AI/LeRobot_Project/so101_visual_tactile_grasp/data/calibration/captures/session_20260803_221455"
+  camera_index: 1
+  backend: "dshow"
+
+board:
+  type: "charuco"
+  dictionary: "DICT_4X4_50"
+  squares_x: 7
+  squares_y: 5
+  square_length_m: 0.027
+  marker_length_m: 0.02

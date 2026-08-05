@@ -1,0 +1,4282 @@
+{
+  "stage": "2B-1",
+  "status": "PASS",
+  "timestamp": "2026-08-04T04:00:58.188496+00:00",
+  "solver": {
+    "type": "finite-difference damped least squares",
+    "position_tolerance_mm": 1.0,
+    "maximum_iterations": 400,
+    "random_restarts": 24,
+    "total_attempts_per_case": 28,
+    "maximum_joint_step_rad": 0.2,
+    "finite_difference_step_rad": 1e-05,
+    "initial_damping": 0.02,
+    "random_seed": 20260804
+  },
+  "model": {
+    "urdf": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\robot_model\\so101\\so101_new_calib.urdf",
+    "urdf_sha256": "3a65d2d35e68a8d2f0c2cc176d19b884506543c93ba72980145b80abe276022c",
+    "base_link": "base_link",
+    "tip_link": "gripper_frame_link",
+    "joint_names": [
+      "shoulder_pan",
+      "shoulder_lift",
+      "elbow_flex",
+      "wrist_flex",
+      "wrist_roll"
+    ],
+    "joint_limits_rad": {
+      "shoulder_pan": {
+        "lower": -1.91986,
+        "upper": 1.91986
+      },
+      "shoulder_lift": {
+        "lower": -1.74533,
+        "upper": 1.74533
+      },
+      "elbow_flex": {
+        "lower": -1.69,
+        "upper": 1.69
+      },
+      "wrist_flex": {
+        "lower": -1.65806,
+        "upper": 1.65806
+      },
+      "wrist_roll": {
+        "lower": -2.74385,
+        "upper": 2.84121
+      }
+    }
+  },
+  "reachable_cases": [
+    {
+      "name": "zero_pose",
+      "reference_q_deg": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "target_position_m": [
+        0.391361470220158,
+        -9.212063114602824e-06,
+        0.22646971024033286
+      ],
+      "success": true,
+      "solution_q_deg": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "solution_q_rad": [
+        0.0,
+        0.0,
+        0.0,
+        0.0,
+        0.0
+      ],
+      "achieved_position_m": [
+        0.391361470220158,
+        -9.212063114602824e-06,
+        0.22646971024033286
+      ],
+      "position_error_mm": 0.0,
+      "within_joint_limits": true,
+      "minimum_joint_limit_margin_rad": 1.65806,
+      "attempt_count": 28,
+      "successful_attempt_count": 22,
+      "iterations": 1,
+      "best_seed": "zero",
+      "deterministic_repeat_equivalent": true,
+      "final_damping": 0.02,
+      "jacobian_singular_values": [],
+      "jacobian_condition": null,
+      "line_search_backtracks": 0,
+      "limit_clipped": false
+    },
+    {
+      "name": "pose_a",
+      "reference_q_deg": [
+        30.0,
+        -30.0,
+        45.0,
+        -20.0,
+        15.0
+      ],
+      "target_position_m": [
+        0.2883483538378068,
+        -0.14643531101924517,
+        0.20442861767417206
+      ],
+      "success": true,
+      "solution_q_deg": [
+        31.313107166349365,
+        -31.320557644832284,
+        38.29225925310165,
+        -0.4950797913722063,
+        -141.88525575799534
+      ],
+      "solution_q_rad": [
+        0.5465168190826282,
+        -0.5466468544630041,
+        0.6683260019938884,
+        -0.008640772419531616,
+        -2.4763648730112613
+      ],
+      "achieved_position_m": [
+        0.28833631910877544,
+        -0.14642818259740426,
+        0.20442691034319724
+      ],
+      "position_error_mm": 0.01409127672918688,
+      "within_joint_limits": true,
+      "minimum_joint_limit_margin_rad": 0.26748512698873883,
+      "attempt_count": 28,
+      "successful_attempt_count": 23,
+      "iterations": 11,
+      "best_seed": "random_19",
+      "deterministic_repeat_equivalent": true,
+      "final_damping": 0.011974738784767573,
+      "jacobian_singular_values": [
+        0.4232714096406183,
+        0.2892002029905557,
+        0.0847840715891145
+      ],
+      "jacobian_condition": 4.99234587001083,
+      "line_search_backtracks": 0,
+      "limit_clipped": false
+    },
+    {
+      "name": "pose_b",
+      "reference_q_deg": [
+        -30.0,
+        20.0,
+        -40.0,
+        30.0,
+        -15.0
+      ],
+      "target_position_m": [
+        0.36317544425258136,
+        0.18960226856356205,
+        0.22870796248665684
+      ],
+      "success": true,
+      "solution_q_deg": [
+        -29.88053550639465,
+        16.34821000163244,
+        -2.4935902831559575,
+        -25.467381743535,
+        -156.56836449340548
+      ],
+      "solution_q_rad": [
+        -0.5215137268456578,
+        0.28533009133595366,
+        -0.043521360636809156,
+        -0.44448966328697986,
+        -2.7326334648725092
+      ],
+      "achieved_position_m": [
+        0.36316226050837486,
+        0.18959464099470635,
+        0.22870262296213345
+      ],
+      "position_error_mm": 0.016140057003825054,
+      "within_joint_limits": true,
+      "minimum_joint_limit_margin_rad": 0.011216535127490879,
+      "attempt_count": 28,
+      "successful_attempt_count": 22,
+      "iterations": 30,
+      "best_seed": "random_08",
+      "deterministic_repeat_equivalent": true,
+      "final_damping": 0.0045187108198513105,
+      "jacobian_singular_values": [
+        0.4845538901583062,
+        0.3749331292933323,
+        0.062055598842310156
+      ],
+      "jacobian_condition": 7.808383114464964,
+      "line_search_backtracks": 0,
+      "limit_clipped": true
+    }
+  ],
+  "unreachable_case": {
+    "target_position_m": [
+      0.8,
+      0.0,
+      0.8
+    ],
+    "success": false,
+    "rejected_as_unreachable": true,
+    "best_position_error_mm": 591.2126311048465,
+    "best_q_deg": [
+      -1.7741785371394179,
+      35.224374027929784,
+      -73.6139821230581,
+      1.0367854124184415,
+      -157.21102461697095
+    ],
+    "best_q_rad": [
+      -0.030965256991299338,
+      0.6147813037413518,
+      -1.2848063635516094,
+      0.018095319083349107,
+      -2.74385
+    ],
+    "best_achieved_position_m": [
+      0.3814055508958717,
+      0.013343142018487849,
+      0.38270750915191265
+    ],
+    "within_joint_limits": true,
+    "attempt_count": 28,
+    "successful_attempt_count": 0,
+    "minimum_expected_error_mm": 50.0
+  },
+  "attempts": {
+    "zero_pose": [
+      {
+        "seed": "zero",
+        "iterations": 1,
+        "success": true,
+        "q_rad": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "q_deg": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "achieved_position_m": [
+          0.391361470220158,
+          -9.212063114602824e-06,
+          0.22646971024033286
+        ],
+        "position_error_mm": 0.0,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 0,
+        "final_damping": 0.02,
+        "jacobian_singular_values": [],
+        "jacobian_condition": null
+      },
+      {
+        "seed": "random_21",
+        "iterations": 15,
+        "success": true,
+        "q_rad": [
+          -0.012358236049236436,
+          0.0073765299960299405,
+          -0.054374194241692306,
+          0.09306593076829132,
+          0.5798456040359508
+        ],
+        "q_deg": [
+          -0.7080747678476764,
+          0.4226440362241695,
+          -3.115411844473513,
+          5.332285049479804,
+          33.222705880473875
+        ],
+        "achieved_position_m": [
+          0.39134739817104874,
+          -9.176402070398739e-06,
+          0.2264666171001527
+        ],
+        "position_error_mm": 0.014408030886184902,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 0,
+        "final_damping": 0.009753499582310591,
+        "jacobian_singular_values": [
+          0.4682984129640187,
+          0.35196872764404746,
+          0.08533975148756272
+        ],
+        "jacobian_condition": 5.487459300045744
+      },
+      {
+        "seed": "random_14",
+        "iterations": 14,
+        "success": true,
+        "q_rad": [
+          -0.017118151798552094,
+          0.12281694823830913,
+          0.24543490785679162,
+          -0.6232119600702234,
+          2.3259795108675148
+        ],
+        "q_deg": [
+          -0.9807978511213143,
+          7.036892786731804,
+          14.062384365376408,
+          -35.707415054099386,
+          133.2688092066122
+        ],
+        "achieved_position_m": [
+          0.3913382935878114,
+          -9.289307215961003e-06,
+          0.22646371466603216
+        ],
+        "position_error_mm": 0.023939698510524837,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 0,
+        "final_damping": 0.010266841665590096,
+        "jacobian_singular_values": [
+          0.46271271297543065,
+          0.3518701939732944,
+          0.07123031897481033
+        ],
+        "jacobian_condition": 6.496007874667288
+      },
+      {
+        "seed": "random_01",
+        "iterations": 15,
+        "success": true,
+        "q_rad": [
+          0.01770776500391378,
+          1.5415863090638453,
+          -1.4543679966816017,
+          -1.146758931294243,
+          -2.175208827208694
+        ],
+        "q_deg": [
+          1.0145801993337193,
+          88.32638926450846,
+          -83.32914806875229,
+          -65.70444688209287,
+          -124.63028535865972
+        ],
+        "achieved_position_m": [
+          0.39133886497865183,
+          -1.07024589455669e-05,
+          0.22646090136190125
+        ],
+        "position_error_mm": 0.02430667732347295,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 0,
+        "final_damping": 0.009753499582310591,
+        "jacobian_singular_values": [
+          0.4355098317426944,
+          0.351380087033121,
+          0.10809532605587921
+        ],
+        "jacobian_condition": 4.028942301515982
+      },
+      {
+        "seed": "random_23",
+        "iterations": 7,
+        "success": true,
+        "q_rad": [
+          -0.020895831130928754,
+          1.2638384856172125,
+          -0.9464097777132858,
+          -1.4078349545790017,
+          1.166577233642517
+        ],
+        "q_deg": [
+          -1.1972429332202956,
+          72.41261121207167,
+          -54.22528595288568,
+          -80.66300114836875,
+          66.83995196376318
+        ],
+        "achieved_position_m": [
+          0.3913377166569912,
+          -9.459288178735939e-06,
+          0.22645675872799204
+        ],
+        "position_error_mm": 0.027056137109095848,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 0,
+        "final_damping": 0.014701837812499997,
+        "jacobian_singular_values": [
+          0.4275047293836385,
+          0.35142214799611493,
+          0.10205897977822437
+        ],
+        "jacobian_condition": 4.188800733777787
+      },
+      {
+        "seed": "random_03",
+        "iterations": 15,
+        "success": true,
+        "q_rad": [
+          0.021812260335582163,
+          0.0051610958980478315,
+          0.12129757788515029,
+          -0.17936322500508392,
+          -1.660621277218486
+        ],
+        "q_deg": [
+          1.2497504588694666,
+          0.29570901262042215,
+          6.949839277978501,
+          -10.276755792646663,
+          -95.14659055424353
+        ],
+        "achieved_position_m": [
+          0.3913351483056164,
+          -9.516722736351013e-06,
+          0.22646294808937542
+        ],
+        "position_error_mm": 0.027178349622296955,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 0,
+        "final_damping": 0.009753499582310591,
+        "jacobian_singular_values": [
+          0.46950193970131626,
+          0.35173444607285276,
+          0.07751339973784353
+        ],
+        "jacobian_condition": 6.057042282872498
+      },
+      {
+        "seed": "random_16",
+        "iterations": 13,
+        "success": true,
+        "q_rad": [
+          0.020165666233636304,
+          0.42578066567732864,
+          -1.0664030106027167,
+          1.0477736043089718,
+          -1.1478453647833662
+        ],
+        "q_deg": [
+          1.1554075662568348,
+          24.39543514158164,
+          -61.10039176758045,
+          60.03300541211441,
+          -65.7666949357413
+        ],
+        "achieved_position_m": [
+          0.3913323439722242,
+          -1.0251736225704716e-05,
+          0.22646169921228348
+        ],
+        "position_error_mm": 0.030225747456191818,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 0,
+        "final_damping": 0.010807201753252733,
+        "jacobian_singular_values": [
+          0.4366889033653325,
+          0.35058511174173085,
+          0.10822495298410041
+        ],
+        "jacobian_condition": 4.035011255024408
+      },
+      {
+        "seed": "random_05",
+        "iterations": 19,
+        "success": true,
+        "q_rad": [
+          -0.019126207925556294,
+          0.002680513780086805,
+          0.11087873159721905,
+          -0.18808317966553484,
+          1.0037105876439625
+        ],
+        "q_deg": [
+          -1.0958509922240411,
+          0.1535821265256324,
+          6.352883358284497,
+          -10.776372392235933,
+          57.50838052459476
+        ],
+        "achieved_position_m": [
+          0.3913326128034974,
+          -9.245415128151212e-06,
+          0.2264583710809331
+        ],
+        "position_error_mm": 0.031005292202660625,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 0,
+        "final_damping": 0.007944286369164364,
+        "jacobian_singular_values": [
+          0.4692159345625486,
+          0.3512372342146735,
+          0.07823538840750555
+        ],
+        "jacobian_condition": 5.997489679715506
+      },
+      {
+        "seed": "random_04",
+        "iterations": 9,
+        "success": true,
+        "q_rad": [
+          -0.021306663767298516,
+          0.43291488126579875,
+          -1.0803001721188072,
+          1.0936345723740661,
+          1.9706554072911926
+        ],
+        "q_deg": [
+          -1.2207819093705157,
+          24.804195584937418,
+          -61.896640469664064,
+          62.66064532662857,
+          112.91023771241962
+        ],
+        "achieved_position_m": [
+          0.39132139091868867,
+          -8.842953977994915e-06,
+          0.2264620752722003
+        ],
+        "position_error_mm": 0.04080170812856333,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 0,
+        "final_damping": 0.013268408625781245,
+        "jacobian_singular_values": [
+          0.43619106462099694,
+          0.35063238881973424,
+          0.1083033242379979
+        ],
+        "jacobian_condition": 4.027494702401393
+      },
+      {
+        "seed": "random_15",
+        "iterations": 13,
+        "success": true,
+        "q_rad": [
+          0.01016249089251818,
+          0.23114437737617932,
+          0.2383326986367374,
+          -0.8327904641290675,
+          -2.6264780824352982
+        ],
+        "q_deg": [
+          0.5822678374814289,
+          13.243597281834264,
+          13.655457751848402,
+          -47.71537881333655,
+          -150.4861091071561
+        ],
+        "achieved_position_m": [
+          0.3913140836264782,
+          -1.0276817867689407e-05,
+          0.22645751392896682
+        ],
+        "position_error_mm": 0.04894254768804894,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 0,
+        "final_damping": 0.010807201753252733,
+        "jacobian_singular_values": [
+          0.45526477373764845,
+          0.35108057461915493,
+          0.07071549166898439
+        ],
+        "jacobian_condition": 6.437977916758603
+      },
+      {
+        "seed": "random_20",
+        "iterations": 15,
+        "success": true,
+        "q_rad": [
+          -0.0031502808376363944,
+          0.09844777479812263,
+          -0.36435528171520964,
+          0.4695561578207638,
+          0.14191650703657843
+        ],
+        "q_deg": [
+          -0.18049779627750315,
+          5.640641998386816,
+          -20.87601988558165,
+          26.903586087508568,
+          8.131216896434594
+        ],
+        "achieved_position_m": [
+          0.391307559726498,
+          -1.8060506619709807e-05,
+          0.22645472601245187
+        ],
+        "position_error_mm": 0.05664947805864132,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 0,
+        "final_damping": 0.009753499582310591,
+        "jacobian_singular_values": [
+          0.4576838382908181,
+          0.3500276506692839,
+          0.0980447264968495
+        ],
+        "jacobian_condition": 4.6681127546979795
+      },
+      {
+        "seed": "random_12",
+        "iterations": 15,
+        "success": true,
+        "q_rad": [
+          -0.014627065088259478,
+          0.41529014025045735,
+          -1.04689521029258,
+          1.0179788292032073,
+          0.7027889600246091
+        ],
+        "q_deg": [
+          -0.838069096220419,
+          23.79437230974724,
+          -59.98267714222561,
+          58.325890547012655,
+          40.26684129779843
+        ],
+        "achieved_position_m": [
+          0.3912910137498944,
+          -4.3295346547180327e-07,
+          0.2264668223419327
+        ],
+        "position_error_mm": 0.07106002339858208,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 0,
+        "final_damping": 0.009753499582310591,
+        "jacobian_singular_values": [
+          0.43492920961108705,
+          0.3492809294898848,
+          0.10944930184080802
+        ],
+        "jacobian_condition": 3.9737961073857146
+      },
+      {
+        "seed": "folded_positive",
+        "iterations": 5,
+        "success": true,
+        "q_rad": [
+          -0.0031592574819471423,
+          0.0339818032894512,
+          0.19388794428422645,
+          -0.42633179404692556,
+          0.14128373018928572
+        ],
+        "q_deg": [
+          -0.18101212011069912,
+          1.9470139087293314,
+          11.108960905953829,
+          -24.42701247112947,
+          8.094961453711127
+        ],
+        "achieved_position_m": [
+          0.39128048765663814,
+          -1.0017579371822296e-05,
+          0.2264475498334935
+        ],
+        "position_error_mm": 0.0839637307530641,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 0,
+        "final_damping": 0.016290125,
+        "jacobian_singular_values": [
+          0.4678633776592869,
+          0.35131140695013713,
+          0.07432873126842675
+        ],
+        "jacobian_condition": 6.29451585780027
+      },
+      {
+        "seed": "random_10",
+        "iterations": 11,
+        "success": true,
+        "q_rad": [
+          -0.02288656959753284,
+          0.14347713178836563,
+          0.24854433449214505,
+          -0.7041614828887912,
+          1.624788321820546
+        ],
+        "q_deg": [
+          -1.3113038454710548,
+          8.220634108115652,
+          14.240541388287724,
+          -40.34548106520127,
+          93.09351344246106
+        ],
+        "achieved_position_m": [
+          0.3912409445706662,
+          -9.846849117350204e-06,
+          0.2264223182950332
+        ],
+        "position_error_mm": 0.12950996725336994,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 0,
+        "final_damping": 0.011974738784767573,
+        "jacobian_singular_values": [
+          0.4591949314850629,
+          0.3494129832465657,
+          0.07182581258293069
+        ],
+        "jacobian_condition": 6.393174194233759
+      },
+      {
+        "seed": "random_08",
+        "iterations": 7,
+        "success": true,
+        "q_rad": [
+          -0.022781902637058225,
+          0.15189047494764765,
+          -0.4962007024317905,
+          0.6533413794186962,
+          1.6958905174086136
+        ],
+        "q_deg": [
+          -1.3053068703813968,
+          8.702683162737774,
+          -28.43020604076844,
+          37.43370362194668,
+          97.16736916377103
+        ],
+        "achieved_position_m": [
+          0.39119770932140335,
+          -9.27262569573161e-06,
+          0.22642324159668667
+        ],
+        "position_error_mm": 0.1702262332047255,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 0,
+        "final_damping": 0.014701837812499997,
+        "jacobian_singular_values": [
+          0.45091400448057806,
+          0.3478201809175513,
+          0.10290480884651149
+        ],
+        "jacobian_condition": 4.381855518075375
+      },
+      {
+        "seed": "folded_negative",
+        "iterations": 4,
+        "success": true,
+        "q_rad": [
+          0.0031603166542720847,
+          0.14699738120818623,
+          -0.48650758234984914,
+          0.5917294874212287,
+          -0.14135634906491618
+        ],
+        "q_deg": [
+          0.18107280621469538,
+          8.422329542704748,
+          -27.874831169759698,
+          33.90360224267594,
+          -8.099122208797738
+        ],
+        "achieved_position_m": [
+          0.3911332410907311,
+          -1.1069033538997804e-05,
+          0.22639611356554484
+        ],
+        "position_error_mm": 0.23980920415605847,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 0,
+        "final_damping": 0.0171475,
+        "jacobian_singular_values": [
+          0.45087430421202607,
+          0.34713696663731486,
+          0.10298841211096253
+        ],
+        "jacobian_condition": 4.377912960986735
+      },
+      {
+        "seed": "joint_limit_middle",
+        "iterations": 1,
+        "success": true,
+        "q_rad": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.048679999999999835
+        ],
+        "q_deg": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          2.789158546696838
+        ],
+        "achieved_position_m": [
+          0.39136147405710175,
+          -0.00039389058862246813,
+          0.22647096471484693
+        ],
+        "position_error_mm": 0.38468057100396164,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 0,
+        "final_damping": 0.02,
+        "jacobian_singular_values": [],
+        "jacobian_condition": null
+      },
+      {
+        "seed": "random_11",
+        "iterations": 19,
+        "success": true,
+        "q_rad": [
+          -0.02091871889136459,
+          0.010909381194333503,
+          0.15399004227519095,
+          -0.2756919897195513,
+          1.160407383310109
+        ],
+        "q_deg": [
+          -1.1985543052957754,
+          0.6250614995346991,
+          8.822979509409567,
+          -15.795987456494368,
+          66.4864455794888
+        ],
+        "achieved_position_m": [
+          0.3910774030412796,
+          1.3420978620202334e-05,
+          0.22616437165290762
+        ],
+        "position_error_mm": 0.4176578380264722,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 0,
+        "final_damping": 0.007944286369164364,
+        "jacobian_singular_values": [
+          0.46294024212836987,
+          0.3444779476566258,
+          0.07903100693865765
+        ],
+        "jacobian_condition": 5.85770395773516
+      },
+      {
+        "seed": "random_09",
+        "iterations": 13,
+        "success": true,
+        "q_rad": [
+          0.0036538159641018742,
+          0.1577028631923077,
+          0.2540109259869898,
+          -0.7932328993748938,
+          -0.17379429576057437
+        ],
+        "q_deg": [
+          0.2093482338605613,
+          9.035708478048248,
+          14.553754009264441,
+          -45.44889730510693,
+          -9.957679650529286
+        ],
+        "achieved_position_m": [
+          0.3909420154707821,
+          6.803782274698183e-05,
+          0.22624708995515913
+        ],
+        "position_error_mm": 0.4811129004822476,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 0,
+        "final_damping": 0.010807201753252733,
+        "jacobian_singular_values": [
+          0.4525663679878742,
+          0.3438196093687959,
+          0.07401181750143436
+        ],
+        "jacobian_condition": 6.114785223036894
+      },
+      {
+        "seed": "random_17",
+        "iterations": 19,
+        "success": true,
+        "q_rad": [
+          0.020255232909884,
+          0.3343185331556856,
+          0.19982613621163442,
+          -1.0188495890694438,
+          -1.9599271891280508
+        ],
+        "q_deg": [
+          1.1605393587908426,
+          19.155040962825264,
+          11.449194241332961,
+          -58.37578141231738,
+          -112.29555608997599
+        ],
+        "achieved_position_m": [
+          0.39086569740763616,
+          -5.838842683550567e-05,
+          0.2265285696992594
+        ],
+        "position_error_mm": 0.5016706412475682,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 0,
+        "final_damping": 0.007944286369164364,
+        "jacobian_singular_values": [
+          0.43837222193776515,
+          0.34256277261195933,
+          0.07474276177849029
+        ],
+        "jacobian_condition": 5.865079259941413
+      },
+      {
+        "seed": "random_07",
+        "iterations": 12,
+        "success": true,
+        "q_rad": [
+          -0.01156743796043798,
+          0.05030106263902426,
+          -0.23378752856312968,
+          0.4230210144999006,
+          2.6452725510417965
+        ],
+        "q_deg": [
+          -0.6627653749125132,
+          2.8820385942392766,
+          -13.395038689461513,
+          24.237318776186704,
+          151.56295283649956
+        ],
+        "achieved_position_m": [
+          0.390880023247484,
+          -1.2583325710832476e-05,
+          0.22624282649921637
+        ],
+        "position_error_mm": 0.5322394056169252,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 0,
+        "final_damping": 0.011376001845529194,
+        "jacobian_singular_values": [
+          0.4533401421867868,
+          0.34211237953827145,
+          0.098010875682878
+        ],
+        "jacobian_condition": 4.625406507473772
+      },
+      {
+        "seed": "random_18",
+        "iterations": 18,
+        "success": true,
+        "q_rad": [
+          0.021976338754473673,
+          0.10870793893756012,
+          0.25020220817934224,
+          -0.6293421370179917,
+          -1.570217723383678
+        ],
+        "q_deg": [
+          1.2591514597811297,
+          6.228506100688061,
+          14.335530553529916,
+          -36.058648320874894,
+          -89.9668484665253
+        ],
+        "achieved_position_m": [
+          0.39089421224541354,
+          -1.0762161811416794e-05,
+          0.22564647549169545
+        ],
+        "position_error_mm": 0.9465980504587742,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 0,
+        "final_damping": 0.008362406704383542,
+        "jacobian_singular_values": [
+          0.452172623392962,
+          0.33740628465799843,
+          0.07581140690656019
+        ],
+        "jacobian_condition": 5.964440469364699
+      },
+      {
+        "seed": "random_13",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          1.91986,
+          1.74533,
+          1.69,
+          0.46172603217572944,
+          -1.5117335676595156
+        ],
+        "q_deg": [
+          109.99987525598623,
+          100.00004285756798,
+          96.82986737710912,
+          26.45495293499095,
+          -86.61595317514492
+        ],
+        "achieved_position_m": [
+          0.08368885433487827,
+          0.10066539105811109,
+          0.2129472024002088
+        ],
+        "position_error_mm": 324.00721056419934,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 295,
+        "final_damping": 0.5,
+        "jacobian_singular_values": [
+          0.36694775430712584,
+          0.11013311940949391,
+          0.031953470307798264
+        ],
+        "jacobian_condition": 11.483815396964005
+      },
+      {
+        "seed": "random_06",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          1.91986,
+          1.6470822477011757,
+          1.69,
+          0.571166061716115,
+          -1.5573419058449585
+        ],
+        "q_deg": [
+          109.99987525598623,
+          94.37086130419861,
+          96.82986737710912,
+          32.72540473744209,
+          -89.22911846377615
+        ],
+        "achieved_position_m": [
+          0.08288016906142287,
+          0.09842749274925447,
+          0.21162272776002503
+        ],
+        "position_error_mm": 324.1464652092851,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 239,
+        "final_damping": 0.45125,
+        "jacobian_singular_values": [
+          0.36163592797806765,
+          0.10790255825702191,
+          0.039054930666570155
+        ],
+        "jacobian_condition": 9.259674048982939
+      },
+      {
+        "seed": "random_22",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          1.91986,
+          -0.29836029989857227,
+          -1.69,
+          -1.65806,
+          -1.5599984868045766
+        ],
+        "q_deg": [
+          109.99987525598623,
+          -17.094785958445716,
+          -96.82986737710912,
+          -94.99984017946129,
+          -89.38132934069709
+        ],
+        "achieved_position_m": [
+          0.10584874507752604,
+          0.16153518363723168,
+          0.27654506036457005
+        ],
+        "position_error_mm": 331.84582066168485,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 260,
+        "final_damping": 0.475,
+        "jacobian_singular_values": [
+          0.33616898688534336,
+          0.17512730278579938,
+          0.14635820216266
+        ],
+        "jacobian_condition": 2.2968920218884006
+      },
+      {
+        "seed": "random_19",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          -1.91986,
+          -0.2857364943975521,
+          -1.69,
+          -1.65806,
+          1.3870496820076141
+        ],
+        "q_deg": [
+          -109.99987525598623,
+          -16.37149518184323,
+          -96.82986737710912,
+          -94.99984017946129,
+          79.4720927539992
+        ],
+        "achieved_position_m": [
+          0.10560643708992784,
+          -0.1603076933949611,
+          0.2806088655413185
+        ],
+        "position_error_mm": 332.0882265502038,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 230,
+        "final_damping": 0.31512470486230454,
+        "jacobian_singular_values": [
+          0.33832166259501123,
+          0.1742768574957758,
+          0.14574599364757526
+        ],
+        "jacobian_condition": 2.3213102063930373
+      },
+      {
+        "seed": "random_00",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          -1.91986,
+          -1.74533,
+          0.8957971110879555,
+          -1.65806,
+          1.7839548219128432
+        ],
+        "q_deg": [
+          -109.99987525598623,
+          -100.00004285756798,
+          51.325393765351606,
+          -94.99984017946129,
+          102.2130821376183
+        ],
+        "achieved_position_m": [
+          0.09052489093591692,
+          -0.11881409194470727,
+          0.3224717273523557
+        ],
+        "position_error_mm": 337.3924038989323,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 906,
+        "final_damping": 0.475,
+        "jacobian_singular_values": [
+          0.35443187989578995,
+          0.12946216941037125,
+          0.09380197475996847
+        ],
+        "jacobian_condition": 3.778511921553378
+      },
+      {
+        "seed": "random_02",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          1.91986,
+          -0.28701713105556115,
+          -1.69,
+          -1.65806,
+          2.84121
+        ],
+        "q_deg": [
+          109.99987525598623,
+          -16.444870257436886,
+          -96.82986737710912,
+          -94.99984017946129,
+          162.78934171036462
+        ],
+        "achieved_position_m": [
+          0.09424969592436616,
+          0.1600732094719109,
+          0.27232933350052496
+        ],
+        "position_error_mm": 340.5949106420674,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 1152,
+        "final_damping": 0.5,
+        "jacobian_singular_values": [
+          0.3268425637696592,
+          0.16961433058874362,
+          0.14916313951500226
+        ],
+        "jacobian_condition": 2.1911751444249177
+      }
+    ],
+    "pose_a": [
+      {
+        "seed": "random_19",
+        "iterations": 11,
+        "success": true,
+        "q_rad": [
+          0.5465168190826282,
+          -0.5466468544630041,
+          0.6683260019938884,
+          -0.008640772419531616,
+          -2.4763648730112613
+        ],
+        "q_deg": [
+          31.313107166349365,
+          -31.320557644832284,
+          38.29225925310165,
+          -0.4950797913722063,
+          -141.88525575799534
+        ],
+        "achieved_position_m": [
+          0.28833631910877544,
+          -0.14642818259740426,
+          0.20442691034319724
+        ],
+        "position_error_mm": 0.01409127672918688,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 0,
+        "final_damping": 0.011974738784767573,
+        "jacobian_singular_values": [
+          0.4232714096406183,
+          0.2892002029905557,
+          0.0847840715891145
+        ],
+        "jacobian_condition": 4.99234587001083
+      },
+      {
+        "seed": "random_06",
+        "iterations": 13,
+        "success": true,
+        "q_rad": [
+          0.5169819798320671,
+          -0.39337599670506174,
+          0.9002767300152393,
+          -0.7657933649358981,
+          0.5223411224112885
+        ],
+        "q_deg": [
+          29.620885528694888,
+          -22.538784372952215,
+          51.5820570237119,
+          -43.8767277899486,
+          29.92794178029313
+        ],
+        "achieved_position_m": [
+          0.28833587971030233,
+          -0.14642748703847236,
+          0.2044252580493073
+        ],
+        "position_error_mm": 0.015103165607366397,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 0,
+        "final_damping": 0.010807201753252733,
+        "jacobian_singular_values": [
+          0.4119341240937331,
+          0.28871813965545895,
+          0.08335103457335996
+        ],
+        "jacobian_condition": 4.942159700863418
+      },
+      {
+        "seed": "folded_negative",
+        "iterations": 8,
+        "success": true,
+        "q_rad": [
+          0.5340287894965449,
+          -0.17577465530404252,
+          -0.26674442055481146,
+          0.996144779017912,
+          -0.12292892112614738
+        ],
+        "q_deg": [
+          30.59759577663229,
+          -10.071145894288467,
+          -15.28332950645338,
+          57.0748916217184,
+          -7.0433083606248275
+        ],
+        "achieved_position_m": [
+          0.2883351887106555,
+          -0.14642662012648142,
+          0.2044271488653185
+        ],
+        "position_error_mm": 0.01584328215333116,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 0,
+        "final_damping": 0.013966745921874996,
+        "jacobian_singular_values": [
+          0.38280617102332914,
+          0.28838183902383524,
+          0.12893427383648162
+        ],
+        "jacobian_condition": 2.969002419859405
+      },
+      {
+        "seed": "joint_limit_middle",
+        "iterations": 6,
+        "success": true,
+        "q_rad": [
+          0.5290060573185451,
+          -0.4929178527110254,
+          0.3988109810692014,
+          0.31407117553343655,
+          0.06152268330629896
+        ],
+        "q_deg": [
+          30.30981442120835,
+          -28.242112606992897,
+          22.85018603873701,
+          17.994952824778355,
+          3.5249900977708957
+        ],
+        "achieved_position_m": [
+          0.28832350299767356,
+          -0.14642055777285934,
+          0.20442350428341466
+        ],
+        "position_error_mm": 0.029349093670638638,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 0,
+        "final_damping": 0.015475618749999998,
+        "jacobian_singular_values": [
+          0.4160970286579949,
+          0.2883547349503347,
+          0.09810670574208846
+        ],
+        "jacobian_condition": 4.241270008105944
+      },
+      {
+        "seed": "zero",
+        "iterations": 6,
+        "success": true,
+        "q_rad": [
+          0.5303159398888645,
+          -0.4929128422321061,
+          0.39878668168784154,
+          0.31406988376830236,
+          0.013561347111240225
+        ],
+        "q_deg": [
+          30.3848651641454,
+          -28.241825527697483,
+          22.848793786740313,
+          17.994878812088047,
+          0.7770079539859959
+        ],
+        "achieved_position_m": [
+          0.28832293629216305,
+          -0.14642019309422927,
+          0.2044233016647027
+        ],
+        "position_error_mm": 0.03004768277285933,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 0,
+        "final_damping": 0.015475618749999998,
+        "jacobian_singular_values": [
+          0.41607818418580395,
+          0.2883301150549129,
+          0.09811016982462091
+        ],
+        "jacobian_condition": 4.24092818236452
+      },
+      {
+        "seed": "random_22",
+        "iterations": 4,
+        "success": true,
+        "q_rad": [
+          0.5277080224894258,
+          -0.21685984946162257,
+          0.9208976530066916,
+          -1.1071386019700848,
+          0.10915289754998805
+        ],
+        "q_deg": [
+          30.23544250383883,
+          -12.425154119993351,
+          52.763548880786395,
+          -63.434369228900195,
+          6.254000351238179
+        ],
+        "achieved_position_m": [
+          0.28831227927029734,
+          -0.14641414870894034,
+          0.20442029283833993
+        ],
+        "position_error_mm": 0.04264411671105244,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 0,
+        "final_damping": 0.0171475,
+        "jacobian_singular_values": [
+          0.39741510779371225,
+          0.28837449832363027,
+          0.0879170878763193
+        ],
+        "jacobian_condition": 4.520339758668884
+      },
+      {
+        "seed": "random_05",
+        "iterations": 7,
+        "success": true,
+        "q_rad": [
+          0.5028444480325663,
+          -0.5458158532429643,
+          0.6383384697966246,
+          0.0025390268491703267,
+          1.5243611040532565
+        ],
+        "q_deg": [
+          28.810864623851504,
+          -31.272944782153782,
+          36.57410022018576,
+          0.14547552252785917,
+          87.33945771615413
+        ],
+        "achieved_position_m": [
+          0.2883127979824882,
+          -0.14641289658109805,
+          0.2044195066533107
+        ],
+        "position_error_mm": 0.04300740152608088,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 0,
+        "final_damping": 0.014701837812499997,
+        "jacobian_singular_values": [
+          0.42240576265616503,
+          0.28814437553994643,
+          0.08594555214921856
+        ],
+        "jacobian_condition": 4.914806550114247
+      },
+      {
+        "seed": "random_09",
+        "iterations": 13,
+        "success": true,
+        "q_rad": [
+          0.5264554490128535,
+          0.026533845280674876,
+          0.8656903493893227,
+          -1.4510774468474807,
+          0.15529098466000332
+        ],
+        "q_deg": [
+          30.163675330101206,
+          1.5202773488357877,
+          49.60040338521383,
+          -83.14061345097969,
+          8.897518017449
+        ],
+        "achieved_position_m": [
+          0.2883020112999607,
+          -0.14640820598794985,
+          0.20442060056597627
+        ],
+        "position_error_mm": 0.05428247930376696,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 0,
+        "final_damping": 0.010807201753252733,
+        "jacobian_singular_values": [
+          0.3768696473769048,
+          0.28649988097015217,
+          0.09153711408419081
+        ],
+        "jacobian_condition": 4.117123979135728
+      },
+      {
+        "seed": "random_20",
+        "iterations": 14,
+        "success": true,
+        "q_rad": [
+          0.553418234306201,
+          0.08244775882480948,
+          0.8422861188148211,
+          -1.4952053610982003,
+          -1.0012771834237058
+        ],
+        "q_deg": [
+          31.70852913132742,
+          4.723908610974071,
+          48.25943975054385,
+          -85.66895669626112,
+          -57.36895673292473
+        ],
+        "achieved_position_m": [
+          0.2883026055050874,
+          -0.1464051884104556,
+          0.20442003930967878
+        ],
+        "position_error_mm": 0.055442491324575315,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 0,
+        "final_damping": 0.010266841665590096,
+        "jacobian_singular_values": [
+          0.3725568448303983,
+          0.28608117499179037,
+          0.0918380965665713
+        ],
+        "jacobian_condition": 4.05666993065716
+      },
+      {
+        "seed": "random_00",
+        "iterations": 8,
+        "success": true,
+        "q_rad": [
+          0.5073158505825957,
+          0.2859586726326413,
+          -1.1000358739541247,
+          1.5839799584409917,
+          1.0103838165205679
+        ],
+        "q_deg": [
+          29.067057118472217,
+          16.384225057013506,
+          -63.02741289055635,
+          90.75536645197636,
+          57.89072837494908
+        ],
+        "achieved_position_m": [
+          0.2882730165259236,
+          -0.14640464609428572,
+          0.2044063898185643
+        ],
+        "position_error_mm": 0.08432156159300422,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 0,
+        "final_damping": 0.013966745921874996,
+        "jacobian_singular_values": [
+          0.3405417526587645,
+          0.28436934209729736,
+          0.14413758459467846
+        ],
+        "jacobian_condition": 2.362615924336346
+      },
+      {
+        "seed": "random_10",
+        "iterations": 15,
+        "success": true,
+        "q_rad": [
+          0.518024368474157,
+          0.16920224511589652,
+          -0.888579323284617,
+          1.5358041768905333,
+          2.705071720016023
+        ],
+        "q_deg": [
+          29.680609998499012,
+          9.694574529278917,
+          -50.91184498679931,
+          87.99509749439088,
+          154.98919283711243
+        ],
+        "achieved_position_m": [
+          0.2882878555866015,
+          -0.14639477312005905,
+          0.2044728641281197
+        ],
+        "position_error_mm": 0.085212137376465,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 0,
+        "final_damping": 0.009753499582310591,
+        "jacobian_singular_values": [
+          0.34843529975267323,
+          0.28572696440757817,
+          0.1433657566557471
+        ],
+        "jacobian_condition": 2.4303941741774744
+      },
+      {
+        "seed": "random_07",
+        "iterations": 13,
+        "success": true,
+        "q_rad": [
+          0.5196547205883904,
+          -0.5442532731090071,
+          0.7135877758166254,
+          -0.08936599097401982,
+          2.7719611407991285
+        ],
+        "q_deg": [
+          29.774022293764816,
+          -31.183415535327047,
+          40.88556786642018,
+          -5.120294114815544,
+          158.821674342059
+        ],
+        "achieved_position_m": [
+          0.28829015227706745,
+          -0.1463843692816717,
+          0.2043592879005649
+        ],
+        "position_error_mm": 0.1038705916413495,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 0,
+        "final_damping": 0.010807201753252733,
+        "jacobian_singular_values": [
+          0.42098868426901076,
+          0.2855324759568676,
+          0.08262935251289272
+        ],
+        "jacobian_condition": 5.094904794314147
+      },
+      {
+        "seed": "random_12",
+        "iterations": 9,
+        "success": true,
+        "q_rad": [
+          0.5082203293989909,
+          0.3312453852155003,
+          -1.1833140220434977,
+          1.6245055394307257,
+          0.9508118677675058
+        ],
+        "q_deg": [
+          29.118879937310652,
+          18.978962556033323,
+          -67.79889930174288,
+          93.07731120500372,
+          54.477507134029
+        ],
+        "achieved_position_m": [
+          0.28826170349090874,
+          -0.14638847268730293,
+          0.2043931014114604
+        ],
+        "position_error_mm": 0.10470681388379283,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 0,
+        "final_damping": 0.013268408625781245,
+        "jacobian_singular_values": [
+          0.33669279444693145,
+          0.2832978807954577,
+          0.14434865074393313
+        ],
+        "jacobian_condition": 2.332496997455187
+      },
+      {
+        "seed": "random_11",
+        "iterations": 19,
+        "success": true,
+        "q_rad": [
+          0.5559391770741918,
+          -0.4805536483150959,
+          0.3653210082612877,
+          0.3899829792246173,
+          -1.2156445794726276
+        ],
+        "q_deg": [
+          31.852968512327326,
+          -27.53369587806904,
+          20.93135194083567,
+          22.344378791508635,
+          -69.65130379173735
+        ],
+        "achieved_position_m": [
+          0.288287806734763,
+          -0.14640404143884236,
+          0.20434652818166532
+        ],
+        "position_error_mm": 0.1066884395123488,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 0,
+        "final_damping": 0.007944286369164364,
+        "jacobian_singular_values": [
+          0.4101164040621507,
+          0.2834053239164536,
+          0.10032455569341193
+        ],
+        "jacobian_condition": 4.087896539661247
+      },
+      {
+        "seed": "random_08",
+        "iterations": 10,
+        "success": true,
+        "q_rad": [
+          0.5554605571425932,
+          -0.547029218415214,
+          0.671292749407924,
+          -0.0343290622860077,
+          -1.9265752350030014
+        ],
+        "q_deg": [
+          31.825545610255887,
+          -31.342465485531854,
+          38.46224135880724,
+          -1.9669103836299668,
+          -110.38462988009672
+        ],
+        "achieved_position_m": [
+          0.28826110588132453,
+          -0.14636306160769258,
+          0.20434333604011495
+        ],
+        "position_error_mm": 0.14179259673016245,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 0,
+        "final_damping": 0.012604988194492182,
+        "jacobian_singular_values": [
+          0.4203689212370383,
+          0.28494287247578104,
+          0.08415020377692076
+        ],
+        "jacobian_condition": 4.995459337821945
+      },
+      {
+        "seed": "folded_positive",
+        "iterations": 3,
+        "success": true,
+        "q_rad": [
+          0.5265421169041635,
+          -0.5308236569444459,
+          0.7739906167814401,
+          -0.3169004646874197,
+          0.15446842388883947
+        ],
+        "q_deg": [
+          30.16864103449257,
+          -30.413955208617022,
+          44.34639572430399,
+          -18.157059152323733,
+          8.850388756868284
+        ],
+        "achieved_position_m": [
+          0.28817132643341026,
+          -0.14635378668783283,
+          0.20433882375173731
+        ],
+        "position_error_mm": 0.21458766745978722,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 0,
+        "final_damping": 0.01805,
+        "jacobian_singular_values": [
+          0.4207802252579747,
+          0.2854521326324221,
+          0.08117030214991765
+        ],
+        "jacobian_condition": 5.183918429683973
+      },
+      {
+        "seed": "random_16",
+        "iterations": 17,
+        "success": true,
+        "q_rad": [
+          0.5415232252432552,
+          0.0027513621775867234,
+          0.8752239428469676,
+          -1.3285573657981988,
+          -2.705625045892437
+        ],
+        "q_deg": [
+          31.026995314750767,
+          0.15764144068764296,
+          50.14663805393042,
+          -76.12072990125506,
+          -155.02089607452632
+        ],
+        "achieved_position_m": [
+          0.2880866531014737,
+          -0.14641313742191403,
+          0.20446840287111306
+        ],
+        "position_error_mm": 0.26563472233792096,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 0,
+        "final_damping": 0.008802533373035307,
+        "jacobian_singular_values": [
+          0.37131051293547823,
+          0.2802095543126085,
+          0.09277986770348828
+        ],
+        "jacobian_condition": 4.002059090255826
+      },
+      {
+        "seed": "random_17",
+        "iterations": 8,
+        "success": true,
+        "q_rad": [
+          0.5482882552363907,
+          -0.4225986566206284,
+          0.8915430494744231,
+          -0.6196897247705646,
+          -2.4058825736254956
+        ],
+        "q_deg": [
+          31.414602981636847,
+          -24.21311945226031,
+          51.08165398910759,
+          -35.50560583697694,
+          -137.84691747281346
+        ],
+        "achieved_position_m": [
+          0.28806310235835964,
+          -0.1463540595323481,
+          0.20423583215318966
+        ],
+        "position_error_mm": 0.3537463324901786,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 0,
+        "final_damping": 0.013966745921874996,
+        "jacobian_singular_values": [
+          0.40848646932207794,
+          0.2818920943722482,
+          0.08212926091216388
+        ],
+        "jacobian_condition": 4.973702000788107
+      },
+      {
+        "seed": "random_13",
+        "iterations": 5,
+        "success": true,
+        "q_rad": [
+          0.5144425430568643,
+          -0.4334576112492681,
+          0.8869516034119166,
+          -0.6718225734364193,
+          0.6335385462636787
+        ],
+        "q_deg": [
+          29.47538651913546,
+          -24.83529172240542,
+          50.818583507864005,
+          -38.49259803952464,
+          36.29908485976244
+        ],
+        "achieved_position_m": [
+          0.28803697350406965,
+          -0.14627126887935954,
+          0.20426894797625256
+        ],
+        "position_error_mm": 0.3864737356279702,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 0,
+        "final_damping": 0.016290125,
+        "jacobian_singular_values": [
+          0.409844909987234,
+          0.2827522510740951,
+          0.08179737259060925
+        ],
+        "jacobian_condition": 5.010489909480127
+      },
+      {
+        "seed": "random_14",
+        "iterations": 19,
+        "success": true,
+        "q_rad": [
+          0.5579231133360434,
+          -0.160770553737343,
+          -0.2939560264313746,
+          1.06885869937507,
+          -1.488107473549236
+        ],
+        "q_deg": [
+          31.96663968695438,
+          -9.211474199130958,
+          -16.842439676953838,
+          61.24109237003395,
+          -85.26227769624701
+        ],
+        "achieved_position_m": [
+          0.2879047751149255,
+          -0.1463438343573227,
+          0.20397041245817724
+        ],
+        "position_error_mm": 0.6442686419765856,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 0,
+        "final_damping": 0.007944286369164364,
+        "jacobian_singular_values": [
+          0.3619701564109997,
+          0.270251340922788,
+          0.1348369502050374
+        ],
+        "jacobian_condition": 2.6845026964832437
+      },
+      {
+        "seed": "random_01",
+        "iterations": 13,
+        "success": true,
+        "q_rad": [
+          0.5140371636457434,
+          0.22131681257815,
+          0.7695286736154328,
+          -1.65806,
+          0.6501828737752283
+        ],
+        "q_deg": [
+          29.452159989776728,
+          12.680519296015847,
+          44.090745212464526,
+          -94.99984017946129,
+          37.252734579007715
+        ],
+        "achieved_position_m": [
+          0.2887527646858771,
+          -0.1466638206283925,
+          0.20379580277956377
+        ],
+        "position_error_mm": 0.7849964753727613,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 3,
+        "final_damping": 0.010807201753252733,
+        "jacobian_singular_values": [
+          0.3677736331933,
+          0.290202883130633,
+          0.0914681916864866
+        ],
+        "jacobian_condition": 4.020781721080361
+      },
+      {
+        "seed": "random_21",
+        "iterations": 27,
+        "success": true,
+        "q_rad": [
+          0.5212517296348292,
+          -0.20283871656202596,
+          0.9244126983746211,
+          -1.035874307247856,
+          2.832632460453062
+        ],
+        "q_deg": [
+          29.865524171969977,
+          -11.621802380854438,
+          52.96494614516577,
+          -59.35122591134005,
+          162.29788489571854
+        ],
+        "achieved_position_m": [
+          0.28807178074417117,
+          -0.14627427282789465,
+          0.20363226709294757
+        ],
+        "position_error_mm": 0.8582541718006516,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 0,
+        "final_damping": 0.005270401889314841,
+        "jacobian_singular_values": [
+          0.3803254155453863,
+          0.26974364342668394,
+          0.09081648548345383
+        ],
+        "jacobian_condition": 4.187845560426131
+      },
+      {
+        "seed": "random_04",
+        "iterations": 18,
+        "success": true,
+        "q_rad": [
+          0.5509771764744916,
+          0.23028651488782056,
+          0.7638204765483294,
+          -1.65806,
+          -0.8481225320171151
+        ],
+        "q_deg": [
+          31.56866682002312,
+          13.194445381848716,
+          43.76368961189055,
+          -94.99984017946129,
+          -48.59384159452973
+        ],
+        "achieved_position_m": [
+          0.28882735575381935,
+          -0.1467294870664272,
+          0.20366413903451752
+        ],
+        "position_error_mm": 0.9488993480698329,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 0,
+        "final_damping": 0.008362406704383542,
+        "jacobian_singular_values": [
+          0.3673317230673426,
+          0.2903425453591205,
+          0.09147079819998179
+        ],
+        "jacobian_condition": 4.0158359858656585
+      },
+      {
+        "seed": "random_03",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          0.506242917273556,
+          1.74533,
+          -1.5556805370551734,
+          -1.65806,
+          1.0837791855028116
+        ],
+        "q_deg": [
+          29.005582568165238,
+          100.00004285756798,
+          -89.1339290439067,
+          -94.99984017946129,
+          62.09597325343704
+        ],
+        "achieved_position_m": [
+          0.2889901455408759,
+          -0.14679115917123475,
+          0.20715457878180354
+        ],
+        "position_error_mm": 2.8230105309265405,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 0,
+        "final_damping": 0.002,
+        "jacobian_singular_values": [
+          0.3514218316708582,
+          0.2900039149271916,
+          0.14164726955417534
+        ],
+        "jacobian_condition": 2.4809643897615064
+      },
+      {
+        "seed": "random_18",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          -1.91986,
+          -1.74533,
+          -1.69,
+          1.65806,
+          1.4735302369053302
+        ],
+        "q_deg": [
+          -109.99987525598623,
+          -100.00004285756798,
+          -96.82986737710912,
+          94.99984017946129,
+          84.42706355958776
+        ],
+        "achieved_position_m": [
+          0.1300596428965443,
+          -0.22716995753092412,
+          0.23662739708162303
+        ],
+        "position_error_mm": 180.58283571298244,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 528,
+        "final_damping": 0.5,
+        "jacobian_singular_values": [
+          0.3715618400700007,
+          0.24476694231378546,
+          0.12402082595551227
+        ],
+        "jacobian_condition": 2.995963276387825
+      },
+      {
+        "seed": "random_15",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          -1.91986,
+          -1.74533,
+          0.0921425424757955,
+          -1.65806,
+          1.6761432514992909
+        ],
+        "q_deg": [
+          -109.99987525598623,
+          -100.00004285756798,
+          5.279378797468001,
+          -94.99984017946129,
+          96.03593417024426
+        ],
+        "achieved_position_m": [
+          0.13479356220147998,
+          -0.2400964948916916,
+          0.23109953197825817
+        ],
+        "position_error_mm": 181.83187033267814,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 660,
+        "final_damping": 0.475,
+        "jacobian_singular_values": [
+          0.3939400043328935,
+          0.2585533943270923,
+          0.08986765347220939
+        ],
+        "jacobian_condition": 4.383557254610139
+      },
+      {
+        "seed": "random_23",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          -1.91986,
+          -1.74533,
+          -1.6274073986046647,
+          1.65806,
+          -2.74385
+        ],
+        "q_deg": [
+          -109.99987525598623,
+          -100.00004285756798,
+          -93.24357548841174,
+          94.99984017946129,
+          -157.21102461697095
+        ],
+        "achieved_position_m": [
+          0.12025408080430877,
+          -0.2316738749420061,
+          0.2451878847197022
+        ],
+        "position_error_mm": 192.8279421047781,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 0,
+        "final_damping": 0.002,
+        "jacobian_singular_values": [
+          0.37837818812318796,
+          0.24566942401512415,
+          0.12303461511510107
+        ],
+        "jacobian_condition": 3.075379947092194
+      },
+      {
+        "seed": "random_02",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          1.91986,
+          1.4825832460798691,
+          1.3425227743520027,
+          1.5988729393105459,
+          -1.549729279007789
+        ],
+        "q_deg": [
+          109.99987525598623,
+          84.94576277718205,
+          76.92088887056391,
+          91.60867140017089,
+          -88.79294707499831
+        ],
+        "achieved_position_m": [
+          0.05528582797186127,
+          0.022610005734546152,
+          0.2043505973576738
+        ],
+        "position_error_mm": 287.91399091842334,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 30,
+        "final_damping": 0.002,
+        "jacobian_singular_values": [
+          0.2625662867810058,
+          0.09074324642370286,
+          0.02681970578196157
+        ],
+        "jacobian_condition": 9.790050976532447
+      }
+    ],
+    "pose_b": [
+      {
+        "seed": "random_08",
+        "iterations": 30,
+        "success": true,
+        "q_rad": [
+          -0.5215137268456578,
+          0.28533009133595366,
+          -0.043521360636809156,
+          -0.44448966328697986,
+          -2.7326334648725092
+        ],
+        "q_deg": [
+          -29.88053550639465,
+          16.34821000163244,
+          -2.4935902831559575,
+          -25.467381743535,
+          -156.56836449340548
+        ],
+        "achieved_position_m": [
+          0.36316226050837486,
+          0.18959464099470635,
+          0.22870262296213345
+        ],
+        "position_error_mm": 0.016140057003825054,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 0,
+        "final_damping": 0.0045187108198513105,
+        "jacobian_singular_values": [
+          0.4845538901583062,
+          0.3749331292933323,
+          0.062055598842310156
+        ],
+        "jacobian_condition": 7.808383114464964
+      },
+      {
+        "seed": "random_03",
+        "iterations": 14,
+        "success": true,
+        "q_rad": [
+          -0.5456804753973264,
+          1.4349516150659343,
+          -1.3716936591968052,
+          -0.964022240602662,
+          2.2828859568692197
+        ],
+        "q_deg": [
+          -31.26518820295916,
+          82.21667134875915,
+          -78.59225745683324,
+          -55.23440574327772,
+          130.79973043829077
+        ],
+        "achieved_position_m": [
+          0.3631543087279064,
+          0.18958910266750564,
+          0.2286968368772722
+        ],
+        "position_error_mm": 0.027273254415890003,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 0,
+        "final_damping": 0.010266841665590096,
+        "jacobian_singular_values": [
+          0.4647871673797413,
+          0.3746264536821836,
+          0.09033507152996283
+        ],
+        "jacobian_condition": 5.14514639229104
+      },
+      {
+        "seed": "random_07",
+        "iterations": 17,
+        "success": true,
+        "q_rad": [
+          -0.5495954242003278,
+          0.4846663743141902,
+          -0.08738636606048926,
+          -0.8585916903591811,
+          1.8876660954912095
+        ],
+        "q_deg": [
+          -31.48949824638093,
+          27.769337720110865,
+          -5.006869962251293,
+          -49.193680182584295,
+          108.15530040158534
+        ],
+        "achieved_position_m": [
+          0.3631503473619029,
+          0.18958754403641398,
+          0.22870068542710337
+        ],
+        "position_error_mm": 0.029993686289058793,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 0,
+        "final_damping": 0.008802533373035307,
+        "jacobian_singular_values": [
+          0.47431887169275594,
+          0.37456492364010296,
+          0.059732026607740525
+        ],
+        "jacobian_condition": 7.940779823319943
+      },
+      {
+        "seed": "random_00",
+        "iterations": 12,
+        "success": true,
+        "q_rad": [
+          -0.5145462578775662,
+          0.2485832027926752,
+          -0.4188296588553461,
+          0.3191379876517605,
+          -2.3317973351122068
+        ],
+        "q_deg": [
+          -29.481328940634633,
+          14.242768377864948,
+          -23.9971717873154,
+          18.28525977474406,
+          -133.60214598178194
+        ],
+        "achieved_position_m": [
+          0.3631232681370065,
+          0.18957292187992728,
+          0.22869075614272674
+        ],
+        "position_error_mm": 0.06228670121526438,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 0,
+        "final_damping": 0.011376001845529194,
+        "jacobian_singular_values": [
+          0.4831386975222499,
+          0.3738788536728769,
+          0.08059911256428728
+        ],
+        "jacobian_condition": 5.99434264411894
+      },
+      {
+        "seed": "random_14",
+        "iterations": 8,
+        "success": true,
+        "q_rad": [
+          -0.5493485708518072,
+          0.4228314697476006,
+          -0.8653856804916065,
+          0.6901840817756257,
+          1.2574158955489294
+        ],
+        "q_deg": [
+          -31.47535459135203,
+          24.226458661851062,
+          -49.58294714322579,
+          39.544634972855434,
+          72.04462390761641
+        ],
+        "achieved_position_m": [
+          0.3631068570413263,
+          0.1895632423976333,
+          0.22869502310514508
+        ],
+        "position_error_mm": 0.07996671037846337,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 0,
+        "final_damping": 0.013966745921874996,
+        "jacobian_singular_values": [
+          0.4711640782682203,
+          0.3736327687329383,
+          0.09038395334148416
+        ],
+        "jacobian_condition": 5.212917347043801
+      },
+      {
+        "seed": "random_19",
+        "iterations": 13,
+        "success": true,
+        "q_rad": [
+          -0.5243375036795225,
+          0.2436692274416877,
+          -0.4035324789687558,
+          0.21877801637655594,
+          -0.2253809651927133
+        ],
+        "q_deg": [
+          -30.042326001261912,
+          13.961218329622048,
+          -23.120707941361363,
+          12.535056988620664,
+          -12.913378088127383
+        ],
+        "achieved_position_m": [
+          0.3630832569817346,
+          0.1895486683821225,
+          0.2286719206277194
+        ],
+        "position_error_mm": 0.11256326200049084,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 0,
+        "final_damping": 0.010807201753252733,
+        "jacobian_singular_values": [
+          0.48231773155054736,
+          0.3727835175945362,
+          0.08107276309466131
+        ],
+        "jacobian_condition": 5.949195674845678
+      },
+      {
+        "seed": "random_18",
+        "iterations": 14,
+        "success": true,
+        "q_rad": [
+          -0.5256903322521438,
+          0.5122101501703026,
+          -1.0529103655205558,
+          0.7860673097579212,
+          -0.15961163043622772
+        ],
+        "q_deg": [
+          -30.11983736887782,
+          29.34747982852044,
+          -60.327320149904686,
+          45.03833926233163,
+          -9.145072785197684
+        ],
+        "achieved_position_m": [
+          0.36303232969490573,
+          0.18951938402879379,
+          0.2286781810772814
+        ],
+        "position_error_mm": 0.1680433130678778,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 0,
+        "final_damping": 0.010266841665590096,
+        "jacobian_singular_values": [
+          0.46342626663734576,
+          0.37087776901046215,
+          0.09370145209788516
+        ],
+        "jacobian_condition": 4.945774651957665
+      },
+      {
+        "seed": "random_17",
+        "iterations": 15,
+        "success": true,
+        "q_rad": [
+          -0.527383051290046,
+          0.4488698027711883,
+          -0.9229810967799505,
+          0.7005533008221289,
+          -0.07839607877150065
+        ],
+        "q_deg": [
+          -30.216823025651063,
+          25.718345249658753,
+          -52.882921415846944,
+          40.13874746106673,
+          -4.4917644439821345
+        ],
+        "achieved_position_m": [
+          0.3630238321923908,
+          0.18951475454260458,
+          0.22867281281614088
+        ],
+        "position_error_mm": 0.1785508890953655,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 0,
+        "final_damping": 0.009753499582310591,
+        "jacobian_singular_values": [
+          0.4662211082259943,
+          0.37062950498570807,
+          0.09337429605225733
+        ],
+        "jacobian_condition": 4.993034785130499
+      },
+      {
+        "seed": "random_10",
+        "iterations": 17,
+        "success": true,
+        "q_rad": [
+          -0.5089135224779288,
+          0.42231992745612895,
+          -0.8664696579448632,
+          0.7203060458392248,
+          -1.761806500947971
+        ],
+        "q_deg": [
+          -29.15859697512147,
+          24.197149447507286,
+          -49.64505447638474,
+          41.27049638434439,
+          -100.94407682303002
+        ],
+        "achieved_position_m": [
+          0.36289962298861994,
+          0.18945227209182874,
+          0.22865105210125192
+        ],
+        "position_error_mm": 0.319084789911163,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 0,
+        "final_damping": 0.008802533373035307,
+        "jacobian_singular_values": [
+          0.46454582850198545,
+          0.36826234541097896,
+          0.09480257766590298
+        ],
+        "jacobian_condition": 4.90013921498113
+      },
+      {
+        "seed": "random_15",
+        "iterations": 9,
+        "success": true,
+        "q_rad": [
+          -0.5087473362285998,
+          0.3885694563877396,
+          -0.7921308411564052,
+          0.6443161702404697,
+          -1.374342579120496
+        ],
+        "q_deg": [
+          -29.149075204421813,
+          22.263389898710187,
+          -45.38575402040983,
+          36.91659722681157,
+          -78.74402938872883
+        ],
+        "achieved_position_m": [
+          0.36288990775564695,
+          0.18943938770159013,
+          0.22862384770138444
+        ],
+        "position_error_mm": 0.33931779113349164,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 0,
+        "final_damping": 0.013268408625781245,
+        "jacobian_singular_values": [
+          0.467731350081283,
+          0.36889915129387696,
+          0.09313806648550675
+        ],
+        "jacobian_condition": 5.0219138933281045
+      },
+      {
+        "seed": "random_23",
+        "iterations": 14,
+        "success": true,
+        "q_rad": [
+          -0.5500763446252317,
+          0.21087497070040048,
+          -0.16425988635870692,
+          -0.09156546328138485,
+          1.7969887191502132
+        ],
+        "q_deg": [
+          -31.51705295700956,
+          12.082245826077841,
+          -9.41139823165243,
+          -5.2463145951834615,
+          102.95986943992683
+        ],
+        "achieved_position_m": [
+          0.362935648028394,
+          0.1894594939066475,
+          0.22848832384285642
+        ],
+        "position_error_mm": 0.35514499242149294,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 0,
+        "final_damping": 0.010266841665590096,
+        "jacobian_singular_values": [
+          0.4834236353031077,
+          0.3692253004275014,
+          0.07288638864081512
+        ],
+        "jacobian_condition": 6.632563971380506
+      },
+      {
+        "seed": "random_16",
+        "iterations": 17,
+        "success": true,
+        "q_rad": [
+          -0.514805159620756,
+          0.3592111889048234,
+          -0.033023533581260506,
+          -0.7118393003694548,
+          -0.7535218426945486
+        ],
+        "q_deg": [
+          -29.496162917827988,
+          20.581285078122924,
+          -1.8921090988147717,
+          -40.78538760271506,
+          -43.17362135731836
+        ],
+        "achieved_position_m": [
+          0.36285177126995743,
+          0.1894400611439292,
+          0.22850496000862344
+        ],
+        "position_error_mm": 0.4150728282510383,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 0,
+        "final_damping": 0.008802533373035307,
+        "jacobian_singular_values": [
+          0.47408956730570306,
+          0.36769997268865434,
+          0.06351043400748517
+        ],
+        "jacobian_condition": 7.464750866760384
+      },
+      {
+        "seed": "random_22",
+        "iterations": 11,
+        "success": true,
+        "q_rad": [
+          -0.5502314506728672,
+          0.5331828316356839,
+          -0.11533524447304903,
+          -0.9462691231711909,
+          1.4523837820524412
+        ],
+        "q_deg": [
+          -31.52593987891603,
+          30.54912596155904,
+          -6.6082227374152644,
+          -54.2172270412543,
+          83.21546094485328
+        ],
+        "achieved_position_m": [
+          0.3628374943196449,
+          0.18936327652309348,
+          0.2286542336214027
+        ],
+        "position_error_mm": 0.4173896782870671,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 0,
+        "final_damping": 0.011974738784767573,
+        "jacobian_singular_values": [
+          0.4654373013629963,
+          0.36928470747616593,
+          0.06327323743048624
+        ],
+        "jacobian_condition": 7.355989992994097
+      },
+      {
+        "seed": "random_12",
+        "iterations": 21,
+        "success": true,
+        "q_rad": [
+          -0.5333360046583973,
+          0.209702094075784,
+          -0.23186204096346097,
+          -0.02248385305430642,
+          0.2056414244726512
+        ],
+        "q_deg": [
+          -30.557902129295776,
+          12.015044945597767,
+          -13.284716376495721,
+          -1.2882298872040832,
+          11.782385715341196
+        ],
+        "achieved_position_m": [
+          0.36291258177796926,
+          0.18944936248154975,
+          0.22840972510552499
+        ],
+        "position_error_mm": 0.42593718548623555,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 0,
+        "final_damping": 0.0071697184481708375,
+        "jacobian_singular_values": [
+          0.48139667742343284,
+          0.36747617761204376,
+          0.0774643471382082
+        ],
+        "jacobian_condition": 6.21442889803935
+      },
+      {
+        "seed": "zero",
+        "iterations": 5,
+        "success": true,
+        "q_rad": [
+          -0.5286664074130937,
+          0.20766625999448907,
+          -0.17829260960907045,
+          -0.11864785359965113,
+          -0.012171643084472257
+        ],
+        "q_deg": [
+          -30.290353915113965,
+          11.898400244950674,
+          -10.215414048973363,
+          -6.798021259546082,
+          -0.6973837784798557
+        ],
+        "achieved_position_m": [
+          0.36285408815743453,
+          0.18936904402432275,
+          0.22854466252796157
+        ],
+        "position_error_mm": 0.42933704953250473,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 0,
+        "final_damping": 0.016290125,
+        "jacobian_singular_values": [
+          0.48429515666542083,
+          0.3706358221017116,
+          0.07319022053930621
+        ],
+        "jacobian_condition": 6.616938070371493
+      },
+      {
+        "seed": "random_04",
+        "iterations": 15,
+        "success": true,
+        "q_rad": [
+          -0.5097320063889227,
+          0.2525259015154477,
+          -0.05858640820023671,
+          -0.3716466933924355,
+          -1.8943653108638756
+        ],
+        "q_deg": [
+          -29.205492648820783,
+          14.46866837457143,
+          -3.356753926704201,
+          -21.293787001379094,
+          -108.53913716848827
+        ],
+        "achieved_position_m": [
+          0.3628439917656572,
+          0.1894435427068196,
+          0.22848452530673458
+        ],
+        "position_error_mm": 0.4300916437905557,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 0,
+        "final_damping": 0.009753499582310591,
+        "jacobian_singular_values": [
+          0.48104051352333443,
+          0.36952021432986876,
+          0.06704557110470846
+        ],
+        "jacobian_condition": 7.174829084117564
+      },
+      {
+        "seed": "joint_limit_middle",
+        "iterations": 5,
+        "success": true,
+        "q_rad": [
+          -0.5296929312518015,
+          0.20761330387133142,
+          -0.17821935588358084,
+          -0.11867129093286574,
+          0.036731686161808316
+        ],
+        "q_deg": [
+          -30.349169398641493,
+          11.895366082594366,
+          -10.211216919669198,
+          -6.799364119822321,
+          2.1045705914707065
+        ],
+        "achieved_position_m": [
+          0.36285027536707903,
+          0.18936544742371728,
+          0.2285417168747774
+        ],
+        "position_error_mm": 0.43526619423678276,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 0,
+        "final_damping": 0.016290125,
+        "jacobian_singular_values": [
+          0.48424653944718105,
+          0.3705776227051612,
+          0.0732259250417166
+        ],
+        "jacobian_condition": 6.613047758308375
+      },
+      {
+        "seed": "random_06",
+        "iterations": 7,
+        "success": true,
+        "q_rad": [
+          -0.5139607147108219,
+          1.2783245811973418,
+          -1.0825181027172837,
+          -1.088727472492602,
+          -2.2987296460156807
+        ],
+        "q_deg": [
+          -29.44777978845746,
+          73.2426033504362,
+          -62.023718532209685,
+          -62.37948921377152,
+          -131.70750695830023
+        ],
+        "achieved_position_m": [
+          0.36285488079651823,
+          0.1893767847935121,
+          0.2284995760282446
+        ],
+        "position_error_mm": 0.44387923579354605,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 0,
+        "final_damping": 0.014701837812499997,
+        "jacobian_singular_values": [
+          0.4520676712790887,
+          0.36901555927399454,
+          0.09230166410349859
+        ],
+        "jacobian_condition": 4.897719620441313
+      },
+      {
+        "seed": "folded_negative",
+        "iterations": 3,
+        "success": true,
+        "q_rad": [
+          -0.5258530077666244,
+          0.3031874630341058,
+          -0.5890149525399117,
+          0.4271693852955147,
+          -0.15381953403870133
+        ],
+        "q_deg": [
+          -30.129157989287677,
+          17.371362033132925,
+          -33.74807085063543,
+          24.475002914630718,
+          -8.813210107086492
+        ],
+        "achieved_position_m": [
+          0.3627724030045541,
+          0.18938707164154023,
+          0.22856623003793944
+        ],
+        "position_error_mm": 0.4783722921307907,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 0,
+        "final_damping": 0.01805,
+        "jacobian_singular_values": [
+          0.47378198433525154,
+          0.36891621503800176,
+          0.08919446342335531
+        ],
+        "jacobian_condition": 5.311786922092668
+      },
+      {
+        "seed": "random_20",
+        "iterations": 13,
+        "success": true,
+        "q_rad": [
+          -0.508675115891705,
+          0.24261732479534076,
+          -0.06761141412276837,
+          -0.3576956060507197,
+          -1.3863387131772094
+        ],
+        "q_deg": [
+          -29.144937283922726,
+          13.900948747527725,
+          -3.873848676145837,
+          -20.49444857708039,
+          -79.43135724065166
+        ],
+        "achieved_position_m": [
+          0.3628005469831851,
+          0.1893768236429552,
+          0.22844400542475526
+        ],
+        "position_error_mm": 0.5109272994819557,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 0,
+        "final_damping": 0.010807201753252733,
+        "jacobian_singular_values": [
+          0.48106039260867967,
+          0.36901769105783566,
+          0.0680778807382253
+        ],
+        "jacobian_condition": 7.066324441832505
+      },
+      {
+        "seed": "folded_positive",
+        "iterations": 8,
+        "success": true,
+        "q_rad": [
+          -0.5319480846121385,
+          0.25134129238525765,
+          -0.04999045359845826,
+          -0.4494627287554295,
+          0.12718799219780766
+        ],
+        "q_deg": [
+          -30.47838016834355,
+          14.400795271038879,
+          -2.8642420071362373,
+          -25.752317406119413,
+          7.287335157677222
+        ],
+        "achieved_position_m": [
+          0.36254122618891776,
+          0.18933792211369488,
+          0.22827097431161536
+        ],
+        "position_error_mm": 0.81429126420505,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 0,
+        "final_damping": 0.013966745921874996,
+        "jacobian_singular_values": [
+          0.47941526047983346,
+          0.36687834482229253,
+          0.06787844552573534
+        ],
+        "jacobian_condition": 7.062849727430317
+      },
+      {
+        "seed": "random_02",
+        "iterations": 51,
+        "success": true,
+        "q_rad": [
+          -0.5212380829686737,
+          0.308247630112812,
+          -0.02749238189024189,
+          -0.5217297058329275,
+          -2.718323925419384
+        ],
+        "q_deg": [
+          -29.86474227559484,
+          17.66128825037383,
+          -1.5751974510727567,
+          -29.89291019082872,
+          -155.74848827596546
+        ],
+        "achieved_position_m": [
+          0.3627406715910775,
+          0.18935351383683466,
+          0.22805069795080785
+        ],
+        "position_error_mm": 0.826379362850489,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 0,
+        "final_damping": 0.002,
+        "jacobian_singular_values": [
+          0.4726470661431296,
+          0.36253128452329786,
+          0.06715232305294197
+        ],
+        "jacobian_condition": 7.038432099668409
+      },
+      {
+        "seed": "random_13",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          1.91986,
+          -1.7448926671977663,
+          -1.6134394191598134,
+          1.268186559718731,
+          -1.5785751842206308
+        ],
+        "q_deg": [
+          109.99987525598623,
+          -99.97498553375735,
+          -92.44326921789627,
+          72.66173750709882,
+          -90.44569569992858
+        ],
+        "achieved_position_m": [
+          0.14704372645625016,
+          0.274728985110855,
+          0.228708187968428
+        ],
+        "position_error_mm": 232.29179345764015,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 0,
+        "final_damping": 0.002,
+        "jacobian_singular_values": [
+          0.43486709140687196,
+          0.29524789559916603,
+          0.09871206530991163
+        ],
+        "jacobian_condition": 4.405409714016056
+      },
+      {
+        "seed": "random_11",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          1.91986,
+          -1.368532433515611,
+          -0.7152818874592373,
+          -1.3948116451479184,
+          -1.5847879010080115
+        ],
+        "q_deg": [
+          109.99987525598623,
+          -78.41113256721245,
+          -40.98263331356582,
+          -79.91682048267475,
+          -90.80165815115556
+        ],
+        "achieved_position_m": [
+          0.14704183530078113,
+          0.27472837665815303,
+          0.22870818884414446
+        ],
+        "position_error_mm": 232.29333007624848,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 30,
+        "final_damping": 0.002,
+        "jacobian_singular_values": [
+          0.43357751858871835,
+          0.29526966068498167,
+          0.0929866545647868
+        ],
+        "jacobian_condition": 4.662792963334657
+      },
+      {
+        "seed": "random_21",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          1.91986,
+          -1.7431980022222944,
+          -0.18357570186413671,
+          -1.3551176962873854,
+          -1.3606326447678758
+        ],
+        "q_deg": [
+          109.99987525598623,
+          -99.87788838297416,
+          -10.518112937966913,
+          -77.64252474075809,
+          -77.95850801292228
+        ],
+        "achieved_position_m": [
+          0.14687780899240457,
+          0.27467536162773243,
+          0.228708180615243
+        ],
+        "position_error_mm": 232.4265436276525,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 0,
+        "final_damping": 0.002,
+        "jacobian_singular_values": [
+          0.4390876935452222,
+          0.2951535944652263,
+          0.07678883048300232
+        ],
+        "jacobian_condition": 5.718119299165742
+      },
+      {
+        "seed": "random_09",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          1.91986,
+          1.74533,
+          1.69,
+          0.08516752166244679,
+          -1.4785753386704839
+        ],
+        "q_deg": [
+          109.99987525598623,
+          100.00004285756798,
+          96.82986737710912,
+          4.879739542847213,
+          -84.71612659794506
+        ],
+        "achieved_position_m": [
+          0.09462697405989241,
+          0.13076034134011816,
+          0.16297884498280907
+        ],
+        "position_error_mm": 282.6675965335207,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 751,
+        "final_damping": 0.475,
+        "jacobian_singular_values": [
+          0.37854856169088064,
+          0.14214449570262283,
+          0.014269693751777182
+        ],
+        "jacobian_condition": 26.528148976128886
+      },
+      {
+        "seed": "random_05",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          1.91986,
+          1.74533,
+          1.69,
+          0.1374318483354952,
+          2.84121
+        ],
+        "q_deg": [
+          109.99987525598623,
+          100.00004285756798,
+          96.82986737710912,
+          7.874264880305903,
+          162.78934171036462
+        ],
+        "achieved_position_m": [
+          0.08489438599216523,
+          0.1343693159027589,
+          0.1632926950532725
+        ],
+        "position_error_mm": 291.15319620356024,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 1040,
+        "final_damping": 0.5,
+        "jacobian_singular_values": [
+          0.3787313042480467,
+          0.14223957693181552,
+          0.014287948837943326
+        ],
+        "jacobian_condition": 26.50704510099317
+      },
+      {
+        "seed": "random_01",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          1.91986,
+          1.74533,
+          1.69,
+          0.13743184799840683,
+          2.84121
+        ],
+        "q_deg": [
+          109.99987525598623,
+          100.00004285756798,
+          96.82986737710912,
+          7.874264860992161,
+          162.78934171036462
+        ],
+        "achieved_position_m": [
+          0.08489438599905183,
+          0.1343693159216803,
+          0.16329269500345475
+        ],
+        "position_error_mm": 291.15319620458155,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 758,
+        "final_damping": 0.475,
+        "jacobian_singular_values": [
+          0.3787313042539678,
+          0.14223957695553607,
+          0.014287948836145238
+        ],
+        "jacobian_condition": 26.507045104743398
+      }
+    ],
+    "unreachable": [
+      {
+        "seed": "random_03",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          -0.030965256991299338,
+          0.6147813037413518,
+          -1.2848063635516094,
+          0.018095319083349107,
+          -2.74385
+        ],
+        "q_deg": [
+          -1.7741785371394179,
+          35.224374027929784,
+          -73.6139821230581,
+          1.0367854124184415,
+          -157.21102461697095
+        ],
+        "achieved_position_m": [
+          0.3814055508958717,
+          0.013343142018487849,
+          0.38270750915191265
+        ],
+        "position_error_mm": 591.2126311048465,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 2066,
+        "final_damping": 0.005463995864544637,
+        "jacobian_singular_values": [
+          0.5296376776725625,
+          0.34301394107343663,
+          0.00024322587124007985
+        ],
+        "jacobian_condition": 2177.5548586678738
+      },
+      {
+        "seed": "folded_positive",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          0.053158954112709766,
+          0.5814574962446533,
+          -1.27038819521794,
+          -0.03795623452577909,
+          0.04473385573363278
+        ],
+        "q_deg": [
+          3.0457837139878796,
+          33.31506050106255,
+          -72.78788192922968,
+          -2.1747320445358818,
+          2.5630611348842574
+        ],
+        "achieved_position_m": [
+          0.379019656856401,
+          -0.018464620642103715,
+          0.38497450670363864
+        ],
+        "position_error_mm": 591.44868891109,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 776,
+        "final_damping": 0.002,
+        "jacobian_singular_values": [
+          0.5294518317452134,
+          0.3408109952998018,
+          0.005647053165450048
+        ],
+        "jacobian_condition": 93.7571891450429
+      },
+      {
+        "seed": "random_12",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          0.0011931648418959768,
+          0.4944378877692943,
+          -1.2861556557248883,
+          -0.08143623822475671,
+          0.126126957777918
+        ],
+        "q_deg": [
+          0.06836330970403362,
+          28.32920420054363,
+          -73.69129086991701,
+          -4.665952749700507,
+          7.226542363499433
+        ],
+        "achieved_position_m": [
+          0.3466940158591386,
+          -0.0013725768923977884,
+          0.41902155763521187
+        ],
+        "position_error_mm": 592.1425274137475,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 1422,
+        "final_damping": 0.002,
+        "jacobian_singular_values": [
+          0.5296630964906603,
+          0.30795111208305076,
+          0.0006902045298840903
+        ],
+        "jacobian_condition": 767.4002032116617
+      },
+      {
+        "seed": "random_23",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          -0.014841140869491704,
+          0.6554332509141019,
+          -1.2878437826319529,
+          -0.06556640987894323,
+          0.9672670074694253
+        ],
+        "q_deg": [
+          -0.8503347349809915,
+          37.553559029917146,
+          -73.7880134169743,
+          -3.756678563888314,
+          55.42031719024715
+        ],
+        "achieved_position_m": [
+          0.3908009046812311,
+          -0.0013637985991750237,
+          0.37150091938504465
+        ],
+        "position_error_mm": 592.5008199523273,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 2058,
+        "final_damping": 0.002,
+        "jacobian_singular_values": [
+          0.5295236047181381,
+          0.3519595475303875,
+          0.0005153482756099375
+        ],
+        "jacobian_condition": 1027.506309381599
+      },
+      {
+        "seed": "random_22",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          -0.023580133201991208,
+          0.6591025954607667,
+          -1.2872122269695676,
+          -0.08444280407374295,
+          -0.04811845916527312
+        ],
+        "q_deg": [
+          -1.3510421128304002,
+          37.76379698602038,
+          -73.75182794299202,
+          -4.838216283675586,
+          -2.7569846268427436
+        ],
+        "achieved_position_m": [
+          0.39193900415521743,
+          0.008698147115182662,
+          0.37005371917867547
+        ],
+        "position_error_mm": 592.8264826111957,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 2049,
+        "final_damping": 0.002,
+        "jacobian_singular_values": [
+          0.5296666040370661,
+          0.35330842541060037,
+          0.00030706194314724007
+        ],
+        "jacobian_condition": 1724.9503426189299
+      },
+      {
+        "seed": "random_19",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          -0.06471922115583252,
+          0.6234401634779948,
+          -1.2865899387336568,
+          -0.037707201415887896,
+          -1.4587426793513323
+        ],
+        "q_deg": [
+          -3.708138225602993,
+          35.720490146235186,
+          -73.7161734534337,
+          -2.1604634983800985,
+          -83.57979892243688
+        ],
+        "achieved_position_m": [
+          0.3817365323711112,
+          0.029933579381499917,
+          0.3809218021204873
+        ],
+        "position_error_mm": 592.8464248567847,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 2118,
+        "final_damping": 0.002,
+        "jacobian_singular_values": [
+          0.5294454841107823,
+          0.3441478198070423,
+          0.0008202572824476161
+        ],
+        "jacobian_condition": 645.462704739344
+      },
+      {
+        "seed": "random_10",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          0.014604778134147723,
+          0.6798173110143156,
+          -1.29038064373005,
+          -0.09217735718991135,
+          0.2334179613172392
+        ],
+        "q_deg": [
+          0.8367921478116138,
+          38.95066276105274,
+          -73.93336485110618,
+          -5.281373533651794,
+          13.373864046025716
+        ],
+        "achieved_position_m": [
+          0.395752191837144,
+          -0.007054920677782772,
+          0.3651610270185952
+        ],
+        "position_error_mm": 593.7600481118328,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 1815,
+        "final_damping": 0.002,
+        "jacobian_singular_values": [
+          0.529654335571411,
+          0.3570746278657473,
+          0.0008282546258605947
+        ],
+        "jacobian_condition": 639.4824961237924
+      },
+      {
+        "seed": "random_07",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          0.13138528876592082,
+          0.5257673626971419,
+          -1.290083735757252,
+          0.0031443918309706255,
+          -2.74385
+        ],
+        "q_deg": [
+          7.527822536394851,
+          30.124250888270225,
+          -73.91635327736107,
+          0.18016038105003018,
+          -157.21102461697095
+        ],
+        "achieved_position_m": [
+          0.351585770017005,
+          -0.03857473667711524,
+          0.412175983751202
+        ],
+        "position_error_mm": 594.1134567911242,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 1800,
+        "final_damping": 0.002,
+        "jacobian_singular_values": [
+          0.5296329384807251,
+          0.31518596295801654,
+          0.000917511879513439
+        ],
+        "jacobian_condition": 577.249134650542
+      },
+      {
+        "seed": "random_13",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          -0.16579834678370212,
+          0.5111761691221173,
+          -1.2857006871239032,
+          0.016193594468044394,
+          2.84121
+        ],
+        "q_deg": [
+          -9.499545520952559,
+          29.28823707836291,
+          -73.6652230892696,
+          0.9278246181653412,
+          162.78934171036462
+        ],
+        "achieved_position_m": [
+          0.3480948490462107,
+          0.04903914217445865,
+          0.41409200459832335
+        ],
+        "position_error_mm": 596.2785287419919,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 1386,
+        "final_damping": 0.002,
+        "jacobian_singular_values": [
+          0.5296456805953972,
+          0.3131945999958103,
+          0.0005512614891798747
+        ],
+        "jacobian_condition": 960.7884660750819
+      },
+      {
+        "seed": "random_17",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          -0.14227953218709077,
+          0.6394490139729707,
+          -1.2906241006710875,
+          0.0017036351034292203,
+          -2.74385
+        ],
+        "q_deg": [
+          -8.152016705416052,
+          36.63772971445323,
+          -73.94731390632079,
+          0.0976111012568278,
+          -157.21102461697095
+        ],
+        "achieved_position_m": [
+          0.38149760245882286,
+          0.05184408304834287,
+          0.3782706875256047
+        ],
+        "position_error_mm": 596.395572330113,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 1792,
+        "final_damping": 0.002,
+        "jacobian_singular_values": [
+          0.5296341266572014,
+          0.34663525852328414,
+          0.0007542019414849777
+        ],
+        "jacobian_condition": 702.2444487671089
+      },
+      {
+        "seed": "joint_limit_middle",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          -0.00020790854785391344,
+          0.725618029303254,
+          -1.2928576413215949,
+          -0.10010313545368146,
+          0.03527598792315435
+        ],
+        "q_deg": [
+          -0.01191228231672295,
+          41.57485061767655,
+          -74.07528635896577,
+          -5.735487177522347,
+          2.0211652261512065
+        ],
+        "achieved_position_m": [
+          0.4058193135168248,
+          -0.0002119235060144717,
+          0.35143999478142846
+        ],
+        "position_error_mm": 597.1469976392787,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 1502,
+        "final_damping": 0.002,
+        "jacobian_singular_values": [
+          0.5296537132637438,
+          0.3670860709022355,
+          0.0014709803346548789
+        ],
+        "jacobian_condition": 360.06852082629035
+      },
+      {
+        "seed": "zero",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          -0.0006382550826262605,
+          0.7256218797206236,
+          -1.2928592284356317,
+          -0.10011056341862429,
+          0.030014304147377446
+        ],
+        "q_deg": [
+          -0.03656932248725837,
+          41.575071230341194,
+          -74.07537729390168,
+          -5.735912768563942,
+          1.7196929526667304
+        ],
+        "achieved_position_m": [
+          0.4058195909922365,
+          -1.2412729043119198e-05,
+          0.35143966909006086
+        ],
+        "position_error_mm": 597.1470216501441,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 1502,
+        "final_damping": 0.002,
+        "jacobian_singular_values": [
+          0.5296537411967343,
+          0.3670863323843071,
+          0.0014704824704608508
+        ],
+        "jacobian_condition": 360.1904489420674
+      },
+      {
+        "seed": "random_06",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          -0.04282548182230778,
+          0.7278483498879557,
+          -1.2924512541953475,
+          -0.0032818574829660205,
+          -2.74385
+        ],
+        "q_deg": [
+          -2.4537193640324615,
+          41.702638574141105,
+          -74.05200209178334,
+          -0.18803658273738044,
+          -157.21102461697095
+        ],
+        "achieved_position_m": [
+          0.40603724403917313,
+          0.018468634988405744,
+          0.3504305531291525
+        ],
+        "position_error_mm": 598.047181351392,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 1505,
+        "final_damping": 0.002,
+        "jacobian_singular_values": [
+          0.529619974760878,
+          0.36774366557536364,
+          0.0016010963307032944
+        ],
+        "jacobian_condition": 330.78582756369076
+      },
+      {
+        "seed": "random_05",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          0.21695694937779322,
+          0.5873908881372989,
+          -1.284482549466239,
+          0.018661422986625993,
+          -2.74385
+        ],
+        "q_deg": [
+          12.430717535381003,
+          33.65501881470828,
+          -73.59542894261949,
+          1.0692207768420892,
+          -157.21102461697095
+        ],
+        "achieved_position_m": [
+          0.3670947722260635,
+          -0.06956087456691515,
+          0.39102513804574335
+        ],
+        "position_error_mm": 599.588266408726,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 1390,
+        "final_damping": 0.002,
+        "jacobian_singular_values": [
+          0.5296213132963034,
+          0.33561904557333205,
+          0.0015793852902286727
+        ],
+        "jacobian_condition": 335.33382675713136
+      },
+      {
+        "seed": "random_16",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          0.19125125221143305,
+          0.5471542616223825,
+          -1.285211036864473,
+          -0.05164450592566079,
+          1.1246763553953558
+        ],
+        "q_deg": [
+          10.957889578307165,
+          31.349629933559385,
+          -73.63716819596675,
+          -2.9590122245787343,
+          64.43920848230933
+        ],
+        "achieved_position_m": [
+          0.35536293178634504,
+          -0.0686521454164137,
+          0.40335197655448285
+        ],
+        "position_error_mm": 599.7873739944401,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 1428,
+        "final_damping": 0.002,
+        "jacobian_singular_values": [
+          0.5294977484604794,
+          0.3238433566717273,
+          0.0004119185590855059
+        ],
+        "jacobian_condition": 1285.4428060634345
+      },
+      {
+        "seed": "random_21",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          -0.2259231524019178,
+          0.5845938054032276,
+          -1.293628814319308,
+          -0.008704050262427793,
+          2.6879032207662417
+        ],
+        "q_deg": [
+          -12.944443126920778,
+          33.49475777909708,
+          -74.11947131700919,
+          -0.49870534470684913,
+          154.00551028952643
+        ],
+        "achieved_position_m": [
+          0.36148872490217976,
+          0.0702731109278798,
+          0.396821651199865
+        ],
+        "position_error_mm": 599.8193306726631,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 1432,
+        "final_damping": 0.002,
+        "jacobian_singular_values": [
+          0.5296133092874464,
+          0.3302822540700761,
+          0.0012272895237661057
+        ],
+        "jacobian_condition": 431.5308645854448
+      },
+      {
+        "seed": "random_00",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          -0.005391023098090843,
+          0.7429084843963445,
+          -1.2860908986881492,
+          -0.08012307731788214,
+          -0.20651499166475384
+        ],
+        "q_deg": [
+          -0.3088828707781469,
+          42.56552072037111,
+          -73.6875805650181,
+          -4.590714171915022,
+          -11.83243742856977
+        ],
+        "achieved_position_m": [
+          0.41256312676620305,
+          0.0036220502542897385,
+          0.34143879975408775
+        ],
+        "position_error_mm": 600.3322616353361,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 1456,
+        "final_damping": 0.002,
+        "jacobian_singular_values": [
+          0.5296535464047826,
+          0.3738401349488086,
+          0.0006622783828219796
+        ],
+        "jacobian_condition": 799.7445789305694
+      },
+      {
+        "seed": "folded_negative",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          -0.12899641475509094,
+          0.7208190643087323,
+          -1.2919923519497187,
+          -0.09771106760914375,
+          0.01568795789827067
+        ],
+        "q_deg": [
+          -7.39095013778581,
+          41.29989017745943,
+          -74.02570892989974,
+          -5.59843178572138,
+          0.8988537767498346
+        ],
+        "achieved_position_m": [
+          0.40203218002118635,
+          0.04697816410730879,
+          0.3525340304481609
+        ],
+        "position_error_mm": 600.6755593068109,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 1466,
+        "final_damping": 0.002,
+        "jacobian_singular_values": [
+          0.5296477910754276,
+          0.36631756367059265,
+          0.001742567945463512
+        ],
+        "jacobian_condition": 303.94670833598093
+      },
+      {
+        "seed": "random_18",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          -0.0019724331272924544,
+          0.7661352891894962,
+          -1.2969688170329805,
+          -0.11116206942714385,
+          0.10241196544529306
+        ],
+        "q_deg": [
+          -0.1130120935656479,
+          43.89631860659294,
+          -74.31083937606486,
+          -6.369117420115583,
+          5.867773391654917
+        ],
+        "achieved_position_m": [
+          0.41340785393649804,
+          -7.919749493532529e-05,
+          0.34011836894807757
+        ],
+        "position_error_mm": 600.7866578488605,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 1124,
+        "final_damping": 0.002,
+        "jacobian_singular_values": [
+          0.5296047399130894,
+          0.3746897930610379,
+          0.0030288353848846104
+        ],
+        "jacobian_condition": 174.8542501042082
+      },
+      {
+        "seed": "random_15",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          0.006948417432392555,
+          0.38666833287286007,
+          -1.2853072824697804,
+          -0.07925883863102827,
+          0.09602370442533305
+        ],
+        "q_deg": [
+          0.39811499317122145,
+          22.15446354497451,
+          -73.64268266294756,
+          -4.541196942666367,
+          5.50175299678327
+        ],
+        "achieved_position_m": [
+          0.3130417639990492,
+          -0.0026739518465440943,
+          0.44674298876391666
+        ],
+        "position_error_mm": 601.6028504047215,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 1436,
+        "final_damping": 0.002,
+        "jacobian_singular_values": [
+          0.5296662029666552,
+          0.2742954574133308,
+          0.0004266693125152042
+        ],
+        "jacobian_condition": 1241.3974650398152
+      },
+      {
+        "seed": "random_08",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          -0.224767227819689,
+          0.46540179181006014,
+          -1.2802792426075644,
+          -0.06549679035859313,
+          0.06746124936355583
+        ],
+        "q_deg": [
+          -12.878213526923645,
+          26.665558448542647,
+          -73.35459719961904,
+          -3.7526896592005277,
+          3.86524486921136
+        ],
+        "achieved_position_m": [
+          0.33353891968969707,
+          0.0668211659001372,
+          0.4240911664135065
+        ],
+        "position_error_mm": 602.7922186167192,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 1058,
+        "final_damping": 0.002,
+        "jacobian_singular_values": [
+          0.5296026262974256,
+          0.30224642867162643,
+          0.0031044949333857152
+        ],
+        "jacobian_condition": 170.59220184323155
+      },
+      {
+        "seed": "random_20",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          0.00230197790754093,
+          0.389080545987915,
+          -1.2919895279193467,
+          -0.0916676686680358,
+          0.5259660320765208
+        ],
+        "q_deg": [
+          0.13189361863445173,
+          22.292673175753265,
+          -74.0255471248782,
+          -5.252170532482064,
+          30.135633805227123
+        ],
+        "achieved_position_m": [
+          0.30985389964088467,
+          -0.004623535252164009,
+          0.4490183605976612
+        ],
+        "position_error_mm": 602.8703741046075,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": false,
+        "line_search_backtracks": 1388,
+        "final_damping": 0.002,
+        "jacobian_singular_values": [
+          0.5296005921719489,
+          0.2710797299156576,
+          0.0017263607387871165
+        ],
+        "jacobian_condition": 306.7728431683569
+      },
+      {
+        "seed": "random_14",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          0.24910488060258076,
+          0.46332404371468033,
+          -1.2821983700396393,
+          0.025858732882887363,
+          2.84121
+        ],
+        "q_deg": [
+          14.272658314638164,
+          26.54651225178604,
+          -73.46455510182471,
+          1.4815962577456059,
+          162.78934171036462
+        ],
+        "achieved_position_m": [
+          0.32939007449845475,
+          -0.0766725488349087,
+          0.42557509333738053
+        ],
+        "position_error_mm": 606.2560452933421,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 1376,
+        "final_damping": 0.002,
+        "jacobian_singular_values": [
+          0.5296428006791505,
+          0.3005727655941539,
+          0.0008698111536813281
+        ],
+        "jacobian_condition": 608.9170027741392
+      },
+      {
+        "seed": "random_09",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          -1.91986,
+          -0.6494711147758927,
+          -1.2883717627871352,
+          -0.039179486049044,
+          1.5817702321066875
+        ],
+        "q_deg": [
+          -109.99987525598623,
+          -37.21195379231533,
+          -73.8182644515329,
+          -2.2448191941019098,
+          90.62875845914182
+        ],
+        "achieved_position_m": [
+          0.09140079063074952,
+          -0.1207972518781689,
+          0.4935330112284775
+        ],
+        "position_error_mm": 781.4261518446444,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 974,
+        "final_damping": 0.5,
+        "jacobian_singular_values": [
+          0.5294631172797813,
+          0.1315146474600423,
+          1.0500313946796373e-05
+        ],
+        "jacobian_condition": 50423.55113975612
+      },
+      {
+        "seed": "random_01",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          -1.91986,
+          -0.6523139845174745,
+          -1.2853474482950995,
+          -0.035448820108972164,
+          1.6566034053025434
+        ],
+        "q_deg": [
+          -109.99987525598623,
+          -37.37483823021341,
+          -73.64498399521901,
+          -2.031067780962588,
+          94.91638345083588
+        ],
+        "achieved_position_m": [
+          0.09147158238200823,
+          -0.12103896105300824,
+          0.4934254074608339
+        ],
+        "position_error_mm": 781.4415713638497,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 407,
+        "final_damping": 0.42868749999999994,
+        "jacobian_singular_values": [
+          0.5294636051324276,
+          0.13168799895630467,
+          0.0002436778343437601
+        ],
+        "jacobian_condition": 2172.801668885095
+      },
+      {
+        "seed": "random_02",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          -1.91986,
+          -0.6606476030573362,
+          -1.2814034972135722,
+          -0.0422298716160279,
+          1.5041017715693126
+        ],
+        "q_deg": [
+          -109.99987525598623,
+          -37.852319400619464,
+          -73.41901224364143,
+          -2.419593412977708,
+          86.17868346907184
+        ],
+        "achieved_position_m": [
+          0.09212808226238166,
+          -0.12288320797668797,
+          0.49257571964497726
+        ],
+        "position_error_mm": 781.4682481559818,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 389,
+        "final_damping": 0.5,
+        "jacobian_singular_values": [
+          0.5294624373089427,
+          0.13372532690244807,
+          0.0005634183255340447
+        ],
+        "jacobian_condition": 939.7323681424165
+      },
+      {
+        "seed": "random_04",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          -1.91986,
+          -0.6788571474718278,
+          -1.2978767759895142,
+          -0.1138971057863029,
+          -0.07756560052051543
+        ],
+        "q_deg": [
+          -109.99987525598623,
+          -38.89564944242586,
+          -74.36286159224534,
+          -6.525823460310224,
+          -4.444181545223276
+        ],
+        "achieved_position_m": [
+          0.08916675999365463,
+          -0.14004035937322468,
+          0.4857765159328741
+        ],
+        "position_error_mm": 789.703485677114,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 1048,
+        "final_damping": 0.002,
+        "jacobian_singular_values": [
+          0.5296160694359879,
+          0.14904670840008832,
+          0.0027163581007296996
+        ],
+        "jacobian_condition": 194.97284591958487
+      },
+      {
+        "seed": "random_11",
+        "iterations": 400,
+        "success": false,
+        "q_rad": [
+          1.91986,
+          1.74533,
+          1.69,
+          0.8208396548236472,
+          -1.5407068798439851
+        ],
+        "q_deg": [
+          109.99987525598623,
+          100.00004285756798,
+          96.82986737710912,
+          47.03064787837029,
+          -88.27600168183
+        ],
+        "achieved_position_m": [
+          0.0680915219843678,
+          0.05779511848966393,
+          0.24653211086794302
+        ],
+        "position_error_mm": 919.4329775533877,
+        "within_joint_limits": true,
+        "minimum_joint_limit_margin_rad": null,
+        "limit_clipped": true,
+        "line_search_backtracks": 1082,
+        "final_damping": 0.475,
+        "jacobian_singular_values": [
+          0.34616422809188574,
+          0.06506562973900168,
+          0.05510054313599077
+        ],
+        "jacobian_condition": 6.28241045169983
+      }
+    ]
+  },
+  "safety": {
+    "opened_com_ports": false,
+    "started_hardware_services": false,
+    "published_robot_commands": false,
+    "used_offline_computation_only": true
+  },
+  "failures": [],
+  "logs": {
+    "verification_log": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\stage_2b1_verification.log"
+  }
+}

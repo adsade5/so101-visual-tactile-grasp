@@ -1,0 +1,279 @@
+{
+  "quality": "PASS",
+  "capture_session": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\calibration\\captures\\session_20260803_221455",
+  "image_size": {
+    "width": 640,
+    "height": 480
+  },
+  "board": {
+    "board_type": "charuco",
+    "dictionary": "DICT_4X4_50",
+    "squares_x": 7,
+    "squares_y": 5,
+    "square_length_m": 0.027,
+    "marker_length_m": 0.02,
+    "measured_square_length_mm": 27.0,
+    "measured_marker_length_mm": 20.0,
+    "print_scale": 0.9,
+    "expected_pattern_width_mm": 189.0,
+    "expected_pattern_height_mm": 135.0
+  },
+  "input_image_count": 25,
+  "valid_image_count": 25,
+  "rejected_image_count": 0,
+  "rms_reprojection_error_px": 0.11046587256864812,
+  "global_recomputed_error_px": 0.110465709535626,
+  "mean_per_view_error_px": 0.10960551049395882,
+  "median_per_view_error_px": 0.1124728198546592,
+  "minimum_per_view_error_px": 0.08408794305681751,
+  "maximum_per_view_error_px": 0.13934926925705332,
+  "camera_matrix": [
+    [
+      308.97230196768476,
+      0.0,
+      297.0863821697673
+    ],
+    [
+      0.0,
+      309.45620406130223,
+      253.57198398746786
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "distortion_coefficients": [
+    -0.16589639985540097,
+    0.03460316302425519,
+    -0.008158726280114487,
+    0.001501418917727141,
+    0.000584095553577152
+  ],
+  "optimal_new_camera_matrix": [
+    [
+      246.02019502219954,
+      0.0,
+      300.55117719740656
+    ],
+    [
+      0.0,
+      249.2776388335991,
+      242.99241329702272
+    ],
+    [
+      0.0,
+      0.0,
+      1.0
+    ]
+  ],
+  "valid_roi": {
+    "x": 18,
+    "y": 19,
+    "width": 607,
+    "height": 430
+  },
+  "images": [
+    {
+      "filename": "charuco_001.png",
+      "path": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\calibration\\captures\\session_20260803_221455\\charuco_001.png",
+      "accepted": true,
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "reprojection_error_px": 0.09941199261445646
+    },
+    {
+      "filename": "charuco_002.png",
+      "path": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\calibration\\captures\\session_20260803_221455\\charuco_002.png",
+      "accepted": true,
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "reprojection_error_px": 0.09129394050944366
+    },
+    {
+      "filename": "charuco_003.png",
+      "path": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\calibration\\captures\\session_20260803_221455\\charuco_003.png",
+      "accepted": true,
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "reprojection_error_px": 0.11020884482417558
+    },
+    {
+      "filename": "charuco_004.png",
+      "path": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\calibration\\captures\\session_20260803_221455\\charuco_004.png",
+      "accepted": true,
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "reprojection_error_px": 0.11337551654495838
+    },
+    {
+      "filename": "charuco_005.png",
+      "path": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\calibration\\captures\\session_20260803_221455\\charuco_005.png",
+      "accepted": true,
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "reprojection_error_px": 0.1124728198546592
+    },
+    {
+      "filename": "charuco_006.png",
+      "path": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\calibration\\captures\\session_20260803_221455\\charuco_006.png",
+      "accepted": true,
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "reprojection_error_px": 0.09670744498067833
+    },
+    {
+      "filename": "charuco_007.png",
+      "path": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\calibration\\captures\\session_20260803_221455\\charuco_007.png",
+      "accepted": true,
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "reprojection_error_px": 0.10239650806966052
+    },
+    {
+      "filename": "charuco_008.png",
+      "path": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\calibration\\captures\\session_20260803_221455\\charuco_008.png",
+      "accepted": true,
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "reprojection_error_px": 0.08761396972440166
+    },
+    {
+      "filename": "charuco_009.png",
+      "path": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\calibration\\captures\\session_20260803_221455\\charuco_009.png",
+      "accepted": true,
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "reprojection_error_px": 0.10405550252733677
+    },
+    {
+      "filename": "charuco_010.png",
+      "path": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\calibration\\captures\\session_20260803_221455\\charuco_010.png",
+      "accepted": true,
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "reprojection_error_px": 0.10696571641843251
+    },
+    {
+      "filename": "charuco_011.png",
+      "path": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\calibration\\captures\\session_20260803_221455\\charuco_011.png",
+      "accepted": true,
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "reprojection_error_px": 0.11248116332250258
+    },
+    {
+      "filename": "charuco_012.png",
+      "path": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\calibration\\captures\\session_20260803_221455\\charuco_012.png",
+      "accepted": true,
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "reprojection_error_px": 0.11464484373206828
+    },
+    {
+      "filename": "charuco_013.png",
+      "path": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\calibration\\captures\\session_20260803_221455\\charuco_013.png",
+      "accepted": true,
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "reprojection_error_px": 0.11386643220543029
+    },
+    {
+      "filename": "charuco_014.png",
+      "path": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\calibration\\captures\\session_20260803_221455\\charuco_014.png",
+      "accepted": true,
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "reprojection_error_px": 0.13934926925705332
+    },
+    {
+      "filename": "charuco_015.png",
+      "path": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\calibration\\captures\\session_20260803_221455\\charuco_015.png",
+      "accepted": true,
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "reprojection_error_px": 0.127753002844085
+    },
+    {
+      "filename": "charuco_016.png",
+      "path": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\calibration\\captures\\session_20260803_221455\\charuco_016.png",
+      "accepted": true,
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "reprojection_error_px": 0.12392301843980118
+    },
+    {
+      "filename": "charuco_017.png",
+      "path": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\calibration\\captures\\session_20260803_221455\\charuco_017.png",
+      "accepted": true,
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "reprojection_error_px": 0.13439752580187908
+    },
+    {
+      "filename": "charuco_018.png",
+      "path": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\calibration\\captures\\session_20260803_221455\\charuco_018.png",
+      "accepted": true,
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "reprojection_error_px": 0.11326348079146996
+    },
+    {
+      "filename": "charuco_019.png",
+      "path": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\calibration\\captures\\session_20260803_221455\\charuco_019.png",
+      "accepted": true,
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "reprojection_error_px": 0.12025114731250884
+    },
+    {
+      "filename": "charuco_020.png",
+      "path": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\calibration\\captures\\session_20260803_221455\\charuco_020.png",
+      "accepted": true,
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "reprojection_error_px": 0.11679240632538967
+    },
+    {
+      "filename": "charuco_021.png",
+      "path": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\calibration\\captures\\session_20260803_221455\\charuco_021.png",
+      "accepted": true,
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "reprojection_error_px": 0.11615256291051954
+    },
+    {
+      "filename": "charuco_022.png",
+      "path": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\calibration\\captures\\session_20260803_221455\\charuco_022.png",
+      "accepted": true,
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "reprojection_error_px": 0.10532083586649502
+    },
+    {
+      "filename": "charuco_023.png",
+      "path": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\calibration\\captures\\session_20260803_221455\\charuco_023.png",
+      "accepted": true,
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "reprojection_error_px": 0.08617992361139579
+    },
+    {
+      "filename": "charuco_024.png",
+      "path": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\calibration\\captures\\session_20260803_221455\\charuco_024.png",
+      "accepted": true,
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "reprojection_error_px": 0.08408794305681751
+    },
+    {
+      "filename": "charuco_025.png",
+      "path": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\calibration\\captures\\session_20260803_221455\\charuco_025.png",
+      "accepted": true,
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "reprojection_error_px": 0.10717195080335117
+    }
+  ]
+}

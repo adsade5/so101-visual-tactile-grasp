@@ -1,0 +1,452 @@
+{
+  "timestamp": "2026-08-04T12:50:46.476266+00:00",
+  "final_status": "PASS",
+  "root_cause": "mapped_joint_state_valid",
+  "tcp_connected": null,
+  "motor_bus_streaming": true,
+  "calibration_applied": true,
+  "calibration_path": "C:\\Users\\82053\\.cache\\huggingface\\lerobot\\calibration\\robots\\so_follower\\my_follower.json",
+  "raw_encoder_values": {
+    "shoulder_pan": 2042.0,
+    "shoulder_lift": 1561.0,
+    "elbow_flex": 2445.0,
+    "wrist_flex": 2814.0,
+    "wrist_roll": 2117.0
+  },
+  "motor_degrees_before_calibration": {
+    "shoulder_pan": -0.4835164835164835,
+    "shoulder_lift": -42.76923076923077,
+    "elbow_flex": 34.94505494505494,
+    "wrist_flex": 67.38461538461539,
+    "wrist_roll": 6.1098901098901095
+  },
+  "calibrated_lerobot_values": {
+    "shoulder_pan": -6.857142857142857,
+    "shoulder_lift": -44.7032967032967,
+    "elbow_flex": 37.934065934065934,
+    "wrist_flex": 71.51648351648352,
+    "wrist_roll": 6.1098901098901095
+  },
+  "source_unit": "lerobot_calibrated_degrees",
+  "mapped_urdf_rad": {
+    "shoulder_pan": -0.11967972013675401,
+    "shoulder_lift": -0.7802197139684541,
+    "elbow_flex": 0.6620743492180687,
+    "wrist_flex": 1.2481981068108898,
+    "wrist_roll": 0.10663769935262057
+  },
+  "per_joint_validation": {
+    "shoulder_pan": {
+      "source_value": -6.857142857142857,
+      "source_unit": "lerobot_calibrated_degrees",
+      "raw_encoder_value": 2042.0,
+      "motor_degrees_before_calibration": -0.4835164835164835,
+      "mapped_rad": -0.11967972013675401,
+      "urdf_lower_rad": -1.91986,
+      "urdf_upper_rad": 1.91986,
+      "lower_margin_rad": 1.8001802798632458,
+      "upper_margin_rad": 2.0395397201367538,
+      "within_limits": true,
+      "sign": 1.0,
+      "offset_rad": 0.0,
+      "scale": 0.017453292519943295
+    },
+    "shoulder_lift": {
+      "source_value": -44.7032967032967,
+      "source_unit": "lerobot_calibrated_degrees",
+      "raw_encoder_value": 1561.0,
+      "motor_degrees_before_calibration": -42.76923076923077,
+      "mapped_rad": -0.7802197139684541,
+      "urdf_lower_rad": -1.74533,
+      "urdf_upper_rad": 1.74533,
+      "lower_margin_rad": 0.9651102860315459,
+      "upper_margin_rad": 2.525549713968454,
+      "within_limits": true,
+      "sign": 1.0,
+      "offset_rad": 0.0,
+      "scale": 0.017453292519943295
+    },
+    "elbow_flex": {
+      "source_value": 37.934065934065934,
+      "source_unit": "lerobot_calibrated_degrees",
+      "raw_encoder_value": 2445.0,
+      "motor_degrees_before_calibration": 34.94505494505494,
+      "mapped_rad": 0.6620743492180687,
+      "urdf_lower_rad": -1.69,
+      "urdf_upper_rad": 1.69,
+      "lower_margin_rad": 2.3520743492180687,
+      "upper_margin_rad": 1.0279256507819312,
+      "within_limits": true,
+      "sign": 1.0,
+      "offset_rad": 0.0,
+      "scale": 0.017453292519943295
+    },
+    "wrist_flex": {
+      "source_value": 71.51648351648352,
+      "source_unit": "lerobot_calibrated_degrees",
+      "raw_encoder_value": 2814.0,
+      "motor_degrees_before_calibration": 67.38461538461539,
+      "mapped_rad": 1.2481981068108898,
+      "urdf_lower_rad": -1.65806,
+      "urdf_upper_rad": 1.65806,
+      "lower_margin_rad": 2.90625810681089,
+      "upper_margin_rad": 0.40986189318911026,
+      "within_limits": true,
+      "sign": 1.0,
+      "offset_rad": 0.0,
+      "scale": 0.017453292519943295
+    },
+    "wrist_roll": {
+      "source_value": 6.1098901098901095,
+      "source_unit": "lerobot_calibrated_degrees",
+      "raw_encoder_value": 2117.0,
+      "motor_degrees_before_calibration": 6.1098901098901095,
+      "mapped_rad": 0.10663769935262057,
+      "urdf_lower_rad": -2.74385,
+      "urdf_upper_rad": 2.84121,
+      "lower_margin_rad": 2.8504876993526205,
+      "upper_margin_rad": 2.734572300647379,
+      "within_limits": true,
+      "sign": 1.0,
+      "offset_rad": 0.0,
+      "scale": 0.017453292519943295
+    }
+  },
+  "violating_joints": [],
+  "sign_offset_scale": {
+    "shoulder_pan": {
+      "source_name": "shoulder_pan",
+      "sign": 1.0,
+      "offset_rad": 0.0,
+      "scale": 0.017453292519943295
+    },
+    "shoulder_lift": {
+      "source_name": "shoulder_lift",
+      "sign": 1.0,
+      "offset_rad": 0.0,
+      "scale": 0.017453292519943295
+    },
+    "elbow_flex": {
+      "source_name": "elbow_flex",
+      "sign": 1.0,
+      "offset_rad": 0.0,
+      "scale": 0.017453292519943295
+    },
+    "wrist_flex": {
+      "source_name": "wrist_flex",
+      "sign": 1.0,
+      "offset_rad": 0.0,
+      "scale": 0.017453292519943295
+    },
+    "wrist_roll": {
+      "source_name": "wrist_roll",
+      "sign": 1.0,
+      "offset_rad": 0.0,
+      "scale": 0.017453292519943295
+    }
+  },
+  "mapping_modified": false,
+  "mapping_modification_basis": "No mapping change was made; diagnostics do not by themselves prove URDF zero/direction mismatch versus current physical pose.",
+  "final_real_joint_state_valid": true,
+  "preflight": {
+    "timestamp": "2026-08-04T12:50:46.408190+00:00",
+    "current_serial_ports": [
+      {
+        "device": "COM8",
+        "description": "USB-SERIAL CH340 (COM8)",
+        "hwid": "USB VID:PID=1A86:7523 SER= LOCATION=1-3.3",
+        "vid": 6790,
+        "pid": 29987,
+        "serial_number": "",
+        "manufacturer": "wch.cn",
+        "product": null,
+        "location": "1-3.3"
+      },
+      {
+        "device": "COM4",
+        "description": "USB-Enhanced-SERIAL CH343 (COM4)",
+        "hwid": "USB VID:PID=1A86:55D3 SER=5B7B009052 LOCATION=1-3.4",
+        "vid": 6790,
+        "pid": 21971,
+        "serial_number": "5B7B009052",
+        "manufacturer": "wch.cn",
+        "product": null,
+        "location": "1-3.4"
+      }
+    ],
+    "configured_follower_port": "COM4",
+    "configured_port_exists": true,
+    "selected_port_basis": "Configured follower_port from real_joint_state_mapping.json; motor identity is confirmed only if read-only preflight passes.",
+    "selected_port_serial_number": "5B7B009052",
+    "port_classification": {
+      "configured_follower_port_info": {
+        "device": "COM4",
+        "description": "USB-Enhanced-SERIAL CH343 (COM4)",
+        "hwid": "USB VID:PID=1A86:55D3 SER=5B7B009052 LOCATION=1-3.4",
+        "vid": 6790,
+        "pid": 21971,
+        "serial_number": "5B7B009052",
+        "manufacturer": "wch.cn",
+        "product": null,
+        "location": "1-3.4"
+      },
+      "possible_so101_usb_serial_ports": [
+        {
+          "device": "COM8",
+          "description": "USB-SERIAL CH340 (COM8)",
+          "hwid": "USB VID:PID=1A86:7523 SER= LOCATION=1-3.3",
+          "vid": 6790,
+          "pid": 29987,
+          "serial_number": "",
+          "manufacturer": "wch.cn",
+          "product": null,
+          "location": "1-3.3"
+        },
+        {
+          "device": "COM4",
+          "description": "USB-Enhanced-SERIAL CH343 (COM4)",
+          "hwid": "USB VID:PID=1A86:55D3 SER=5B7B009052 LOCATION=1-3.4",
+          "vid": 6790,
+          "pid": 21971,
+          "serial_number": "5B7B009052",
+          "manufacturer": "wch.cn",
+          "product": null,
+          "location": "1-3.4"
+        }
+      ],
+      "possible_flexitac_ports": [
+        {
+          "device": "COM8",
+          "description": "USB-SERIAL CH340 (COM8)",
+          "hwid": "USB VID:PID=1A86:7523 SER= LOCATION=1-3.3",
+          "vid": 6790,
+          "pid": 29987,
+          "serial_number": "",
+          "manufacturer": "wch.cn",
+          "product": null,
+          "location": "1-3.3"
+        }
+      ],
+      "possible_so101_bus_ports": [
+        {
+          "device": "COM4",
+          "description": "USB-Enhanced-SERIAL CH343 (COM4)",
+          "hwid": "USB VID:PID=1A86:55D3 SER=5B7B009052 LOCATION=1-3.4",
+          "vid": 6790,
+          "pid": 21971,
+          "serial_number": "5B7B009052",
+          "manufacturer": "wch.cn",
+          "product": null,
+          "location": "1-3.4"
+        }
+      ],
+      "leader_port_candidates": [],
+      "follower_port_candidates": [
+        {
+          "device": "COM4",
+          "description": "USB-Enhanced-SERIAL CH343 (COM4)",
+          "hwid": "USB VID:PID=1A86:55D3 SER=5B7B009052 LOCATION=1-3.4",
+          "vid": 6790,
+          "pid": 21971,
+          "serial_number": "5B7B009052",
+          "manufacturer": "wch.cn",
+          "product": null,
+          "location": "1-3.4"
+        }
+      ],
+      "classification_basis": "Configured follower_port is used only when present. CH343/CH340 classification is diagnostic, not proof of Leader/Follower identity."
+    },
+    "calibration_path": "C:\\Users\\82053\\.cache\\huggingface\\lerobot\\calibration\\robots\\so_follower\\my_follower.json",
+    "calibration_exists": true,
+    "bus_class": "lerobot.motors.feetech.feetech.FeetechMotorsBus",
+    "connect_method": "FeetechMotorsBus.connect(handshake=False)",
+    "disconnect_method": "FeetechMotorsBus.disconnect(disable_torque=False)",
+    "motor_model": "sts3215",
+    "baudrate": 1000000,
+    "protocol": 0,
+    "required_motor_ids": [
+      1,
+      2,
+      3,
+      4,
+      5
+    ],
+    "optional_motor_ids": [
+      6
+    ],
+    "joint_source_names": [
+      "shoulder_pan",
+      "shoulder_lift",
+      "elbow_flex",
+      "wrist_flex",
+      "wrist_roll"
+    ],
+    "includes_gripper_id_6": true,
+    "calibration_motor_ids": {
+      "shoulder_pan": 1,
+      "shoulder_lift": 2,
+      "elbow_flex": 3,
+      "wrist_flex": 4,
+      "wrist_roll": 5,
+      "gripper": 6
+    },
+    "sync_read_parameters": {
+      "data_name": "Present_Position",
+      "motors": [
+        "shoulder_pan",
+        "shoulder_lift",
+        "elbow_flex",
+        "wrist_flex",
+        "wrist_roll"
+      ],
+      "normalize": true,
+      "num_retry": 3
+    },
+    "responsive_motor_ids": [
+      1,
+      2,
+      3,
+      4,
+      5,
+      6
+    ],
+    "per_motor_ping_results": {
+      "1": {
+        "motor_name": "shoulder_pan",
+        "motor_id": 1,
+        "ping_passed": true,
+        "model_number": 777,
+        "error": null
+      },
+      "2": {
+        "motor_name": "shoulder_lift",
+        "motor_id": 2,
+        "ping_passed": true,
+        "model_number": 777,
+        "error": null
+      },
+      "3": {
+        "motor_name": "elbow_flex",
+        "motor_id": 3,
+        "ping_passed": true,
+        "model_number": 777,
+        "error": null
+      },
+      "4": {
+        "motor_name": "wrist_flex",
+        "motor_id": 4,
+        "ping_passed": true,
+        "model_number": 777,
+        "error": null
+      },
+      "5": {
+        "motor_name": "wrist_roll",
+        "motor_id": 5,
+        "ping_passed": true,
+        "model_number": 777,
+        "error": null
+      },
+      "6": {
+        "motor_name": "gripper",
+        "motor_id": 6,
+        "ping_passed": true,
+        "model_number": 777,
+        "error": null
+      }
+    },
+    "per_motor_present_position_results": {
+      "1": {
+        "motor_name": "shoulder_pan",
+        "motor_id": 1,
+        "present_position_read_passed": true,
+        "raw_value": 2042,
+        "calibrated_value": -6.857142857142857,
+        "error": null
+      },
+      "2": {
+        "motor_name": "shoulder_lift",
+        "motor_id": 2,
+        "present_position_read_passed": true,
+        "raw_value": 1561,
+        "calibrated_value": -44.7032967032967,
+        "error": null
+      },
+      "3": {
+        "motor_name": "elbow_flex",
+        "motor_id": 3,
+        "present_position_read_passed": true,
+        "raw_value": 2445,
+        "calibrated_value": 37.934065934065934,
+        "error": null
+      },
+      "4": {
+        "motor_name": "wrist_flex",
+        "motor_id": 4,
+        "present_position_read_passed": true,
+        "raw_value": 2814,
+        "calibrated_value": 71.51648351648352,
+        "error": null
+      },
+      "5": {
+        "motor_name": "wrist_roll",
+        "motor_id": 5,
+        "present_position_read_passed": true,
+        "raw_value": 2117,
+        "calibrated_value": 6.1098901098901095,
+        "error": null
+      },
+      "6": {
+        "motor_name": "gripper",
+        "motor_id": 6,
+        "present_position_read_passed": true,
+        "raw_value": 1607,
+        "calibrated_value": 46.92513368983957,
+        "error": null
+      }
+    },
+    "bulk_sync_read_result": {
+      "passed": true,
+      "raw_values": {
+        "shoulder_pan": 2042.0,
+        "shoulder_lift": 1561.0,
+        "elbow_flex": 2445.0,
+        "wrist_flex": 2814.0,
+        "wrist_roll": 2117.0
+      },
+      "calibrated_values": {
+        "shoulder_pan": -6.857142857142857,
+        "shoulder_lift": -44.7032967032967,
+        "elbow_flex": 37.934065934065934,
+        "wrist_flex": 71.51648351648352,
+        "wrist_roll": 6.1098901098901095
+      },
+      "error": null
+    },
+    "failure_reason": null,
+    "suggested_checks": [],
+    "torque_enable_written": false,
+    "torque_disable_written": false,
+    "goal_position_written": false,
+    "motion_parameters_written": false,
+    "motion_command_sent": false,
+    "observed_physical_motion": false,
+    "opened_com_ports": true,
+    "final_status": "READ_ONLY_PREFLIGHT_PASS"
+  },
+  "safety": {
+    "read_only": true,
+    "torque_state_changed": false,
+    "torque_enable_written": false,
+    "goal_position_written": false,
+    "motion_parameters_written": false,
+    "motion_command_sent": false,
+    "shadow_execution_started": false,
+    "controller_command_topics_published": []
+  },
+  "urdf": {
+    "path": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\robot_model\\so101\\so101_new_calib.urdf",
+    "sha256": "3a65d2d35e68a8d2f0c2cc176d19b884506543c93ba72980145b80abe276022c",
+    "expected_sha256": "3a65d2d35e68a8d2f0c2cc176d19b884506543c93ba72980145b80abe276022c",
+    "matches_expected": true
+  }
+}

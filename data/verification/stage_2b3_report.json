@@ -1,0 +1,1223 @@
+{
+  "stage": "2B-3",
+  "status": "PASS",
+  "timestamp": "2026-08-04T07:28:18.311786+00:00",
+  "description": "Position IK with top-down tool approach-axis constraint, implemented in so101_kinematics.top_down_ik.",
+  "model": {
+    "urdf": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\robot_model\\so101\\so101_new_calib.urdf",
+    "urdf_sha256": "3a65d2d35e68a8d2f0c2cc176d19b884506543c93ba72980145b80abe276022c",
+    "base_link": "base_link",
+    "tip_link": "gripper_frame_link",
+    "joint_names": [
+      "shoulder_pan",
+      "shoulder_lift",
+      "elbow_flex",
+      "wrist_flex",
+      "wrist_roll"
+    ],
+    "joint_limits_rad": {
+      "shoulder_pan": {
+        "lower": -1.91986,
+        "upper": 1.91986
+      },
+      "shoulder_lift": {
+        "lower": -1.74533,
+        "upper": 1.74533
+      },
+      "elbow_flex": {
+        "lower": -1.69,
+        "upper": 1.69
+      },
+      "wrist_flex": {
+        "lower": -1.65806,
+        "upper": 1.65806
+      },
+      "wrist_roll": {
+        "lower": -2.74385,
+        "upper": 2.84121
+      }
+    }
+  },
+  "frame_convention": {
+    "tool_frame": "gripper_frame_link",
+    "tool_approach_axis_local": [
+      0.0,
+      0.0,
+      1.0
+    ],
+    "target_approach_axis_base": [
+      0.0,
+      0.0,
+      -1.0
+    ],
+    "note": "Only the approach direction is constrained; rotation about that axis is not independently commanded."
+  },
+  "configuration": {
+    "position_tolerance_mm": 1.0,
+    "approach_tolerance_deg": 2.0,
+    "minimum_limit_margin_rad": 0.05,
+    "maximum_adjacent_delta_rad": 0.15,
+    "maximum_wrist_roll_deviation_rad": 0.5,
+    "maximum_pregrasp_return_delta_rad": 0.15,
+    "reference_q_deg": [
+      0.0,
+      -20.0,
+      30.0,
+      80.0,
+      0.0
+    ],
+    "vertical_offsets_m": [
+      0.0,
+      0.005,
+      0.01,
+      0.015,
+      0.02,
+      0.025,
+      0.02,
+      0.015,
+      0.01,
+      0.005,
+      0.0,
+      -0.005,
+      -0.01,
+      -0.015,
+      -0.02,
+      -0.015,
+      -0.01,
+      -0.005,
+      0.0,
+      0.005,
+      0.01,
+      0.015,
+      0.02,
+      0.025
+    ],
+    "random_seed": 20260804
+  },
+  "reference": {
+    "q_rad": [
+      0.0,
+      -0.3490658503988659,
+      0.5235987755982988,
+      1.3962634015954636,
+      0.0
+    ],
+    "q_deg": [
+      0.0,
+      -20.0,
+      30.0,
+      80.0,
+      0.0
+    ],
+    "position_m": [
+      0.18289733886666237,
+      -1.0074442143860504e-05,
+      0.05442612789124232
+    ],
+    "approach_axis_base": [
+      9.155950952010694e-06,
+      6.193363591682789e-06,
+      -0.9999999999389054
+    ],
+    "approach_error_deg": 0.0006333429639140244,
+    "minimum_limit_margin_rad": 0.2617965984045365
+  },
+  "summary": {
+    "path_point_count": 24,
+    "solved_point_count": 24,
+    "maximum_position_error_mm": 0.6489302057835082,
+    "maximum_approach_error_deg": 0.6555079320605507,
+    "minimum_observed_margin_rad": 0.08500904221161076,
+    "maximum_adjacent_delta_rad": 0.039151221775395983,
+    "maximum_adjacent_delta_deg": 2.2431997705108757,
+    "maximum_wrist_roll_deviation_rad": 0.000592252248540401,
+    "maximum_wrist_roll_deviation_deg": 0.033933554248498046,
+    "pregrasp_return_delta_rad": 0.00028337008816555165,
+    "pregrasp_return_delta_deg": 0.016235910092136145,
+    "unreachable_rejected": true
+  },
+  "path_results": [
+    {
+      "point_index": 0,
+      "target_position_m": [
+        0.18289733886666237,
+        -1.0074442143860504e-05,
+        0.05442612789124232
+      ],
+      "adjacent_max_joint_delta_rad": 0.0,
+      "success": true,
+      "q_rad": [
+        0.0,
+        -0.3490658503988659,
+        0.5235987755982988,
+        1.3962634015954636,
+        0.0
+      ],
+      "q_deg": [
+        0.0,
+        -20.0,
+        29.999999999999996,
+        80.0,
+        0.0
+      ],
+      "achieved_position_m": [
+        0.18289733886666237,
+        -1.0074442143860504e-05,
+        0.05442612789124232
+      ],
+      "achieved_approach_axis_base": [
+        9.155950952010694e-06,
+        6.193363591682789e-06,
+        -0.9999999999389054
+      ],
+      "position_error_mm": 0.0,
+      "approach_error_deg": 0.0006333429639140244,
+      "minimum_joint_limit_margin_rad": 0.2617965984045365,
+      "failure_reason": "",
+      "selected_seed": "reference",
+      "attempt_count": 33,
+      "z_offset_m": 0.0,
+      "wrist_roll_deviation_rad": 0.0,
+      "wrist_roll_deviation_deg": 0.0,
+      "passed": true
+    },
+    {
+      "point_index": 1,
+      "target_position_m": [
+        0.18289733886666237,
+        -1.0074442143860504e-05,
+        0.05942612789124232
+      ],
+      "adjacent_max_joint_delta_rad": 0.03262566737223005,
+      "success": true,
+      "q_rad": [
+        4.844830138555286e-07,
+        -0.3616259510761585,
+        0.49879097242020726,
+        1.4288890689676936,
+        -9.937082342036398e-06
+      ],
+      "q_deg": [
+        2.7758831939699972e-05,
+        -20.719640759068273,
+        28.578617578904122,
+        81.86931304422646,
+        -0.0005693528788726611
+      ],
+      "achieved_position_m": [
+        0.18279507076217752,
+        -1.0079088360786349e-05,
+        0.05923795154080315
+      ],
+      "achieved_approach_axis_base": [
+        0.004751374556755315,
+        6.221008385255127e-06,
+        -0.9999887121368523
+      ],
+      "position_error_mm": 0.21417073581868568,
+      "approach_error_deg": 0.27223496664802976,
+      "minimum_joint_limit_margin_rad": 0.22917093103230646,
+      "failure_reason": "",
+      "selected_seed": "wrist_flex_-1_0.04",
+      "attempt_count": 33,
+      "z_offset_m": 0.005,
+      "wrist_roll_deviation_rad": 9.937082342036398e-06,
+      "wrist_roll_deviation_deg": 0.0005693528788726611,
+      "passed": true
+    },
+    {
+      "point_index": 2,
+      "target_position_m": [
+        0.18289733886666237,
+        -1.0074442143860504e-05,
+        0.06442612789124232
+      ],
+      "adjacent_max_joint_delta_rad": 0.03617444767168698,
+      "success": true,
+      "q_rad": [
+        4.7581674460709e-06,
+        -0.3690165554690496,
+        0.46774591346360345,
+        1.4650635166393806,
+        -9.319752852262596e-05
+      ],
+      "q_deg": [
+        0.00027262291287640433,
+        -21.14309119883178,
+        26.79986672595591,
+        83.94195622203097,
+        -0.005339825045396577
+      ],
+      "achieved_position_m": [
+        0.18271588023291419,
+        -1.0049996965157414e-05,
+        0.06429041060070435
+      ],
+      "achieved_approach_axis_base": [
+        0.007012550640678301,
+        6.203993482313242e-06,
+        -0.9999754117452201
+      ],
+      "position_error_mm": 0.22659748301843854,
+      "approach_error_deg": 0.4017930057059806,
+      "minimum_joint_limit_margin_rad": 0.19299648336061948,
+      "failure_reason": "",
+      "selected_seed": "shoulder_lift_-1_0.04",
+      "attempt_count": 33,
+      "z_offset_m": 0.01,
+      "wrist_roll_deviation_rad": 9.319752852262596e-05,
+      "wrist_roll_deviation_deg": 0.005339825045396577,
+      "passed": true
+    },
+    {
+      "point_index": 3,
+      "target_position_m": [
+        0.18289733886666237,
+        -1.0074442143860504e-05,
+        0.06942612789124232
+      ],
+      "adjacent_max_joint_delta_rad": 0.035691761904158126,
+      "success": true,
+      "q_rad": [
+        1.217242251460205e-05,
+        -0.3771043190446779,
+        0.4369222105499469,
+        1.5007552785435387,
+        -0.00023329217031391376
+      ],
+      "q_deg": [
+        0.0006974284365367182,
+        -21.606485917414915,
+        25.033798640038288,
+        85.98694354252504,
+        -0.013366656752434453
+      ],
+      "achieved_position_m": [
+        0.18251238579112988,
+        -1.0022205228422059e-05,
+        0.06939680717627049
+      ],
+      "achieved_approach_axis_base": [
+        0.010232134156387766,
+        6.132735179590863e-06,
+        -0.9999476503262534
+      ],
+      "position_error_mm": 0.3860680994553654,
+      "approach_error_deg": 0.5862684382305129,
+      "minimum_joint_limit_margin_rad": 0.15730472145646135,
+      "failure_reason": "",
+      "selected_seed": "shoulder_lift_-1_0.08",
+      "attempt_count": 33,
+      "z_offset_m": 0.015,
+      "wrist_roll_deviation_rad": 0.00023329217031391376,
+      "wrist_roll_deviation_deg": 0.013366656752434453,
+      "passed": true
+    },
+    {
+      "point_index": 4,
+      "target_position_m": [
+        0.18289733886666237,
+        -1.0074442143860504e-05,
+        0.07442612789124232
+      ],
+      "adjacent_max_joint_delta_rad": 0.035984953738649184,
+      "success": true,
+      "q_rad": [
+        2.060168418745745e-05,
+        -0.3786627760295216,
+        0.40166456588833654,
+        1.536740232282188,
+        -0.00038875664097930216
+      ],
+      "q_deg": [
+        0.0011803895548027166,
+        -21.695778925199143,
+        23.01368440535606,
+        88.04872951772315,
+        -0.0222741147857966
+      ],
+      "achieved_position_m": [
+        0.18247998039828897,
+        -1.0017588155831976e-05,
+        0.07433735841096352
+      ],
+      "achieved_approach_axis_base": [
+        0.011063234932651291,
+        6.034186444525696e-06,
+        -0.999938800525519
+      ],
+      "position_error_mm": 0.42669440467896613,
+      "approach_error_deg": 0.633889694980075,
+      "minimum_joint_limit_margin_rad": 0.12131976771781217,
+      "failure_reason": "",
+      "selected_seed": "shoulder_lift_-1_0.08",
+      "attempt_count": 33,
+      "z_offset_m": 0.02,
+      "wrist_roll_deviation_rad": 0.00038875664097930216,
+      "wrist_roll_deviation_deg": 0.0222741147857966,
+      "passed": true
+    },
+    {
+      "point_index": 5,
+      "target_position_m": [
+        0.18289733886666237,
+        -1.0074442143860504e-05,
+        0.07942612789124232
+      ],
+      "adjacent_max_joint_delta_rad": 0.03756467285282933,
+      "success": true,
+      "q_rad": [
+        2.9447473046909096e-05,
+        -0.3777461621550652,
+        0.3640998930355072,
+        1.5730509577883893,
+        -0.0005512679724397848
+      ],
+      "q_deg": [
+        0.001687215922913138,
+        -21.643260818749656,
+        20.86138719209928,
+        90.12918084028652,
+        -0.03158532820153385
+      ],
+      "achieved_position_m": [
+        0.18247168281531012,
+        -1.0017168798184925e-05,
+        0.07929393009047393
+      ],
+      "achieved_approach_axis_base": [
+        0.011400547132521472,
+        5.928083746268866e-06,
+        -0.9999350116332246
+      ],
+      "position_error_mm": 0.4457121670551796,
+      "approach_error_deg": 0.6532174737138942,
+      "minimum_joint_limit_margin_rad": 0.08500904221161076,
+      "failure_reason": "",
+      "selected_seed": "shoulder_lift_-1_0.08",
+      "attempt_count": 33,
+      "z_offset_m": 0.025,
+      "wrist_roll_deviation_rad": 0.0005512679724397848,
+      "wrist_roll_deviation_deg": 0.03158532820153385,
+      "passed": true
+    },
+    {
+      "point_index": 6,
+      "target_position_m": [
+        0.18289733886666237,
+        -1.0074442143860504e-05,
+        0.07442612789124232
+      ],
+      "adjacent_max_joint_delta_rad": 0.02161072441832035,
+      "success": true,
+      "q_rad": [
+        3.2131249294863325e-05,
+        -0.35613543773674483,
+        0.3769163268162502,
+        1.5533388999491229,
+        -0.000592252248540401
+      ],
+      "q_deg": [
+        0.0018409849750783708,
+        -20.40505751735959,
+        21.59571475614475,
+        88.99976312057879,
+        -0.033933554248498046
+      ],
+      "achieved_position_m": [
+        0.18277846628328948,
+        -1.0075525578303143e-05,
+        0.07506407751378262
+      ],
+      "achieved_approach_axis_base": [
+        -0.003314300177166338,
+        6.277245088947339e-06,
+        -0.9999945076723831
+      ],
+      "position_error_mm": 0.6489302057835082,
+      "approach_error_deg": 0.18989610044388172,
+      "minimum_joint_limit_margin_rad": 0.1047211000508772,
+      "failure_reason": "",
+      "selected_seed": "wrist_flex_+1_0.08",
+      "attempt_count": 33,
+      "z_offset_m": 0.02,
+      "wrist_roll_deviation_rad": 0.000592252248540401,
+      "wrist_roll_deviation_deg": 0.033933554248498046,
+      "passed": true
+    },
+    {
+      "point_index": 7,
+      "target_position_m": [
+        0.18289733886666237,
+        -1.0074442143860504e-05,
+        0.06942612789124232
+      ],
+      "adjacent_max_joint_delta_rad": 0.03455488668551432,
+      "success": true,
+      "q_rad": [
+        2.4816801564658582e-05,
+        -0.34389834092165616,
+        0.4054739795538351,
+        1.5187840132636086,
+        -0.00045902288158719887
+      ],
+      "q_deg": [
+        0.0014218979906685946,
+        -19.70392351636203,
+        23.231947730808585,
+        87.01991395194601,
+        -0.02630007381487984
+      ],
+      "achieved_position_m": [
+        0.18318212346623317,
+        -1.0068726105662968e-05,
+        0.069763392311486
+      ],
+      "achieved_approach_axis_base": [
+        -0.00955402376645498,
+        6.368621914958528e-06,
+        -0.9999543592531165
+      ],
+      "position_error_mm": 0.44141766768863366,
+      "approach_error_deg": 0.547413688951671,
+      "minimum_joint_limit_margin_rad": 0.13927598673639152,
+      "failure_reason": "",
+      "selected_seed": "shoulder_lift_+1_0.08",
+      "attempt_count": 33,
+      "z_offset_m": 0.015,
+      "wrist_roll_deviation_rad": 0.00045902288158719887,
+      "wrist_roll_deviation_deg": 0.02630007381487984,
+      "passed": true
+    },
+    {
+      "point_index": 8,
+      "target_position_m": [
+        0.18289733886666237,
+        -1.0074442143860504e-05,
+        0.06442612789124232
+      ],
+      "adjacent_max_joint_delta_rad": 0.03626608202795567,
+      "success": true,
+      "q_rad": [
+        1.658822140975998e-05,
+        -0.34002636219825294,
+        0.4390972640831401,
+        1.482517931235653,
+        -0.00030692244957282103
+      ],
+      "q_deg": [
+        0.0009504350764077994,
+        -19.48207547714657,
+        25.158420027705276,
+        84.94202051226891,
+        -0.017585360998339482
+      ],
+      "achieved_position_m": [
+        0.18322198553882574,
+        -1.0069868651679071e-05,
+        0.06476197054160451
+      ],
+      "achieved_approach_axis_base": [
+        -0.010783141373826678,
+        6.302988323423544e-06,
+        -0.9999418602210753
+      ],
+      "position_error_mm": 0.46710357263670027,
+      "approach_error_deg": 0.6178405699094883,
+      "minimum_joint_limit_margin_rad": 0.1755420687643472,
+      "failure_reason": "",
+      "selected_seed": "shoulder_lift_+1_0.08",
+      "attempt_count": 33,
+      "z_offset_m": 0.01,
+      "wrist_roll_deviation_rad": 0.00030692244957282103,
+      "wrist_roll_deviation_deg": 0.017585360998339482,
+      "passed": true
+    },
+    {
+      "point_index": 9,
+      "target_position_m": [
+        0.18289733886666237,
+        -1.0074442143860504e-05,
+        0.05942612789124232
+      ],
+      "adjacent_max_joint_delta_rad": 0.037283573362211886,
+      "success": true,
+      "q_rad": [
+        8.342207760738767e-06,
+        -0.3363562038812076,
+        0.4728438197586007,
+        1.445234357873441,
+        -0.00015487222381142693
+      ],
+      "q_deg": [
+        0.00047797329651161265,
+        -19.271790895435036,
+        27.091955241012425,
+        82.80582911344779,
+        -0.008873524788200256
+      ],
+      "achieved_position_m": [
+        0.18322473863180141,
+        -1.0067390242795215e-05,
+        0.05976827125787454
+      ],
+      "achieved_approach_axis_base": [
+        -0.010916274177390314,
+        6.214737873001541e-06,
+        -0.9999404156845852
+      ],
+      "position_error_mm": 0.4735532595107535,
+      "approach_error_deg": 0.6254689624939429,
+      "minimum_joint_limit_margin_rad": 0.21282564212655908,
+      "failure_reason": "",
+      "selected_seed": "shoulder_lift_+1_0.08",
+      "attempt_count": 33,
+      "z_offset_m": 0.005,
+      "wrist_roll_deviation_rad": 0.00015487222381142693,
+      "wrist_roll_deviation_deg": 0.008873524788200256,
+      "passed": true
+    },
+    {
+      "point_index": 10,
+      "target_position_m": [
+        0.18289733886666237,
+        -1.0074442143860504e-05,
+        0.05442612789124232
+      ],
+      "adjacent_max_joint_delta_rad": 0.03773771037439433,
+      "success": true,
+      "q_rad": [
+        2.912864696312818e-07,
+        -0.33143210906096304,
+        0.5055544686239591,
+        1.4074966474990467,
+        -6.431731437527347e-06
+      ],
+      "q_deg": [
+        1.6689485339138073e-05,
+        -18.989661044312793,
+        28.966137366131857,
+        80.64361758050794,
+        -0.0003685110663319269
+      ],
+      "achieved_position_m": [
+        0.18321805020086557,
+        -1.006457120655992e-05,
+        0.054772884530224705
+      ],
+      "achieved_approach_axis_base": [
+        -0.010813313575235742,
+        6.1278696289583455e-06,
+        -0.999941534396873
+      ],
+      "position_error_mm": 0.4723303152055646,
+      "approach_error_deg": 0.6195694044430742,
+      "minimum_joint_limit_margin_rad": 0.2505633525009534,
+      "failure_reason": "",
+      "selected_seed": "shoulder_lift_+1_0.08",
+      "attempt_count": 33,
+      "z_offset_m": 0.0,
+      "wrist_roll_deviation_rad": 6.431731437527347e-06,
+      "wrist_roll_deviation_deg": 0.0003685110663319269,
+      "passed": true
+    },
+    {
+      "point_index": 11,
+      "target_position_m": [
+        0.18289733886666237,
+        -1.0074442143860504e-05,
+        0.04942612789124232
+      ],
+      "adjacent_max_joint_delta_rad": 0.03807556774530507,
+      "success": true,
+      "q_rad": [
+        -7.520672566886462e-06,
+        -0.32491161346363145,
+        0.5369509368398547,
+        1.3694210797537416,
+        0.00013763246826540133
+      ],
+      "q_deg": [
+        -0.0004309027971824136,
+        -18.61606416625206,
+        30.76502248651931,
+        78.4620482461375,
+        0.007885759555575736
+      ],
+      "achieved_position_m": [
+        0.18320901852131866,
+        -1.0061818468867561e-05,
+        0.04977763387228208
+      ],
+      "achieved_approach_axis_base": [
+        -0.010654718788946301,
+        6.045978955832975e-06,
+        -0.99994323685446
+      ],
+      "position_error_mm": 0.469787890427946,
+      "approach_error_deg": 0.6104820677941358,
+      "minimum_joint_limit_margin_rad": 0.2886389202462585,
+      "failure_reason": "",
+      "selected_seed": "shoulder_lift_+1_0.08",
+      "attempt_count": 33,
+      "z_offset_m": -0.005,
+      "wrist_roll_deviation_rad": 0.00013763246826540133,
+      "wrist_roll_deviation_deg": 0.007885759555575736,
+      "passed": true
+    },
+    {
+      "point_index": 12,
+      "target_position_m": [
+        0.18289733886666237,
+        -1.0074442143860504e-05,
+        0.04442612789124232
+      ],
+      "adjacent_max_joint_delta_rad": 0.03841235613463545,
+      "success": true,
+      "q_rad": [
+        -1.5084470024329662e-05,
+        -0.3166891455860503,
+        0.5669672874694104,
+        1.3310087236191062,
+        0.00027716229027582883
+      ],
+      "q_deg": [
+        -0.0008642764685856918,
+        -18.144951459684766,
+        32.4848326939777,
+        76.26118235846944,
+        0.01588022947298481
+      ],
+      "achieved_position_m": [
+        0.1831993789687723,
+        -1.0059222944678675e-05,
+        0.044782899597757095
+      ],
+      "achieved_approach_axis_base": [
+        -0.010481190859887336,
+        5.969478960298392e-06,
+        -0.999945070792653
+      ],
+      "position_error_mm": 0.4674551038160451,
+      "approach_error_deg": 0.6005390936941757,
+      "minimum_joint_limit_margin_rad": 0.32705127638089393,
+      "failure_reason": "",
+      "selected_seed": "shoulder_lift_+1_0.08",
+      "attempt_count": 33,
+      "z_offset_m": -0.01,
+      "wrist_roll_deviation_rad": 0.00027716229027582883,
+      "wrist_roll_deviation_deg": 0.01588022947298481,
+      "passed": true
+    },
+    {
+      "point_index": 13,
+      "target_position_m": [
+        0.18289733886666237,
+        -1.0074442143860504e-05,
+        0.03942612789124232
+      ],
+      "adjacent_max_joint_delta_rad": 0.038770671324087624,
+      "success": true,
+      "q_rad": [
+        -2.2398138074247668e-05,
+        -0.3067142152843958,
+        0.5955829097431979,
+        1.2922380522950185,
+        0.00041212425137823793
+      ],
+      "q_deg": [
+        -0.0012833187806056687,
+        -17.573430052462808,
+        34.12438707840628,
+        74.03978652271033,
+        0.023612980238961634
+      ],
+      "achieved_position_m": [
+        0.183189510030593,
+        -1.0056799658946739e-05,
+        0.03978872415575645
+      ],
+      "achieved_approach_axis_base": [
+        -0.01030108184272813,
+        5.898359311501187e-06,
+        -0.9999469424314866
+      ],
+      "position_error_mm": 0.46566086413121754,
+      "approach_error_deg": 0.5902190493278673,
+      "minimum_joint_limit_margin_rad": 0.36582194770498155,
+      "failure_reason": "",
+      "selected_seed": "shoulder_lift_+1_0.08",
+      "attempt_count": 33,
+      "z_offset_m": -0.015,
+      "wrist_roll_deviation_rad": 0.00041212425137823793,
+      "wrist_roll_deviation_deg": 0.023612980238961634,
+      "passed": true
+    },
+    {
+      "point_index": 14,
+      "target_position_m": [
+        0.18289733886666237,
+        -1.0074442143860504e-05,
+        0.03442612789124232
+      ],
+      "adjacent_max_joint_delta_rad": 0.039151221775395983,
+      "success": true,
+      "q_rad": [
+        -2.9460590049103885e-05,
+        -0.29494912083978553,
+        0.6227831782271188,
+        1.2530868305196226,
+        0.0005424991829921199
+      ],
+      "q_deg": [
+        -0.0016879674717787633,
+        -16.899339795213827,
+        35.68284766415765,
+        71.79658675219945,
+        0.031082913574743805
+      ],
+      "achieved_position_m": [
+        0.18317947778575638,
+        -1.005454889336935e-05,
+        0.034795086839774864
+      ],
+      "achieved_approach_axis_base": [
+        -0.010115232686354326,
+        5.832610065974096e-06,
+        -0.9999488397081531
+      ],
+      "position_error_mm": 0.4644707480192057,
+      "approach_error_deg": 0.5795701217613355,
+      "minimum_joint_limit_margin_rad": 0.40497316948037754,
+      "failure_reason": "",
+      "selected_seed": "shoulder_lift_+1_0.08",
+      "attempt_count": 33,
+      "z_offset_m": -0.02,
+      "wrist_roll_deviation_rad": 0.0005424991829921199,
+      "wrist_roll_deviation_deg": 0.031082913574743805,
+      "passed": true
+    },
+    {
+      "point_index": 15,
+      "target_position_m": [
+        0.18289733886666237,
+        -1.0074442143860504e-05,
+        0.03942612789124232
+      ],
+      "adjacent_max_joint_delta_rad": 0.02758082543937962,
+      "success": true,
+      "q_rad": [
+        -3.0996989778934715e-05,
+        -0.32252994627916515,
+        0.6136076297966092,
+        1.2799917073991807,
+        0.0005713870559838283
+      ],
+      "q_deg": [
+        -0.0017759966919431098,
+        -18.479604688377332,
+        35.15712746437156,
+        73.33812264571723,
+        0.03273806677627865
+      ],
+      "achieved_position_m": [
+        0.1828830565511944,
+        -1.0084002315441262e-05,
+        0.039282279630578606
+      ],
+      "achieved_approach_axis_base": [
+        -0.0002639082039565652,
+        6.184969972500621e-06,
+        -0.9999999651571024
+      ],
+      "position_error_mm": 0.14455554891632247,
+      "approach_error_deg": 0.0151249784165492,
+      "minimum_joint_limit_margin_rad": 0.3780682926008194,
+      "failure_reason": "",
+      "selected_seed": "reference",
+      "attempt_count": 33,
+      "z_offset_m": -0.015,
+      "wrist_roll_deviation_rad": 0.0005713870559838283,
+      "wrist_roll_deviation_deg": 0.03273806677627865,
+      "passed": true
+    },
+    {
+      "point_index": 16,
+      "target_position_m": [
+        0.18289733886666237,
+        -1.0074442143860504e-05,
+        0.04442612789124232
+      ],
+      "adjacent_max_joint_delta_rad": 0.03471833512838818,
+      "success": true,
+      "q_rad": [
+        -3.1008112388337134e-05,
+        -0.3401394687245335,
+        0.5918821666526733,
+        1.3147100425275688,
+        0.0005700954256716506
+      ],
+      "q_deg": [
+        -0.001776633970519041,
+        -19.48855600373783,
+        33.91235011825702,
+        75.32733672029467,
+        0.0326640618106997
+      ],
+      "achieved_position_m": [
+        0.18280880273731787,
+        -1.0088109823792722e-05,
+        0.044235239951562644
+      ],
+      "achieved_approach_axis_base": [
+        0.004352728505683238,
+        6.357300272012307e-06,
+        -0.9999905268121997
+      ],
+      "position_error_mm": 0.21042065464508014,
+      "approach_error_deg": 0.24939402625720453,
+      "minimum_joint_limit_margin_rad": 0.34334995747243124,
+      "failure_reason": "",
+      "selected_seed": "wrist_flex_-1_0.04",
+      "attempt_count": 33,
+      "z_offset_m": -0.01,
+      "wrist_roll_deviation_rad": 0.0005700954256716506,
+      "wrist_roll_deviation_deg": 0.0326640618106997,
+      "passed": true
+    },
+    {
+      "point_index": 17,
+      "target_position_m": [
+        0.18289733886666237,
+        -1.0074442143860504e-05,
+        0.04942612789124232
+      ],
+      "adjacent_max_joint_delta_rad": 0.037566852517628924,
+      "success": true,
+      "q_rad": [
+        -2.7487749580505274e-05,
+        -0.35263290637627526,
+        0.5646732419255026,
+        1.3522768950451978,
+        0.0004995403302615808
+      ],
+      "q_deg": [
+        -0.0015749320392754512,
+        -20.20437725279247,
+        32.353393566300994,
+        77.47975881914522,
+        0.02862155262055986
+      ],
+      "achieved_position_m": [
+        0.18273720509262237,
+        -1.005341275602377e-05,
+        0.04933136638101043
+      ],
+      "achieved_approach_axis_base": [
+        0.006488206591487968,
+        6.413969583127801e-06,
+        -0.9999789513455207
+      ],
+      "position_error_mm": 0.18607141062495156,
+      "approach_error_deg": 0.3717496442250959,
+      "minimum_joint_limit_margin_rad": 0.3057831049548023,
+      "failure_reason": "",
+      "selected_seed": "shoulder_lift_-1_0.04",
+      "attempt_count": 33,
+      "z_offset_m": -0.005,
+      "wrist_roll_deviation_rad": 0.0004995403302615808,
+      "wrist_roll_deviation_deg": 0.02862155262055986,
+      "passed": true
+    },
+    {
+      "point_index": 18,
+      "target_position_m": [
+        0.18289733886666237,
+        -1.0074442143860504e-05,
+        0.05442612789124232
+      ],
+      "adjacent_max_joint_delta_rad": 0.03756381303646861,
+      "success": true,
+      "q_rad": [
+        -2.3191765511110334e-05,
+        -0.36049904706492,
+        0.5343882863680389,
+        1.3898407080816664,
+        0.00041897324800844646
+      ],
+      "q_deg": [
+        -0.0013287902832436846,
+        -20.65507391530794,
+        30.618193430117053,
+        79.63200676855337,
+        0.024005398839771906
+      ],
+      "achieved_position_m": [
+        0.18271629193772324,
+        -1.0048863563774332e-05,
+        0.05431346519458058
+      ],
+      "achieved_approach_axis_base": [
+        0.007075476292500079,
+        6.403207594407615e-06,
+        -0.9999749684838283
+      ],
+      "position_error_mm": 0.2132390075751918,
+      "approach_error_deg": 0.4053984781988377,
+      "minimum_joint_limit_margin_rad": 0.2682192919183337,
+      "failure_reason": "",
+      "selected_seed": "shoulder_lift_-1_0.04",
+      "attempt_count": 33,
+      "z_offset_m": 0.0,
+      "wrist_roll_deviation_rad": 0.00041897324800844646,
+      "wrist_roll_deviation_deg": 0.024005398839771906,
+      "passed": true
+    },
+    {
+      "point_index": 19,
+      "target_position_m": [
+        0.18289733886666237,
+        -1.0074442143860504e-05,
+        0.05942612789124232
+      ],
+      "adjacent_max_joint_delta_rad": 0.03747543155782429,
+      "success": true,
+      "q_rad": [
+        -1.8584801539681067e-05,
+        -0.3661183133664527,
+        0.5022503590824274,
+        1.4273161396394907,
+        0.00033319045546910777
+      ],
+      "q_deg": [
+        -0.0010648306913119594,
+        -20.97703415834585,
+        28.776825834353186,
+        81.77919083224808,
+        0.019090406872421473
+      ],
+      "achieved_position_m": [
+        0.1827063631800627,
+        -1.0047390502448906e-05,
+        0.059296223619835706
+      ],
+      "achieved_approach_axis_base": [
+        0.007357230990431464,
+        6.377397326677755e-06,
+        -0.9999729351894892
+      ],
+      "position_error_mm": 0.23096933418463111,
+      "approach_error_deg": 0.42154224601545204,
+      "minimum_joint_limit_margin_rad": 0.23074386036050942,
+      "failure_reason": "",
+      "selected_seed": "shoulder_lift_-1_0.04",
+      "attempt_count": 33,
+      "z_offset_m": 0.005,
+      "wrist_roll_deviation_rad": 0.00033319045546910777,
+      "wrist_roll_deviation_deg": 0.019090406872421473,
+      "passed": true
+    },
+    {
+      "point_index": 20,
+      "target_position_m": [
+        0.18289733886666237,
+        -1.0074442143860504e-05,
+        0.06442612789124232
+      ],
+      "adjacent_max_joint_delta_rad": 0.0364311741045098,
+      "success": true,
+      "q_rad": [
+        -1.1437023570790616e-05,
+        -0.37527356776504517,
+        0.4721517243157295,
+        1.4637473137440005,
+        0.00019786486318693156
+      ],
+      "q_deg": [
+        -0.0006552931807979446,
+        -21.501591595753787,
+        27.052301093115666,
+        83.86654335114278,
+        0.01133682157454463
+      ],
+      "achieved_position_m": [
+        0.18251532987449967,
+        -1.0023507384212724e-05,
+        0.06442628072150731
+      ],
+      "achieved_approach_axis_base": [
+        0.010179836605123109,
+        6.374525369615755e-06,
+        -0.9999481841005855
+      ],
+      "position_error_mm": 0.3820090261297542,
+      "approach_error_deg": 0.5832718622461291,
+      "minimum_joint_limit_margin_rad": 0.19431268625599962,
+      "failure_reason": "",
+      "selected_seed": "shoulder_lift_-1_0.08",
+      "attempt_count": 33,
+      "z_offset_m": 0.01,
+      "wrist_roll_deviation_rad": 0.00019786486318693156,
+      "wrist_roll_deviation_deg": 0.01133682157454463,
+      "passed": true
+    },
+    {
+      "point_index": 21,
+      "target_position_m": [
+        0.18289733886666237,
+        -1.0074442143860504e-05,
+        0.06942612789124232
+      ],
+      "adjacent_max_joint_delta_rad": 0.036306593918502106,
+      "success": true,
+      "q_rad": [
+        -3.3574909827423356e-06,
+        -0.3783045817761181,
+        0.43813459346455363,
+        1.5000539076625026,
+        4.8674786442541584e-05
+      ],
+      "q_deg": [
+        -0.00019237006306436694,
+        -21.675255906233282,
+        25.103263064199023,
+        85.9467579511683,
+        0.0027888598318582315
+      ],
+      "achieved_position_m": [
+        0.1824841191714886,
+        -1.0019009796639764e-05,
+        0.06937229531100214
+      ],
+      "achieved_approach_axis_base": [
+        0.010921346268343632,
+        6.299041855546079e-06,
+        -0.9999403602995577
+      ],
+      "position_error_mm": 0.41671149041940947,
+      "approach_error_deg": 0.6257595919436566,
+      "minimum_joint_limit_margin_rad": 0.15800609233749752,
+      "failure_reason": "",
+      "selected_seed": "shoulder_lift_-1_0.08",
+      "attempt_count": 33,
+      "z_offset_m": 0.015,
+      "wrist_roll_deviation_rad": 4.8674786442541584e-05,
+      "wrist_roll_deviation_deg": 0.0027888598318582315,
+      "passed": true
+    },
+    {
+      "point_index": 22,
+      "target_position_m": [
+        0.18289733886666237,
+        -1.0074442143860504e-05,
+        0.07442612789124232
+      ],
+      "adjacent_max_joint_delta_rad": 0.03650623876392811,
+      "success": true,
+      "q_rad": [
+        5.113070248012963e-06,
+        -0.37893408266997747,
+        0.40194389821611826,
+        1.5365601464264307,
+        -0.0001070694845408742
+      ],
+      "q_deg": [
+        0.0002929573455650519,
+        -21.71132365065114,
+        23.029688968819514,
+        88.03841135823826,
+        -0.006134629578833304
+      ],
+      "achieved_position_m": [
+        0.18247617487370807,
+        -1.0018389315440872e-05,
+        0.07433098424219066
+      ],
+      "achieved_approach_axis_base": [
+        0.011235284389346274,
+        6.206490936917343e-06,
+        -0.9999368821811555
+      ],
+      "position_error_mm": 0.43177705596522764,
+      "approach_error_deg": 0.6437480194060154,
+      "minimum_joint_limit_margin_rad": 0.1214998535735694,
+      "failure_reason": "",
+      "selected_seed": "shoulder_lift_-1_0.08",
+      "attempt_count": 33,
+      "z_offset_m": 0.02,
+      "wrist_roll_deviation_rad": 0.0001070694845408742,
+      "wrist_roll_deviation_deg": 0.006134629578833304,
+      "passed": true
+    },
+    {
+      "point_index": 23,
+      "target_position_m": [
+        0.18289733886666237,
+        -1.0074442143860504e-05,
+        0.07942612789124232
+      ],
+      "adjacent_max_joint_delta_rad": 0.037780463953645704,
+      "success": true,
+      "q_rad": [
+        1.3870942415213797e-05,
+        -0.3778082460749284,
+        0.36416343426247255,
+        1.5730095245145195,
+        -0.0002678978842742331
+      ],
+      "q_deg": [
+        0.0007947464582607513,
+        -21.646817965333447,
+        20.865027836229476,
+        90.12680688856237,
+        -0.015349418109397705
+      ],
+      "achieved_position_m": [
+        0.18247087636536446,
+        -1.0018762383571432e-05,
+        0.07929252779362854
+      ],
+      "achieved_approach_axis_base": [
+        0.011440520476705582,
+        6.106112983071701e-06,
+        -0.9999345550854504
+      ],
+      "position_error_mm": 0.44689960191961986,
+      "approach_error_deg": 0.6555079320605507,
+      "minimum_joint_limit_margin_rad": 0.08505047548548061,
+      "failure_reason": "",
+      "selected_seed": "shoulder_lift_-1_0.08",
+      "attempt_count": 33,
+      "z_offset_m": 0.025,
+      "wrist_roll_deviation_rad": 0.0002678978842742331,
+      "wrist_roll_deviation_deg": 0.015349418109397705,
+      "passed": true
+    }
+  ],
+  "unreachable_case": {
+    "target_position_m": [
+      0.8,
+      0.0,
+      0.8
+    ],
+    "rejected": true,
+    "candidate_count": 33,
+    "best_raw_position_error_mm": 641.0735298220676,
+    "best_raw_approach_error_deg": 89.90017488524327
+  },
+  "safety": {
+    "opened_com_ports": false,
+    "started_hardware_services": false,
+    "published_robot_commands": false,
+    "used_offline_computation_only": true
+  },
+  "limitations": [
+    "This stage constrains position and gripper approach direction only.",
+    "It does not independently enforce gripper roll/yaw about the approach axis.",
+    "It is not a time-parameterized trajectory and contains no velocity, acceleration, collision or hardware-control validation."
+  ],
+  "failures": [],
+  "logs": {
+    "verification_log": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\stage_2b3_verification.log"
+  }
+}

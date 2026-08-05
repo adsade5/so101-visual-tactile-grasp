@@ -1,0 +1,17 @@
+{
+  "version": "1.0",
+  "calibration_status": "real_planar_calibrated_provisional_z_assumed",
+  "source_frame": "workspace_plane",
+  "target_frame": "base_link",
+  "translation_m": [
+    0.3582641975602481,
+    -0.09760551442824955,
+    0.0
+  ],
+  "yaw_deg": 89.36482734673851,
+  "stale_timeout_s": 0.5,
+  "planar_fit_rms_mm": 4.021509102978556,
+  "planar_fit_max_mm": 5.5040606267145895,
+  "planar_holdout_max_mm": 4.313980796520203,
+  "z_assumption": "workspace_plane_z0_equals_base_link_z0"
+}

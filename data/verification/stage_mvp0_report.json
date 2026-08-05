@@ -1,0 +1,100 @@
+﻿{
+    "stage":  "MVP-0",
+    "timestamp":  "2026-08-05T09:01:06.0014060+08:00",
+    "git_branch":  "refactor/mvp_simple_grasp",
+    "git_worktree_clean_or_dirty":  "dirty",
+    "git_status_short":  [
+                             "?? .gitignore",
+                             "?? audit/",
+                             "?? config/",
+                             "?? data/",
+                             "?? docs/",
+                             "?? lerobot_server/",
+                             "?? ros2_ws/",
+                             "?? scripts/",
+                             "?? shared_protocol/",
+                             "?? tests/"
+                         ],
+    "git_log_1":  "NO_COMMITS: fatal: your current branch \u0027refactor/mvp_simple_grasp\u0027 does not have any commits yet",
+    "frozen_assets":  {
+                          "urdf":  "data/robot_model/so101/so101_new_calib.urdf",
+                          "follower_calibration":  "C:/Users/82053/.cache/huggingface/lerobot/calibration/robots/so_follower/my_follower.json",
+                          "workspace_to_base":  "config/workspace_to_base.json",
+                          "camera_config":  "config/camera.yaml",
+                          "camera_intrinsics":  "data/calibration/camera_intrinsics.yaml",
+                          "aruco_config":  "config/object_marker.json",
+                          "flexitac_reference":  "docs/stage_minus1_windows_audit.md and audited legacy so101_flexitac_bridge copy"
+                      },
+    "urdf_sha256":  "3a65d2d35e68a8d2f0c2cc176d19b884506543c93ba72980145b80abe276022c",
+    "urdf_sha256_expected":  "3a65d2d35e68a8d2f0c2cc176d19b884506543c93ba72980145b80abe276022c",
+    "urdf_sha256_matches_expected":  true,
+    "legacy_components":  [
+                              "so101_command_gate",
+                              "command_gate_node",
+                              "connection_trajectory_node",
+                              "shadow_executor_node",
+                              "timed_trajectory_node",
+                              "mock_joint_state_publisher",
+                              "perception_to_connected_shadow_dry_run.launch.py",
+                              "Stage 2D-3A/2D-3B/2D-3C validation chain",
+                              "plan_id/trajectory_hash pairing",
+                              "active/pending plan switching",
+                              "multi-layer valid/status heartbeats",
+                              "connection trajectory safety envelope"
+                          ],
+    "new_packages":  [
+                         "so101_mvp_kinematics",
+                         "so101_mvp_control",
+                         "so101_mvp_bringup"
+                     ],
+    "new_nodes":  [
+                      "/mvp_grasp_controller_node",
+                      "/mvp_hardware_bridge_node"
+                  ],
+    "new_config_files":  [
+                             "config/mvp_motion.yaml",
+                             "config/mvp_hardware.json"
+                         ],
+    "build_result":  {
+                         "command":  "colcon build --merge-install --packages-select so101_mvp_kinematics so101_mvp_control so101_mvp_bringup",
+                         "return_code":  0,
+                         "summary":  "3 packages finished [13.0s]"
+                     },
+    "launch_result":  {
+                          "command":  "ros2 launch so101_mvp_bringup mvp_skeleton.launch.py",
+                          "smoke_timeout_expected":  true,
+                          "nodes_started":  [
+                                                "/mvp_grasp_controller_node",
+                                                "/mvp_hardware_bridge_node"
+                                            ],
+                          "node_list":  [
+                                            "/mvp_grasp_controller_node",
+                                            "/mvp_hardware_bridge_node"
+                                        ],
+                          "legacy_nodes_seen":  [
+
+                                                ],
+                          "passed":  true
+                      },
+    "dry_run_result":  {
+                           "command":  "conda run --no-capture-output -p E:/Anaconda/envs_dirs/lerobot python scripts/mvp_so101_server.py --config config/mvp_hardware.json --dry-run",
+                           "return_code":  0,
+                           "output":  [
+                                          "MVP SO101 server dry run",
+                                          "config=E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\config\\mvp_hardware.json",
+                                          "host=127.0.0.1",
+                                          "port=8770",
+                                          "calibration_path=C:/Users/82053/.cache/huggingface/lerobot/calibration/robots/so_follower/my_follower.json",
+                                          "hardware_enabled=false",
+                                          "no serial port opened",
+                                          "no motor command sent"
+                                      ],
+                           "passed":  true
+                       },
+    "opened_com_ports":  false,
+    "torque_enable_written":  false,
+    "torque_disable_written":  false,
+    "goal_position_written":  false,
+    "motion_command_sent":  false,
+    "final_status":  "PASS"
+}

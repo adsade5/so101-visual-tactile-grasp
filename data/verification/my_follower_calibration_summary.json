@@ -1,0 +1,67 @@
+{
+  "timestamp": "2026-08-04T12:50:46.467459+00:00",
+  "calibration_path": "C:\\Users\\82053\\.cache\\huggingface\\lerobot\\calibration\\robots\\so_follower\\my_follower.json",
+  "calibration_format_version": null,
+  "motor_names": [
+    "shoulder_pan",
+    "shoulder_lift",
+    "elbow_flex",
+    "wrist_flex",
+    "wrist_roll",
+    "gripper"
+  ],
+  "motors": {
+    "shoulder_pan": {
+      "id": 1,
+      "homing_offset": -1342,
+      "range_min": 774,
+      "range_max": 3466,
+      "drive_mode": 0
+    },
+    "shoulder_lift": {
+      "id": 2,
+      "homing_offset": -2020,
+      "range_min": 858,
+      "range_max": 3281,
+      "drive_mode": 0
+    },
+    "elbow_flex": {
+      "id": 3,
+      "homing_offset": -1947,
+      "range_min": 899,
+      "range_max": 3128,
+      "drive_mode": 0
+    },
+    "wrist_flex": {
+      "id": 4,
+      "homing_offset": 2013,
+      "range_min": 798,
+      "range_max": 3203,
+      "drive_mode": 0
+    },
+    "wrist_roll": {
+      "id": 5,
+      "homing_offset": -1878,
+      "range_min": 0,
+      "range_max": 4095,
+      "drive_mode": 0
+    },
+    "gripper": {
+      "id": 6,
+      "homing_offset": 1830,
+      "range_min": 905,
+      "range_max": 2401,
+      "drive_mode": 0
+    }
+  },
+  "expected_arm_joint_names": [
+    "shoulder_pan",
+    "shoulder_lift",
+    "elbow_flex",
+    "wrist_flex",
+    "wrist_roll"
+  ],
+  "matches_expected_arm_joint_names": true,
+  "contains_gripper": true,
+  "robot_id_basis": "LeRobot SOFollower Robot.calibration_fpath resolves id=my_follower to this my_follower.json path when calibration_dir is default."
+}

@@ -1,0 +1,285 @@
+{
+  "timestamp": "2026-08-04T15:51:35.179400+00:00",
+  "current_serial_ports": [
+    {
+      "device": "COM8",
+      "description": "USB-SERIAL CH340 (COM8)",
+      "hwid": "USB VID:PID=1A86:7523 SER= LOCATION=1-3.3",
+      "vid": 6790,
+      "pid": 29987,
+      "serial_number": "",
+      "manufacturer": "wch.cn",
+      "product": null,
+      "location": "1-3.3"
+    },
+    {
+      "device": "COM4",
+      "description": "USB-Enhanced-SERIAL CH343 (COM4)",
+      "hwid": "USB VID:PID=1A86:55D3 SER=5B7B009052 LOCATION=1-3.4",
+      "vid": 6790,
+      "pid": 21971,
+      "serial_number": "5B7B009052",
+      "manufacturer": "wch.cn",
+      "product": null,
+      "location": "1-3.4"
+    }
+  ],
+  "configured_follower_port": "COM4",
+  "configured_port_exists": true,
+  "selected_port_basis": "Configured follower_port from real_joint_state_mapping.json; motor identity is confirmed only if read-only preflight passes.",
+  "selected_port_serial_number": "5B7B009052",
+  "port_classification": {
+    "configured_follower_port_info": {
+      "device": "COM4",
+      "description": "USB-Enhanced-SERIAL CH343 (COM4)",
+      "hwid": "USB VID:PID=1A86:55D3 SER=5B7B009052 LOCATION=1-3.4",
+      "vid": 6790,
+      "pid": 21971,
+      "serial_number": "5B7B009052",
+      "manufacturer": "wch.cn",
+      "product": null,
+      "location": "1-3.4"
+    },
+    "possible_so101_usb_serial_ports": [
+      {
+        "device": "COM8",
+        "description": "USB-SERIAL CH340 (COM8)",
+        "hwid": "USB VID:PID=1A86:7523 SER= LOCATION=1-3.3",
+        "vid": 6790,
+        "pid": 29987,
+        "serial_number": "",
+        "manufacturer": "wch.cn",
+        "product": null,
+        "location": "1-3.3"
+      },
+      {
+        "device": "COM4",
+        "description": "USB-Enhanced-SERIAL CH343 (COM4)",
+        "hwid": "USB VID:PID=1A86:55D3 SER=5B7B009052 LOCATION=1-3.4",
+        "vid": 6790,
+        "pid": 21971,
+        "serial_number": "5B7B009052",
+        "manufacturer": "wch.cn",
+        "product": null,
+        "location": "1-3.4"
+      }
+    ],
+    "possible_flexitac_ports": [
+      {
+        "device": "COM8",
+        "description": "USB-SERIAL CH340 (COM8)",
+        "hwid": "USB VID:PID=1A86:7523 SER= LOCATION=1-3.3",
+        "vid": 6790,
+        "pid": 29987,
+        "serial_number": "",
+        "manufacturer": "wch.cn",
+        "product": null,
+        "location": "1-3.3"
+      }
+    ],
+    "possible_so101_bus_ports": [
+      {
+        "device": "COM4",
+        "description": "USB-Enhanced-SERIAL CH343 (COM4)",
+        "hwid": "USB VID:PID=1A86:55D3 SER=5B7B009052 LOCATION=1-3.4",
+        "vid": 6790,
+        "pid": 21971,
+        "serial_number": "5B7B009052",
+        "manufacturer": "wch.cn",
+        "product": null,
+        "location": "1-3.4"
+      }
+    ],
+    "leader_port_candidates": [],
+    "follower_port_candidates": [
+      {
+        "device": "COM4",
+        "description": "USB-Enhanced-SERIAL CH343 (COM4)",
+        "hwid": "USB VID:PID=1A86:55D3 SER=5B7B009052 LOCATION=1-3.4",
+        "vid": 6790,
+        "pid": 21971,
+        "serial_number": "5B7B009052",
+        "manufacturer": "wch.cn",
+        "product": null,
+        "location": "1-3.4"
+      }
+    ],
+    "classification_basis": "Configured follower_port is used only when present. CH343/CH340 classification is diagnostic, not proof of Leader/Follower identity."
+  },
+  "calibration_path": "C:\\Users\\82053\\.cache\\huggingface\\lerobot\\calibration\\robots\\so_follower\\my_follower.json",
+  "calibration_exists": true,
+  "bus_class": "lerobot.motors.feetech.feetech.FeetechMotorsBus",
+  "connect_method": "FeetechMotorsBus.connect(handshake=False)",
+  "disconnect_method": "FeetechMotorsBus.disconnect(disable_torque=False)",
+  "motor_model": "sts3215",
+  "baudrate": 1000000,
+  "protocol": 0,
+  "required_motor_ids": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "optional_motor_ids": [
+    6
+  ],
+  "joint_source_names": [
+    "shoulder_pan",
+    "shoulder_lift",
+    "elbow_flex",
+    "wrist_flex",
+    "wrist_roll"
+  ],
+  "includes_gripper_id_6": true,
+  "calibration_motor_ids": {
+    "shoulder_pan": 1,
+    "shoulder_lift": 2,
+    "elbow_flex": 3,
+    "wrist_flex": 4,
+    "wrist_roll": 5,
+    "gripper": 6
+  },
+  "sync_read_parameters": {
+    "data_name": "Present_Position",
+    "motors": [
+      "shoulder_pan",
+      "shoulder_lift",
+      "elbow_flex",
+      "wrist_flex",
+      "wrist_roll"
+    ],
+    "normalize": true,
+    "num_retry": 3
+  },
+  "responsive_motor_ids": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6
+  ],
+  "per_motor_ping_results": {
+    "1": {
+      "motor_name": "shoulder_pan",
+      "motor_id": 1,
+      "ping_passed": true,
+      "model_number": 777,
+      "error": null
+    },
+    "2": {
+      "motor_name": "shoulder_lift",
+      "motor_id": 2,
+      "ping_passed": true,
+      "model_number": 777,
+      "error": null
+    },
+    "3": {
+      "motor_name": "elbow_flex",
+      "motor_id": 3,
+      "ping_passed": true,
+      "model_number": 777,
+      "error": null
+    },
+    "4": {
+      "motor_name": "wrist_flex",
+      "motor_id": 4,
+      "ping_passed": true,
+      "model_number": 777,
+      "error": null
+    },
+    "5": {
+      "motor_name": "wrist_roll",
+      "motor_id": 5,
+      "ping_passed": true,
+      "model_number": 777,
+      "error": null
+    },
+    "6": {
+      "motor_name": "gripper",
+      "motor_id": 6,
+      "ping_passed": true,
+      "model_number": 777,
+      "error": null
+    }
+  },
+  "per_motor_present_position_results": {
+    "1": {
+      "motor_name": "shoulder_pan",
+      "motor_id": 1,
+      "present_position_read_passed": true,
+      "raw_value": 2069,
+      "calibrated_value": -4.483516483516484,
+      "error": null
+    },
+    "2": {
+      "motor_name": "shoulder_lift",
+      "motor_id": 2,
+      "present_position_read_passed": true,
+      "raw_value": 1324,
+      "calibrated_value": -65.53846153846153,
+      "error": null
+    },
+    "3": {
+      "motor_name": "elbow_flex",
+      "motor_id": 3,
+      "present_position_read_passed": true,
+      "raw_value": 2538,
+      "calibrated_value": 46.10989010989011,
+      "error": null
+    },
+    "4": {
+      "motor_name": "wrist_flex",
+      "motor_id": 4,
+      "present_position_read_passed": true,
+      "raw_value": 3057,
+      "calibrated_value": 92.87912087912088,
+      "error": null
+    },
+    "5": {
+      "motor_name": "wrist_roll",
+      "motor_id": 5,
+      "present_position_read_passed": true,
+      "raw_value": 2025,
+      "calibrated_value": -1.978021978021978,
+      "error": null
+    },
+    "6": {
+      "motor_name": "gripper",
+      "motor_id": 6,
+      "present_position_read_passed": true,
+      "raw_value": 1607,
+      "calibrated_value": 46.92513368983957,
+      "error": null
+    }
+  },
+  "bulk_sync_read_result": {
+    "passed": true,
+    "raw_values": {
+      "shoulder_pan": 2069.0,
+      "shoulder_lift": 1324.0,
+      "elbow_flex": 2538.0,
+      "wrist_flex": 3057.0,
+      "wrist_roll": 2025.0
+    },
+    "calibrated_values": {
+      "shoulder_pan": -4.483516483516484,
+      "shoulder_lift": -65.53846153846153,
+      "elbow_flex": 46.10989010989011,
+      "wrist_flex": 92.87912087912088,
+      "wrist_roll": -1.978021978021978
+    },
+    "error": null
+  },
+  "failure_reason": null,
+  "suggested_checks": [],
+  "torque_enable_written": false,
+  "torque_disable_written": false,
+  "goal_position_written": false,
+  "motion_parameters_written": false,
+  "motion_command_sent": false,
+  "observed_physical_motion": false,
+  "opened_com_ports": true,
+  "final_status": "READ_ONLY_PREFLIGHT_PASS"
+}

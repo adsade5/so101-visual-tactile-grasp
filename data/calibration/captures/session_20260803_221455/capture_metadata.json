@@ -1,0 +1,174 @@
+{
+  "camera_index": 1,
+  "camera_backend": "dshow",
+  "width": 640,
+  "height": 480,
+  "reported_fps": 30.00003000003,
+  "board_config": {
+    "board_type": "charuco",
+    "dictionary": "DICT_4X4_50",
+    "squares_x": 7,
+    "squares_y": 5,
+    "square_length_m": 0.027,
+    "marker_length_m": 0.02,
+    "measured_square_length_mm": 27.0,
+    "measured_marker_length_mm": 20.0,
+    "print_scale": 0.9,
+    "expected_pattern_width_mm": 189.0,
+    "expected_pattern_height_mm": 135.0
+  },
+  "minimum_charuco_corners": 12,
+  "target_image_count": 25,
+  "images": [
+    {
+      "filename": "charuco_001.png",
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "coverage": 0.042360026041666665
+    },
+    {
+      "filename": "charuco_002.png",
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "coverage": 0.042360026041666665
+    },
+    {
+      "filename": "charuco_003.png",
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "coverage": 0.04189453125
+    },
+    {
+      "filename": "charuco_004.png",
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "coverage": 0.04365234375
+    },
+    {
+      "filename": "charuco_005.png",
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "coverage": 0.044622395833333335
+    },
+    {
+      "filename": "charuco_006.png",
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "coverage": 0.042877604166666666
+    },
+    {
+      "filename": "charuco_007.png",
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "coverage": 0.03944661458333333
+    },
+    {
+      "filename": "charuco_008.png",
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "coverage": 0.03944661458333333
+    },
+    {
+      "filename": "charuco_009.png",
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "coverage": 0.03944661458333333
+    },
+    {
+      "filename": "charuco_010.png",
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "coverage": 0.04316731770833333
+    },
+    {
+      "filename": "charuco_011.png",
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "coverage": 0.04316731770833333
+    },
+    {
+      "filename": "charuco_012.png",
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "coverage": 0.04316731770833333
+    },
+    {
+      "filename": "charuco_013.png",
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "coverage": 0.043359375
+    },
+    {
+      "filename": "charuco_014.png",
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "coverage": 0.0419140625
+    },
+    {
+      "filename": "charuco_015.png",
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "coverage": 0.0419140625
+    },
+    {
+      "filename": "charuco_016.png",
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "coverage": 0.0419140625
+    },
+    {
+      "filename": "charuco_017.png",
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "coverage": 0.0404296875
+    },
+    {
+      "filename": "charuco_018.png",
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "coverage": 0.0404296875
+    },
+    {
+      "filename": "charuco_019.png",
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "coverage": 0.0404296875
+    },
+    {
+      "filename": "charuco_020.png",
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "coverage": 0.038232421875
+    },
+    {
+      "filename": "charuco_021.png",
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "coverage": 0.038232421875
+    },
+    {
+      "filename": "charuco_022.png",
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "coverage": 0.04324869791666667
+    },
+    {
+      "filename": "charuco_023.png",
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "coverage": 0.0427734375
+    },
+    {
+      "filename": "charuco_024.png",
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "coverage": 0.042587890625
+    },
+    {
+      "filename": "charuco_025.png",
+      "charuco_corner_count": 24,
+      "marker_count": 17,
+      "coverage": 0.0427734375
+    }
+  ]
+}

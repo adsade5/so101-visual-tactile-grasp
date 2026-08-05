@@ -1,0 +1,57 @@
+{
+  "sample_count": 90,
+  "estimated_rate_hz": 19.986525937564167,
+  "first_sample": {
+    "received_monotonic_s": 34926.187,
+    "stamp_sec": 1785839073,
+    "stamp_nanosec": 487888800,
+    "name": [
+      "shoulder_pan",
+      "shoulder_lift",
+      "elbow_flex",
+      "wrist_flex",
+      "wrist_roll"
+    ],
+    "position": [
+      0.0,
+      -0.3490658504,
+      0.5235987756,
+      1.3962634016,
+      0.0
+    ],
+    "velocity": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "last_sample": {
+    "received_monotonic_s": 34930.64,
+    "stamp_sec": 1785839077,
+    "stamp_nanosec": 931529200,
+    "name": [
+      "shoulder_pan",
+      "shoulder_lift",
+      "elbow_flex",
+      "wrist_flex",
+      "wrist_roll"
+    ],
+    "position": [
+      0.0,
+      -0.3490658504,
+      0.5235987756,
+      1.3962634016,
+      0.0
+    ],
+    "velocity": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ]
+  },
+  "passed": true
+}

@@ -1,0 +1,90 @@
+﻿# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+*.egg-info/
+
+# Virtual environments
+.venv/
+venv/
+env/
+
+# ROS2 / colcon
+ros2_ws/build/
+ros2_ws/install/
+ros2_ws/log/
+build/
+install/
+log/
+
+# CMake
+CMakeCache.txt
+CMakeFiles/
+cmake-build-*/
+
+# Runtime data
+data/logs/*
+!data/logs/.gitkeep
+*.log
+*.tmp
+*.temp
+*.bak
+*.swp
+*.pid
+*.sock
+runtime/
+tmp/
+temp/
+data/verification/ros_logs*/
+data/verification/stage_mvp0_*.cmd
+data/verification/*_job.log
+data/verification/*_start.log
+data/verification/*_stdout.log
+data/verification/*_stderr.log
+
+# Calibration outputs generated locally
+data/calibration/*.npy
+data/calibration/*.npz
+data/calibration/*.pkl
+
+# Audit generated outputs
+audit_results/**/*.log
+audit_results/**/*.json
+audit_results/**/build/
+audit_results/**/install/
+audit_results/**/log/
+
+# Camera captures and videos
+*.avi
+*.mp4
+*.mov
+*.mkv
+
+# IDE
+.idea/
+.vscode/
+*.iml
+*.suo
+*.user
+
+# Windows
+Thumbs.db
+Desktop.ini
+
+# Secrets and local overrides
+.env
+.env.*
+config/local.yaml
+credentials.json
+*.pem
+*.key
+*token*
+*secret*
+
+# Generated environment audit artifacts
+audit_results/

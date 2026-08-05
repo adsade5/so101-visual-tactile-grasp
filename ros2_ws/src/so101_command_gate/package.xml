@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>so101_command_gate</name>
+  <version>0.1.0</version>
+  <description>Final shadow-only command safety gate and executor for SO-101 dry-run grasp trajectories.</description>
+  <maintainer email="maintainer@example.com">so101_visual_tactile_grasp</maintainer>
+  <license>Apache-2.0</license>
+
+  <buildtool_depend>ament_python</buildtool_depend>
+
+  <depend>rclpy</depend>
+  <depend>std_msgs</depend>
+  <depend>sensor_msgs</depend>
+  <depend>trajectory_msgs</depend>
+  <depend>std_srvs</depend>
+  <depend>so101_kinematics</depend>
+  <depend>so101_trajectory_safety</depend>
+  <depend>so101_object_perception</depend>
+  <depend>so101_frame_transform</depend>
+  <depend>so101_grasp_planner</depend>
+
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

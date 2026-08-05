@@ -1,0 +1,2174 @@
+{
+  "stage": "2D-2-live-hold",
+  "status": "FAIL",
+  "timestamp": "2026-08-04T09:41:07.889131+00:00",
+  "duration_s": 10.0,
+  "removal_window_s": 0.0,
+  "topic_counts": {
+    "/object_pose_stable": 0,
+    "/object_pose_base_valid": 171,
+    "/grasp_plan_valid": 0,
+    "/safe_timed_grasp_valid": 174,
+    "/grasp_plan_status": 0,
+    "/safe_timed_grasp_status": 173
+  },
+  "false_events": [
+    {
+      "t_s": 1.4529999999977008,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 1.4529999999977008,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 1.4689999999973224,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 1.5309999999990396,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 1.5779999999977008,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 1.625,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 1.625,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 1.625,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 1.625,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 1.6559999999990396,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 1.6719999999986612,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 1.7029999999977008,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 1.7339999999967404,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 1.75,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 1.7809999999990396,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 1.8129999999982829,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 1.8279999999977008,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 1.8589999999967404,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 1.875,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 1.9059999999990396,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 1.9219999999986612,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 1.9529999999977008,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 1.9689999999973224,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.0,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.0309999999990396,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.062999999998283,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.077999999997701,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.1089999999967404,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.125,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.1559999999990396,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.1719999999986612,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.202999999997701,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.2339999999967404,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.2659999999996217,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.2809999999990396,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.312999999998283,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.327999999997701,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.3589999999967404,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.375,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.4059999999990396,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.4219999999986612,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.452999999997701,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.4839999999967404,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.5159999999996217,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.5309999999990396,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.562999999998283,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.577999999997701,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.6089999999967404,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.625,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.6559999999990396,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.6719999999986612,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.702999999997701,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.7339999999967404,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.7659999999996217,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.7809999999990396,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.812999999998283,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.827999999997701,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.8589999999967404,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.875,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.9059999999990396,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.9219999999986612,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.952999999997701,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 2.9839999999967404,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.0,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.0309999999990396,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.062999999998283,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.077999999997701,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.1089999999967404,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.125,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.1559999999990396,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.1719999999986612,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.202999999997701,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.2339999999967404,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.25,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.2809999999990396,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.312999999998283,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.327999999997701,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.3589999999967404,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.375,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.4059999999990396,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.4219999999986612,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.452999999997701,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.4839999999967404,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.5159999999996217,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.5309999999990396,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.562999999998283,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.577999999997701,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.6089999999967404,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.625,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.6559999999990396,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.6719999999986612,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.702999999997701,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.7189999999973224,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.75,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.7809999999990396,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.812999999998283,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.827999999997701,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.8589999999967404,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.875,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.9059999999990396,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.9219999999986612,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.952999999997701,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 3.9689999999973224,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.0,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.03099999999904,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.062999999998283,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.077999999997701,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.10899999999674,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.125,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.15599999999904,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.171999999998661,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.202999999997701,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.23399999999674,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.25,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.28099999999904,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.312999999998283,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.327999999997701,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.35899999999674,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.375,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.40599999999904,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.421999999998661,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.452999999997701,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.48399999999674,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.5,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.53099999999904,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.562999999998283,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.577999999997701,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.60899999999674,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.625,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.65599999999904,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.671999999998661,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.702999999997701,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.73399999999674,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.75,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.78099999999904,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.812999999998283,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.827999999997701,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.85899999999674,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.875,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.90599999999904,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.937999999998283,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.952999999997701,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 4.98399999999674,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.015999999999622,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.03099999999904,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.062999999998283,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.077999999997701,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.10899999999674,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.125,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.15599999999904,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.187999999998283,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.202999999997701,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.23399999999674,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.265999999999622,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.28099999999904,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.312999999998283,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.327999999997701,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.35899999999674,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.375,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.40599999999904,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.421999999998661,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.452999999997701,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.48399999999674,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.515999999999622,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.53099999999904,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.562999999998283,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.577999999997701,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.60899999999674,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.625,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.65599999999904,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.687999999998283,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.702999999997701,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.73399999999674,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.765999999999622,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.78099999999904,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.812999999998283,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.827999999997701,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.85899999999674,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.875,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.90599999999904,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.937999999998283,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.937999999998283,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 5.98399999999674,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.015999999999622,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.03099999999904,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.062999999998283,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.077999999997701,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.10899999999674,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.125,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.15599999999904,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.187999999998283,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.2189999999973224,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.23399999999674,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.265999999999622,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.28099999999904,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.312999999998283,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.327999999997701,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.35899999999674,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.375,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.40599999999904,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.437999999998283,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.452999999997701,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.4689999999973224,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.515999999999622,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.53099999999904,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.546999999998661,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.562999999998283,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.5939999999973224,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.60899999999674,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.640999999999622,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.671999999998661,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.702999999997701,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.7189999999973224,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.75,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.765999999999622,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.796999999998661,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.812999999998283,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.8439999999973224,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.875,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.890999999999622,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.937999999998283,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.952999999997701,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 6.98399999999674,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.0,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.03099999999904,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.046999999998661,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.077999999997701,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.10899999999674,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.125,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.15599999999904,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.187999999998283,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.187999999998283,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.23399999999674,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.265999999999622,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.28099999999904,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.312999999998283,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.327999999997701,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.35899999999674,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.375,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.40599999999904,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.421999999998661,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.452999999997701,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.48399999999674,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.515999999999622,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.53099999999904,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.562999999998283,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.577999999997701,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.60899999999674,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.625,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.65599999999904,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.671999999998661,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.702999999997701,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.73399999999674,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.765999999999622,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.78099999999904,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.812999999998283,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.827999999997701,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.85899999999674,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.875,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.90599999999904,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.937999999998283,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.952999999997701,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 7.98399999999674,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.015999999999622,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.03099999999904,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.062999999998283,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.0779999999977,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.10899999999674,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.125,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.15599999999904,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.171999999998661,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.2029999999977,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.23399999999674,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.25,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.265999999999622,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.312999999998283,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.3279999999977,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.35899999999674,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.375,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.390999999999622,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.437999999998283,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.4529999999977,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.468999999997322,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.515999999999622,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.53099999999904,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.562999999998283,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.5779999999977,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.60899999999674,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.60899999999674,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.640999999999622,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.671999999998661,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.7029999999977,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.718999999997322,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.75,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.765999999999622,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.796999999998661,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.812999999998283,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.843999999997322,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.875,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.90599999999904,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.921999999998661,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.9529999999977,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 8.968999999997322,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.0,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.015999999999622,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.046999999998661,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.062999999998283,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.093999999997322,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.125,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.140999999999622,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.171999999998661,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.2029999999977,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.218999999997322,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.25,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.265999999999622,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.296999999998661,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.3279999999977,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.343999999997322,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.35899999999674,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.390999999999622,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.437999999998283,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.4529999999977,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.468999999997322,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.515999999999622,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.53099999999904,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.562999999998283,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.5779999999977,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.60899999999674,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.625,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.65599999999904,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.671999999998661,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.7029999999977,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.73399999999674,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.75,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.78099999999904,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.812999999998283,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.8279999999977,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.85899999999674,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.875,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.90599999999904,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.921999999998661,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.9529999999977,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 9.98399999999674,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 10.0,
+      "topic": "/object_pose_base_valid",
+      "type": "bool",
+      "value": false
+    },
+    {
+      "t_s": 10.03099999999904,
+      "topic": "/safe_timed_grasp_valid",
+      "type": "bool",
+      "value": false
+    }
+  ],
+  "first_false_event": {
+    "t_s": 1.4529999999977008,
+    "topic": "/safe_timed_grasp_valid",
+    "type": "bool",
+    "value": false
+  },
+  "last_safe_status": {
+    "status": "INVALID",
+    "reason": "grasp_plan_valid_false",
+    "active_plan_id": null,
+    "latest_upstream_plan_id": null,
+    "source_waypoint_count": 0,
+    "output_point_count": 0,
+    "total_duration_s": 0.0,
+    "sample_rate_hz": 50.0,
+    "maximum_velocity_rad_s_observed": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "maximum_acceleration_rad_s2_observed": [
+      0.0,
+      0.0,
+      0.0,
+      0.0,
+      0.0
+    ],
+    "velocity_limits_rad_s": [
+      0.2,
+      0.2,
+      0.2,
+      0.2,
+      0.2
+    ],
+    "acceleration_limits_rad_s2": [
+      0.4,
+      0.4,
+      0.4,
+      0.4,
+      0.4
+    ],
+    "minimum_joint_limit_margin_rad": null,
+    "maximum_input_adjacent_delta_rad": null,
+    "time_strictly_increasing": false,
+    "all_positions_finite": false,
+    "all_velocities_finite": false,
+    "all_accelerations_finite": false,
+    "limit_profile_status": "provisional_software_preview_limits",
+    "stop_at_each_source_waypoint": true,
+    "timestamp": 1785836467.83978,
+    "hardware_control_enabled": false,
+    "published_controller_command_topics": [],
+    "using_cached_timed_trajectory": false,
+    "timed_trajectory_recomputed": false,
+    "reparameterization_count": 0,
+    "cached_timed_trajectory_hit_count": 0,
+    "last_source_trajectory_age_s": null,
+    "last_upstream_valid_heartbeat_age_s": null,
+    "last_parameterized_plan_age_s": null,
+    "source_waypoint_times_s": [],
+    "segment_durations_s": [],
+    "input_stale_timeout_s": 0.6,
+    "source_valid_heartbeat_timeout_s": 0.8,
+    "trajectory_payload_timeout_before_first_plan_s": 0.8,
+    "require_periodic_trajectory_republish": false,
+    "source_plan_status_raw": null,
+    "disabled_controller_command_topics": [
+      "/joint_trajectory_controller/joint_trajectory",
+      "/joint_trajectory_controller/follow_joint_trajectory",
+      "/arm_controller/command",
+      "/robot_command",
+      "/hardware_command"
+    ]
+  },
+  "reparameterization_counts_seen": [],
+  "reparameterization_count_changed": null,
+  "safety": {
+    "opened_com_ports": false,
+    "started_lerobot_hardware_server": false,
+    "connected_real_so101": false,
+    "published_real_controller_commands": false,
+    "published_controller_command_topics": [],
+    "hardware_control_enabled": false
+  },
+  "notes": "This monitor only observes ROS topics. It does not move the object or fake live camera observations."
+}

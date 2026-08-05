@@ -1,0 +1,36 @@
+{
+  "version": "1.0",
+  "status": "provisional_software_preview_limits",
+  "joint_names": [
+    "shoulder_pan",
+    "shoulder_lift",
+    "elbow_flex",
+    "wrist_flex",
+    "wrist_roll"
+  ],
+  "maximum_velocity_rad_s": [
+    0.2,
+    0.2,
+    0.2,
+    0.2,
+    0.2
+  ],
+  "maximum_acceleration_rad_s2": [
+    0.4,
+    0.4,
+    0.4,
+    0.4,
+    0.4
+  ],
+  "sample_rate_hz": 50.0,
+  "minimum_segment_duration_s": 0.2,
+  "maximum_segment_duration_s": 5.0,
+  "maximum_total_duration_s": 60.0,
+  "maximum_input_adjacent_delta_rad": 0.15,
+  "minimum_joint_limit_margin_rad": 0.05,
+  "input_stale_timeout_s": 0.6,
+  "source_valid_heartbeat_timeout_s": 0.8,
+  "trajectory_payload_timeout_before_first_plan_s": 0.8,
+  "require_periodic_trajectory_republish": false,
+  "stop_at_each_source_waypoint": true
+}

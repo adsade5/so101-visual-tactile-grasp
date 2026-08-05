@@ -1,0 +1,13 @@
+{
+  "board_type": "charuco",
+  "dictionary": "DICT_4X4_50",
+  "squares_x": 7,
+  "squares_y": 5,
+  "square_length_m": 0.027,
+  "marker_length_m": 0.0200,
+  "measured_square_length_mm": 27.0,
+  "measured_marker_length_mm": 20.0,
+  "print_scale": 0.9,
+  "expected_pattern_width_mm": 189.0,
+  "expected_pattern_height_mm": 135.0
+}

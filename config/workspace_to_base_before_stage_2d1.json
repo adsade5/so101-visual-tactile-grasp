@@ -1,0 +1,13 @@
+{
+  "version": "1.0",
+  "calibration_status": "synthetic_test_only",
+  "source_frame": "workspace_plane",
+  "target_frame": "base_link",
+  "translation_m": [
+    0.1,
+    -0.2,
+    0.03
+  ],
+  "yaw_deg": 90.0,
+  "stale_timeout_s": 0.5
+}

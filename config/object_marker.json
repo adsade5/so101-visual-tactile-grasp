@@ -1,0 +1,20 @@
+{
+  "version": "1.1",
+  "dictionary": "DICT_4X4_50",
+  "target_id": 0,
+
+  "marker_size_m": 0.022,
+  "object_top_height_mm": 25.0,
+
+  "marker_center_offset_mm": {
+    "x": 0.0,
+    "y": 0.0
+  },
+
+  "camera": {
+    "index": 1,
+    "backend": "dshow",
+    "width": 640,
+    "height": 480
+  }
+}

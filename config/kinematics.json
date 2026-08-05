@@ -1,0 +1,48 @@
+{
+  "version": "1.1",
+
+  "joint_state_topic": "/joint_states",
+  "end_effector_pose_topic": "/end_effector_pose",
+  "fk_valid_topic": "/fk_valid",
+
+  "base_link": "base_link",
+  "tip_link": "gripper_frame_link",
+
+  "stale_timeout_s": 0.5,
+  "status_publish_rate_hz": 20.0,
+
+  "joint_position_unit": "radian",
+
+  "joint_aliases": {
+    "shoulder_pan": [
+      "shoulder_pan",
+      "shoulder_pan.pos",
+      "joint_1",
+      "mock_joint_1"
+    ],
+    "shoulder_lift": [
+      "shoulder_lift",
+      "shoulder_lift.pos",
+      "joint_2",
+      "mock_joint_2"
+    ],
+    "elbow_flex": [
+      "elbow_flex",
+      "elbow_flex.pos",
+      "joint_3",
+      "mock_joint_3"
+    ],
+    "wrist_flex": [
+      "wrist_flex",
+      "wrist_flex.pos",
+      "joint_4",
+      "mock_joint_4"
+    ],
+    "wrist_roll": [
+      "wrist_roll",
+      "wrist_roll.pos",
+      "joint_5",
+      "mock_joint_5"
+    ]
+  }
+}

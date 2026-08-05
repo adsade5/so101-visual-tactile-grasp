@@ -1,0 +1,33 @@
+{
+  "version": "1.0",
+  "status": "shadow_execution_only",
+  "joint_names": [
+    "shoulder_pan",
+    "shoulder_lift",
+    "elbow_flex",
+    "wrist_flex",
+    "wrist_roll"
+  ],
+  "current_joint_state_timeout_s": 0.30,
+  "source_valid_heartbeat_timeout_s": 0.80,
+  "maximum_start_state_error_rad": 0.08,
+  "minimum_joint_limit_margin_rad": 0.05,
+  "maximum_velocity_rad_s": [
+    0.20,
+    0.20,
+    0.20,
+    0.20,
+    0.20
+  ],
+  "maximum_acceleration_rad_s2": [
+    0.40,
+    0.40,
+    0.40,
+    0.40,
+    0.40
+  ],
+  "maximum_total_duration_s": 60.0,
+  "shadow_publish_rate_hz": 50.0,
+  "require_explicit_shadow_start": true,
+  "hardware_control_enabled": false
+}

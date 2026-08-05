@@ -1,0 +1,960 @@
+{
+  "stage": "2D-3A",
+  "status": "PASS",
+  "timestamp": "2026-08-04T15:43:34.187611+00:00",
+  "environment": {
+    "ros_distro": "lyrical",
+    "python": "C:\\pixi_ws\\.pixi\\envs\\default\\python.exe",
+    "rmw_implementation": "rmw_zenoh_cpp",
+    "ros_log_dir": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\ros_logs"
+  },
+  "model": {
+    "urdf": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\robot_model\\so101\\so101_new_calib.urdf",
+    "urdf_sha256": "3a65d2d35e68a8d2f0c2cc176d19b884506543c93ba72980145b80abe276022c",
+    "urdf_sha256_expected": "3a65d2d35e68a8d2f0c2cc176d19b884506543c93ba72980145b80abe276022c",
+    "urdf_sha256_matches_expected": true,
+    "joint_names": [
+      "shoulder_pan",
+      "shoulder_lift",
+      "elbow_flex",
+      "wrist_flex",
+      "wrist_roll"
+    ],
+    "joint_limits_rad": {
+      "shoulder_pan": {
+        "lower": -1.91986,
+        "upper": 1.91986
+      },
+      "shoulder_lift": {
+        "lower": -1.74533,
+        "upper": 1.74533
+      },
+      "elbow_flex": {
+        "lower": -1.69,
+        "upper": 1.69
+      },
+      "wrist_flex": {
+        "lower": -1.65806,
+        "upper": 1.65806
+      },
+      "wrist_roll": {
+        "lower": -2.74385,
+        "upper": 2.84121
+      }
+    }
+  },
+  "safety": {
+    "opened_com_ports": false,
+    "started_lerobot_hardware_server": false,
+    "connected_real_so101": false,
+    "published_real_controller_commands": false,
+    "published_controller_command_topics": [],
+    "hardware_control_enabled": false,
+    "shadow_execution_only": true,
+    "test_only_mock_joint_state": true
+  },
+  "failures": [],
+  "logs": {
+    "main_log": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\stage_2d3a_verification.log",
+    "ros_log_dir": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\ros_logs"
+  },
+  "configuration": {
+    "config_path": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\config\\command_gate.json",
+    "status": "shadow_execution_only",
+    "joint_names": [
+      "shoulder_pan",
+      "shoulder_lift",
+      "elbow_flex",
+      "wrist_flex",
+      "wrist_roll"
+    ],
+    "current_joint_state_timeout_s": 0.3,
+    "source_valid_heartbeat_timeout_s": 0.8,
+    "maximum_start_state_error_rad": 0.08,
+    "minimum_joint_limit_margin_rad": 0.05,
+    "maximum_velocity_rad_s": [
+      0.2,
+      0.2,
+      0.2,
+      0.2,
+      0.2
+    ],
+    "maximum_acceleration_rad_s2": [
+      0.4,
+      0.4,
+      0.4,
+      0.4,
+      0.4
+    ],
+    "maximum_total_duration_s": 60.0,
+    "shadow_publish_rate_hz": 50.0,
+    "require_explicit_shadow_start": true,
+    "hardware_control_enabled": false
+  },
+  "synthetic_cases": [
+    {
+      "name": "matching_start_state_ready",
+      "passed": true,
+      "latest_status": {
+        "status": "READY",
+        "reason": "shadow_execution_candidate_valid",
+        "plan_id": "stage2d3a-ready",
+        "current_joint_state_age_s": 0.18699999999807915,
+        "source_valid_heartbeat_age_s": 0.2180000000007567,
+        "maximum_start_state_error_rad_observed": 0.0,
+        "maximum_start_state_error_rad_limit": 0.08,
+        "minimum_current_joint_limit_margin_rad": 0.2617965984045365,
+        "minimum_trajectory_joint_limit_margin_rad": 0.2617965984045365,
+        "maximum_velocity_rad_s_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "maximum_acceleration_rad_s2_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "total_duration_s": 0.8,
+        "trajectory_point_count": 3,
+        "time_strictly_increasing": true,
+        "hardware_control_enabled": false,
+        "command_topics_published": [],
+        "shadow_execution_only": true,
+        "timestamp": 1785858216.2603736,
+        "status_profile": "shadow_execution_only",
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ],
+        "safe_timed_status_raw": "{\"status\": \"VALID\", \"reason\": \"test_valid\", \"plan_id\": \"stage2d3a-ready\", \"active_plan_id\": \"stage2d3a-ready\", \"latest_upstream_plan_id\": \"stage2d3a-ready\", \"hardware_control_enabled\": false, \"published_controller_command_topics\": [], \"timestamp\": 54068.593}"
+      }
+    },
+    {
+      "name": "explicit_shadow_start_required",
+      "passed": true,
+      "before_start_state": "READY",
+      "before_start_active": false,
+      "start_service": {
+        "success": true,
+        "message": "shadow_execution_started"
+      },
+      "running_observed_after_start": false,
+      "after_start_status": {
+        "state": "INVALIDATED",
+        "reason": "command_gate_invalidated",
+        "plan_id": "stage2d3a-start-required",
+        "elapsed_s": 0.0,
+        "total_duration_s": 1.2,
+        "progress_ratio": 0.0,
+        "current_shadow_positions_rad": [],
+        "hardware_control_enabled": false,
+        "command_topics_published": [],
+        "shadow_execution_only": true,
+        "timestamp": 1785858217.7051203,
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ]
+      }
+    },
+    {
+      "name": "shadow_execution_completes",
+      "passed": true,
+      "total_duration_s": 0.6,
+      "final_state": {
+        "state": "COMPLETED",
+        "reason": "shadow_execution_completed",
+        "plan_id": "stage2d3a-completes",
+        "elapsed_s": 0.6000000000000001,
+        "total_duration_s": 0.6000000000000001,
+        "progress_ratio": 1.0,
+        "current_shadow_positions_rad": [
+          0.03,
+          -0.3540658503988659,
+          0.5335987755982988,
+          1.3762634015954636,
+          0.0
+        ],
+        "hardware_control_enabled": false,
+        "command_topics_published": [],
+        "shadow_execution_only": true,
+        "timestamp": 1785858219.5274124,
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ]
+      },
+      "final_position_error_rad": 0.0
+    },
+    {
+      "name": "start_state_mismatch_rejected",
+      "passed": true,
+      "expected_reason": "start_state_mismatch",
+      "latest_status": {
+        "status": "INVALID",
+        "reason": "start_state_mismatch",
+        "plan_id": "stage2d3a-mismatch",
+        "current_joint_state_age_s": 0.0,
+        "source_valid_heartbeat_age_s": 0.031000000002677552,
+        "maximum_start_state_error_rad_observed": 0.1,
+        "maximum_start_state_error_rad_limit": 0.08,
+        "minimum_current_joint_limit_margin_rad": 0.2617965984045365,
+        "minimum_trajectory_joint_limit_margin_rad": 0.2617965984045365,
+        "maximum_velocity_rad_s_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "maximum_acceleration_rad_s2_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "total_duration_s": 0.8,
+        "trajectory_point_count": 3,
+        "time_strictly_increasing": true,
+        "hardware_control_enabled": false,
+        "command_topics_published": [],
+        "shadow_execution_only": true,
+        "timestamp": 1785858220.4447472,
+        "status_profile": "shadow_execution_only",
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ],
+        "safe_timed_status_raw": "{\"status\": \"VALID\", \"reason\": \"test_valid\", \"plan_id\": \"stage2d3a-mismatch\", \"active_plan_id\": \"stage2d3a-mismatch\", \"latest_upstream_plan_id\": \"stage2d3a-mismatch\", \"hardware_control_enabled\": false, \"published_controller_command_topics\": [], \"timestamp\": 54072.843}"
+      }
+    },
+    {
+      "name": "current_state_stale_rejected",
+      "passed": true,
+      "latest_status": {
+        "status": "INVALID",
+        "reason": "current_joint_state_stale",
+        "plan_id": "stage2d3a-stale",
+        "current_joint_state_age_s": 0.3430000000007567,
+        "source_valid_heartbeat_age_s": 0.3430000000007567,
+        "maximum_start_state_error_rad_observed": null,
+        "maximum_start_state_error_rad_limit": 0.08,
+        "minimum_current_joint_limit_margin_rad": null,
+        "minimum_trajectory_joint_limit_margin_rad": null,
+        "maximum_velocity_rad_s_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "maximum_acceleration_rad_s2_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "total_duration_s": 0.0,
+        "trajectory_point_count": 3,
+        "time_strictly_increasing": false,
+        "hardware_control_enabled": false,
+        "command_topics_published": [],
+        "shadow_execution_only": true,
+        "timestamp": 1785858222.014802,
+        "status_profile": "shadow_execution_only",
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ],
+        "safe_timed_status_raw": "{\"status\": \"VALID\", \"reason\": \"test_valid\", \"plan_id\": \"stage2d3a-stale\", \"active_plan_id\": \"stage2d3a-stale\", \"latest_upstream_plan_id\": \"stage2d3a-stale\", \"hardware_control_enabled\": false, \"published_controller_command_topics\": [], \"timestamp\": 54074.328}"
+      }
+    },
+    {
+      "name": "safe_timed_invalid_rejected",
+      "passed": true,
+      "latest_status": {
+        "status": "INVALID",
+        "reason": "safe_timed_grasp_invalid",
+        "plan_id": "stage2d3a-safe-false",
+        "current_joint_state_age_s": 0.031000000002677552,
+        "source_valid_heartbeat_age_s": 0.031000000002677552,
+        "maximum_start_state_error_rad_observed": null,
+        "maximum_start_state_error_rad_limit": 0.08,
+        "minimum_current_joint_limit_margin_rad": null,
+        "minimum_trajectory_joint_limit_margin_rad": null,
+        "maximum_velocity_rad_s_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "maximum_acceleration_rad_s2_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "total_duration_s": 0.0,
+        "trajectory_point_count": 0,
+        "time_strictly_increasing": false,
+        "hardware_control_enabled": false,
+        "command_topics_published": [],
+        "shadow_execution_only": true,
+        "timestamp": 1785858222.6985035,
+        "status_profile": "shadow_execution_only",
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ],
+        "safe_timed_status_raw": "{\"status\": \"VALID\", \"reason\": \"test_valid\", \"plan_id\": \"stage2d3a-safe-false\", \"active_plan_id\": \"stage2d3a-safe-false\", \"latest_upstream_plan_id\": \"stage2d3a-safe-false\", \"hardware_control_enabled\": false, \"published_controller_command_topics\": [], \"timestamp\": 54075.343}"
+      }
+    },
+    {
+      "name": "heartbeat_stale_rejected",
+      "passed": true,
+      "latest_status": {
+        "status": "INVALID",
+        "reason": "source_valid_heartbeat_stale",
+        "plan_id": "stage2d3a-heartbeat-stale",
+        "current_joint_state_age_s": 0.7969999999986612,
+        "source_valid_heartbeat_age_s": 0.8119999999980791,
+        "maximum_start_state_error_rad_observed": null,
+        "maximum_start_state_error_rad_limit": 0.08,
+        "minimum_current_joint_limit_margin_rad": null,
+        "minimum_trajectory_joint_limit_margin_rad": null,
+        "maximum_velocity_rad_s_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "maximum_acceleration_rad_s2_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "total_duration_s": 0.0,
+        "trajectory_point_count": 0,
+        "time_strictly_increasing": false,
+        "hardware_control_enabled": false,
+        "command_topics_published": [],
+        "shadow_execution_only": true,
+        "timestamp": 1785858225.2271667,
+        "status_profile": "shadow_execution_only",
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ],
+        "safe_timed_status_raw": "{\"status\": \"VALID\", \"reason\": \"test_valid\", \"plan_id\": \"stage2d3a-heartbeat-stale\", \"active_plan_id\": \"stage2d3a-heartbeat-stale\", \"latest_upstream_plan_id\": \"stage2d3a-heartbeat-stale\", \"hardware_control_enabled\": false, \"published_controller_command_topics\": [], \"timestamp\": 54076.015}"
+      }
+    },
+    {
+      "name": "plan_id_mismatch_rejected",
+      "passed": true,
+      "expected_reason": "plan_id_mismatch",
+      "latest_status": {
+        "status": "INVALID",
+        "reason": "plan_id_mismatch",
+        "plan_id": "status-plan",
+        "current_joint_state_age_s": 0.06300000000192085,
+        "source_valid_heartbeat_age_s": 0.0940000000045984,
+        "maximum_start_state_error_rad_observed": null,
+        "maximum_start_state_error_rad_limit": 0.08,
+        "minimum_current_joint_limit_margin_rad": null,
+        "minimum_trajectory_joint_limit_margin_rad": null,
+        "maximum_velocity_rad_s_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "maximum_acceleration_rad_s2_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "total_duration_s": 0.0,
+        "trajectory_point_count": 3,
+        "time_strictly_increasing": false,
+        "hardware_control_enabled": false,
+        "command_topics_published": [],
+        "shadow_execution_only": true,
+        "timestamp": 1785858225.8810823,
+        "status_profile": "shadow_execution_only",
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ],
+        "safe_timed_status_raw": "{\"status\": \"VALID\", \"reason\": \"test_valid\", \"plan_id\": \"status-plan\", \"active_plan_id\": \"status-plan\", \"latest_upstream_plan_id\": \"status-plan\", \"hardware_control_enabled\": false, \"published_controller_command_topics\": [], \"timestamp\": 54078.218}"
+      }
+    },
+    {
+      "name": "invalid_joint_names_rejected",
+      "passed": true,
+      "expected_reason": "trajectory_wrong_joint_names",
+      "latest_status": {
+        "status": "INVALID",
+        "reason": "trajectory_wrong_joint_names",
+        "plan_id": "stage2d3a-bad-names",
+        "current_joint_state_age_s": 0.18800000000192085,
+        "source_valid_heartbeat_age_s": 0.21899999999732245,
+        "maximum_start_state_error_rad_observed": null,
+        "maximum_start_state_error_rad_limit": 0.08,
+        "minimum_current_joint_limit_margin_rad": 0.2617965984045365,
+        "minimum_trajectory_joint_limit_margin_rad": null,
+        "maximum_velocity_rad_s_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "maximum_acceleration_rad_s2_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "total_duration_s": 0.0,
+        "trajectory_point_count": 3,
+        "time_strictly_increasing": false,
+        "hardware_control_enabled": false,
+        "command_topics_published": [],
+        "shadow_execution_only": true,
+        "timestamp": 1785858226.546884,
+        "status_profile": "shadow_execution_only",
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ],
+        "safe_timed_status_raw": "{\"status\": \"VALID\", \"reason\": \"test_valid\", \"plan_id\": \"stage2d3a-bad-names\", \"active_plan_id\": \"stage2d3a-bad-names\", \"latest_upstream_plan_id\": \"stage2d3a-bad-names\", \"hardware_control_enabled\": false, \"published_controller_command_topics\": [], \"timestamp\": 54078.875}"
+      }
+    },
+    {
+      "name": "non_finite_values_rejected",
+      "passed": true,
+      "expected_reason": "trajectory_non_finite_values",
+      "latest_status": {
+        "status": "INVALID",
+        "reason": "trajectory_non_finite_values",
+        "plan_id": "stage2d3a-nan",
+        "current_joint_state_age_s": 0.06199999999807915,
+        "source_valid_heartbeat_age_s": 0.09399999999732245,
+        "maximum_start_state_error_rad_observed": null,
+        "maximum_start_state_error_rad_limit": 0.08,
+        "minimum_current_joint_limit_margin_rad": 0.2617965984045365,
+        "minimum_trajectory_joint_limit_margin_rad": null,
+        "maximum_velocity_rad_s_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "maximum_acceleration_rad_s2_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "total_duration_s": 0.0,
+        "trajectory_point_count": 3,
+        "time_strictly_increasing": false,
+        "hardware_control_enabled": false,
+        "command_topics_published": [],
+        "shadow_execution_only": true,
+        "timestamp": 1785858226.9859254,
+        "status_profile": "shadow_execution_only",
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ],
+        "safe_timed_status_raw": "{\"status\": \"VALID\", \"reason\": \"test_valid\", \"plan_id\": \"stage2d3a-nan\", \"active_plan_id\": \"stage2d3a-nan\", \"latest_upstream_plan_id\": \"stage2d3a-nan\", \"hardware_control_enabled\": false, \"published_controller_command_topics\": [], \"timestamp\": 54079.531}"
+      }
+    },
+    {
+      "name": "non_monotonic_time_rejected",
+      "passed": true,
+      "expected_reason": "trajectory_time_not_strictly_increasing",
+      "latest_status": {
+        "status": "INVALID",
+        "reason": "trajectory_time_not_strictly_increasing",
+        "plan_id": "stage2d3a-time",
+        "current_joint_state_age_s": 0.125,
+        "source_valid_heartbeat_age_s": 0.15600000000267755,
+        "maximum_start_state_error_rad_observed": 0.0,
+        "maximum_start_state_error_rad_limit": 0.08,
+        "minimum_current_joint_limit_margin_rad": 0.2617965984045365,
+        "minimum_trajectory_joint_limit_margin_rad": 0.2617965984045365,
+        "maximum_velocity_rad_s_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "maximum_acceleration_rad_s2_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "total_duration_s": 0.2,
+        "trajectory_point_count": 3,
+        "time_strictly_increasing": false,
+        "hardware_control_enabled": false,
+        "command_topics_published": [],
+        "shadow_execution_only": true,
+        "timestamp": 1785858227.7031314,
+        "status_profile": "shadow_execution_only",
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ],
+        "safe_timed_status_raw": "{\"status\": \"VALID\", \"reason\": \"test_valid\", \"plan_id\": \"stage2d3a-time\", \"active_plan_id\": \"stage2d3a-time\", \"latest_upstream_plan_id\": \"stage2d3a-time\", \"hardware_control_enabled\": false, \"published_controller_command_topics\": [], \"timestamp\": 54080.187}"
+      }
+    },
+    {
+      "name": "velocity_limit_rejected",
+      "passed": true,
+      "expected_reason": "trajectory_velocity_limit_exceeded",
+      "latest_status": {
+        "status": "INVALID",
+        "reason": "trajectory_velocity_limit_exceeded",
+        "plan_id": "stage2d3a-vel",
+        "current_joint_state_age_s": 0.23399999999674037,
+        "source_valid_heartbeat_age_s": 0.26599999999598367,
+        "maximum_start_state_error_rad_observed": 0.0,
+        "maximum_start_state_error_rad_limit": 0.08,
+        "minimum_current_joint_limit_margin_rad": 0.2617965984045365,
+        "minimum_trajectory_joint_limit_margin_rad": 0.2617965984045365,
+        "maximum_velocity_rad_s_observed": [
+          0.21,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "maximum_acceleration_rad_s2_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "total_duration_s": 0.8,
+        "trajectory_point_count": 3,
+        "time_strictly_increasing": true,
+        "hardware_control_enabled": false,
+        "command_topics_published": [],
+        "shadow_execution_only": true,
+        "timestamp": 1785858228.492086,
+        "status_profile": "shadow_execution_only",
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ],
+        "safe_timed_status_raw": "{\"status\": \"VALID\", \"reason\": \"test_valid\", \"plan_id\": \"stage2d3a-vel\", \"active_plan_id\": \"stage2d3a-vel\", \"latest_upstream_plan_id\": \"stage2d3a-vel\", \"hardware_control_enabled\": false, \"published_controller_command_topics\": [], \"timestamp\": 54080.828}"
+      }
+    },
+    {
+      "name": "acceleration_limit_rejected",
+      "passed": true,
+      "expected_reason": "trajectory_acceleration_limit_exceeded",
+      "latest_status": {
+        "status": "INVALID",
+        "reason": "trajectory_acceleration_limit_exceeded",
+        "plan_id": "stage2d3a-acc",
+        "current_joint_state_age_s": 0.125,
+        "source_valid_heartbeat_age_s": 0.15600000000267755,
+        "maximum_start_state_error_rad_observed": 0.0,
+        "maximum_start_state_error_rad_limit": 0.08,
+        "minimum_current_joint_limit_margin_rad": 0.2617965984045365,
+        "minimum_trajectory_joint_limit_margin_rad": 0.2617965984045365,
+        "maximum_velocity_rad_s_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "maximum_acceleration_rad_s2_observed": [
+          0.41,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "total_duration_s": 0.8,
+        "trajectory_point_count": 3,
+        "time_strictly_increasing": true,
+        "hardware_control_enabled": false,
+        "command_topics_published": [],
+        "shadow_execution_only": true,
+        "timestamp": 1785858229.0657547,
+        "status_profile": "shadow_execution_only",
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ],
+        "safe_timed_status_raw": "{\"status\": \"VALID\", \"reason\": \"test_valid\", \"plan_id\": \"stage2d3a-acc\", \"active_plan_id\": \"stage2d3a-acc\", \"latest_upstream_plan_id\": \"stage2d3a-acc\", \"hardware_control_enabled\": false, \"published_controller_command_topics\": [], \"timestamp\": 54081.484}"
+      }
+    },
+    {
+      "name": "joint_limit_rejected",
+      "passed": true,
+      "expected_reason": "trajectory_joint_position_out_of_bounds",
+      "latest_status": {
+        "status": "INVALID",
+        "reason": "trajectory_joint_position_out_of_bounds",
+        "plan_id": "stage2d3a-out",
+        "current_joint_state_age_s": 0.125,
+        "source_valid_heartbeat_age_s": 0.15600000000267755,
+        "maximum_start_state_error_rad_observed": 0.0,
+        "maximum_start_state_error_rad_limit": 0.08,
+        "minimum_current_joint_limit_margin_rad": 0.2617965984045365,
+        "minimum_trajectory_joint_limit_margin_rad": -0.010000000000000009,
+        "maximum_velocity_rad_s_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "maximum_acceleration_rad_s2_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "total_duration_s": 0.8,
+        "trajectory_point_count": 3,
+        "time_strictly_increasing": true,
+        "hardware_control_enabled": false,
+        "command_topics_published": [],
+        "shadow_execution_only": true,
+        "timestamp": 1785858229.8272417,
+        "status_profile": "shadow_execution_only",
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ],
+        "safe_timed_status_raw": "{\"status\": \"VALID\", \"reason\": \"test_valid\", \"plan_id\": \"stage2d3a-out\", \"active_plan_id\": \"stage2d3a-out\", \"latest_upstream_plan_id\": \"stage2d3a-out\", \"hardware_control_enabled\": false, \"published_controller_command_topics\": [], \"timestamp\": 54082.156}"
+      }
+    },
+    {
+      "name": "joint_limit_margin_rejected",
+      "passed": true,
+      "expected_reason": "trajectory_joint_limit_margin_insufficient",
+      "latest_status": {
+        "status": "INVALID",
+        "reason": "trajectory_joint_limit_margin_insufficient",
+        "plan_id": "stage2d3a-margin",
+        "current_joint_state_age_s": 0.125,
+        "source_valid_heartbeat_age_s": 0.1569999999992433,
+        "maximum_start_state_error_rad_observed": 0.0,
+        "maximum_start_state_error_rad_limit": 0.08,
+        "minimum_current_joint_limit_margin_rad": 0.2617965984045365,
+        "minimum_trajectory_joint_limit_margin_rad": 0.010000000000000009,
+        "maximum_velocity_rad_s_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "maximum_acceleration_rad_s2_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "total_duration_s": 0.8,
+        "trajectory_point_count": 3,
+        "time_strictly_increasing": true,
+        "hardware_control_enabled": false,
+        "command_topics_published": [],
+        "shadow_execution_only": true,
+        "timestamp": 1785858230.4972138,
+        "status_profile": "shadow_execution_only",
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ],
+        "safe_timed_status_raw": "{\"status\": \"VALID\", \"reason\": \"test_valid\", \"plan_id\": \"stage2d3a-margin\", \"active_plan_id\": \"stage2d3a-margin\", \"latest_upstream_plan_id\": \"stage2d3a-margin\", \"hardware_control_enabled\": false, \"published_controller_command_topics\": [], \"timestamp\": 54082.828}"
+      }
+    },
+    {
+      "name": "invalidation_during_shadow_stops",
+      "passed": true,
+      "expected_count_before_invalidation": 1,
+      "expected_count_after_invalidation": 3,
+      "expected_count_after_hold": 3,
+      "latest_shadow_status": {
+        "state": "INVALIDATED",
+        "reason": "command_gate_invalidated",
+        "plan_id": "stage2d3a-invalidate-running",
+        "elapsed_s": 0.062000000005355105,
+        "total_duration_s": 1.6,
+        "progress_ratio": 0.03875000000334694,
+        "current_shadow_positions_rad": [
+          0.0015500000001338777,
+          -0.3502283503989663,
+          0.5251487755984326,
+          1.3954884015953966,
+          0.0003875000000334694
+        ],
+        "hardware_control_enabled": false,
+        "command_topics_published": [],
+        "shadow_execution_only": true,
+        "timestamp": 1785858231.4962144,
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ]
+      }
+    },
+    {
+      "name": "cancel_shadow_execution",
+      "passed": true,
+      "cancel_service": {
+        "success": true,
+        "message": "cancel_shadow_execution_called"
+      },
+      "latest_shadow_status": {
+        "state": "CANCELLED",
+        "reason": "cancel_shadow_execution_called",
+        "plan_id": "stage2d3a-cancel",
+        "elapsed_s": 0.0,
+        "total_duration_s": 1.6,
+        "progress_ratio": 0.0,
+        "current_shadow_positions_rad": [
+          0.0,
+          -0.3490658503988659,
+          0.5235987755982988,
+          1.3962634015954636,
+          0.0
+        ],
+        "hardware_control_enabled": false,
+        "command_topics_published": [],
+        "shadow_execution_only": true,
+        "timestamp": 1785858232.1843975,
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ]
+      }
+    },
+    {
+      "name": "deterministic_repeat",
+      "passed": true,
+      "first": {
+        "name": "matching_start_state_ready",
+        "passed": true,
+        "latest_status": {
+          "status": "READY",
+          "reason": "shadow_execution_candidate_valid",
+          "plan_id": "stage2d3a-ready",
+          "current_joint_state_age_s": 0.25,
+          "source_valid_heartbeat_age_s": 0.26600000000325963,
+          "maximum_start_state_error_rad_observed": 0.0,
+          "maximum_start_state_error_rad_limit": 0.08,
+          "minimum_current_joint_limit_margin_rad": 0.2617965984045365,
+          "minimum_trajectory_joint_limit_margin_rad": 0.2617965984045365,
+          "maximum_velocity_rad_s_observed": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maximum_acceleration_rad_s2_observed": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "total_duration_s": 0.8,
+          "trajectory_point_count": 3,
+          "time_strictly_increasing": true,
+          "hardware_control_enabled": false,
+          "command_topics_published": [],
+          "shadow_execution_only": true,
+          "timestamp": 1785858232.832538,
+          "status_profile": "shadow_execution_only",
+          "disabled_controller_command_topics": [
+            "/joint_trajectory_controller/joint_trajectory",
+            "/joint_trajectory_controller/follow_joint_trajectory",
+            "/arm_controller/command",
+            "/robot_command",
+            "/hardware_command"
+          ],
+          "safe_timed_status_raw": "{\"status\": \"VALID\", \"reason\": \"test_valid\", \"plan_id\": \"stage2d3a-ready\", \"active_plan_id\": \"stage2d3a-ready\", \"latest_upstream_plan_id\": \"stage2d3a-ready\", \"hardware_control_enabled\": false, \"published_controller_command_topics\": [], \"timestamp\": 54085.171}"
+        }
+      },
+      "second": {
+        "name": "matching_start_state_ready",
+        "passed": true,
+        "latest_status": {
+          "status": "READY",
+          "reason": "shadow_execution_candidate_valid",
+          "plan_id": "stage2d3a-ready",
+          "current_joint_state_age_s": 0.15600000000267755,
+          "source_valid_heartbeat_age_s": 0.1870000000053551,
+          "maximum_start_state_error_rad_observed": 0.0,
+          "maximum_start_state_error_rad_limit": 0.08,
+          "minimum_current_joint_limit_margin_rad": 0.2617965984045365,
+          "minimum_trajectory_joint_limit_margin_rad": 0.2617965984045365,
+          "maximum_velocity_rad_s_observed": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "maximum_acceleration_rad_s2_observed": [
+            0.0,
+            0.0,
+            0.0,
+            0.0,
+            0.0
+          ],
+          "total_duration_s": 0.8,
+          "trajectory_point_count": 3,
+          "time_strictly_increasing": true,
+          "hardware_control_enabled": false,
+          "command_topics_published": [],
+          "shadow_execution_only": true,
+          "timestamp": 1785858233.4760952,
+          "status_profile": "shadow_execution_only",
+          "disabled_controller_command_topics": [
+            "/joint_trajectory_controller/joint_trajectory",
+            "/joint_trajectory_controller/follow_joint_trajectory",
+            "/arm_controller/command",
+            "/robot_command",
+            "/hardware_command"
+          ],
+          "safe_timed_status_raw": "{\"status\": \"VALID\", \"reason\": \"test_valid\", \"plan_id\": \"stage2d3a-ready\", \"active_plan_id\": \"stage2d3a-ready\", \"latest_upstream_plan_id\": \"stage2d3a-ready\", \"hardware_control_enabled\": false, \"published_controller_command_topics\": [], \"timestamp\": 54085.812}"
+        }
+      }
+    }
+  ],
+  "executables": {
+    "return_code": 0,
+    "raw_output": "so101_command_gate command_gate_node-script.py\nso101_command_gate command_gate_node.exe\nso101_command_gate connection_trajectory_node-script.py\nso101_command_gate connection_trajectory_node.exe\nso101_command_gate mock_joint_state_publisher-script.py\nso101_command_gate mock_joint_state_publisher.exe\nso101_command_gate real_joint_state_bridge_node-script.py\nso101_command_gate real_joint_state_bridge_node.exe\nso101_command_gate shadow_executor_node-script.py\nso101_command_gate shadow_executor_node.exe\n",
+    "command_gate_node": true,
+    "shadow_executor_node": true,
+    "mock_joint_state_publisher": true
+  },
+  "dry_run_launch": {
+    "path": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\ros2_ws\\src\\so101_command_gate\\launch\\perception_to_shadow_execution_dry_run.launch.py",
+    "default_use_mock_joint_state": false,
+    "test_mock_mode": "match_first_trajectory",
+    "hardware_control_enabled": false,
+    "controller_command_topics_disabled": true,
+    "shadow_execution_requires_explicit_trigger": true
+  },
+  "forbidden_topics": {
+    "forbidden_controller_topics": [
+      "/joint_trajectory_controller/joint_trajectory",
+      "/joint_trajectory_controller/follow_joint_trajectory",
+      "/arm_controller/command",
+      "/robot_command",
+      "/hardware_command"
+    ],
+    "published_controller_command_topics": [],
+    "passed": true
+  },
+  "stage_2d1_regression": {
+    "return_code": 0,
+    "status": "PASS",
+    "report": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\stage_2d1_report.json",
+    "report_status": "PASS",
+    "report_timestamp": "2026-08-04T15:43:58.061826+00:00",
+    "report_failures": [],
+    "log_excerpt": "d=bad_frame\n[WARN] [1785858254.612972600] [workspace_to_base_node]: Rejected pose with frame_id=bad_frame\n[INFO] [1785858254.849985000] [visual_grasp_planner_node]: Planner invalid: object_pose_base_stale\n[WARN] [1785858254.978709700] [workspace_to_base_node]: Rejected pose with frame_id=bad_frame\n[WARN] [1785858255.308843300] [workspace_to_base_node]: Rejected non-finite pose\n[WARN] [1785858255.541373800] [workspace_to_base_node]: Rejected non-finite pose\n[WARN] [1785858255.746420700] [workspace_to_base_node]: Rejected non-finite pose\n[WARN] [1785858255.930590600] [workspace_to_base_node]: Rejected non-finite pose\n[WARN] [1785858256.081666400] [workspace_to_base_node]: Rejected non-finite pose\n[WARN] [1785858256.197549900] [workspace_to_base_node]: Rejected non-finite pose\n[WARN] [1785858256.421743900] [workspace_to_base_node]: Rejected non-finite pose\n[WARN] [1785858256.592837400] [workspace_to_base_node]: Rejected non-finite pose\n[WARN] [1785858256.787975300] [workspace_to_base_node]: Rejected non-finite pose\n[INFO] [1785858256.871929100] [visual_grasp_planner_node]: Planner invalid: object_pose_base_stale\n[WARN] [1785858256.878824900] [workspace_to_base_node]: Rejected non-finite pose\n[WARN] [1785858257.186547600] [workspace_to_base_node]: Rejected non-finite pose\n[WARN] [1785858257.378413500] [workspace_to_base_node]: Rejected non-finite pose\n[INFO] [1785858258.808336600] [visual_grasp_planner_node]: New SO-101 grasp preview plan created | plan_id=e002dbbdae327b0d03f48e6e | waypoints=23 | plan_attempt_count=3\n[INFO] [1785858258.993037600] [visual_grasp_planner_node]: Published event-driven source trajectory for plan_id=e002dbbdae327b0d03f48e6e\n[INFO] [1785858259.023463500] [visual_grasp_planner_node]: Planner heartbeat keeps cached plan valid: e002dbbdae327b0d03f48e6e\n[INFO] [1785858259.054195900] [visual_grasp_planner_node]: Planner invalid: object_pose_base_valid_false\n[INFO] [1785858259.484572600] [visual_grasp_planner_node]: Planner invalid: waiting_for_object_pose_base_valid\n[INFO] [1785858260.623482300] [visual_grasp_planner_node]: Planner invalid: object_x_out_of_bounds\n[INFO] [1785858262.748583100] [visual_grasp_planner_node]: Planner invalid: object_x_out_of_bounds\n[INFO] [1785858268.653224200] [visual_grasp_planner_node]: Planner invalid: ik_failed:no safe top-down IK solution: best_position_error_mm=0.185221, best_approach_error_deg=0.514511, best_margin_rad=0.000000\n[INFO] [1785858268.657581700] [visual_grasp_planner_node]: Planner invalid: object_pose_base_valid_false\n[INFO] [1785858273.059962700] [visual_grasp_planner_node]: Planner invalid: ik_failed:no safe top-down IK solution: best_position_error_mm=0.185221, best_approach_error_deg=0.514511, best_margin_rad=0.000000\n[INFO] [1785858273.063872100] [visual_grasp_planner_node]: Planner invalid: object_pose_base_valid_false\n[INFO] [1785858277.363323400] [visual_grasp_planner_node]: Planner invalid: ik_failed:no safe top-down IK solution: best_position_error_mm=0.185221, best_approach_error_deg=0.514511, best_margin_rad=0.000000\n[INFO] [1785858277.367016200] [visual_grasp_planner_node]: Planner invalid: object_pose_base_valid_false\n[INFO] [1785858281.690828400] [visual_grasp_planner_node]: Planner invalid: ik_failed:no safe top-down IK solution: best_position_error_mm=0.185221, best_approach_error_deg=0.514511, best_margin_rad=0.000000\n[INFO] [1785858281.694810900] [visual_grasp_planner_node]: Planner invalid: object_pose_base_valid_false\n[INFO] [1785858286.058137800] [visual_grasp_planner_node]: Planner invalid: ik_failed:no safe top-down IK solution: best_position_error_mm=0.185221, best_approach_error_deg=0.514511, best_margin_rad=0.000000\n2026-08-04T15:44:46.118136+00:00 Report written: E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\stage_2d1_report.json\n2026-08-04T15:44:46.119193+00:00 Stage 2D-1 status: PASS\nThe following exception was never retrieved: cannot use Destroyable because destruction was requested\n",
+    "passed": true
+  },
+  "stage_2d2_regression": {
+    "return_code": 0,
+    "status": "PASS",
+    "report": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\stage_2d2_report.json",
+    "report_status": "PASS",
+    "report_timestamp": "2026-08-04T15:44:46.349846+00:00",
+    "report_failures": [],
+    "log_excerpt": "ff581277e9bbc23caf0eb0c9d9b059499c08fb796b5a7bf59082ed2 | source_waypoints=4 | output_points=95 | reparameterization_count=3\n[INFO] [1785858289.832045900] [timed_trajectory_node]: Upstream grasp plan explicitly invalidated.\n[INFO] [1785858289.911434100] [timed_trajectory_node]: Safe timed trajectory reparameterized | plan_id=stage2d2-plan-a | trajectory_hash=a962333f5ff581277e9bbc23caf0eb0c9d9b059499c08fb796b5a7bf59082ed2 | source_waypoints=4 | output_points=95 | reparameterization_count=4\n[INFO] [1785858290.436581400] [timed_trajectory_node]: Using cached timed trajectory for plan_id=stage2d2-plan-a\n[INFO] [1785858292.457721300] [timed_trajectory_node]: Using cached timed trajectory for plan_id=stage2d2-plan-a\n[INFO] [1785858294.480533800] [timed_trajectory_node]: Using cached timed trajectory for plan_id=stage2d2-plan-a\n[INFO] [1785858296.523055500] [timed_trajectory_node]: Using cached timed trajectory for plan_id=stage2d2-plan-a\n[INFO] [1785858298.538550400] [timed_trajectory_node]: Using cached timed trajectory for plan_id=stage2d2-plan-a\n[INFO] [1785858298.540237500] [timed_trajectory_node]: Using cached timed trajectory for plan_id=stage2d2-plan-a\n[INFO] [1785858299.423909200] [timed_trajectory_node]: Upstream valid heartbeat stale; safe timed trajectory invalidated.\n[INFO] [1785858299.459497500] [timed_trajectory_node]: Safe timed trajectory reparameterized | plan_id=stage2d2-plan-a | trajectory_hash=a962333f5ff581277e9bbc23caf0eb0c9d9b059499c08fb796b5a7bf59082ed2 | source_waypoints=4 | output_points=95 | reparameterization_count=5\n[INFO] [1785858300.062569600] [timed_trajectory_node]: Upstream grasp plan heartbeat changed | old=stage2d2-plan-a | new=stage2d2-plan-b\n[INFO] [1785858300.158898000] [timed_trajectory_node]: Safe timed trajectory reparameterized | plan_id=stage2d2-plan-b | trajectory_hash=85c8ed3647e5b9f9439694d3e777230969a891af11fbe62ccafe4090c2f09bd1 | source_waypoints=4 | output_points=97 | reparameterization_count=6\n[INFO] [1785858300.187467900] [timed_trajectory_node]: Upstream grasp plan heartbeat changed | old=stage2d2-plan-b | new=stage2d2-plan-a\n[INFO] [1785858300.192009000] [timed_trajectory_node]: Safe timed trajectory reparameterized | plan_id=stage2d2-plan-a | trajectory_hash=a962333f5ff581277e9bbc23caf0eb0c9d9b059499c08fb796b5a7bf59082ed2 | source_waypoints=4 | output_points=95 | reparameterization_count=7\n[INFO] [1785858300.282581000] [timed_trajectory_node]: Upstream grasp plan heartbeat changed | old=stage2d2-plan-a | new=stage2d2-plan-c\n[INFO] [1785858300.287457900] [timed_trajectory_node]: Safe timed trajectory reparameterized | plan_id=stage2d2-plan-c | trajectory_hash=85c8ed3647e5b9f9439694d3e777230969a891af11fbe62ccafe4090c2f09bd1 | source_waypoints=4 | output_points=97 | reparameterization_count=8\n[INFO] [1785858300.529433200] [timed_trajectory_node]: Using cached timed trajectory for plan_id=stage2d2-plan-c\n[INFO] [1785858301.283748900] [timed_trajectory_node]: Safe timed trajectory reparameterized | plan_id=stage2d2-plan-c | trajectory_hash=85c8ed3647e5b9f9439694d3e777230969a891af11fbe62ccafe4090c2f09bd1 | source_waypoints=4 | output_points=97 | reparameterization_count=9\n[INFO] [1785858301.389473100] [timed_trajectory_node]: Upstream grasp plan heartbeat changed | old=stage2d2-plan-c | new=stage2d2-plan-a\n[INFO] [1785858301.393952700] [timed_trajectory_node]: Safe timed trajectory reparameterized | plan_id=stage2d2-plan-a | trajectory_hash=a962333f5ff581277e9bbc23caf0eb0c9d9b059499c08fb796b5a7bf59082ed2 | source_waypoints=4 | output_points=95 | reparameterization_count=10\n[INFO] [1785858301.484143200] [timed_trajectory_node]: Upstream grasp plan explicitly invalidated.\n2026-08-04T15:45:02.960183+00:00 Running Stage 2D-1 synthetic verifier regression as a hard gate.\n2026-08-04T15:45:51.798899+00:00 Report written: E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\stage_2d2_report.json\n2026-08-04T15:45:51.798899+00:00 Stage 2D-2 status: PASS\n",
+    "passed": true
+  }
+}

@@ -1,0 +1,114 @@
+{
+  "version": "2d3b-real-joint-state-read-only-v1",
+  "status": "provisional_requires_physical_validation",
+  "follower_port": "COM4",
+  "follower_port_source": "repos/lerobot/so101_sparse_tactile/configs/tactile_teleop_force_close.yaml",
+  "selected_port_basis": "Configured follower_port from real_joint_state_mapping.json and LeRobot tactile_teleop_force_close.yaml; current USB identity is recorded, but motor identity requires READ_ONLY_PREFLIGHT_PASS.",
+  "selected_port_serial_number": "5B7B009052",
+  "selected_port_usb": {
+    "description": "USB-Enhanced-SERIAL CH343 (COM4)",
+    "vid": 6790,
+    "pid": 21971,
+    "manufacturer": "wch.cn",
+    "hwid": "USB VID:PID=1A86:55D3 SER=5B7B009052 LOCATION=1-3.4"
+  },
+  "current_device_enumeration_at_creation": [
+    {
+      "device": "COM8",
+      "description": "USB-SERIAL CH340 (COM8)",
+      "hwid": "USB VID:PID=1A86:7523 SER= LOCATION=1-3.3",
+      "vid": 6790,
+      "pid": 29987,
+      "serial_number": "",
+      "manufacturer": "wch.cn",
+      "product": null
+    },
+    {
+      "device": "COM4",
+      "description": "USB-Enhanced-SERIAL CH343 (COM4)",
+      "hwid": "USB VID:PID=1A86:55D3 SER=5B7B009052 LOCATION=1-3.4",
+      "vid": 6790,
+      "pid": 21971,
+      "serial_number": "5B7B009052",
+      "manufacturer": "wch.cn",
+      "product": null
+    }
+  ],
+  "calibration_path": "C:/Users/82053/.cache/huggingface/lerobot/calibration/robots/so_follower/my_follower.json",
+  "alternate_calibration_paths": [
+    "C:/Users/82053/.cache/huggingface/lerobot/calibration/robots/so_follower/my_so101_follower.json"
+  ],
+  "lerobot_version": "0.5.2",
+  "bus_class": "lerobot.motors.feetech.feetech.FeetechMotorsBus",
+  "connect_method": "FeetechMotorsBus.connect(handshake=False)",
+  "baudrate": 1000000,
+  "protocol_version": 0,
+  "motor_model": "sts3215",
+  "required_motor_ids": [1, 2, 3, 4, 5],
+  "optional_gripper_id": 6,
+  "read_retry_count": 3,
+  "reconnect_backoff_s": 1.0,
+  "maximum_consecutive_read_failures": 5,
+  "fault_policy": "stay_alive_fault",
+  "verification_timestamp": "2026-08-04T11:21:28.013392+00:00",
+  "lerobot_observation_field": "Present_Position",
+  "source_unit": "degrees_from_lerobot_feetech_normalization",
+  "output_unit": "rad",
+  "mapping_basis": [
+    "LeRobot SOFollower uses FeetechMotorsBus with shoulder_pan=1, shoulder_lift=2, elbow_flex=3, wrist_flex=4, wrist_roll=5, gripper=6.",
+    "SOFollower.get_observation reads bus.sync_read(\"Present_Position\") and the default SOFollowerRobotConfig uses degrees.",
+    "Stage 2D-3B read-only server intentionally bypasses SOFollower.connect/configure/disconnect defaults and uses FeetechMotorsBus.connect(handshake=False), sync_read(\"Present_Position\"), disconnect(disable_torque=False)."
+  ],
+  "joint_mappings": [
+    {
+      "source_name": "shoulder_pan",
+      "target_name": "shoulder_pan",
+      "source_motor_id": 1,
+      "sign": 1.0,
+      "offset_rad": 0.0,
+      "scale": "pi/180"
+    },
+    {
+      "source_name": "shoulder_lift",
+      "target_name": "shoulder_lift",
+      "source_motor_id": 2,
+      "sign": 1.0,
+      "offset_rad": 0.0,
+      "scale": "pi/180"
+    },
+    {
+      "source_name": "elbow_flex",
+      "target_name": "elbow_flex",
+      "source_motor_id": 3,
+      "sign": 1.0,
+      "offset_rad": 0.0,
+      "scale": "pi/180"
+    },
+    {
+      "source_name": "wrist_flex",
+      "target_name": "wrist_flex",
+      "source_motor_id": 4,
+      "sign": 1.0,
+      "offset_rad": 0.0,
+      "scale": "pi/180"
+    },
+    {
+      "source_name": "wrist_roll",
+      "target_name": "wrist_roll",
+      "source_motor_id": 5,
+      "sign": 1.0,
+      "offset_rad": 0.0,
+      "scale": "pi/180"
+    }
+  ],
+  "read_only_safety": {
+    "uses_sofollower_connect": false,
+    "uses_sofollower_configure": false,
+    "uses_sofollower_send_action": false,
+    "uses_sync_write": false,
+    "uses_write": false,
+    "uses_torque_enable_or_disable": false,
+    "disconnect_disables_torque": false,
+    "read_register": "Present_Position"
+  }
+}

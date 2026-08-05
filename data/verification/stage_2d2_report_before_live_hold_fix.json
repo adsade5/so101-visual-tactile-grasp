@@ -1,0 +1,1102 @@
+{
+  "stage": "2D-2",
+  "status": "PASS",
+  "timestamp": "2026-08-04T09:01:13.552408+00:00",
+  "environment": {
+    "ros_distro": "lyrical",
+    "python": "C:\\pixi_ws\\.pixi\\envs\\default\\python.exe",
+    "rmw_implementation": "rmw_zenoh_cpp",
+    "zenoh_router_check_attempts": "1",
+    "rcl_logging_implementation": "rcl_logging_noop",
+    "ros_log_dir": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\ros_logs"
+  },
+  "model": {
+    "urdf": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\robot_model\\so101\\so101_new_calib.urdf",
+    "urdf_sha256": "3a65d2d35e68a8d2f0c2cc176d19b884506543c93ba72980145b80abe276022c",
+    "urdf_sha256_expected": "3a65d2d35e68a8d2f0c2cc176d19b884506543c93ba72980145b80abe276022c",
+    "urdf_sha256_matches_expected": true,
+    "joint_names": [
+      "shoulder_pan",
+      "shoulder_lift",
+      "elbow_flex",
+      "wrist_flex",
+      "wrist_roll"
+    ],
+    "joint_limits_rad": {
+      "shoulder_pan": {
+        "lower": -1.91986,
+        "upper": 1.91986
+      },
+      "shoulder_lift": {
+        "lower": -1.74533,
+        "upper": 1.74533
+      },
+      "elbow_flex": {
+        "lower": -1.69,
+        "upper": 1.69
+      },
+      "wrist_flex": {
+        "lower": -1.65806,
+        "upper": 1.65806
+      },
+      "wrist_roll": {
+        "lower": -2.74385,
+        "upper": 2.84121
+      }
+    }
+  },
+  "safety": {
+    "opened_com_ports": false,
+    "started_lerobot_hardware_server": false,
+    "connected_real_so101": false,
+    "published_real_controller_commands": false,
+    "published_controller_command_topics": [],
+    "hardware_control_enabled": false,
+    "limit_profile_status": "provisional_software_preview_limits"
+  },
+  "failures": [],
+  "logs": {
+    "main_log": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\stage_2d2_verification.log",
+    "ros_log_dir": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\ros_logs"
+  },
+  "configuration": {
+    "config_path": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\config\\trajectory_safety.json",
+    "status": "provisional_software_preview_limits",
+    "joint_names": [
+      "shoulder_pan",
+      "shoulder_lift",
+      "elbow_flex",
+      "wrist_flex",
+      "wrist_roll"
+    ],
+    "maximum_velocity_rad_s": [
+      0.2,
+      0.2,
+      0.2,
+      0.2,
+      0.2
+    ],
+    "maximum_acceleration_rad_s2": [
+      0.4,
+      0.4,
+      0.4,
+      0.4,
+      0.4
+    ],
+    "sample_rate_hz": 50.0,
+    "minimum_segment_duration_s": 0.2,
+    "maximum_segment_duration_s": 5.0,
+    "maximum_total_duration_s": 60.0,
+    "maximum_input_adjacent_delta_rad": 0.15,
+    "minimum_joint_limit_margin_rad": 0.05,
+    "input_stale_timeout_s": 0.6,
+    "stop_at_each_source_waypoint": true
+  },
+  "direct_parameterizer": {
+    "deterministic_repeat_passed": true,
+    "normal_success": true,
+    "normal_reason": "time_parameterized_preview_valid",
+    "normal_output_point_count": 95,
+    "normal_total_duration_s": 1.848749020933641,
+    "normal_max_velocity_rad_s_observed": [
+      0.09233058847696721,
+      0.04672276402657235,
+      0.07787127337762058,
+      0.06229701870209645,
+      0.031148509351048202
+    ],
+    "normal_max_acceleration_rad_s2_observed": [
+      0.39915574166196327,
+      0.2391091750273596,
+      0.3991557416619633,
+      0.3188122333698128,
+      0.15940611668490626
+    ]
+  },
+  "node_execution": {
+    "mode": "in_process_rclpy_executor",
+    "nodes_started": [
+      "so101_stage_2d2_observer",
+      "timed_trajectory_node"
+    ],
+    "camera_started": false,
+    "hardware_started": false,
+    "controller_command_publishers_started": false
+  },
+  "ros_graph_safety": {
+    "forbidden_controller_topics": [
+      "/joint_trajectory_controller/joint_trajectory",
+      "/joint_trajectory_controller/follow_joint_trajectory",
+      "/arm_controller/command",
+      "/robot_command",
+      "/hardware_command"
+    ],
+    "forbidden_topics_seen": [],
+    "passed": true,
+    "topic_names": [
+      "/grasp_plan_status",
+      "/grasp_plan_valid",
+      "/parameter_events",
+      "/planned_grasp_joint_trajectory",
+      "/rosout",
+      "/safe_timed_grasp_status",
+      "/safe_timed_grasp_trajectory",
+      "/safe_timed_grasp_valid",
+      "/safe_timed_grasp_validity_reason"
+    ]
+  },
+  "synthetic_cases": [
+    {
+      "name": "normal_valid_trajectory",
+      "passed": true,
+      "latest_status": {
+        "status": "VALID",
+        "reason": "time_parameterized_preview_valid",
+        "source_waypoint_count": 4,
+        "output_point_count": 95,
+        "total_duration_s": 1.848749020933641,
+        "sample_rate_hz": 50.0,
+        "maximum_velocity_rad_s_observed": [
+          0.09233058847696721,
+          0.04672276402657235,
+          0.07787127337762058,
+          0.06229701870209645,
+          0.031148509351048202
+        ],
+        "maximum_acceleration_rad_s2_observed": [
+          0.39915574166196327,
+          0.2391091750273596,
+          0.3991557416619633,
+          0.3188122333698128,
+          0.15940611668490626
+        ],
+        "velocity_limits_rad_s": [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        "acceleration_limits_rad_s2": [
+          0.4,
+          0.4,
+          0.4,
+          0.4,
+          0.4
+        ],
+        "minimum_joint_limit_margin_rad": 0.2617965984045365,
+        "maximum_input_adjacent_delta_rad": 0.035,
+        "time_strictly_increasing": true,
+        "all_positions_finite": true,
+        "all_velocities_finite": true,
+        "all_accelerations_finite": true,
+        "limit_profile_status": "provisional_software_preview_limits",
+        "stop_at_each_source_waypoint": true,
+        "timestamp": 1785834075.687385,
+        "hardware_control_enabled": false,
+        "published_controller_command_topics": [],
+        "source_waypoint_times_s": [
+          0.0,
+          0.6007028535336888,
+          1.13798781944546,
+          1.848749020933641
+        ],
+        "segment_durations_s": [
+          0.6007028535336888,
+          0.5372849659117712,
+          0.710761201488181
+        ],
+        "input_stale_timeout_s": 0.6,
+        "source_plan_status_raw": "{\"status\": \"VALID\", \"source\": \"stage_2d2_test\"}",
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ]
+      },
+      "output_checks": {
+        "joint_names": [
+          "shoulder_pan",
+          "shoulder_lift",
+          "elbow_flex",
+          "wrist_flex",
+          "wrist_roll"
+        ],
+        "point_count": 95,
+        "source_waypoint_count": 4,
+        "first_time_s": 0.0,
+        "last_time_s": 1.8487490210000002,
+        "time_strictly_increasing": true,
+        "all_positions_finite": true,
+        "all_velocities_finite": true,
+        "all_accelerations_finite": true,
+        "velocity_observed": [
+          0.09233058847696721,
+          0.04672276402657235,
+          0.07787127337762058,
+          0.06229701870209645,
+          0.031148509351048202
+        ],
+        "acceleration_observed": [
+          0.39915574166196327,
+          0.2391091750273596,
+          0.3991557416619633,
+          0.3188122333698128,
+          0.15940611668490626
+        ],
+        "velocity_within_limits": true,
+        "acceleration_within_limits": true,
+        "boundary_stop_checks": [
+          {
+            "waypoint_index": 0,
+            "time_s": 0.0,
+            "passed": true,
+            "max_abs_velocity": 0.0,
+            "max_abs_acceleration": 0.0
+          },
+          {
+            "waypoint_index": 1,
+            "time_s": 0.6007028535336888,
+            "passed": true,
+            "max_abs_velocity": 0.0,
+            "max_abs_acceleration": 0.0
+          },
+          {
+            "waypoint_index": 2,
+            "time_s": 1.13798781944546,
+            "passed": true,
+            "max_abs_velocity": 0.0,
+            "max_abs_acceleration": 0.0
+          },
+          {
+            "waypoint_index": 3,
+            "time_s": 1.848749020933641,
+            "passed": true,
+            "max_abs_velocity": 0.0,
+            "max_abs_acceleration": 0.0
+          }
+        ],
+        "output_more_dense_than_source": true,
+        "first_position_matches_source": true,
+        "last_position_matches_source": true
+      }
+    },
+    {
+      "name": "zero_displacement_segment",
+      "passed": true,
+      "latest_status": {
+        "status": "VALID",
+        "reason": "time_parameterized_preview_valid",
+        "source_waypoint_count": 3,
+        "output_point_count": 42,
+        "total_duration_s": 0.8007028535336889,
+        "sample_rate_hz": 50.0,
+        "maximum_velocity_rad_s_observed": [
+          0.062297018702096404,
+          0.04672276402657235,
+          0.07787127337762058,
+          0.06229701870209645,
+          0.031148509351048202
+        ],
+        "maximum_acceleration_rad_s2_observed": [
+          0.3188122333698125,
+          0.2391091750273596,
+          0.398515291712266,
+          0.3188122333698128,
+          0.15940611668490626
+        ],
+        "velocity_limits_rad_s": [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        "acceleration_limits_rad_s2": [
+          0.4,
+          0.4,
+          0.4,
+          0.4,
+          0.4
+        ],
+        "minimum_joint_limit_margin_rad": 0.2617965984045365,
+        "maximum_input_adjacent_delta_rad": 0.025000000000000022,
+        "time_strictly_increasing": true,
+        "all_positions_finite": true,
+        "all_velocities_finite": true,
+        "all_accelerations_finite": true,
+        "limit_profile_status": "provisional_software_preview_limits",
+        "stop_at_each_source_waypoint": true,
+        "timestamp": 1785834075.8158991,
+        "hardware_control_enabled": false,
+        "published_controller_command_topics": [],
+        "source_waypoint_times_s": [
+          0.0,
+          0.2,
+          0.8007028535336889
+        ],
+        "segment_durations_s": [
+          0.2,
+          0.6007028535336888
+        ],
+        "input_stale_timeout_s": 0.6,
+        "source_plan_status_raw": "{\"status\": \"VALID\", \"source\": \"stage_2d2_test\"}",
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ]
+      },
+      "output_checks": {
+        "joint_names": [
+          "shoulder_pan",
+          "shoulder_lift",
+          "elbow_flex",
+          "wrist_flex",
+          "wrist_roll"
+        ],
+        "point_count": 42,
+        "source_waypoint_count": 3,
+        "first_time_s": 0.0,
+        "last_time_s": 0.8007028540000001,
+        "time_strictly_increasing": true,
+        "all_positions_finite": true,
+        "all_velocities_finite": true,
+        "all_accelerations_finite": true,
+        "velocity_observed": [
+          0.062297018702096404,
+          0.04672276402657235,
+          0.07787127337762058,
+          0.06229701870209645,
+          0.031148509351048202
+        ],
+        "acceleration_observed": [
+          0.3188122333698125,
+          0.2391091750273596,
+          0.398515291712266,
+          0.3188122333698128,
+          0.15940611668490626
+        ],
+        "velocity_within_limits": true,
+        "acceleration_within_limits": true,
+        "boundary_stop_checks": [
+          {
+            "waypoint_index": 0,
+            "time_s": 0.0,
+            "passed": true,
+            "max_abs_velocity": 0.0,
+            "max_abs_acceleration": 0.0
+          },
+          {
+            "waypoint_index": 1,
+            "time_s": 0.2,
+            "passed": true,
+            "max_abs_velocity": 0.0,
+            "max_abs_acceleration": 0.0
+          },
+          {
+            "waypoint_index": 2,
+            "time_s": 0.8007028535336889,
+            "passed": true,
+            "max_abs_velocity": 0.0,
+            "max_abs_acceleration": 0.0
+          }
+        ],
+        "output_more_dense_than_source": true,
+        "first_position_matches_source": true,
+        "last_position_matches_source": true
+      }
+    },
+    {
+      "name": "wrong_names",
+      "passed": true,
+      "expected_reason": "wrong_joint_names",
+      "latest_status": {
+        "status": "INVALID",
+        "reason": "wrong_joint_names",
+        "source_waypoint_count": 4,
+        "output_point_count": 0,
+        "total_duration_s": 0.0,
+        "sample_rate_hz": 50.0,
+        "maximum_velocity_rad_s_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "maximum_acceleration_rad_s2_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "velocity_limits_rad_s": [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        "acceleration_limits_rad_s2": [
+          0.4,
+          0.4,
+          0.4,
+          0.4,
+          0.4
+        ],
+        "minimum_joint_limit_margin_rad": null,
+        "maximum_input_adjacent_delta_rad": null,
+        "time_strictly_increasing": false,
+        "all_positions_finite": false,
+        "all_velocities_finite": false,
+        "all_accelerations_finite": false,
+        "limit_profile_status": "provisional_software_preview_limits",
+        "stop_at_each_source_waypoint": true,
+        "timestamp": 1785834075.9354334,
+        "hardware_control_enabled": false,
+        "published_controller_command_topics": [],
+        "source_waypoint_times_s": [],
+        "segment_durations_s": [],
+        "input_stale_timeout_s": 0.6,
+        "source_plan_status_raw": "{\"status\": \"VALID\", \"source\": \"stage_2d2_test\"}",
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ]
+      }
+    },
+    {
+      "name": "wrong_order",
+      "passed": true,
+      "expected_reason": "wrong_joint_order",
+      "latest_status": {
+        "status": "INVALID",
+        "reason": "wrong_joint_order",
+        "source_waypoint_count": 4,
+        "output_point_count": 0,
+        "total_duration_s": 0.0,
+        "sample_rate_hz": 50.0,
+        "maximum_velocity_rad_s_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "maximum_acceleration_rad_s2_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "velocity_limits_rad_s": [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        "acceleration_limits_rad_s2": [
+          0.4,
+          0.4,
+          0.4,
+          0.4,
+          0.4
+        ],
+        "minimum_joint_limit_margin_rad": null,
+        "maximum_input_adjacent_delta_rad": null,
+        "time_strictly_increasing": false,
+        "all_positions_finite": false,
+        "all_velocities_finite": false,
+        "all_accelerations_finite": false,
+        "limit_profile_status": "provisional_software_preview_limits",
+        "stop_at_each_source_waypoint": true,
+        "timestamp": 1785834076.0924537,
+        "hardware_control_enabled": false,
+        "published_controller_command_topics": [],
+        "source_waypoint_times_s": [],
+        "segment_durations_s": [],
+        "input_stale_timeout_s": 0.6,
+        "source_plan_status_raw": "{\"status\": \"VALID\", \"source\": \"stage_2d2_test\"}",
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ]
+      }
+    },
+    {
+      "name": "nan_inf_position",
+      "passed": true,
+      "expected_reason": "non_finite_position",
+      "latest_status": {
+        "status": "INVALID",
+        "reason": "non_finite_position",
+        "source_waypoint_count": 4,
+        "output_point_count": 0,
+        "total_duration_s": 0.0,
+        "sample_rate_hz": 50.0,
+        "maximum_velocity_rad_s_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "maximum_acceleration_rad_s2_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "velocity_limits_rad_s": [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        "acceleration_limits_rad_s2": [
+          0.4,
+          0.4,
+          0.4,
+          0.4,
+          0.4
+        ],
+        "minimum_joint_limit_margin_rad": null,
+        "maximum_input_adjacent_delta_rad": null,
+        "time_strictly_increasing": false,
+        "all_positions_finite": false,
+        "all_velocities_finite": false,
+        "all_accelerations_finite": false,
+        "limit_profile_status": "provisional_software_preview_limits",
+        "stop_at_each_source_waypoint": true,
+        "timestamp": 1785834076.2324693,
+        "hardware_control_enabled": false,
+        "published_controller_command_topics": [],
+        "source_waypoint_times_s": [],
+        "segment_durations_s": [],
+        "input_stale_timeout_s": 0.6,
+        "source_plan_status_raw": "{\"status\": \"VALID\", \"source\": \"stage_2d2_test\"}",
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ]
+      }
+    },
+    {
+      "name": "out_of_bounds",
+      "passed": true,
+      "expected_reason": "joint_position_out_of_bounds",
+      "latest_status": {
+        "status": "INVALID",
+        "reason": "joint_position_out_of_bounds",
+        "source_waypoint_count": 4,
+        "output_point_count": 0,
+        "total_duration_s": 0.0,
+        "sample_rate_hz": 50.0,
+        "maximum_velocity_rad_s_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "maximum_acceleration_rad_s2_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "velocity_limits_rad_s": [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        "acceleration_limits_rad_s2": [
+          0.4,
+          0.4,
+          0.4,
+          0.4,
+          0.4
+        ],
+        "minimum_joint_limit_margin_rad": -0.010000000000000009,
+        "maximum_input_adjacent_delta_rad": 1.9648599999999998,
+        "time_strictly_increasing": false,
+        "all_positions_finite": false,
+        "all_velocities_finite": false,
+        "all_accelerations_finite": false,
+        "limit_profile_status": "provisional_software_preview_limits",
+        "stop_at_each_source_waypoint": true,
+        "timestamp": 1785834076.3428614,
+        "hardware_control_enabled": false,
+        "published_controller_command_topics": [],
+        "source_waypoint_times_s": [],
+        "segment_durations_s": [],
+        "input_stale_timeout_s": 0.6,
+        "source_plan_status_raw": "{\"status\": \"VALID\", \"source\": \"stage_2d2_test\"}",
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ]
+      }
+    },
+    {
+      "name": "margin_insufficient",
+      "passed": true,
+      "expected_reason": "joint_limit_margin_insufficient",
+      "latest_status": {
+        "status": "INVALID",
+        "reason": "joint_limit_margin_insufficient",
+        "source_waypoint_count": 4,
+        "output_point_count": 0,
+        "total_duration_s": 0.0,
+        "sample_rate_hz": 50.0,
+        "maximum_velocity_rad_s_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "maximum_acceleration_rad_s2_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "velocity_limits_rad_s": [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        "acceleration_limits_rad_s2": [
+          0.4,
+          0.4,
+          0.4,
+          0.4,
+          0.4
+        ],
+        "minimum_joint_limit_margin_rad": 0.030000000000000027,
+        "maximum_input_adjacent_delta_rad": 1.9248599999999998,
+        "time_strictly_increasing": false,
+        "all_positions_finite": false,
+        "all_velocities_finite": false,
+        "all_accelerations_finite": false,
+        "limit_profile_status": "provisional_software_preview_limits",
+        "stop_at_each_source_waypoint": true,
+        "timestamp": 1785834076.4817626,
+        "hardware_control_enabled": false,
+        "published_controller_command_topics": [],
+        "source_waypoint_times_s": [],
+        "segment_durations_s": [],
+        "input_stale_timeout_s": 0.6,
+        "source_plan_status_raw": "{\"status\": \"VALID\", \"source\": \"stage_2d2_test\"}",
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ]
+      }
+    },
+    {
+      "name": "adjacent_jump_too_large",
+      "passed": true,
+      "expected_reason": "input_adjacent_delta_exceeds_limit",
+      "latest_status": {
+        "status": "INVALID",
+        "reason": "input_adjacent_delta_exceeds_limit",
+        "source_waypoint_count": 2,
+        "output_point_count": 0,
+        "total_duration_s": 0.0,
+        "sample_rate_hz": 50.0,
+        "maximum_velocity_rad_s_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "maximum_acceleration_rad_s2_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "velocity_limits_rad_s": [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        "acceleration_limits_rad_s2": [
+          0.4,
+          0.4,
+          0.4,
+          0.4,
+          0.4
+        ],
+        "minimum_joint_limit_margin_rad": 0.2617965984045365,
+        "maximum_input_adjacent_delta_rad": 0.151,
+        "time_strictly_increasing": false,
+        "all_positions_finite": false,
+        "all_velocities_finite": false,
+        "all_accelerations_finite": false,
+        "limit_profile_status": "provisional_software_preview_limits",
+        "stop_at_each_source_waypoint": true,
+        "timestamp": 1785834076.6378944,
+        "hardware_control_enabled": false,
+        "published_controller_command_topics": [],
+        "source_waypoint_times_s": [],
+        "segment_durations_s": [],
+        "input_stale_timeout_s": 0.6,
+        "source_plan_status_raw": "{\"status\": \"VALID\", \"source\": \"stage_2d2_test\"}",
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ]
+      }
+    },
+    {
+      "name": "total_duration_too_long",
+      "passed": true,
+      "expected_reason": "total_duration_exceeds_limit",
+      "latest_status": {
+        "status": "INVALID",
+        "reason": "total_duration_exceeds_limit",
+        "source_waypoint_count": 50,
+        "output_point_count": 0,
+        "total_duration_s": 60.53940459581461,
+        "sample_rate_hz": 50.0,
+        "maximum_velocity_rad_s_observed": [
+          0.17096302927160834,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "maximum_acceleration_rad_s2_observed": [
+          0.3999954381883752,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "velocity_limits_rad_s": [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        "acceleration_limits_rad_s2": [
+          0.4,
+          0.4,
+          0.4,
+          0.4,
+          0.4
+        ],
+        "minimum_joint_limit_margin_rad": 0.2617965984045365,
+        "maximum_input_adjacent_delta_rad": 0.12,
+        "time_strictly_increasing": true,
+        "all_positions_finite": true,
+        "all_velocities_finite": true,
+        "all_accelerations_finite": true,
+        "limit_profile_status": "provisional_software_preview_limits",
+        "stop_at_each_source_waypoint": true,
+        "timestamp": 1785834076.852493,
+        "hardware_control_enabled": false,
+        "published_controller_command_topics": [],
+        "source_waypoint_times_s": [
+          0.0,
+          1.3160740129524924,
+          2.6321480259049848,
+          3.948222038857477,
+          5.2642960518099695,
+          6.580370064762462,
+          7.896444077714955,
+          9.212518090667448,
+          10.52859210361994,
+          11.844666116572434,
+          13.160740129524926,
+          14.47681414247742,
+          15.792888155429912,
+          17.108962168382405,
+          18.425036181334896,
+          19.741110194287387,
+          21.057184207239878,
+          22.37325822019237,
+          23.68933223314486,
+          25.00540624609735,
+          26.321480259049842,
+          27.637554272002333,
+          28.953628284954824,
+          30.269702297907315,
+          31.585776310859806,
+          32.9018503238123,
+          34.21792433676479,
+          35.53399834971728,
+          36.85007236266977,
+          38.16614637562226,
+          39.48222038857475,
+          40.798294401527244,
+          42.114368414479735,
+          43.430442427432226,
+          44.74651644038472,
+          46.06259045333721,
+          47.3786644662897,
+          48.69473847924219,
+          50.01081249219468,
+          51.32688650514717,
+          52.64296051809966,
+          53.959034531052154,
+          55.275108544004645,
+          56.591182556957136,
+          57.90725656990963,
+          59.22333058286212
+        ],
+        "segment_durations_s": [
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924,
+          1.3160740129524924
+        ],
+        "input_stale_timeout_s": 0.6,
+        "source_plan_status_raw": "{\"status\": \"VALID\", \"source\": \"stage_2d2_test\"}",
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ]
+      }
+    },
+    {
+      "name": "plan_valid_false_invalidates",
+      "passed": true,
+      "elapsed_s": 0.06299999999828287,
+      "latest_status": {
+        "status": "INVALID",
+        "reason": "grasp_plan_valid_false",
+        "source_waypoint_count": 4,
+        "output_point_count": 0,
+        "total_duration_s": 0.0,
+        "sample_rate_hz": 50.0,
+        "maximum_velocity_rad_s_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "maximum_acceleration_rad_s2_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "velocity_limits_rad_s": [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        "acceleration_limits_rad_s2": [
+          0.4,
+          0.4,
+          0.4,
+          0.4,
+          0.4
+        ],
+        "minimum_joint_limit_margin_rad": 0.2617965984045365,
+        "maximum_input_adjacent_delta_rad": 0.035,
+        "time_strictly_increasing": false,
+        "all_positions_finite": false,
+        "all_velocities_finite": false,
+        "all_accelerations_finite": false,
+        "limit_profile_status": "provisional_software_preview_limits",
+        "stop_at_each_source_waypoint": true,
+        "timestamp": 1785834076.986148,
+        "hardware_control_enabled": false,
+        "published_controller_command_topics": [],
+        "source_waypoint_times_s": [],
+        "segment_durations_s": [],
+        "input_stale_timeout_s": 0.6,
+        "source_plan_status_raw": "{\"status\": \"VALID\", \"source\": \"stage_2d2_test\"}",
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ]
+      }
+    },
+    {
+      "name": "input_stopped_stale_invalidates",
+      "passed": true,
+      "elapsed_s": 0.625,
+      "latest_status": {
+        "status": "INVALID",
+        "reason": "source_trajectory_stale",
+        "source_waypoint_count": 4,
+        "output_point_count": 0,
+        "total_duration_s": 0.0,
+        "sample_rate_hz": 50.0,
+        "maximum_velocity_rad_s_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "maximum_acceleration_rad_s2_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "velocity_limits_rad_s": [
+          0.2,
+          0.2,
+          0.2,
+          0.2,
+          0.2
+        ],
+        "acceleration_limits_rad_s2": [
+          0.4,
+          0.4,
+          0.4,
+          0.4,
+          0.4
+        ],
+        "minimum_joint_limit_margin_rad": 0.2617965984045365,
+        "maximum_input_adjacent_delta_rad": 0.035,
+        "time_strictly_increasing": false,
+        "all_positions_finite": false,
+        "all_velocities_finite": false,
+        "all_accelerations_finite": false,
+        "limit_profile_status": "provisional_software_preview_limits",
+        "stop_at_each_source_waypoint": true,
+        "timestamp": 1785834077.7569757,
+        "hardware_control_enabled": false,
+        "published_controller_command_topics": [],
+        "source_waypoint_times_s": [],
+        "segment_durations_s": [],
+        "input_stale_timeout_s": 0.6,
+        "source_plan_status_raw": "{\"status\": \"VALID\", \"source\": \"stage_2d2_test\"}",
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ]
+      }
+    }
+  ],
+  "executables": {
+    "return_code": 0,
+    "raw_output": "so101_trajectory_safety timed_trajectory_node-script.py\nso101_trajectory_safety timed_trajectory_node.exe\nso101_grasp_planner visual_grasp_planner_node-script.py\nso101_grasp_planner visual_grasp_planner_node.exe\n",
+    "timed_trajectory_node": true,
+    "visual_grasp_planner_node": true
+  },
+  "live_vision_to_safe_timed_grasp_validation": {
+    "status": "NOT_RUN",
+    "reason": "Physical camera and object-motion validation is not faked by this offline verifier.",
+    "launch_command": "ros2 launch so101_trajectory_safety perception_to_safe_timed_grasp_dry_run.launch.py"
+  },
+  "stage_2d1_regression": {
+    "status": "ATTEMPTED_SEPARATELY_NOT_BLOCKING_STAGE_2D2",
+    "report": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\stage_2d1_report.json",
+    "report_status": "FAIL",
+    "report_timestamp": "2026-08-04T08:45:18.114708+00:00",
+    "report_failures": [
+      {
+        "item": "stale_invalidation_case",
+        "detail": "Stale invalidation failed: {'status': 'VALID', 'reason': 'planned_preview_only', 'object_position_base_m': [0.18289733886666235, 0.0, 0.025], 'waypoint_count': 23, 'max_position_error_mm': 0.658317262226108, 'max_approach_error_deg': 0.8162536597931672, 'min_margin_rad': 0.08005398929377616, 'max_adjacent_delta_rad': 0.038728536447238726, 'calibration_status': 'real_planar_calibrated_provisional_z_assumed', 'z_assumption': 'workspace_plane_z0_equals_base_link_z0', 'timestamp': 1785833125.6457796, 'time_parameterization_status': 'nominal_preview_only', 'hardware_control_enabled': False, 'command_topics_published': [], 'debug': {'pose_received_count': 2, 'valid_true_count': 1, 'plan_attempt_count': 1, 'last_processed_position_base_m': [0.18289733886666235, 0.0, 0.025]}}"
+      }
+    ],
+    "latest_attempt_log": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\stage_2d2_verification.log",
+    "notes": "Stage 2D-1 was re-run during this Stage 2D-2 work. On this Windows ROS2 setup, the in-process verifier can trigger a non-Python Windows fatal exception around rclpy node construction and FK initialization, and process-mode attempts did not refresh stage_2d1_report.json. This diagnostic is recorded but is not a Stage 2D-2 trajectory-safety failure.",
+    "passed": false
+  }
+}

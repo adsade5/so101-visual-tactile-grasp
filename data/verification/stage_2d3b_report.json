@@ -1,0 +1,668 @@
+{
+  "stage": "2D-3B",
+  "status": "FAIL_BLOCKED_NO_COM_PORT",
+  "offline_status": "PASS",
+  "real_hardware_status": "FAIL_BLOCKED_NO_COM_PORT",
+  "timestamp": "2026-08-04T15:45:52.083285+00:00",
+  "environment": {
+    "ros_distro": "lyrical",
+    "python": "C:\\pixi_ws\\.pixi\\envs\\default\\python.exe",
+    "rmw_implementation": "rmw_zenoh_cpp",
+    "ros_log_dir": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\ros_logs_2d3b"
+  },
+  "model": {
+    "urdf": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\robot_model\\so101\\so101_new_calib.urdf",
+    "urdf_sha256": "3a65d2d35e68a8d2f0c2cc176d19b884506543c93ba72980145b80abe276022c",
+    "urdf_sha256_expected": "3a65d2d35e68a8d2f0c2cc176d19b884506543c93ba72980145b80abe276022c",
+    "urdf_sha256_matches_expected": true,
+    "joint_names": [
+      "shoulder_pan",
+      "shoulder_lift",
+      "elbow_flex",
+      "wrist_flex",
+      "wrist_roll"
+    ],
+    "joint_limits_rad": {
+      "shoulder_pan": {
+        "lower": -1.91986,
+        "upper": 1.91986
+      },
+      "shoulder_lift": {
+        "lower": -1.74533,
+        "upper": 1.74533
+      },
+      "elbow_flex": {
+        "lower": -1.69,
+        "upper": 1.69
+      },
+      "wrist_flex": {
+        "lower": -1.65806,
+        "upper": 1.65806
+      },
+      "wrist_roll": {
+        "lower": -2.74385,
+        "upper": 2.84121
+      }
+    }
+  },
+  "mapping": {
+    "path": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\config\\real_joint_state_mapping.json",
+    "follower_port": "COM4",
+    "follower_port_source": "repos/lerobot/so101_sparse_tactile/configs/tactile_teleop_force_close.yaml",
+    "calibration_path": "C:/Users/82053/.cache/huggingface/lerobot/calibration/robots/so_follower/my_follower.json",
+    "status": "provisional_requires_physical_validation",
+    "joint_mappings": [
+      {
+        "source_name": "shoulder_pan",
+        "target_name": "shoulder_pan",
+        "source_motor_id": 1,
+        "sign": 1.0,
+        "offset_rad": 0.0,
+        "scale": "pi/180"
+      },
+      {
+        "source_name": "shoulder_lift",
+        "target_name": "shoulder_lift",
+        "source_motor_id": 2,
+        "sign": 1.0,
+        "offset_rad": 0.0,
+        "scale": "pi/180"
+      },
+      {
+        "source_name": "elbow_flex",
+        "target_name": "elbow_flex",
+        "source_motor_id": 3,
+        "sign": 1.0,
+        "offset_rad": 0.0,
+        "scale": "pi/180"
+      },
+      {
+        "source_name": "wrist_flex",
+        "target_name": "wrist_flex",
+        "source_motor_id": 4,
+        "sign": 1.0,
+        "offset_rad": 0.0,
+        "scale": "pi/180"
+      },
+      {
+        "source_name": "wrist_roll",
+        "target_name": "wrist_roll",
+        "source_motor_id": 5,
+        "sign": 1.0,
+        "offset_rad": 0.0,
+        "scale": "pi/180"
+      }
+    ]
+  },
+  "safety": {
+    "opened_com_ports": false,
+    "real_so101_connected": false,
+    "motor_read_requests_sent": 0,
+    "torque_enable_written": false,
+    "torque_disable_written": false,
+    "goal_position_written": false,
+    "motion_parameters_written": false,
+    "motion_command_sent": false,
+    "shadow_execution_started": false,
+    "controller_command_topics_published": [],
+    "observed_physical_motion": false,
+    "test_only_mock_joint_state_used_as_real": false
+  },
+  "failures": [],
+  "logs": {
+    "main_log": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\stage_2d3b_verification.log",
+    "offline_log": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\stage_2d3b_offline.log",
+    "offline_report": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\stage_2d3b_offline_report.json"
+  },
+  "offline_joint_states_sample": {
+    "name": [
+      "shoulder_pan",
+      "shoulder_lift",
+      "elbow_flex",
+      "wrist_flex",
+      "wrist_roll"
+    ],
+    "position": [
+      0.0,
+      -0.3490658503988659,
+      0.5235987755982988,
+      1.3962634015954636,
+      0.0
+    ]
+  },
+  "offline_cases": [
+    {
+      "name": "normal_json_bridge_and_gate_ready",
+      "passed": true,
+      "real_valid_seen": true,
+      "latest_real_status": {
+        "status": "VALID",
+        "reason": "valid_real_joint_state",
+        "tcp_connected": true,
+        "host": "127.0.0.1",
+        "port": 18766,
+        "sequence": 29,
+        "source": "real_so101_follower_read_only",
+        "joint_names": [
+          "shoulder_pan",
+          "shoulder_lift",
+          "elbow_flex",
+          "wrist_flex",
+          "wrist_roll"
+        ],
+        "positions_rad": [
+          0.0,
+          -0.3490658503988659,
+          0.5235987755982988,
+          1.3962634015954636,
+          0.0
+        ],
+        "sample_rate_hz": 33.76018626322473,
+        "last_message_age_s": 0.031000000002677552,
+        "read_only": true,
+        "torque_state_changed": false,
+        "motion_command_sent": false,
+        "goal_position_written": false,
+        "motion_parameters_written": false,
+        "calibration_path": "C:/Users/82053/.cache/huggingface/lerobot/calibration/robots/so_follower/my_follower.json",
+        "follower_port": "COM4",
+        "mapping_status": "offline_test",
+        "timestamp_ros_s": 1785858354.6381311,
+        "message_count": 30,
+        "valid_message_count": 30,
+        "invalid_message_count": 0
+      },
+      "latest_gate_status": {
+        "status": "READY",
+        "reason": "shadow_execution_candidate_valid",
+        "plan_id": "stage2d3b-ready",
+        "current_joint_state_age_s": 0.25,
+        "source_valid_heartbeat_age_s": 0.2819999999992433,
+        "maximum_start_state_error_rad_observed": 0.0,
+        "maximum_start_state_error_rad_limit": 0.08,
+        "minimum_current_joint_limit_margin_rad": 0.2617965984045365,
+        "minimum_trajectory_joint_limit_margin_rad": 0.2617965984045365,
+        "maximum_velocity_rad_s_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "maximum_acceleration_rad_s2_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "total_duration_s": 0.8,
+        "trajectory_point_count": 3,
+        "time_strictly_increasing": true,
+        "hardware_control_enabled": false,
+        "command_topics_published": [],
+        "shadow_execution_only": true,
+        "timestamp": 1785858354.6690586,
+        "status_profile": "shadow_execution_only",
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ],
+        "safe_timed_status_raw": "{\"status\": \"VALID\", \"reason\": \"stage_2d3b_test_valid\", \"plan_id\": \"stage2d3b-ready\", \"active_plan_id\": \"stage2d3b-ready\", \"hardware_control_enabled\": false, \"published_controller_command_topics\": [], \"timestamp\": 54206.812}"
+      }
+    },
+    {
+      "name": "wrong_joint_names",
+      "passed": true,
+      "expected_reason": "wrong_joint_names",
+      "matching_real_status": {
+        "status": "INVALID",
+        "reason": "wrong_joint_names",
+        "tcp_connected": true,
+        "host": "127.0.0.1",
+        "port": 18766,
+        "sequence": 42,
+        "source": "real_so101_follower_read_only",
+        "joint_names": [
+          "shoulder_pan",
+          "shoulder_lift",
+          "elbow_flex",
+          "wrist_flex",
+          "wrist_roll"
+        ],
+        "positions_rad": [
+          0.0,
+          -0.3490658503988659,
+          0.5235987755982988,
+          1.3962634015954636,
+          0.0
+        ],
+        "sample_rate_hz": 33.66174055827137,
+        "last_message_age_s": 0.09399999999732245,
+        "read_only": true,
+        "torque_state_changed": false,
+        "motion_command_sent": false,
+        "goal_position_written": false,
+        "motion_parameters_written": false,
+        "calibration_path": "C:/Users/82053/.cache/huggingface/lerobot/calibration/robots/so_follower/my_follower.json",
+        "follower_port": "COM4",
+        "mapping_status": "offline_test",
+        "timestamp_ros_s": 1785858355.062275,
+        "message_count": 43,
+        "valid_message_count": 42,
+        "invalid_message_count": 1
+      }
+    },
+    {
+      "name": "wrong_length",
+      "passed": true,
+      "expected_reason": "wrong_position_length",
+      "matching_real_status": {
+        "status": "INVALID",
+        "reason": "wrong_position_length",
+        "tcp_connected": true,
+        "host": "127.0.0.1",
+        "port": 18766,
+        "sequence": 43,
+        "source": "real_so101_follower_read_only",
+        "joint_names": [
+          "shoulder_pan",
+          "shoulder_lift",
+          "elbow_flex",
+          "wrist_flex",
+          "wrist_roll"
+        ],
+        "positions_rad": [
+          0.0,
+          1.0
+        ],
+        "sample_rate_hz": 33.66174055827137,
+        "last_message_age_s": 0.14099999999598367,
+        "read_only": true,
+        "torque_state_changed": false,
+        "motion_command_sent": false,
+        "goal_position_written": false,
+        "motion_parameters_written": false,
+        "calibration_path": "C:/Users/82053/.cache/huggingface/lerobot/calibration/robots/so_follower/my_follower.json",
+        "follower_port": "COM4",
+        "mapping_status": "offline_test",
+        "timestamp_ros_s": 1785858355.110083,
+        "message_count": 44,
+        "valid_message_count": 42,
+        "invalid_message_count": 2
+      }
+    },
+    {
+      "name": "nan_inf",
+      "passed": true,
+      "expected_reason": "non_finite_position",
+      "matching_real_status": {
+        "status": "INVALID",
+        "reason": "non_finite_position",
+        "tcp_connected": true,
+        "host": "127.0.0.1",
+        "port": 18766,
+        "sequence": 44,
+        "source": "real_so101_follower_read_only",
+        "joint_names": [
+          "shoulder_pan",
+          "shoulder_lift",
+          "elbow_flex",
+          "wrist_flex",
+          "wrist_roll"
+        ],
+        "positions_rad": [
+          0.0,
+          "NaN",
+          0.0,
+          0.0,
+          0.0
+        ],
+        "sample_rate_hz": 33.66174055827137,
+        "last_message_age_s": 0.1879999999946449,
+        "read_only": true,
+        "torque_state_changed": false,
+        "motion_command_sent": false,
+        "goal_position_written": false,
+        "motion_parameters_written": false,
+        "calibration_path": "C:/Users/82053/.cache/huggingface/lerobot/calibration/robots/so_follower/my_follower.json",
+        "follower_port": "COM4",
+        "mapping_status": "offline_test",
+        "timestamp_ros_s": 1785858355.1556654,
+        "message_count": 45,
+        "valid_message_count": 42,
+        "invalid_message_count": 3
+      }
+    },
+    {
+      "name": "urdf_out_of_bounds",
+      "passed": true,
+      "expected_reason": "current_joint_state_out_of_bounds",
+      "matching_real_status": {
+        "status": "INVALID",
+        "reason": "current_joint_state_out_of_bounds",
+        "tcp_connected": true,
+        "host": "127.0.0.1",
+        "port": 18766,
+        "sequence": 45,
+        "source": "real_so101_follower_read_only",
+        "joint_names": [
+          "shoulder_pan",
+          "shoulder_lift",
+          "elbow_flex",
+          "wrist_flex",
+          "wrist_roll"
+        ],
+        "positions_rad": [
+          2.16986,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "sample_rate_hz": 33.66174055827137,
+        "last_message_age_s": 0.23500000000058208,
+        "read_only": true,
+        "torque_state_changed": false,
+        "motion_command_sent": false,
+        "goal_position_written": false,
+        "motion_parameters_written": false,
+        "calibration_path": "C:/Users/82053/.cache/huggingface/lerobot/calibration/robots/so_follower/my_follower.json",
+        "follower_port": "COM4",
+        "mapping_status": "offline_test",
+        "timestamp_ros_s": 1785858355.202749,
+        "message_count": 46,
+        "valid_message_count": 42,
+        "invalid_message_count": 4
+      }
+    },
+    {
+      "name": "sequence_regression",
+      "passed": true,
+      "expected_reason": "sequence_regression",
+      "matching_real_status": {
+        "status": "INVALID",
+        "reason": "sequence_regression",
+        "tcp_connected": true,
+        "host": "127.0.0.1",
+        "port": 18766,
+        "sequence": 1,
+        "source": "real_so101_follower_read_only",
+        "joint_names": [
+          "shoulder_pan",
+          "shoulder_lift",
+          "elbow_flex",
+          "wrist_flex",
+          "wrist_roll"
+        ],
+        "positions_rad": [
+          0.0,
+          -0.3490658503988659,
+          0.5235987755982988,
+          1.3962634015954636,
+          0.0
+        ],
+        "sample_rate_hz": 33.66174055827137,
+        "last_message_age_s": 0.2819999999992433,
+        "read_only": true,
+        "torque_state_changed": false,
+        "motion_command_sent": false,
+        "goal_position_written": false,
+        "motion_parameters_written": false,
+        "calibration_path": "C:/Users/82053/.cache/huggingface/lerobot/calibration/robots/so_follower/my_follower.json",
+        "follower_port": "COM4",
+        "mapping_status": "offline_test",
+        "timestamp_ros_s": 1785858355.2502632,
+        "message_count": 47,
+        "valid_message_count": 42,
+        "invalid_message_count": 5
+      }
+    },
+    {
+      "name": "timeout",
+      "passed": true,
+      "latest_real_status": {
+        "status": "INVALID",
+        "reason": "real_joint_state_timeout",
+        "tcp_connected": true,
+        "host": "127.0.0.1",
+        "port": 18766,
+        "sequence": 46,
+        "source": "real_so101_follower_read_only",
+        "joint_names": [
+          "shoulder_pan",
+          "shoulder_lift",
+          "elbow_flex",
+          "wrist_flex",
+          "wrist_roll"
+        ],
+        "positions_rad": [
+          0.0,
+          -0.3490658503988659,
+          0.5235987755982988,
+          1.3962634015954636,
+          0.0
+        ],
+        "sample_rate_hz": 27.433050294007934,
+        "last_message_age_s": 0.4690000000045984,
+        "read_only": true,
+        "torque_state_changed": false,
+        "motion_command_sent": false,
+        "goal_position_written": false,
+        "motion_parameters_written": false,
+        "calibration_path": "C:/Users/82053/.cache/huggingface/lerobot/calibration/robots/so_follower/my_follower.json",
+        "follower_port": "COM4",
+        "mapping_status": "offline_test",
+        "timestamp_ros_s": 1785858355.7565222,
+        "message_count": 48,
+        "valid_message_count": 43,
+        "invalid_message_count": 5
+      }
+    },
+    {
+      "name": "tcp_disconnect",
+      "passed": true,
+      "matching_real_status": {
+        "status": "INVALID",
+        "reason": "tcp_disconnected",
+        "detail": "peer_closed",
+        "tcp_connected": false,
+        "host": "127.0.0.1",
+        "port": 18766,
+        "timestamp_ros_s": 1785858355.7903404
+      }
+    },
+    {
+      "name": "reconnect",
+      "passed": true,
+      "connected_count": 2,
+      "latest_real_status": {
+        "status": "VALID",
+        "reason": "valid_real_joint_state",
+        "tcp_connected": true,
+        "host": "127.0.0.1",
+        "port": 18766,
+        "sequence": 47,
+        "source": "real_so101_follower_read_only",
+        "joint_names": [
+          "shoulder_pan",
+          "shoulder_lift",
+          "elbow_flex",
+          "wrist_flex",
+          "wrist_roll"
+        ],
+        "positions_rad": [
+          0.0,
+          -0.3490658503988659,
+          0.5235987755982988,
+          1.3962634015954636,
+          0.0
+        ],
+        "sample_rate_hz": 20.853540252201775,
+        "last_message_age_s": 0.031000000002677552,
+        "read_only": true,
+        "torque_state_changed": false,
+        "motion_command_sent": false,
+        "goal_position_written": false,
+        "motion_parameters_written": false,
+        "calibration_path": "C:/Users/82053/.cache/huggingface/lerobot/calibration/robots/so_follower/my_follower.json",
+        "follower_port": "COM4",
+        "mapping_status": "offline_test",
+        "timestamp_ros_s": 1785858355.8502972,
+        "message_count": 49,
+        "valid_message_count": 44,
+        "invalid_message_count": 5
+      }
+    },
+    {
+      "name": "mock_real_topic_isolation",
+      "passed": true,
+      "latest_gate_status": {
+        "status": "INVALID",
+        "reason": "current_joint_state_source_invalid",
+        "plan_id": "stage2d3b-mock-isolation",
+        "current_joint_state_age_s": 0.9219999999986612,
+        "source_valid_heartbeat_age_s": 0.18699999999807915,
+        "maximum_start_state_error_rad_observed": null,
+        "maximum_start_state_error_rad_limit": 0.08,
+        "minimum_current_joint_limit_margin_rad": null,
+        "minimum_trajectory_joint_limit_margin_rad": null,
+        "maximum_velocity_rad_s_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "maximum_acceleration_rad_s2_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "total_duration_s": 0.0,
+        "trajectory_point_count": 0,
+        "time_strictly_increasing": false,
+        "hardware_control_enabled": false,
+        "command_topics_published": [],
+        "shadow_execution_only": true,
+        "timestamp": 1785858356.73733,
+        "status_profile": "shadow_execution_only",
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ],
+        "safe_timed_status_raw": "{\"status\": \"VALID\", \"reason\": \"stage_2d3b_test_valid\", \"plan_id\": \"stage2d3b-mock-isolation\", \"active_plan_id\": \"stage2d3b-mock-isolation\", \"hardware_control_enabled\": false, \"published_controller_command_topics\": [], \"timestamp\": 54209.062}"
+      }
+    },
+    {
+      "name": "command_gate_reads_real_joint_states",
+      "passed": true,
+      "first_real_sequence": 48,
+      "last_real_sequence": 80,
+      "latest_real_status": {
+        "status": "VALID",
+        "reason": "valid_real_joint_state",
+        "tcp_connected": true,
+        "host": "127.0.0.1",
+        "port": 18766,
+        "sequence": 80,
+        "source": "real_so101_follower_read_only",
+        "joint_names": [
+          "shoulder_pan",
+          "shoulder_lift",
+          "elbow_flex",
+          "wrist_flex",
+          "wrist_roll"
+        ],
+        "positions_rad": [
+          0.0,
+          -0.3490658503988659,
+          0.5235987755982988,
+          1.3962634015954636,
+          0.0
+        ],
+        "sample_rate_hz": 17.62523191095405,
+        "last_message_age_s": 0.031000000002677552,
+        "read_only": true,
+        "torque_state_changed": false,
+        "motion_command_sent": false,
+        "goal_position_written": false,
+        "motion_parameters_written": false,
+        "calibration_path": "C:/Users/82053/.cache/huggingface/lerobot/calibration/robots/so_follower/my_follower.json",
+        "follower_port": "COM4",
+        "mapping_status": "offline_test",
+        "timestamp_ros_s": 1785858358.090719,
+        "message_count": 82,
+        "valid_message_count": 77,
+        "invalid_message_count": 5
+      },
+      "latest_gate_status": {
+        "status": "READY",
+        "reason": "shadow_execution_candidate_valid",
+        "plan_id": "stage2d3b-real-source",
+        "current_joint_state_age_s": 0.2180000000007567,
+        "source_valid_heartbeat_age_s": 0.25,
+        "maximum_start_state_error_rad_observed": 0.0,
+        "maximum_start_state_error_rad_limit": 0.08,
+        "minimum_current_joint_limit_margin_rad": 0.2617965984045365,
+        "minimum_trajectory_joint_limit_margin_rad": 0.2617965984045365,
+        "maximum_velocity_rad_s_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "maximum_acceleration_rad_s2_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "total_duration_s": 0.8,
+        "trajectory_point_count": 3,
+        "time_strictly_increasing": true,
+        "hardware_control_enabled": false,
+        "command_topics_published": [],
+        "shadow_execution_only": true,
+        "timestamp": 1785858358.0919056,
+        "status_profile": "shadow_execution_only",
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ],
+        "safe_timed_status_raw": "{\"status\": \"VALID\", \"reason\": \"stage_2d3b_test_valid\", \"plan_id\": \"stage2d3b-real-source\", \"active_plan_id\": \"stage2d3b-real-source\", \"hardware_control_enabled\": false, \"published_controller_command_topics\": [], \"timestamp\": 54210.265}"
+      }
+    }
+  ],
+  "real_server_no_com_safe_block": {
+    "return_code": 3,
+    "output": "{\"status\": \"CONFIG_LOADED\", \"follower_port\": \"COM_DOES_NOT_EXIST_2D3B_TEST\"}\n{\"status\": \"READ_ONLY_PREFLIGHT_FAIL\", \"reason\": \"configured_port_missing\", \"follower_port\": \"COM_DOES_NOT_EXIST_2D3B_TEST\", \"responsive_motor_ids\": [], \"required_motor_ids\": [1, 2, 3, 4, 5], \"suggested_checks\": [\"wrong_serial_port\", \"device_not_connected\"], \"torque_enable_written\": false, \"goal_position_written\": false, \"motion_command_sent\": false}\n",
+    "passed": true
+  },
+  "executables": {
+    "return_code": 0,
+    "raw_output": "so101_command_gate command_gate_node-script.py\nso101_command_gate command_gate_node.exe\nso101_command_gate connection_trajectory_node-script.py\nso101_command_gate connection_trajectory_node.exe\nso101_command_gate mock_joint_state_publisher-script.py\nso101_command_gate mock_joint_state_publisher.exe\nso101_command_gate real_joint_state_bridge_node-script.py\nso101_command_gate real_joint_state_bridge_node.exe\nso101_command_gate shadow_executor_node-script.py\nso101_command_gate shadow_executor_node.exe\n",
+    "command_gate_node": true,
+    "shadow_executor_node": true,
+    "mock_joint_state_publisher": true,
+    "real_joint_state_bridge_node": true
+  },
+  "stage_pass_criteria": {
+    "requires_real_10s_200_frames": true,
+    "met": false,
+    "reason": "No serial COM ports were visible, so real follower read-only sampling was not run."
+  }
+}

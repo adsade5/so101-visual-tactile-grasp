@@ -1,0 +1,1419 @@
+{
+  "stage": "2B-2",
+  "status": "PASS",
+  "timestamp": "2026-08-04T04:10:51.236702+00:00",
+  "description": "Safe and continuous position-only IK selection",
+  "model": {
+    "urdf": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\robot_model\\so101\\so101_new_calib.urdf",
+    "urdf_sha256": "3a65d2d35e68a8d2f0c2cc176d19b884506543c93ba72980145b80abe276022c",
+    "base_link": "base_link",
+    "tip_link": "gripper_frame_link",
+    "joint_names": [
+      "shoulder_pan",
+      "shoulder_lift",
+      "elbow_flex",
+      "wrist_flex",
+      "wrist_roll"
+    ],
+    "joint_limits_rad": {
+      "shoulder_pan": {
+        "lower": -1.91986,
+        "upper": 1.91986
+      },
+      "shoulder_lift": {
+        "lower": -1.74533,
+        "upper": 1.74533
+      },
+      "elbow_flex": {
+        "lower": -1.69,
+        "upper": 1.69
+      },
+      "wrist_flex": {
+        "lower": -1.65806,
+        "upper": 1.65806
+      },
+      "wrist_roll": {
+        "lower": -2.74385,
+        "upper": 2.84121
+      }
+    }
+  },
+  "configuration": {
+    "position_tolerance_mm": 1.0,
+    "minimum_limit_margin_rad": 0.05,
+    "maximum_adjacent_delta_rad": 0.15,
+    "maximum_return_delta_rad": 0.15,
+    "maximum_wrist_roll_deviation_rad": 0.5,
+    "reference_q_deg": [
+      0.0,
+      -30.0,
+      45.0,
+      -20.0,
+      0.0
+    ],
+    "path_step_m": 0.002,
+    "path_steps_per_segment": 5,
+    "local_random_starts": 16,
+    "random_seed": 20260804
+  },
+  "reference": {
+    "q_rad": [
+      0.0,
+      -0.5235987755982988,
+      0.7853981633974483,
+      -0.3490658503988659,
+      0.0
+    ],
+    "q_deg": [
+      0.0,
+      -30.0,
+      45.0,
+      -20.0,
+      0.0
+    ],
+    "center_position_m": [
+      0.3281570945623701,
+      -9.55285979726948e-06,
+      0.2042037446487724
+    ],
+    "minimum_limit_margin_rad": 0.9046018366025517
+  },
+  "summary": {
+    "path_point_count": 31,
+    "solved_point_count": 31,
+    "maximum_position_error_mm": 0.4937302450916831,
+    "minimum_observed_margin_rad": 0.9046018366025517,
+    "maximum_adjacent_delta_rad": 0.018766031635418567,
+    "maximum_adjacent_delta_deg": 1.0752144109184698,
+    "maximum_wrist_roll_deviation_rad": 0.00136661988592181,
+    "maximum_wrist_roll_deviation_deg": 0.07830155166196974,
+    "closed_path_return_delta_rad": 0.0013453840685346682,
+    "closed_path_return_delta_deg": 0.077084828951176,
+    "unreachable_rejected": true,
+    "deterministic_repeat": true
+  },
+  "path_results": [
+    {
+      "point_index": 0,
+      "point_name": "center_start",
+      "offset_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "target_position_m": [
+        0.3281570945623701,
+        -9.55285979726948e-06,
+        0.2042037446487724
+      ],
+      "selected_q_rad": [
+        0.0,
+        -0.5235987755982988,
+        0.7853981633974483,
+        -0.3490658503988659,
+        0.0
+      ],
+      "selected_q_deg": [
+        0.0,
+        -29.999999999999996,
+        45.0,
+        -20.0,
+        0.0
+      ],
+      "achieved_position_m": [
+        0.3281570945623701,
+        -9.55285979726948e-06,
+        0.2042037446487724
+      ],
+      "position_error_mm": 0.0,
+      "minimum_limit_margin_rad": 0.9046018366025517,
+      "adjacent_max_joint_delta_rad": 0.0,
+      "adjacent_max_joint_delta_deg": 0.0,
+      "wrist_roll_deviation_rad": 0.0,
+      "selection_score": 0.01324012295297329,
+      "selected_seed": "reference",
+      "candidate_count": 37,
+      "passed": true
+    },
+    {
+      "point_index": 1,
+      "point_name": "01_x_positive",
+      "offset_m": [
+        0.002,
+        0.0,
+        0.0
+      ],
+      "target_position_m": [
+        0.3301570945623701,
+        -9.55285979726948e-06,
+        0.2042037446487724
+      ],
+      "selected_q_rad": [
+        4.816493807235922e-05,
+        -0.5090479295218092,
+        0.7736089180075357,
+        -0.351130536838479,
+        0.00136661988592181
+      ],
+      "selected_q_deg": [
+        0.002759647672055158,
+        -29.166297931472652,
+        44.324525995513945,
+        -20.118297819007722,
+        0.07830155166196974
+      ],
+      "achieved_position_m": [
+        0.3297037931551527,
+        -3.435084803718734e-05,
+        0.20418339228824609
+      ],
+      "position_error_mm": 0.45443517093751007,
+      "minimum_limit_margin_rad": 0.9163910819924642,
+      "adjacent_max_joint_delta_rad": 0.014550846076489599,
+      "adjacent_max_joint_delta_deg": 0.8337020685273471,
+      "wrist_roll_deviation_rad": 0.00136661988592181,
+      "selection_score": 0.01593698599320647,
+      "selected_seed": "shoulder_pan_-1_0.05",
+      "candidate_count": 37,
+      "passed": true
+    },
+    {
+      "point_index": 2,
+      "point_name": "02_x_positive",
+      "offset_m": [
+        0.004,
+        0.0,
+        0.0
+      ],
+      "target_position_m": [
+        0.3321570945623701,
+        -9.55285979726948e-06,
+        0.2042037446487724
+      ],
+      "selected_q_rad": [
+        -0.00016372011262429792,
+        -0.4905942306277286,
+        0.7585040175238013,
+        -0.35377979131760123,
+        2.467826891751606e-06
+      ],
+      "selected_q_deg": [
+        -0.00938047147477878,
+        -28.108978868436598,
+        43.45907894783085,
+        -20.270088919517555,
+        0.0001413960654662553
+      ],
+      "achieved_position_m": [
+        0.3316766197489003,
+        3.8394002083815026e-05,
+        0.20417385031379312
+      ],
+      "position_error_mm": 0.4837857162080498,
+      "minimum_limit_margin_rad": 0.9314959824761987,
+      "adjacent_max_joint_delta_rad": 0.018453698894080606,
+      "adjacent_max_joint_delta_deg": 1.0573190630360534,
+      "wrist_roll_deviation_rad": 2.467826891751606e-06,
+      "selection_score": 0.016374756430615565,
+      "selected_seed": "shoulder_pan_+1_0.05",
+      "candidate_count": 37,
+      "passed": true
+    },
+    {
+      "point_index": 3,
+      "point_name": "03_x_positive",
+      "offset_m": [
+        0.006,
+        0.0,
+        0.0
+      ],
+      "target_position_m": [
+        0.3341570945623701,
+        -9.55285979726948e-06,
+        0.2042037446487724
+      ],
+      "selected_q_rad": [
+        0.00013248184376910693,
+        -0.472042598763265,
+        0.7431652065466796,
+        -0.35646359741962175,
+        0.0013592597203419216
+      ],
+      "selected_q_deg": [
+        0.00759065051008137,
+        -27.046048659522416,
+        42.58022981609284,
+        -20.423859682194788,
+        0.07787984523772468
+      ],
+      "achieved_position_m": [
+        0.3336719091854575,
+        -5.931839517404658e-05,
+        0.20417351059563862
+      ],
+      "position_error_mm": 0.48866712233381465,
+      "minimum_limit_margin_rad": 0.9468347934533203,
+      "adjacent_max_joint_delta_rad": 0.018551631864463625,
+      "adjacent_max_joint_delta_deg": 1.06293020891418,
+      "wrist_roll_deviation_rad": 0.0013592597203419216,
+      "selection_score": 0.016147584834284752,
+      "selected_seed": "shoulder_pan_-1_0.05",
+      "candidate_count": 37,
+      "passed": true
+    },
+    {
+      "point_index": 4,
+      "point_name": "04_x_positive",
+      "offset_m": [
+        0.008,
+        0.0,
+        0.0
+      ],
+      "target_position_m": [
+        0.3361570945623701,
+        -9.55285979726948e-06,
+        0.2042037446487724
+      ],
+      "selected_q_rad": [
+        -0.00017012646468840542,
+        -0.45357136918769037,
+        0.7277652358759429,
+        -0.3591438523354037,
+        1.1010108205785577e-05
+      ],
+      "selected_q_deg": [
+        -0.009747528410127063,
+        -25.98772516242477,
+        41.697876492034375,
+        -20.577426976888287,
+        0.0006308327321738689
+      ],
+      "achieved_position_m": [
+        0.33566936421967886,
+        4.0907085232155826e-05,
+        0.2041736679104592
+      ],
+      "position_error_mm": 0.4912552324623475,
+      "minimum_limit_margin_rad": 0.9622347641240571,
+      "adjacent_max_joint_delta_rad": 0.01847122957557462,
+      "adjacent_max_joint_delta_deg": 1.0583234970976487,
+      "wrist_roll_deviation_rad": 1.1010108205785577e-05,
+      "selection_score": 0.015888511564589106,
+      "selected_seed": "shoulder_pan_+1_0.05",
+      "candidate_count": 37,
+      "passed": true
+    },
+    {
+      "point_index": 5,
+      "point_name": "05_x_positive",
+      "offset_m": [
+        0.01,
+        0.0,
+        0.0
+      ],
+      "target_position_m": [
+        0.3381570945623701,
+        -9.55285979726948e-06,
+        0.2042037446487724
+      ],
+      "selected_q_rad": [
+        0.00013509788599326555,
+        -0.43519467749418717,
+        0.7123150525973294,
+        -0.36181726357255406,
+        0.0013497815826510455
+      ],
+      "selected_q_deg": [
+        0.007740538688553676,
+        -24.93481828697392,
+        40.81264619746622,
+        -20.73060215767985,
+        0.0773367879503936
+      ],
+      "achieved_position_m": [
+        0.3376669134244302,
+        -6.052925092651462e-05,
+        0.2041738546090649
+      ],
+      "position_error_mm": 0.4937302450916831,
+      "minimum_limit_margin_rad": 0.9776849474026705,
+      "adjacent_max_joint_delta_rad": 0.0183766916935032,
+      "adjacent_max_joint_delta_deg": 1.0529068754508508,
+      "wrist_roll_deviation_rad": 0.0013497815826510455,
+      "selection_score": 0.015628977427643177,
+      "selected_seed": "shoulder_pan_-1_0.05",
+      "candidate_count": 37,
+      "passed": true
+    },
+    {
+      "point_index": 6,
+      "point_name": "06_y_positive",
+      "offset_m": [
+        0.01,
+        0.002,
+        0.0
+      ],
+      "target_position_m": [
+        0.3381570945623701,
+        0.0019904471402027307,
+        0.2042037446487724
+      ],
+      "selected_q_rad": [
+        -0.006693077404958692,
+        -0.4309673233087217,
+        0.7086664243953669,
+        -0.3624582321462733,
+        0.001169177358170534
+      ],
+      "selected_q_deg": [
+        -0.38348508725850644,
+        -24.69260873363978,
+        40.603595200481365,
+        -20.767326951754484,
+        0.06698892812542699
+      ],
+      "achieved_position_m": [
+        0.3381231134041792,
+        0.001984458166800193,
+        0.20420016857633913
+      ],
+      "position_error_mm": 0.03468969888103451,
+      "minimum_limit_margin_rad": 0.9813335756046331,
+      "adjacent_max_joint_delta_rad": 0.0068281752909519575,
+      "adjacent_max_joint_delta_deg": 0.3912256259470601,
+      "wrist_roll_deviation_rad": 0.001169177358170534,
+      "selection_score": 0.013049965582747812,
+      "selected_seed": "reference",
+      "candidate_count": 37,
+      "passed": true
+    },
+    {
+      "point_index": 7,
+      "point_name": "07_y_positive",
+      "offset_m": [
+        0.01,
+        0.004,
+        0.0
+      ],
+      "target_position_m": [
+        0.3381570945623701,
+        0.003990447140202731,
+        0.2042037446487724
+      ],
+      "selected_q_rad": [
+        -0.01336014284372356,
+        -0.43056007763658133,
+        0.7083123727499065,
+        -0.3625207127595932,
+        0.0009931586294666497
+      ],
+      "selected_q_deg": [
+        -0.7654797986372698,
+        -24.66927527540117,
+        40.583309535466825,
+        -20.770906827199102,
+        0.056903797855436186
+      ],
+      "achieved_position_m": [
+        0.3381478674994386,
+        0.003981758321263726,
+        0.20420348610096847
+      ],
+      "position_error_mm": 0.012676794226596441,
+      "minimum_limit_margin_rad": 0.9816876272500934,
+      "adjacent_max_joint_delta_rad": 0.006667065438764868,
+      "adjacent_max_joint_delta_deg": 0.38199471137876334,
+      "wrist_roll_deviation_rad": 0.0009931586294666497,
+      "selection_score": 0.012722796349709966,
+      "selected_seed": "reference",
+      "candidate_count": 37,
+      "passed": true
+    },
+    {
+      "point_index": 8,
+      "point_name": "08_y_positive",
+      "offset_m": [
+        0.01,
+        0.006,
+        0.0
+      ],
+      "target_position_m": [
+        0.3381570945623701,
+        0.005990447140202731,
+        0.2042037446487724
+      ],
+      "selected_q_rad": [
+        -0.02003509671120351,
+        -0.43024881950448135,
+        0.7080487644930232,
+        -0.3625657726904864,
+        0.0008169620407724017
+      ],
+      "selected_q_deg": [
+        -1.1479264836883971,
+        -24.651441498092716,
+        40.56820589490261,
+        -20.773488571064433,
+        0.0468084769586533
+      ],
+      "achieved_position_m": [
+        0.3381485512337587,
+        0.005981624971180476,
+        0.20420355632894108
+      ],
+      "position_error_mm": 0.012282287831599499,
+      "minimum_limit_margin_rad": 0.9819512355069767,
+      "adjacent_max_joint_delta_rad": 0.0066749538674799515,
+      "adjacent_max_joint_delta_deg": 0.38244668505112744,
+      "wrist_roll_deviation_rad": 0.0008169620407724017,
+      "selection_score": 0.012718921370210386,
+      "selected_seed": "reference",
+      "candidate_count": 37,
+      "passed": true
+    },
+    {
+      "point_index": 9,
+      "point_name": "09_y_positive",
+      "offset_m": [
+        0.01,
+        0.008,
+        0.0
+      ],
+      "target_position_m": [
+        0.3381570945623701,
+        0.00799044714020273,
+        0.2042037446487724
+      ],
+      "selected_q_rad": [
+        -0.02670884082670314,
+        -0.4298272494692089,
+        0.7076921078892487,
+        -0.36262664049273424,
+        0.0006408167196848055
+      ],
+      "selected_q_deg": [
+        -1.5303038550567944,
+        -24.627287314302425,
+        40.54777097677086,
+        -20.77697603924147,
+        0.036716093479357295
+      ],
+      "achieved_position_m": [
+        0.33814790951825263,
+        0.007981637008642283,
+        0.204203487377892
+      ],
+      "position_error_mm": 0.012729872028338668,
+      "minimum_limit_margin_rad": 0.9823078921107512,
+      "adjacent_max_joint_delta_rad": 0.0066737441154996295,
+      "adjacent_max_joint_delta_deg": 0.3823773713683974,
+      "wrist_roll_deviation_rad": 0.0006408167196848055,
+      "selection_score": 0.012716700862324869,
+      "selected_seed": "reference",
+      "candidate_count": 37,
+      "passed": true
+    },
+    {
+      "point_index": 10,
+      "point_name": "10_y_positive",
+      "offset_m": [
+        0.01,
+        0.01,
+        0.0
+      ],
+      "target_position_m": [
+        0.3381570945623701,
+        0.009990447140202731,
+        0.2042037446487724
+      ],
+      "selected_q_rad": [
+        -0.03338024265423539,
+        -0.42928407530147605,
+        0.707232415774564,
+        -0.36270509470221507,
+        0.00046475921358461806
+      ],
+      "selected_q_deg": [
+        -1.9125470232102568,
+        -24.5961657269508,
+        40.52143255872398,
+        -20.78147113432976,
+        0.026628741428217813
+      ],
+      "achieved_position_m": [
+        0.33814719607842053,
+        0.009981648285487924,
+        0.2042034093239649
+      ],
+      "position_error_mm": 0.013248104450010538,
+      "minimum_limit_margin_rad": 0.982767584225436,
+      "adjacent_max_joint_delta_rad": 0.0066714018275322515,
+      "adjacent_max_joint_delta_deg": 0.3822431681534623,
+      "wrist_roll_deviation_rad": 0.00046475921358461806,
+      "selection_score": 0.01271392157533352,
+      "selected_seed": "reference",
+      "candidate_count": 37,
+      "passed": true
+    },
+    {
+      "point_index": 11,
+      "point_name": "11_z_positive",
+      "offset_m": [
+        0.01,
+        0.01,
+        0.002
+      ],
+      "target_position_m": [
+        0.3381570945623701,
+        0.009990447140202731,
+        0.2062037446487724
+      ],
+      "selected_q_rad": [
+        -0.03340833080078487,
+        -0.4305506370783296,
+        0.702628064763823,
+        -0.36469296905649645,
+        0.0004622205037937328
+      ],
+      "selected_q_deg": [
+        -1.9141563554618868,
+        -24.6687343712571,
+        40.25762267841173,
+        -20.895367945032376,
+        0.026483284071791548
+      ],
+      "achieved_position_m": [
+        0.33813923877590224,
+        0.009989813560414498,
+        0.20619864701473423
+      ],
+      "position_error_mm": 0.01858000017546928,
+      "minimum_limit_margin_rad": 0.987371935236177,
+      "adjacent_max_joint_delta_rad": 0.00460435101074097,
+      "adjacent_max_joint_delta_deg": 0.2638098803122524,
+      "wrist_roll_deviation_rad": 0.0004622205037937328,
+      "selection_score": 0.01259247786065383,
+      "selected_seed": "reference",
+      "candidate_count": 37,
+      "passed": true
+    },
+    {
+      "point_index": 12,
+      "point_name": "12_z_positive",
+      "offset_m": [
+        0.01,
+        0.01,
+        0.004
+      ],
+      "target_position_m": [
+        0.3381570945623701,
+        0.009990447140202731,
+        0.2082037446487724
+      ],
+      "selected_q_rad": [
+        -0.03340842507823285,
+        -0.43162995495864104,
+        0.6978514420350599,
+        -0.366708162395933,
+        0.0004604190589500816
+      ],
+      "selected_q_deg": [
+        -1.9141617571617593,
+        -24.73057473055195,
+        39.98394235572734,
+        -21.010830018284963,
+        0.026380068885224726
+      ],
+      "achieved_position_m": [
+        0.33813800991027654,
+        0.009989809667219064,
+        0.2081984098370946
+      ],
+      "position_error_mm": 0.01982651086233582,
+      "minimum_limit_margin_rad": 0.9921485579649401,
+      "adjacent_max_joint_delta_rad": 0.0047766227287631136,
+      "adjacent_max_joint_delta_deg": 0.27368032268438897,
+      "wrist_roll_deviation_rad": 0.0004604190589500816,
+      "selection_score": 0.012578756499350537,
+      "selected_seed": "reference",
+      "candidate_count": 37,
+      "passed": true
+    },
+    {
+      "point_index": 13,
+      "point_name": "13_z_positive",
+      "offset_m": [
+        0.01,
+        0.01,
+        0.006
+      ],
+      "target_position_m": [
+        0.3381570945623701,
+        0.009990447140202731,
+        0.2102037446487724
+      ],
+      "selected_q_rad": [
+        -0.03340839613097369,
+        -0.4325751669740897,
+        0.6929598741965474,
+        -0.3687375928834573,
+        0.0004586248955753138
+      ],
+      "selected_q_deg": [
+        -1.914160098605981,
+        -24.784731389782213,
+        39.703676163378645,
+        -21.127107820035285,
+        0.026277270896093583
+      ],
+      "achieved_position_m": [
+        0.3381371897956987,
+        0.009989782457065397,
+        0.21019819590473746
+      ],
+      "position_error_mm": 0.02067438270617827,
+      "minimum_limit_margin_rad": 0.9970401258034526,
+      "adjacent_max_joint_delta_rad": 0.004891567838512523,
+      "adjacent_max_joint_delta_deg": 0.2802661923486982,
+      "wrist_roll_deviation_rad": 0.0004586248955753138,
+      "selection_score": 0.01255777800561075,
+      "selected_seed": "reference",
+      "candidate_count": 37,
+      "passed": true
+    },
+    {
+      "point_index": 14,
+      "point_name": "14_z_positive",
+      "offset_m": [
+        0.01,
+        0.01,
+        0.008
+      ],
+      "target_position_m": [
+        0.3381570945623701,
+        0.009990447140202731,
+        0.2122037446487724
+      ],
+      "selected_q_rad": [
+        -0.033408366760641926,
+        -0.4333903464536172,
+        0.687956419902236,
+        -0.37078018400031,
+        0.0004568353492016881
+      ],
+      "selected_q_deg": [
+        -1.914158415809928,
+        -24.83143773350481,
+        39.416999349327995,
+        -21.244139670301855,
+        0.026174737441641893
+      ],
+      "achieved_position_m": [
+        0.33813639615970953,
+        0.009989755968823698,
+        0.2121979707450458
+      ],
+      "position_error_mm": 0.02149975708741601,
+      "minimum_limit_margin_rad": 1.002043580097764,
+      "adjacent_max_joint_delta_rad": 0.005003454294311371,
+      "adjacent_max_joint_delta_deg": 0.28667681405064926,
+      "wrist_roll_deviation_rad": 0.0004568353492016881,
+      "selection_score": 0.012535466699120434,
+      "selected_seed": "reference",
+      "candidate_count": 37,
+      "passed": true
+    },
+    {
+      "point_index": 15,
+      "point_name": "15_z_positive",
+      "offset_m": [
+        0.01,
+        0.01,
+        0.01
+      ],
+      "target_position_m": [
+        0.3381570945623701,
+        0.009990447140202731,
+        0.2142037446487724
+      ],
+      "selected_q_rad": [
+        -0.03340833752176861,
+        -0.43407629003584103,
+        0.6828412509969923,
+        -0.3728353637364238,
+        0.00045505091923923115
+      ],
+      "selected_q_deg": [
+        -1.9141567405458895,
+        -24.87073940575032,
+        39.12392175956098,
+        -21.361892795321985,
+        0.02607249713595642
+      ],
+      "achieved_position_m": [
+        0.33813560789410824,
+        0.00998972965911946,
+        0.21419773263153563
+      ],
+      "position_error_mm": 0.022323441566094147,
+      "minimum_limit_margin_rad": 1.0071587490030076,
+      "adjacent_max_joint_delta_rad": 0.005115168905243661,
+      "adjacent_max_joint_delta_deg": 0.2930775897670155,
+      "wrist_roll_deviation_rad": 0.00045505091923923115,
+      "selection_score": 0.012512110903921075,
+      "selected_seed": "reference",
+      "candidate_count": 37,
+      "passed": true
+    },
+    {
+      "point_index": 16,
+      "point_name": "16_z_negative",
+      "offset_m": [
+        0.01,
+        0.01,
+        0.008
+      ],
+      "target_position_m": [
+        0.3381570945623701,
+        0.009990447140202731,
+        0.2122037446487724
+      ],
+      "selected_q_rad": [
+        -0.03340836179253296,
+        -0.43315329956487464,
+        0.6877237593188718,
+        -0.37083015345902265,
+        0.000456818456212184
+      ],
+      "selected_q_deg": [
+        -1.9141581311582523,
+        -24.817855947233156,
+        39.40366887984217,
+        -21.247002709390642,
+        0.026173769544639947
+      ],
+      "achieved_position_m": [
+        0.3381627757324572,
+        0.009990636375725264,
+        0.21220982256884519
+      ],
+      "position_error_mm": 0.00832181567043234,
+      "minimum_limit_margin_rad": 1.002276240681128,
+      "adjacent_max_joint_delta_rad": 0.00488250832187942,
+      "adjacent_max_joint_delta_deg": 0.2797471202811928,
+      "wrist_roll_deviation_rad": 0.000456818456212184,
+      "selection_score": 0.012504405350213906,
+      "selected_seed": "reference",
+      "candidate_count": 37,
+      "passed": true
+    },
+    {
+      "point_index": 17,
+      "point_name": "17_z_negative",
+      "offset_m": [
+        0.01,
+        0.01,
+        0.006
+      ],
+      "target_position_m": [
+        0.3381570945623701,
+        0.009990447140202731,
+        0.2102037446487724
+      ],
+      "selected_q_rad": [
+        -0.03340839099089298,
+        -0.4323381919364658,
+        0.692730329540243,
+        -0.3687924190807068,
+        0.0004586024768593471
+      ],
+      "selected_q_deg": [
+        -1.9141598041010501,
+        -24.77115372027641,
+        39.69052422336262,
+        -21.13024912974443,
+        0.02627598639828659
+      ],
+      "achieved_position_m": [
+        0.3381635116615942,
+        0.009990660928263369,
+        0.210209916083717
+      ],
+      "position_error_mm": 0.008905699133839064,
+      "minimum_limit_margin_rad": 0.9972696704597569,
+      "adjacent_max_joint_delta_rad": 0.005006570221371298,
+      "adjacent_max_joint_delta_deg": 0.28685534352045367,
+      "wrist_roll_deviation_rad": 0.0004586024768593471,
+      "selection_score": 0.012554215036407504,
+      "selected_seed": "reference",
+      "candidate_count": 37,
+      "passed": true
+    },
+    {
+      "point_index": 18,
+      "point_name": "18_z_negative",
+      "offset_m": [
+        0.01,
+        0.01,
+        0.004
+      ],
+      "target_position_m": [
+        0.3381570945623701,
+        0.009990447140202731,
+        0.2082037446487724
+      ],
+      "selected_q_rad": [
+        -0.03340842059872076,
+        -0.4314067265854665,
+        0.6976370753464576,
+        -0.3667654012356711,
+        0.00046039171406181444
+      ],
+      "selected_q_deg": [
+        -1.9141615005046224,
+        -24.71778468690148,
+        39.971660049202235,
+        -21.01410956222618,
+        0.026378502138535764
+      ],
+      "achieved_position_m": [
+        0.3381627729220704,
+        0.009990636268887246,
+        0.20820977963973583
+      ],
+      "position_error_mm": 0.008288585794601275,
+      "minimum_limit_margin_rad": 0.9923629246535424,
+      "adjacent_max_joint_delta_rad": 0.00490674580621453,
+      "adjacent_max_joint_delta_deg": 0.28113582583960905,
+      "wrist_roll_deviation_rad": 0.00046039171406181444,
+      "selection_score": 0.012576742454364671,
+      "selected_seed": "reference",
+      "candidate_count": 37,
+      "passed": true
+    },
+    {
+      "point_index": 19,
+      "point_name": "19_z_negative",
+      "offset_m": [
+        0.01,
+        0.01,
+        0.002
+      ],
+      "target_position_m": [
+        0.3381570945623701,
+        0.009990447140202731,
+        0.2062037446487724
+      ],
+      "selected_q_rad": [
+        -0.03340845033984772,
+        -0.4303457204537647,
+        0.7024326326336804,
+        -0.3647516079242023,
+        0.00046218541139161776
+      ],
+      "selected_q_deg": [
+        -1.9141632045456751,
+        -24.656993513517463,
+        40.24642524217331,
+        -20.898727704667348,
+        0.026481273425257378
+      ],
+      "achieved_position_m": [
+        0.33816194860817284,
+        0.009990608753640969,
+        0.20620964183168647
+      ],
+      "position_error_mm": 0.0076396757706523296,
+      "minimum_limit_margin_rad": 0.9875673673663196,
+      "adjacent_max_joint_delta_rad": 0.004795557287222807,
+      "adjacent_max_joint_delta_deg": 0.27476519297107316,
+      "wrist_roll_deviation_rad": 0.00046218541139161776,
+      "selection_score": 0.012596980262255447,
+      "selected_seed": "reference",
+      "candidate_count": 37,
+      "passed": true
+    },
+    {
+      "point_index": 20,
+      "point_name": "20_z_negative",
+      "offset_m": [
+        0.01,
+        0.01,
+        0.0
+      ],
+      "target_position_m": [
+        0.3381570945623701,
+        0.009990447140202731,
+        0.2042037446487724
+      ],
+      "selected_q_rad": [
+        -0.03340848018670395,
+        -0.4291538726642954,
+        0.707116344247961,
+        -0.36275169150862496,
+        0.0004639830484266544
+      ],
+      "selected_q_deg": [
+        -1.9141649146445687,
+        -24.588705665358876,
+        40.51478215012799,
+        -20.784140934675833,
+        0.02658427044046139
+      ],
+      "achieved_position_m": [
+        0.3381611159822515,
+        0.00999058096100839,
+        0.20420951348117755
+      ],
+      "position_error_mm": 0.007033431110746638,
+      "minimum_limit_margin_rad": 0.982883655752039,
+      "adjacent_max_joint_delta_rad": 0.004683711614280606,
+      "adjacent_max_joint_delta_deg": 0.2683569079546845,
+      "wrist_roll_deviation_rad": 0.0004639830484266544,
+      "selection_score": 0.012616196093583474,
+      "selected_seed": "reference",
+      "candidate_count": 37,
+      "passed": true
+    },
+    {
+      "point_index": 21,
+      "point_name": "21_y_negative",
+      "offset_m": [
+        0.01,
+        0.008,
+        0.0
+      ],
+      "target_position_m": [
+        0.3381570945623701,
+        0.00799044714020273,
+        0.2042037446487724
+      ],
+      "selected_q_rad": [
+        -0.026768479142578957,
+        -0.4297625734746499,
+        0.7076472175164428,
+        -0.3626578336582695,
+        0.0006391744264921907
+      ],
+      "selected_q_deg": [
+        -1.5337208788537469,
+        -24.623581652778384,
+        40.545198947868315,
+        -20.778763275976292,
+        0.036621997010697405
+      ],
+      "achieved_position_m": [
+        0.33815410597758844,
+        0.007999679185455567,
+        0.2042040977774502
+      ],
+      "position_error_mm": 0.009710149247596432,
+      "minimum_limit_margin_rad": 0.9823527824835572,
+      "adjacent_max_joint_delta_rad": 0.006640001044124991,
+      "adjacent_max_joint_delta_deg": 0.3804440357908219,
+      "wrist_roll_deviation_rad": 0.0006391744264921907,
+      "selection_score": 0.012712938552985916,
+      "selected_seed": "reference",
+      "candidate_count": 37,
+      "passed": true
+    },
+    {
+      "point_index": 22,
+      "point_name": "22_y_negative",
+      "offset_m": [
+        0.01,
+        0.006,
+        0.0
+      ],
+      "target_position_m": [
+        0.3381570945623701,
+        0.005990447140202731,
+        0.2042037446487724
+      ],
+      "selected_q_rad": [
+        -0.02009475288244569,
+        -0.430201418484341,
+        0.7080190245855317,
+        -0.36259430644610635,
+        0.0008152882931534044
+      ],
+      "selected_q_deg": [
+        -1.1513445305224836,
+        -24.648725619694062,
+        40.56650192372024,
+        -20.775123434835113,
+        0.04671257828411468
+      ],
+      "achieved_position_m": [
+        0.3381529697450225,
+        0.005999590083376168,
+        0.20420399182582005
+      ],
+      "position_error_mm": 0.010033375529522883,
+      "minimum_limit_margin_rad": 0.9819809754144683,
+      "adjacent_max_joint_delta_rad": 0.006673726260133267,
+      "adjacent_max_joint_delta_deg": 0.38237634833126316,
+      "wrist_roll_deviation_rad": 0.0008152882931534044,
+      "selection_score": 0.012717913342325294,
+      "selected_seed": "reference",
+      "candidate_count": 37,
+      "passed": true
+    },
+    {
+      "point_index": 23,
+      "point_name": "23_y_negative",
+      "offset_m": [
+        0.01,
+        0.004,
+        0.0
+      ],
+      "target_position_m": [
+        0.3381570945623701,
+        0.003990447140202731,
+        0.2042037446487724
+      ],
+      "selected_q_rad": [
+        -0.01341921205106113,
+        -0.4305143368358051,
+        0.708284048999534,
+        -0.3625490251764145,
+        0.0009914771733410056
+      ],
+      "selected_q_deg": [
+        -0.7688642149168957,
+        -24.666654520565142,
+        40.581686704110496,
+        -20.772529009190777,
+        0.05680745751600036
+      ],
+      "achieved_position_m": [
+        0.33815222653256066,
+        0.003999513447406547,
+        0.20420392312837266
+      ],
+      "position_error_mm": 0.010292108409219443,
+      "minimum_limit_margin_rad": 0.9817159510004659,
+      "adjacent_max_joint_delta_rad": 0.006675540831384559,
+      "adjacent_max_joint_delta_deg": 0.38248031560558793,
+      "wrist_roll_deviation_rad": 0.0009914771733410056,
+      "selection_score": 0.012719640796578342,
+      "selected_seed": "reference",
+      "candidate_count": 37,
+      "passed": true
+    },
+    {
+      "point_index": 24,
+      "point_name": "24_y_negative",
+      "offset_m": [
+        0.01,
+        0.002,
+        0.0
+      ],
+      "target_position_m": [
+        0.3381570945623701,
+        0.0019904471402027307,
+        0.2042037446487724
+      ],
+      "selected_q_rad": [
+        -0.006742483460886504,
+        -0.43070463699302625,
+        0.7084452431724654,
+        -0.36252147161334014,
+        0.0011677166968032523
+      ],
+      "selected_q_deg": [
+        -0.38631584574555733,
+        -24.677557916414592,
+        40.59092244990157,
+        -20.77095030631607,
+        0.06690523839378394
+      ],
+      "achieved_position_m": [
+        0.3381515049074594,
+        0.0019994486026991623,
+        0.20420385461543686
+      ],
+      "position_error_mm": 0.01059635134198442,
+      "minimum_limit_margin_rad": 0.9815547568275346,
+      "adjacent_max_joint_delta_rad": 0.006676728590174627,
+      "adjacent_max_joint_delta_deg": 0.3825483691713384,
+      "wrist_roll_deviation_rad": 0.0011677166968032523,
+      "selection_score": 0.012720760938710489,
+      "selected_seed": "reference",
+      "candidate_count": 37,
+      "passed": true
+    },
+    {
+      "point_index": 25,
+      "point_name": "25_y_negative",
+      "offset_m": [
+        0.01,
+        0.0,
+        0.0
+      ],
+      "target_position_m": [
+        0.3381570945623701,
+        -9.55285979726948e-06,
+        0.2042037446487724
+      ],
+      "selected_q_rad": [
+        -6.515421218746854e-05,
+        -0.4307724635463271,
+        0.7085027624100179,
+        -0.3625116237716079,
+        0.001343983674357935
+      ],
+      "selected_q_deg": [
+        -0.003733061375841779,
+        -24.68144409165765,
+        40.594218059454136,
+        -20.7703860665475,
+        0.07700459227519448
+      ],
+      "achieved_position_m": [
+        0.3381507843900312,
+        -6.072727860777054e-07,
+        0.20420378448418516
+      ],
+      "position_error_mm": 0.010947300524842373,
+      "minimum_limit_margin_rad": 0.9814972375899821,
+      "adjacent_max_joint_delta_rad": 0.006677329248699035,
+      "adjacent_max_joint_delta_deg": 0.38258278436971555,
+      "wrist_roll_deviation_rad": 0.001343983674357935,
+      "selection_score": 0.012721227694249762,
+      "selected_seed": "reference",
+      "candidate_count": 37,
+      "passed": true
+    },
+    {
+      "point_index": 26,
+      "point_name": "26_x_negative",
+      "offset_m": [
+        0.008,
+        0.0,
+        0.0
+      ],
+      "target_position_m": [
+        0.3361570945623701,
+        -9.55285979726948e-06,
+        0.2042037446487724
+      ],
+      "selected_q_rad": [
+        -3.587171282674972e-05,
+        -0.4480427935439116,
+        0.723092633216905,
+        -0.36002536430519094,
+        0.001344891761973001
+      ],
+      "selected_q_deg": [
+        -0.0020552977488780587,
+        -25.67096111131742,
+        41.430156080329894,
+        -20.627933892347357,
+        0.07705662186296586
+      ],
+      "achieved_position_m": [
+        0.3362698324291141,
+        -9.458508831502381e-06,
+        0.2041969926074523
+      ],
+      "position_error_mm": 0.11293992014380759,
+      "minimum_limit_margin_rad": 0.966907366783095,
+      "adjacent_max_joint_delta_rad": 0.017270329997584488,
+      "adjacent_max_joint_delta_deg": 0.9895170196597723,
+      "wrist_roll_deviation_rad": 0.001344891761973001,
+      "selection_score": 0.015242210721501913,
+      "selected_seed": "reference",
+      "candidate_count": 37,
+      "passed": true
+    },
+    {
+      "point_index": 27,
+      "point_name": "27_x_negative",
+      "offset_m": [
+        0.006,
+        0.0,
+        0.0
+      ],
+      "target_position_m": [
+        0.3341570945623701,
+        -9.55285979726948e-06,
+        0.2042037446487724
+      ],
+      "selected_q_rad": [
+        -3.5829614694096315e-05,
+        -0.4664310104866113,
+        0.7384866941664975,
+        -0.35739030738697497,
+        0.0013450294328336884
+      ],
+      "selected_q_deg": [
+        -0.002052885703551637,
+        -26.72452833490507,
+        42.3121708023087,
+        -20.476956252156835,
+        0.07706450982224518
+      ],
+      "achieved_position_m": [
+        0.33427732837832264,
+        -9.556110812699648e-06,
+        0.2041954563384532
+      ],
+      "position_error_mm": 0.12051915448188527,
+      "minimum_limit_margin_rad": 0.9515133058335025,
+      "adjacent_max_joint_delta_rad": 0.01838821694269971,
+      "adjacent_max_joint_delta_deg": 1.0535672235876472,
+      "wrist_roll_deviation_rad": 0.0013450294328336884,
+      "selection_score": 0.015687097118737878,
+      "selected_seed": "reference",
+      "candidate_count": 37,
+      "passed": true
+    },
+    {
+      "point_index": 28,
+      "point_name": "28_x_negative",
+      "offset_m": [
+        0.004,
+        0.0,
+        0.0
+      ],
+      "target_position_m": [
+        0.3321570945623701,
+        -9.55285979726948e-06,
+        0.2042037446487724
+      ],
+      "selected_q_rad": [
+        -3.611613314445443e-05,
+        -0.48497770808523316,
+        0.7538808375980774,
+        -0.35474090100632905,
+        0.0013451543218694186
+      ],
+      "selected_q_deg": [
+        -0.0020693020015097856,
+        -27.78717583121152,
+        43.19419025015727,
+        -20.32515644833079,
+        0.07707166543689997
+      ],
+      "achieved_position_m": [
+        0.3322784886481771,
+        -9.557284288515407e-06,
+        0.20419532433051465
+      ],
+      "position_error_mm": 0.12168576682612071,
+      "minimum_limit_margin_rad": 0.9361191624019225,
+      "adjacent_max_joint_delta_rad": 0.018546697598621875,
+      "adjacent_max_joint_delta_deg": 1.0626474963064523,
+      "wrist_roll_deviation_rad": 0.0013451543218694186,
+      "selection_score": 0.015965463054452747,
+      "selected_seed": "reference",
+      "candidate_count": 37,
+      "passed": true
+    },
+    {
+      "point_index": 29,
+      "point_name": "29_x_negative",
+      "offset_m": [
+        0.002,
+        0.0,
+        0.0
+      ],
+      "target_position_m": [
+        0.3301570945623701,
+        -9.55285979726948e-06,
+        0.2042037446487724
+      ],
+      "selected_q_rad": [
+        -3.6410302013135345e-05,
+        -0.503632556126845,
+        0.7692357278807764,
+        -0.35208454497191943,
+        0.0013452732905587471
+      ],
+      "selected_q_deg": [
+        -0.0020861566361493403,
+        -28.85601989145377,
+        44.073960658242356,
+        -20.172958458675012,
+        0.0770784818406927
+      ],
+      "achieved_position_m": [
+        0.33027936541900094,
+        -9.557339107698671e-06,
+        0.20419529375518072
+      ],
+      "position_error_mm": 0.12256255547191211,
+      "minimum_limit_margin_rad": 0.9207642721192235,
+      "adjacent_max_joint_delta_rad": 0.018654848041611827,
+      "adjacent_max_joint_delta_deg": 1.0688440602422469,
+      "wrist_roll_deviation_rad": 0.0013452732905587471,
+      "selection_score": 0.016237871497078258,
+      "selected_seed": "reference",
+      "candidate_count": 37,
+      "passed": true
+    },
+    {
+      "point_index": 30,
+      "point_name": "30_x_negative",
+      "offset_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "target_position_m": [
+        0.3281570945623701,
+        -9.55285979726948e-06,
+        0.2042037446487724
+      ],
+      "selected_q_rad": [
+        -3.6708339756470796e-05,
+        -0.5223985877622636,
+        0.7845533936166047,
+        -0.34942234841806397,
+        0.0013453840685346682
+      ],
+      "selected_q_deg": [
+        -0.0021032329409780646,
+        -29.93123430237224,
+        44.95159825689747,
+        -20.020425831904824,
+        0.077084828951176
+      ],
+      "achieved_position_m": [
+        0.32828030521116397,
+        -9.557382878696782e-06,
+        0.20419528171641163
+      ],
+      "position_error_mm": 0.12350095230731177,
+      "minimum_limit_margin_rad": 0.9054466063833952,
+      "adjacent_max_joint_delta_rad": 0.018766031635418567,
+      "adjacent_max_joint_delta_deg": 1.0752144109184698,
+      "wrist_roll_deviation_rad": 0.0013453840685346682,
+      "selection_score": 0.01651340604422918,
+      "selected_seed": "reference",
+      "candidate_count": 37,
+      "passed": true
+    }
+  ],
+  "unreachable_case": {
+    "target_position_m": [
+      0.8,
+      0.0,
+      0.8
+    ],
+    "rejected": true,
+    "candidate_count": 37,
+    "best_raw_error_mm": 591.0859906165929
+  },
+  "safety": {
+    "opened_com_ports": false,
+    "started_hardware_services": false,
+    "published_robot_commands": false,
+    "used_offline_computation_only": true
+  },
+  "failures": [],
+  "logs": {
+    "verification_log": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\stage_2b2_verification.log"
+  }
+}

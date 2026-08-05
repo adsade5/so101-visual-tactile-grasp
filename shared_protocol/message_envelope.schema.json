@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://adsade5.github.io/so101-visual-tactile-grasp/message-envelope-v1.schema.json",
+  "title": "SO-101 TCP Bridge Message Envelope v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "protocol_version",
+    "type",
+    "seq",
+    "timestamp_monotonic",
+    "payload"
+  ],
+  "properties": {
+    "protocol_version": {
+      "const": "1.0"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "hello",
+        "hello_ack",
+        "heartbeat",
+        "joint_state",
+        "joint_command",
+        "command_ack",
+        "estop",
+        "clear_estop",
+        "error"
+      ]
+    },
+    "seq": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "timestamp_monotonic": {
+      "type": "number",
+      "minimum": 0
+    },
+    "payload": {
+      "type": "object"
+    }
+  }
+}

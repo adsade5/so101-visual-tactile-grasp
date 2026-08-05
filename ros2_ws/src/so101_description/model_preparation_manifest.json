@@ -1,0 +1,151 @@
+{
+  "status": "PASS",
+  "source_urdf": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\robot_model\\so101\\so101_new_calib.urdf",
+  "source_sha256": "3a65d2d35e68a8d2f0c2cc176d19b884506543c93ba72980145b80abe276022c",
+  "output_urdf": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\ros2_ws\\src\\so101_description\\urdf\\so101_visualization.urdf",
+  "output_sha256": "79f1288c20966d4a9049e1a7ba9939c7e3aa6ff854feea1b288e00dcdde3a546",
+  "mesh_path_replacement_count": 34,
+  "asset_file_count": 26,
+  "mesh_path_replacements": [
+    {
+      "old": "assets/base_motor_holder_so101_v1.stl",
+      "new": "package://so101_description/assets/base_motor_holder_so101_v1.stl"
+    },
+    {
+      "old": "assets/base_motor_holder_so101_v1.stl",
+      "new": "package://so101_description/assets/base_motor_holder_so101_v1.stl"
+    },
+    {
+      "old": "assets/base_so101_v2.stl",
+      "new": "package://so101_description/assets/base_so101_v2.stl"
+    },
+    {
+      "old": "assets/base_so101_v2.stl",
+      "new": "package://so101_description/assets/base_so101_v2.stl"
+    },
+    {
+      "old": "assets/sts3215_03a_v1.stl",
+      "new": "package://so101_description/assets/sts3215_03a_v1.stl"
+    },
+    {
+      "old": "assets/sts3215_03a_v1.stl",
+      "new": "package://so101_description/assets/sts3215_03a_v1.stl"
+    },
+    {
+      "old": "assets/waveshare_mounting_plate_so101_v2.stl",
+      "new": "package://so101_description/assets/waveshare_mounting_plate_so101_v2.stl"
+    },
+    {
+      "old": "assets/waveshare_mounting_plate_so101_v2.stl",
+      "new": "package://so101_description/assets/waveshare_mounting_plate_so101_v2.stl"
+    },
+    {
+      "old": "assets/sts3215_03a_v1.stl",
+      "new": "package://so101_description/assets/sts3215_03a_v1.stl"
+    },
+    {
+      "old": "assets/sts3215_03a_v1.stl",
+      "new": "package://so101_description/assets/sts3215_03a_v1.stl"
+    },
+    {
+      "old": "assets/motor_holder_so101_base_v1.stl",
+      "new": "package://so101_description/assets/motor_holder_so101_base_v1.stl"
+    },
+    {
+      "old": "assets/motor_holder_so101_base_v1.stl",
+      "new": "package://so101_description/assets/motor_holder_so101_base_v1.stl"
+    },
+    {
+      "old": "assets/rotation_pitch_so101_v1.stl",
+      "new": "package://so101_description/assets/rotation_pitch_so101_v1.stl"
+    },
+    {
+      "old": "assets/rotation_pitch_so101_v1.stl",
+      "new": "package://so101_description/assets/rotation_pitch_so101_v1.stl"
+    },
+    {
+      "old": "assets/sts3215_03a_v1.stl",
+      "new": "package://so101_description/assets/sts3215_03a_v1.stl"
+    },
+    {
+      "old": "assets/sts3215_03a_v1.stl",
+      "new": "package://so101_description/assets/sts3215_03a_v1.stl"
+    },
+    {
+      "old": "assets/upper_arm_so101_v1.stl",
+      "new": "package://so101_description/assets/upper_arm_so101_v1.stl"
+    },
+    {
+      "old": "assets/upper_arm_so101_v1.stl",
+      "new": "package://so101_description/assets/upper_arm_so101_v1.stl"
+    },
+    {
+      "old": "assets/under_arm_so101_v1.stl",
+      "new": "package://so101_description/assets/under_arm_so101_v1.stl"
+    },
+    {
+      "old": "assets/under_arm_so101_v1.stl",
+      "new": "package://so101_description/assets/under_arm_so101_v1.stl"
+    },
+    {
+      "old": "assets/motor_holder_so101_wrist_v1.stl",
+      "new": "package://so101_description/assets/motor_holder_so101_wrist_v1.stl"
+    },
+    {
+      "old": "assets/motor_holder_so101_wrist_v1.stl",
+      "new": "package://so101_description/assets/motor_holder_so101_wrist_v1.stl"
+    },
+    {
+      "old": "assets/sts3215_03a_v1.stl",
+      "new": "package://so101_description/assets/sts3215_03a_v1.stl"
+    },
+    {
+      "old": "assets/sts3215_03a_v1.stl",
+      "new": "package://so101_description/assets/sts3215_03a_v1.stl"
+    },
+    {
+      "old": "assets/sts3215_03a_no_horn_v1.stl",
+      "new": "package://so101_description/assets/sts3215_03a_no_horn_v1.stl"
+    },
+    {
+      "old": "assets/sts3215_03a_no_horn_v1.stl",
+      "new": "package://so101_description/assets/sts3215_03a_no_horn_v1.stl"
+    },
+    {
+      "old": "assets/wrist_roll_pitch_so101_v2.stl",
+      "new": "package://so101_description/assets/wrist_roll_pitch_so101_v2.stl"
+    },
+    {
+      "old": "assets/wrist_roll_pitch_so101_v2.stl",
+      "new": "package://so101_description/assets/wrist_roll_pitch_so101_v2.stl"
+    },
+    {
+      "old": "assets/sts3215_03a_v1.stl",
+      "new": "package://so101_description/assets/sts3215_03a_v1.stl"
+    },
+    {
+      "old": "assets/sts3215_03a_v1.stl",
+      "new": "package://so101_description/assets/sts3215_03a_v1.stl"
+    },
+    {
+      "old": "assets/wrist_roll_follower_so101_v1.stl",
+      "new": "package://so101_description/assets/wrist_roll_follower_so101_v1.stl"
+    },
+    {
+      "old": "assets/wrist_roll_follower_so101_v1.stl",
+      "new": "package://so101_description/assets/wrist_roll_follower_so101_v1.stl"
+    },
+    {
+      "old": "assets/moving_jaw_so101_v1.stl",
+      "new": "package://so101_description/assets/moving_jaw_so101_v1.stl"
+    },
+    {
+      "old": "assets/moving_jaw_so101_v1.stl",
+      "new": "package://so101_description/assets/moving_jaw_so101_v1.stl"
+    }
+  ],
+  "notes": [
+    "The frozen kinematics URDF was not modified.",
+    "This generated copy only changes mesh resource paths for ROS2/RViz."
+  ]
+}

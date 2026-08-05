@@ -1,0 +1,158 @@
+{
+  "status": "DUMP_ONCE_PASS",
+  "timestamp": "2026-08-04T12:50:46.474270+00:00",
+  "payload": {
+    "type": "joint_state",
+    "sequence": 0,
+    "timestamp_monotonic_s": 43699.171,
+    "joint_names": [
+      "shoulder_pan",
+      "shoulder_lift",
+      "elbow_flex",
+      "wrist_flex",
+      "wrist_roll"
+    ],
+    "source": "real_so101_follower_read_only",
+    "read_only": true,
+    "torque_state_changed": false,
+    "torque_enable_written": false,
+    "torque_disable_written": false,
+    "goal_position_written": false,
+    "motion_parameters_written": false,
+    "motion_command_sent": false,
+    "follower_port": "COM4",
+    "calibration_path": "C:\\Users\\82053\\.cache\\huggingface\\lerobot\\calibration\\robots\\so_follower\\my_follower.json",
+    "mapping_status": "provisional_requires_physical_validation",
+    "motor_read_requests_sent": 1,
+    "motor_bus_read_valid": true,
+    "read_register": "Present_Position",
+    "raw_encoder_values": {
+      "shoulder_pan": 2042.0,
+      "shoulder_lift": 1561.0,
+      "elbow_flex": 2445.0,
+      "wrist_flex": 2814.0,
+      "wrist_roll": 2117.0
+    },
+    "motor_degrees_before_calibration": {
+      "shoulder_pan": -0.4835164835164835,
+      "shoulder_lift": -42.76923076923077,
+      "elbow_flex": 34.94505494505494,
+      "wrist_flex": 67.38461538461539,
+      "wrist_roll": 6.1098901098901095
+    },
+    "lerobot_calibrated_degrees": {
+      "shoulder_pan": -6.857142857142857,
+      "shoulder_lift": -44.7032967032967,
+      "elbow_flex": 37.934065934065934,
+      "wrist_flex": 71.51648351648352,
+      "wrist_roll": 6.1098901098901095
+    },
+    "source_positions": {
+      "shoulder_pan": -6.857142857142857,
+      "shoulder_lift": -44.7032967032967,
+      "elbow_flex": 37.934065934065934,
+      "wrist_flex": 71.51648351648352,
+      "wrist_roll": 6.1098901098901095
+    },
+    "source_unit": "lerobot_calibrated_degrees",
+    "calibration_applied": true,
+    "mapped_positions_rad": {
+      "shoulder_pan": -0.11967972013675401,
+      "shoulder_lift": -0.7802197139684541,
+      "elbow_flex": 0.6620743492180687,
+      "wrist_flex": 1.2481981068108898,
+      "wrist_roll": 0.10663769935262057
+    },
+    "positions_rad": [
+      -0.11967972013675401,
+      -0.7802197139684541,
+      0.6620743492180687,
+      1.2481981068108898,
+      0.10663769935262057
+    ],
+    "per_joint_validation": {
+      "shoulder_pan": {
+        "source_value": -6.857142857142857,
+        "source_unit": "lerobot_calibrated_degrees",
+        "raw_encoder_value": 2042.0,
+        "motor_degrees_before_calibration": -0.4835164835164835,
+        "mapped_rad": -0.11967972013675401,
+        "urdf_lower_rad": -1.91986,
+        "urdf_upper_rad": 1.91986,
+        "lower_margin_rad": 1.8001802798632458,
+        "upper_margin_rad": 2.0395397201367538,
+        "within_limits": true,
+        "sign": 1.0,
+        "offset_rad": 0.0,
+        "scale": 0.017453292519943295
+      },
+      "shoulder_lift": {
+        "source_value": -44.7032967032967,
+        "source_unit": "lerobot_calibrated_degrees",
+        "raw_encoder_value": 1561.0,
+        "motor_degrees_before_calibration": -42.76923076923077,
+        "mapped_rad": -0.7802197139684541,
+        "urdf_lower_rad": -1.74533,
+        "urdf_upper_rad": 1.74533,
+        "lower_margin_rad": 0.9651102860315459,
+        "upper_margin_rad": 2.525549713968454,
+        "within_limits": true,
+        "sign": 1.0,
+        "offset_rad": 0.0,
+        "scale": 0.017453292519943295
+      },
+      "elbow_flex": {
+        "source_value": 37.934065934065934,
+        "source_unit": "lerobot_calibrated_degrees",
+        "raw_encoder_value": 2445.0,
+        "motor_degrees_before_calibration": 34.94505494505494,
+        "mapped_rad": 0.6620743492180687,
+        "urdf_lower_rad": -1.69,
+        "urdf_upper_rad": 1.69,
+        "lower_margin_rad": 2.3520743492180687,
+        "upper_margin_rad": 1.0279256507819312,
+        "within_limits": true,
+        "sign": 1.0,
+        "offset_rad": 0.0,
+        "scale": 0.017453292519943295
+      },
+      "wrist_flex": {
+        "source_value": 71.51648351648352,
+        "source_unit": "lerobot_calibrated_degrees",
+        "raw_encoder_value": 2814.0,
+        "motor_degrees_before_calibration": 67.38461538461539,
+        "mapped_rad": 1.2481981068108898,
+        "urdf_lower_rad": -1.65806,
+        "urdf_upper_rad": 1.65806,
+        "lower_margin_rad": 2.90625810681089,
+        "upper_margin_rad": 0.40986189318911026,
+        "within_limits": true,
+        "sign": 1.0,
+        "offset_rad": 0.0,
+        "scale": 0.017453292519943295
+      },
+      "wrist_roll": {
+        "source_value": 6.1098901098901095,
+        "source_unit": "lerobot_calibrated_degrees",
+        "raw_encoder_value": 2117.0,
+        "motor_degrees_before_calibration": 6.1098901098901095,
+        "mapped_rad": 0.10663769935262057,
+        "urdf_lower_rad": -2.74385,
+        "urdf_upper_rad": 2.84121,
+        "lower_margin_rad": 2.8504876993526205,
+        "upper_margin_rad": 2.734572300647379,
+        "within_limits": true,
+        "sign": 1.0,
+        "offset_rad": 0.0,
+        "scale": 0.017453292519943295
+      }
+    },
+    "violating_joints": [],
+    "mapped_joint_state_valid": true,
+    "mapping_failure_reason": null
+  },
+  "torque_enable_written": false,
+  "goal_position_written": false,
+  "motion_parameters_written": false,
+  "motion_command_sent": false
+}

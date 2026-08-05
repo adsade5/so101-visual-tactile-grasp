@@ -1,0 +1,16 @@
+bridge:
+  host: "127.0.0.1"
+  port: 8765
+  protocol_version: "1.0"
+
+  max_message_bytes: 65536
+  heartbeat_period_s: 0.2
+  peer_timeout_s: 1.0
+  reconnect_delay_s: 1.0
+
+  joint_state_rate_hz: 20.0
+  tcp_nodelay: true
+
+  dry_run: true
+  hardware_enabled: false
+  command_enabled: false

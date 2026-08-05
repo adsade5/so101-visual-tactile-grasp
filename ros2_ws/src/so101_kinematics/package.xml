@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<package format="3">
+  <name>so101_kinematics</name>
+  <version>0.2.0</version>
+
+  <description>
+    ROS2 forward kinematics and consistency checks
+    for the SO-101 robot arm.
+  </description>
+
+  <maintainer email="maintainer@example.com">
+    so101_visual_tactile_grasp
+  </maintainer>
+
+  <license>Apache-2.0</license>
+
+  <buildtool_depend>ament_python</buildtool_depend>
+
+  <exec_depend>rclpy</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>geometry_msgs</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>tf2_ros</exec_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

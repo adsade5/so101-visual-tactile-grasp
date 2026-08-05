@@ -1,0 +1,18 @@
+camera:
+  role: "workspace_camera"
+
+  index: 1
+  backend: "dshow"
+
+  width: 640
+  height: 480
+  requested_fps: 30.0
+
+  probe_result:
+    valid_frames: 100
+    attempted_frames: 100
+    valid_ratio: 1.0
+    measured_fps: 23.79
+    reported_fps: 30.0
+
+  calibration_file: "data/calibration/camera_intrinsics.yaml"

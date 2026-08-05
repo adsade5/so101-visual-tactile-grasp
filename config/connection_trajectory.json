@@ -1,0 +1,38 @@
+{
+  "version": "1.0",
+  "status": "shadow_connection_preview_only",
+  "joint_names": [
+    "shoulder_pan",
+    "shoulder_lift",
+    "elbow_flex",
+    "wrist_flex",
+    "wrist_roll"
+  ],
+  "sample_rate_hz": 50.0,
+  "maximum_connection_velocity_rad_s": [
+    0.10,
+    0.10,
+    0.10,
+    0.10,
+    0.10
+  ],
+  "maximum_connection_acceleration_rad_s2": [
+    0.20,
+    0.20,
+    0.20,
+    0.20,
+    0.20
+  ],
+  "minimum_connection_duration_s": 1.0,
+  "maximum_connection_duration_s": 30.0,
+  "minimum_joint_limit_margin_rad": 0.05,
+  "current_joint_state_timeout_s": 0.30,
+  "source_valid_heartbeat_timeout_s": 0.80,
+  "minimum_tcp_z_m": 0.055,
+  "tcp_workspace_x_min_m": 0.05,
+  "tcp_workspace_x_max_m": 0.38,
+  "tcp_workspace_y_min_m": -0.25,
+  "tcp_workspace_y_max_m": 0.25,
+  "allow_direct_joint_connection_only": true,
+  "hardware_control_enabled": false
+}

@@ -1,0 +1,172 @@
+{
+  "stage": "2A-3",
+  "status": "PASS",
+  "timestamp": "2026-08-04T03:39:16.327531+00:00",
+  "environment": {
+    "ros_distro": "lyrical",
+    "python": "C:\\pixi_ws\\.pixi\\envs\\default\\python.exe",
+    "cmake_generator": "Ninja",
+    "install_layout": "merged",
+    "ros_log_dir": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\ros_logs",
+    "fastdds_profile": "",
+    "fastdds_builtin_transports": "",
+    "rmw_implementation": "rmw_zenoh_cpp",
+    "zenoh_router_check_attempts": "5"
+  },
+  "logs": {
+    "directory": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\stage_2a3_logs",
+    "main_log": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\stage_2a3_verification.log"
+  },
+  "failures": [],
+  "safety": {
+    "used_simulated_joint_states_only": true,
+    "opened_com_ports": false,
+    "started_hardware_services": false,
+    "published_robot_commands": false
+  },
+  "files": {
+    "source_urdf": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\robot_model\\so101\\so101_new_calib.urdf",
+    "source_urdf_sha256": "3a65d2d35e68a8d2f0c2cc176d19b884506543c93ba72980145b80abe276022c",
+    "manifest_source_sha256": "3a65d2d35e68a8d2f0c2cc176d19b884506543c93ba72980145b80abe276022c",
+    "source_urdf_sha256_matches_manifest": true,
+    "visualization_urdf": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\ros2_ws\\src\\so101_description\\urdf\\so101_visualization.urdf",
+    "visualization_urdf_exists": true,
+    "assets_exist": true,
+    "mesh_path_count": 34,
+    "invalid_mesh_paths": [],
+    "installed": {
+      "urdf": true,
+      "launch": true,
+      "assets": true,
+      "rviz": true
+    }
+  },
+  "executables": {
+    "fk_node": true,
+    "test_joint_state_publisher": true,
+    "tf_fk_consistency_checker": true,
+    "raw_output": "so101_kinematics fk_node-script.py\nso101_kinematics fk_node.exe\nso101_kinematics test_joint_state_publisher-script.py\nso101_kinematics test_joint_state_publisher.exe\nso101_kinematics tf_fk_consistency_checker-script.py\nso101_kinematics tf_fk_consistency_checker.exe\n",
+    "return_code": 0
+  },
+  "zenoh_router": {
+    "started": true,
+    "return_code": null,
+    "log": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\stage_2a3_logs\\rmw_zenoh_router_20260804_033917.log"
+  },
+  "checker_entry_smoke": {
+    "ros2_run_started": true,
+    "return_code": null,
+    "log": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\stage_2a3_logs\\checker_entry_smoke_20260804_033919.log"
+  },
+  "static_zero_test": {
+    "passed": true,
+    "fk_valid": true,
+    "pose_samples": 24,
+    "pose_rate_hz": 24.134312696759274,
+    "pose_rate_stats": {
+      "samples": 24,
+      "duration_s": 0.9529999999995198,
+      "rate_hz": 24.134312696759274,
+      "min_interval_s": 0.0,
+      "max_interval_s": 0.07799999999951979
+    },
+    "joint_state_rate_hz": 20.551967116858407,
+    "joint_state_rate_stats": {
+      "samples": 36,
+      "duration_s": 1.7029999999995198,
+      "rate_hz": 20.551967116858407,
+      "min_interval_s": 0.0,
+      "max_interval_s": 0.06300000000010186
+    },
+    "expected_position_m": [
+      0.3913614702,
+      -9.2121e-06,
+      0.2264697102
+    ],
+    "measured_position_m": [
+      0.391361470220158,
+      -9.212063114602824e-06,
+      0.22646971024033286
+    ],
+    "zero_position_error_mm": 5.8254747290036485e-08,
+    "tf_position_m": [
+      0.3913614702201583,
+      -9.212063114564704e-06,
+      0.22646971024033286
+    ],
+    "tf_pose_position_error_mm": 3.3524124051692853e-13,
+    "tf_pose_orientation_error_deg": 0.0,
+    "fk_tf_consistent": true,
+    "pose_frame_id": "base_link",
+    "quaternion_norm": 1.0,
+    "tf_messages": 216,
+    "tf_static_messages": 1,
+    "gripper_in_fk_chain": false
+  },
+  "stale_timeout_test": {
+    "passed": true,
+    "fk_valid_became_false": true,
+    "pose_stopped": true,
+    "pose_samples_before_stop": 24,
+    "pose_samples_after_stop": 0,
+    "fk_node_alive": true
+  },
+  "dynamic_test": {
+    "passed": true,
+    "duration_s": 6.0,
+    "pose_changed": true,
+    "tf_changed": true,
+    "maximum_position_range_mm": 44.544613392076116,
+    "pose_axis_ranges_mm": [
+      11.84910636913894,
+      44.544613392076116,
+      36.13298212392016
+    ],
+    "tf_maximum_position_range_mm": 143.83384333427202,
+    "tf_axis_ranges_mm": [
+      24.820790236331213,
+      51.94545609899547,
+      143.83384333427202
+    ],
+    "fk_valid_seen": true,
+    "pose_samples": 31,
+    "tf_samples": 311,
+    "all_values_finite": true,
+    "nodes_alive": {
+      "fk_node": true,
+      "tf_fk_consistency_checker": true
+    },
+    "gripper_joint_present_in_joint_states": true,
+    "gripper_in_five_joint_fk_chain": false
+  },
+  "rviz_smoke_test": {
+    "passed": true,
+    "process_started": true,
+    "return_code_after_10s": null,
+    "robot_state_publisher_available": true,
+    "rviz2_available": true,
+    "fatal_resource_errors": [],
+    "nonfatal_warnings": [
+      "2026-08-04T03:39:43.198998Z  WARN ThreadId(06) zenoh::net::runtime::orchestrator: Scouting delay elapsed before start conditions are met.",
+      "[WARN] [1785814783.199204800] [rmw_zenoh_cpp]: Unable to connect to a Zenoh router. Have you started a router with `ros2 run rmw_zenoh_cpp rmw_zenohd`?",
+      "[WARN] [1785814784.213295500] [rmw_zenoh_cpp]: Unable to connect to a Zenoh router. Have you started a router with `ros2 run rmw_zenoh_cpp rmw_zenohd`?",
+      "[INFO] [1785814787.885603500] [rviz2]: OpenGl version: 4.6 (GLSL 4.6)"
+    ],
+    "rviz_config": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\ros2_ws\\install\\share\\so101_description\\rviz\\so101.rviz",
+    "log": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\stage_2a3_logs\\rviz2_smoke_20260804_033941.log",
+    "limitations": "Automatic smoke testing confirms the RViz process, RobotModel configuration, URDF, TF, and mesh resource loading path had no obvious fatal failure. It cannot fully replace manual visual inspection of model appearance; this stage uses numeric FK/TF consistency as the core acceptance signal."
+  },
+  "process_cleanup": {
+    "all_started_processes_stopped": true,
+    "process_logs": {
+      "zero_joint_state_publisher": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\stage_2a3_logs\\zero_joint_state_publisher_20260804_033924.log",
+      "fk_node": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\stage_2a3_logs\\fk_node_20260804_033924.log",
+      "robot_state_publisher_launch": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\stage_2a3_logs\\robot_state_publisher_launch_20260804_033924.log",
+      "tf_fk_consistency_checker": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\stage_2a3_logs\\tf_fk_consistency_checker_20260804_033924.log",
+      "sine_joint_state_publisher": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\stage_2a3_logs\\sine_joint_state_publisher_20260804_033932.log",
+      "rviz_zero_joint_state_publisher": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\stage_2a3_logs\\rviz_zero_joint_state_publisher_20260804_033939.log",
+      "rviz_robot_state_publisher_launch": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\stage_2a3_logs\\rviz_robot_state_publisher_launch_20260804_033939.log",
+      "rviz2_smoke": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\stage_2a3_logs\\rviz2_smoke_20260804_033941.log"
+    }
+  }
+}

@@ -1,0 +1,418 @@
+{
+  "stage": "2D-1",
+  "status": "PASS",
+  "timestamp": "2026-08-04T15:45:03.147796+00:00",
+  "environment": {
+    "ros_distro": "lyrical",
+    "python": "C:\\pixi_ws\\.pixi\\envs\\default\\python.exe",
+    "rmw_implementation": "rmw_zenoh_cpp",
+    "zenoh_router_check_attempts": "1",
+    "rcl_logging_implementation": "rcl_logging_noop",
+    "ros_log_dir": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\ros_logs"
+  },
+  "model": {
+    "urdf": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\robot_model\\so101\\so101_new_calib.urdf",
+    "urdf_sha256": "3a65d2d35e68a8d2f0c2cc176d19b884506543c93ba72980145b80abe276022c",
+    "urdf_sha256_expected": "3a65d2d35e68a8d2f0c2cc176d19b884506543c93ba72980145b80abe276022c",
+    "urdf_sha256_matches_expected": true
+  },
+  "workspace_transform_config": {
+    "version": "1.0",
+    "calibration_status": "real_planar_calibrated_provisional_z_assumed",
+    "source_frame": "workspace_plane",
+    "target_frame": "base_link",
+    "translation_m": [
+      0.3582641975602481,
+      -0.09760551442824955,
+      0.0
+    ],
+    "yaw_deg": 89.36482734673851,
+    "stale_timeout_s": 0.5,
+    "planar_fit_rms_mm": 4.021509102978556,
+    "planar_fit_max_mm": 5.5040606267145895,
+    "planar_holdout_max_mm": 4.313980796520203,
+    "z_assumption": "workspace_plane_z0_equals_base_link_z0"
+  },
+  "thresholds": {
+    "position_tolerance_mm": 1.0,
+    "approach_tolerance_deg": 2.0,
+    "minimum_limit_margin_rad": 0.05,
+    "maximum_adjacent_delta_rad": 0.15,
+    "stale_timeout_s": 0.5
+  },
+  "safety": {
+    "opened_com_ports": false,
+    "started_hardware_services": false,
+    "published_robot_commands": false,
+    "published_controller_command_topics": false,
+    "planned_trajectory_is_preview_only": true
+  },
+  "failures": [],
+  "logs": {
+    "main_log": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\stage_2d1_verification.log",
+    "process_log_dir": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\stage_2d1_logs"
+  },
+  "executables": {
+    "return_code": 0,
+    "raw_output": "so101_object_perception object_pose_node-script.py\nso101_object_perception object_pose_node.exe\nso101_frame_transform test_workspace_pose_publisher-script.py\nso101_frame_transform test_workspace_pose_publisher.exe\nso101_frame_transform workspace_to_base_node-script.py\nso101_frame_transform workspace_to_base_node.exe\nso101_grasp_planner visual_grasp_planner_node-script.py\nso101_grasp_planner visual_grasp_planner_node.exe\n",
+    "object_pose_node": true,
+    "workspace_to_base_node": true,
+    "visual_grasp_planner_node": true
+  },
+  "node_execution": {
+    "mode": "in_process_rclpy_executor",
+    "nodes_started": [
+      "so101_stage_2d1_observer",
+      "workspace_to_base_node",
+      "visual_grasp_planner_node"
+    ],
+    "camera_started": false,
+    "hardware_started": false
+  },
+  "synthetic_valid_case": {
+    "passed": true,
+    "base_target_m": [
+      0.18289733886666232,
+      0.0,
+      0.025
+    ],
+    "workspace_input_m": [
+      0.09565546522550779,
+      0.17643810117814965,
+      0.025
+    ],
+    "object_pose_base_count": 24,
+    "object_pose_base_valid_seen": true,
+    "grasp_plan_valid_seen": true,
+    "valid_status_seen": true,
+    "latest_status": {
+      "status": "VALID",
+      "reason": "planned_preview_only",
+      "plan_id": "e002dbbdae327b0d03f48e6e",
+      "active_plan_id": "e002dbbdae327b0d03f48e6e",
+      "latest_generated_plan_id": "e002dbbdae327b0d03f48e6e",
+      "trajectory_hash": "25a7e013ebad223bf54583374b4bbbb782be91af6199b9b31fb8eb04c564894d",
+      "trajectory_point_count": 17,
+      "trajectory_payload_publish_seq": 1,
+      "trajectory_payload_publish_timestamp": 1785858313.187451,
+      "planner_config_version": "visual_grasp_planner_v1",
+      "planner_heartbeat_seq": 15,
+      "last_object_pose_age_s": 0.18699999999807915,
+      "last_object_pose_base_valid_age_s": 0.18699999999807915,
+      "cached_plan_available": true,
+      "trajectory_republished": true,
+      "object_position_base_m": [
+        0.18289733886666235,
+        0.0,
+        0.025
+      ],
+      "waypoint_count": 17,
+      "max_position_error_mm": 0.6583172620822849,
+      "max_approach_error_deg": 0.8162536598163864,
+      "min_margin_rad": 0.08005398929228402,
+      "max_adjacent_delta_rad": 0.038728536444974315,
+      "calibration_status": "real_planar_calibrated_provisional_z_assumed",
+      "z_assumption": "workspace_plane_z0_equals_base_link_z0",
+      "timestamp": 1785858313.1874654,
+      "time_parameterization_status": "nominal_preview_only",
+      "hardware_control_enabled": false,
+      "command_topics_published": [],
+      "debug": {
+        "pose_received_count": 2,
+        "valid_true_count": 1,
+        "plan_attempt_count": 1,
+        "last_processed_position_base_m": [
+          0.18289733886666235,
+          0.0,
+          0.025
+        ]
+      }
+    },
+    "trajectory_point_count": 17,
+    "joint_names": [
+      "shoulder_pan",
+      "shoulder_lift",
+      "elbow_flex",
+      "wrist_flex",
+      "wrist_roll"
+    ],
+    "pregrasp_z_m": 0.08,
+    "grasp_z_m": 0.04
+  },
+  "stale_invalidation_case": {
+    "passed": true,
+    "latest_status": {
+      "status": "INVALID",
+      "reason": "object_pose_base_valid_false",
+      "plan_id": "e002dbbdae327b0d03f48e6e",
+      "active_plan_id": null,
+      "latest_generated_plan_id": "e002dbbdae327b0d03f48e6e",
+      "trajectory_hash": null,
+      "trajectory_point_count": 0,
+      "trajectory_payload_publish_seq": 1,
+      "trajectory_payload_publish_timestamp": 1785858313.187451,
+      "planner_config_version": "visual_grasp_planner_v1",
+      "planner_heartbeat_seq": 38,
+      "last_object_pose_age_s": 0.0,
+      "last_object_pose_base_valid_age_s": 1.1869999999980791,
+      "cached_plan_available": false,
+      "trajectory_republished": false,
+      "object_position_base_m": null,
+      "waypoint_count": 0,
+      "max_position_error_mm": null,
+      "max_approach_error_deg": null,
+      "min_margin_rad": null,
+      "max_adjacent_delta_rad": null,
+      "calibration_status": "real_planar_calibrated_provisional_z_assumed",
+      "z_assumption": "workspace_plane_z0_equals_base_link_z0",
+      "timestamp": 1785858314.8944764,
+      "time_parameterization_status": "nominal_preview_only",
+      "hardware_control_enabled": false,
+      "command_topics_published": [],
+      "debug": {
+        "pose_received_count": 5,
+        "valid_true_count": 3,
+        "plan_attempt_count": 2,
+        "last_processed_position_base_m": [
+          0.18289733886666235,
+          0.0,
+          0.025
+        ]
+      }
+    }
+  },
+  "synthetic_negative_cases": [
+    {
+      "name": "wrong_frame",
+      "passed": true,
+      "latest_status": {
+        "status": "VALID",
+        "reason": "planned_preview_only",
+        "plan_id": "e002dbbdae327b0d03f48e6e",
+        "active_plan_id": "e002dbbdae327b0d03f48e6e",
+        "latest_generated_plan_id": "e002dbbdae327b0d03f48e6e",
+        "trajectory_hash": "25a7e013ebad223bf54583374b4bbbb782be91af6199b9b31fb8eb04c564894d",
+        "trajectory_point_count": 17,
+        "trajectory_payload_publish_seq": 2,
+        "trajectory_payload_publish_timestamp": 1785858319.1249897,
+        "planner_config_version": "visual_grasp_planner_v1",
+        "planner_heartbeat_seq": 89,
+        "last_object_pose_age_s": 0.0,
+        "last_object_pose_base_valid_age_s": 0.01600000000325963,
+        "cached_plan_available": true,
+        "trajectory_republished": true,
+        "object_position_base_m": [
+          0.18289733886666235,
+          0.0,
+          0.025
+        ],
+        "waypoint_count": 17,
+        "max_position_error_mm": 0.6583172620822849,
+        "max_approach_error_deg": 0.8162536598163864,
+        "min_margin_rad": 0.08005398929228402,
+        "max_adjacent_delta_rad": 0.038728536444974315,
+        "calibration_status": "real_planar_calibrated_provisional_z_assumed",
+        "z_assumption": "workspace_plane_z0_equals_base_link_z0",
+        "timestamp": 1785858319.1250136,
+        "time_parameterization_status": "nominal_preview_only",
+        "hardware_control_enabled": false,
+        "command_topics_published": [],
+        "debug": {
+          "pose_received_count": 5,
+          "valid_true_count": 3,
+          "plan_attempt_count": 2,
+          "last_processed_position_base_m": [
+            0.18289733886666235,
+            0.0,
+            0.025
+          ]
+        }
+      }
+    },
+    {
+      "name": "nan_input",
+      "passed": true,
+      "latest_status": {
+        "status": "INVALID",
+        "reason": "object_pose_base_stale",
+        "plan_id": "e002dbbdae327b0d03f48e6e",
+        "active_plan_id": null,
+        "latest_generated_plan_id": "e002dbbdae327b0d03f48e6e",
+        "trajectory_hash": null,
+        "trajectory_point_count": 0,
+        "trajectory_payload_publish_seq": 2,
+        "trajectory_payload_publish_timestamp": 1785858319.1249897,
+        "planner_config_version": "visual_grasp_planner_v1",
+        "planner_heartbeat_seq": 90,
+        "last_object_pose_age_s": 0.7660000000032596,
+        "last_object_pose_base_valid_age_s": 0.7660000000032596,
+        "cached_plan_available": false,
+        "trajectory_republished": true,
+        "object_position_base_m": null,
+        "waypoint_count": 0,
+        "max_position_error_mm": null,
+        "max_approach_error_deg": null,
+        "min_margin_rad": null,
+        "max_adjacent_delta_rad": null,
+        "calibration_status": "real_planar_calibrated_provisional_z_assumed",
+        "z_assumption": "workspace_plane_z0_equals_base_link_z0",
+        "timestamp": 1785858319.928136,
+        "time_parameterization_status": "nominal_preview_only",
+        "hardware_control_enabled": false,
+        "command_topics_published": [],
+        "debug": {
+          "pose_received_count": 14,
+          "valid_true_count": 8,
+          "plan_attempt_count": 3,
+          "last_processed_position_base_m": [
+            0.18289733886666235,
+            0.0,
+            0.025
+          ]
+        }
+      }
+    },
+    {
+      "name": "workspace_out_of_bounds",
+      "passed": true,
+      "latest_status": {
+        "status": "INVALID",
+        "reason": "object_x_out_of_bounds",
+        "plan_id": "e002dbbdae327b0d03f48e6e",
+        "active_plan_id": null,
+        "latest_generated_plan_id": "e002dbbdae327b0d03f48e6e",
+        "trajectory_hash": null,
+        "trajectory_point_count": 0,
+        "trajectory_payload_publish_seq": 3,
+        "trajectory_payload_publish_timestamp": 1785858324.3353622,
+        "planner_config_version": "visual_grasp_planner_v1",
+        "planner_heartbeat_seq": 97,
+        "last_object_pose_age_s": 0.0,
+        "last_object_pose_base_valid_age_s": 0.0,
+        "cached_plan_available": false,
+        "trajectory_republished": false,
+        "object_position_base_m": [
+          0.4,
+          -1.3877787807814457e-17,
+          0.025
+        ],
+        "waypoint_count": 0,
+        "max_position_error_mm": null,
+        "max_approach_error_deg": null,
+        "min_margin_rad": null,
+        "max_adjacent_delta_rad": null,
+        "calibration_status": "real_planar_calibrated_provisional_z_assumed",
+        "z_assumption": "workspace_plane_z0_equals_base_link_z0",
+        "timestamp": 1785858326.3345964,
+        "time_parameterization_status": "nominal_preview_only",
+        "hardware_control_enabled": false,
+        "command_topics_published": [],
+        "debug": {
+          "pose_received_count": 20,
+          "valid_true_count": 9,
+          "plan_attempt_count": 3,
+          "last_processed_position_base_m": [
+            0.4,
+            -1.3877787807814457e-17,
+            0.025
+          ]
+        }
+      }
+    },
+    {
+      "name": "unreachable_target",
+      "passed": true,
+      "latest_status": {
+        "status": "INVALID",
+        "reason": "object_pose_base_valid_false",
+        "plan_id": "e002dbbdae327b0d03f48e6e",
+        "active_plan_id": null,
+        "latest_generated_plan_id": "e002dbbdae327b0d03f48e6e",
+        "trajectory_hash": null,
+        "trajectory_point_count": 0,
+        "trajectory_payload_publish_seq": 3,
+        "trajectory_payload_publish_timestamp": 1785858324.3353622,
+        "planner_config_version": "visual_grasp_planner_v1",
+        "planner_heartbeat_seq": 112,
+        "last_object_pose_age_s": 0.0,
+        "last_object_pose_base_valid_age_s": 17.860000000000582,
+        "cached_plan_available": false,
+        "trajectory_republished": false,
+        "object_position_base_m": null,
+        "waypoint_count": 0,
+        "max_position_error_mm": null,
+        "max_approach_error_deg": null,
+        "min_margin_rad": null,
+        "max_adjacent_delta_rad": null,
+        "calibration_status": "real_planar_calibrated_provisional_z_assumed",
+        "z_assumption": "workspace_plane_z0_equals_base_link_z0",
+        "timestamp": 1785858347.459249,
+        "time_parameterization_status": "nominal_preview_only",
+        "hardware_control_enabled": false,
+        "command_topics_published": [],
+        "debug": {
+          "pose_received_count": 33,
+          "valid_true_count": 18,
+          "plan_attempt_count": 7,
+          "last_processed_position_base_m": [
+            0.32,
+            0.12,
+            0.025
+          ]
+        }
+      }
+    },
+    {
+      "name": "valid_false",
+      "passed": true,
+      "latest_status": {
+        "status": "INVALID",
+        "reason": "object_pose_base_valid_false",
+        "plan_id": "e002dbbdae327b0d03f48e6e",
+        "active_plan_id": null,
+        "latest_generated_plan_id": "e002dbbdae327b0d03f48e6e",
+        "trajectory_hash": null,
+        "trajectory_point_count": 0,
+        "trajectory_payload_publish_seq": 3,
+        "trajectory_payload_publish_timestamp": 1785858324.3353622,
+        "planner_config_version": "visual_grasp_planner_v1",
+        "planner_heartbeat_seq": 112,
+        "last_object_pose_age_s": 0.0,
+        "last_object_pose_base_valid_age_s": 17.860000000000582,
+        "cached_plan_available": false,
+        "trajectory_republished": false,
+        "object_position_base_m": null,
+        "waypoint_count": 0,
+        "max_position_error_mm": null,
+        "max_approach_error_deg": null,
+        "min_margin_rad": null,
+        "max_adjacent_delta_rad": null,
+        "calibration_status": "real_planar_calibrated_provisional_z_assumed",
+        "z_assumption": "workspace_plane_z0_equals_base_link_z0",
+        "timestamp": 1785858347.459249,
+        "time_parameterization_status": "nominal_preview_only",
+        "hardware_control_enabled": false,
+        "command_topics_published": [],
+        "debug": {
+          "pose_received_count": 33,
+          "valid_true_count": 18,
+          "plan_attempt_count": 7,
+          "last_processed_position_base_m": [
+            0.32,
+            0.12,
+            0.025
+          ]
+        }
+      }
+    }
+  ],
+  "live_vision_validation": {
+    "status": "NOT_RUN",
+    "reason": "Physical center/left/right/removed-object validation requires a camera and moving the target in the workspace. This verifier does not fake physical observations.",
+    "launch_command": "powershell -ExecutionPolicy Bypass -File \"E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\audit\\run_in_ros2_lyrical.ps1\" -CommandFile <cmd-file-containing-ros2-launch>"
+  },
+  "process_cleanup": {
+    "all_started_processes_stopped": true,
+    "process_logs": {}
+  }
+}

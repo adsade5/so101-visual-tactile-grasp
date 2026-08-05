@@ -1,0 +1,743 @@
+{
+  "stage": "2D-3C",
+  "status": "PASS",
+  "timestamp": "2026-08-04T15:43:24.512985+00:00",
+  "model": {
+    "urdf": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\robot_model\\so101\\so101_new_calib.urdf",
+    "urdf_sha256": "3a65d2d35e68a8d2f0c2cc176d19b884506543c93ba72980145b80abe276022c",
+    "urdf_sha256_expected": "3a65d2d35e68a8d2f0c2cc176d19b884506543c93ba72980145b80abe276022c",
+    "urdf_sha256_matches_expected": true,
+    "joint_names": [
+      "shoulder_pan",
+      "shoulder_lift",
+      "elbow_flex",
+      "wrist_flex",
+      "wrist_roll"
+    ],
+    "joint_limits_rad": {
+      "shoulder_pan": {
+        "lower": -1.91986,
+        "upper": 1.91986
+      },
+      "shoulder_lift": {
+        "lower": -1.74533,
+        "upper": 1.74533
+      },
+      "elbow_flex": {
+        "lower": -1.69,
+        "upper": 1.69
+      },
+      "wrist_flex": {
+        "lower": -1.65806,
+        "upper": 1.65806
+      },
+      "wrist_roll": {
+        "lower": -2.74385,
+        "upper": 2.84121
+      }
+    }
+  },
+  "safety": {
+    "opened_com_ports": false,
+    "real_joint_state_read_only": true,
+    "torque_enable_written": false,
+    "torque_disable_written": false,
+    "goal_position_written": false,
+    "motion_parameters_written": false,
+    "motion_command_sent": false,
+    "real_controller_topics_published": [],
+    "hardware_control_enabled": false,
+    "shadow_execution_only": true,
+    "observed_physical_motion": false,
+    "forbidden_controller_topics": [
+      "/joint_trajectory_controller/joint_trajectory",
+      "/joint_trajectory_controller/follow_joint_trajectory",
+      "/arm_controller/command",
+      "/robot_command",
+      "/hardware_command"
+    ]
+  },
+  "failures": [],
+  "logs": {
+    "main_log": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\stage_2d3c_verification.log",
+    "ros_log_dir": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\ros_logs_2d3c"
+  },
+  "configuration": {
+    "config_path": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\config\\connection_trajectory.json",
+    "status": "shadow_connection_preview_only",
+    "joint_names": [
+      "shoulder_pan",
+      "shoulder_lift",
+      "elbow_flex",
+      "wrist_flex",
+      "wrist_roll"
+    ],
+    "sample_rate_hz": 50.0,
+    "maximum_connection_velocity_rad_s": [
+      0.1,
+      0.1,
+      0.1,
+      0.1,
+      0.1
+    ],
+    "maximum_connection_acceleration_rad_s2": [
+      0.2,
+      0.2,
+      0.2,
+      0.2,
+      0.2
+    ],
+    "minimum_connection_duration_s": 1.0,
+    "maximum_connection_duration_s": 30.0,
+    "minimum_joint_limit_margin_rad": 0.05,
+    "minimum_tcp_z_m": 0.055
+  },
+  "final_metrics": {
+    "q_current_rad": [
+      0.05235987755982989,
+      -0.3141592653589793,
+      0.3141592653589793,
+      1.1868238913561442,
+      0.03490658503988659
+    ],
+    "q_start_rad": [
+      0.0,
+      -0.3490658503988659,
+      0.3490658503988659,
+      1.2217304763960306,
+      0.0
+    ],
+    "per_joint_start_error_rad": [
+      0.05235987755982989,
+      0.034906585039886584,
+      0.034906585039886584,
+      0.03490658503988642,
+      0.03490658503988659
+    ],
+    "connection_duration_s": 1.2294305471213822,
+    "connection_point_count": 63,
+    "combined_trajectory_point_count": 65,
+    "combined_total_duration_s": 2.029430547,
+    "maximum_connection_velocity_rad_s_observed": [
+      0.0798538564496789,
+      0.05323590429978591,
+      0.05323590429978591,
+      0.05323590429978566,
+      0.053235904299785926
+    ],
+    "maximum_connection_acceleration_rad_s2_observed": [
+      0.19999021073060405,
+      0.13332680715373602,
+      0.13332680715373602,
+      0.13332680715373535,
+      0.13332680715373604
+    ],
+    "minimum_joint_limit_margin_rad": 0.2617965984045365,
+    "minimum_tcp_z_m_observed": 0.08483076359598142,
+    "tcp_x_range_m_observed": [
+      0.2389792499717086,
+      0.24799715313761075
+    ],
+    "tcp_y_range_m_observed": [
+      -0.011247698250552033,
+      -9.800304415675824e-06
+    ],
+    "time_strictly_increasing": true,
+    "first_point_matches_q_current": true,
+    "connection_endpoint_matches_q_start": true
+  },
+  "synthetic_cases": [
+    {
+      "name": "A.valid_connection",
+      "passed": true,
+      "reason": "connection_and_grasp_shadow_candidate_valid",
+      "metrics": {
+        "q_current_rad": [
+          0.05235987755982989,
+          -0.3141592653589793,
+          0.3141592653589793,
+          1.1868238913561442,
+          0.03490658503988659
+        ],
+        "q_start_rad": [
+          0.0,
+          -0.3490658503988659,
+          0.3490658503988659,
+          1.2217304763960306,
+          0.0
+        ],
+        "per_joint_start_error_rad": [
+          0.05235987755982989,
+          0.034906585039886584,
+          0.034906585039886584,
+          0.03490658503988642,
+          0.03490658503988659
+        ],
+        "connection_duration_s": 1.2294305471213822,
+        "connection_point_count": 63,
+        "combined_trajectory_point_count": 65,
+        "combined_total_duration_s": 2.029430547,
+        "maximum_connection_velocity_rad_s_observed": [
+          0.0798538564496789,
+          0.05323590429978591,
+          0.05323590429978591,
+          0.05323590429978566,
+          0.053235904299785926
+        ],
+        "maximum_connection_acceleration_rad_s2_observed": [
+          0.19999021073060405,
+          0.13332680715373602,
+          0.13332680715373602,
+          0.13332680715373535,
+          0.13332680715373604
+        ],
+        "minimum_joint_limit_margin_rad": 0.2617965984045365,
+        "minimum_tcp_z_m_observed": 0.08483076359598142,
+        "tcp_x_range_m_observed": [
+          0.2389792499717086,
+          0.24799715313761075
+        ],
+        "tcp_y_range_m_observed": [
+          -0.011247698250552033,
+          -9.800304415675824e-06
+        ],
+        "time_strictly_increasing": true,
+        "first_point_matches_q_current": true,
+        "connection_endpoint_matches_q_start": true
+      }
+    },
+    {
+      "name": "B.zero_connection",
+      "passed": true,
+      "reason": "connection_and_grasp_shadow_candidate_valid",
+      "connection_duration_s": 1.0,
+      "point_count": 53
+    },
+    {
+      "name": "C.joint_state_stale",
+      "passed": true,
+      "expected_reason": "current_joint_state_stale",
+      "actual_reason": "current_joint_state_stale"
+    },
+    {
+      "name": "D.real_joint_state_invalid",
+      "passed": true,
+      "expected_reason": "real_joint_state_invalid",
+      "actual_reason": "real_joint_state_invalid"
+    },
+    {
+      "name": "E.safe_trajectory_invalid",
+      "passed": true,
+      "expected_reason": "safe_trajectory_invalid",
+      "actual_reason": "safe_trajectory_invalid"
+    },
+    {
+      "name": "F.current_joint_out_of_bounds",
+      "passed": true,
+      "expected_reason": "current_joint_out_of_bounds",
+      "actual_reason": "current_joint_out_of_bounds"
+    },
+    {
+      "name": "G.joint_margin_insufficient",
+      "passed": true,
+      "expected_reason": "joint_margin_insufficient",
+      "actual_reason": "joint_margin_insufficient"
+    },
+    {
+      "name": "H.connection_duration_too_long",
+      "passed": true,
+      "expected_reason": "connection_duration_too_long",
+      "actual_reason": "connection_duration_too_long"
+    },
+    {
+      "name": "I.tcp_below_minimum_z",
+      "passed": true,
+      "expected_reason": "tcp_below_minimum_z",
+      "actual_reason": "tcp_below_minimum_z"
+    },
+    {
+      "name": "J.tcp_outside_workspace",
+      "passed": true,
+      "expected_reason": "tcp_outside_workspace",
+      "actual_reason": "tcp_outside_workspace"
+    },
+    {
+      "name": "L.non_finite_input",
+      "passed": true,
+      "expected_reason": "non_finite_input",
+      "actual_reason": "non_finite_input"
+    },
+    {
+      "name": "K.plan_id_changes",
+      "passed": true,
+      "original_connection_plan_id": "conn_a04aba5c5e7f4fa5041d",
+      "changed_connection_plan_id": "conn_48164fb1a5409049cbe7"
+    },
+    {
+      "name": "M.deterministic_repeat",
+      "passed": true,
+      "first_connection_plan_id": "conn_a04aba5c5e7f4fa5041d",
+      "second_connection_plan_id": "conn_a04aba5c5e7f4fa5041d"
+    },
+    {
+      "name": "N.command_gate_ready_with_connected_trajectory",
+      "passed": true,
+      "connection_status": {
+        "status": "VALID",
+        "reason": "connection_and_grasp_shadow_candidate_valid",
+        "upstream_plan_id": "stage2d3c-valid",
+        "latest_upstream_plan_id": "stage2d3c-valid",
+        "connection_plan_id": "conn_a04aba5c5e7f4fa5041d",
+        "plan_id": "conn_a04aba5c5e7f4fa5041d",
+        "active_plan_id": "conn_a04aba5c5e7f4fa5041d",
+        "current_joint_positions_rad": [
+          0.05235987755982989,
+          -0.3141592653589793,
+          0.3141592653589793,
+          1.1868238913561442,
+          0.03490658503988659
+        ],
+        "target_start_positions_rad": [
+          0.0,
+          -0.3490658503988659,
+          0.3490658503988659,
+          1.2217304763960306,
+          0.0
+        ],
+        "per_joint_start_error_rad": [
+          0.05235987755982989,
+          0.034906585039886584,
+          0.034906585039886584,
+          0.03490658503988642,
+          0.03490658503988659
+        ],
+        "maximum_start_error_rad": 0.05235987755982989,
+        "connection_duration_s": 1.2294305471213822,
+        "connection_point_count": 63,
+        "original_trajectory_point_count": 3,
+        "combined_trajectory_point_count": 65,
+        "maximum_connection_velocity_rad_s_observed": [
+          0.0798538564496789,
+          0.05323590429978591,
+          0.05323590429978591,
+          0.05323590429978566,
+          0.053235904299785926
+        ],
+        "maximum_connection_acceleration_rad_s2_observed": [
+          0.19999021073060405,
+          0.13332680715373602,
+          0.13332680715373602,
+          0.13332680715373535,
+          0.13332680715373604
+        ],
+        "minimum_joint_limit_margin_rad": 0.2617965984045365,
+        "minimum_tcp_z_m_observed": 0.08483076359598142,
+        "tcp_x_range_m_observed": [
+          0.2389792499717086,
+          0.24799715313761075
+        ],
+        "tcp_y_range_m_observed": [
+          -0.011247698250552033,
+          -9.800304415675824e-06
+        ],
+        "time_strictly_increasing": true,
+        "current_joint_state_age_s": 0.046999999998661224,
+        "source_valid_heartbeat_age_s": 0.046999999998661224,
+        "shadow_connection_preview_only": true,
+        "hardware_control_enabled": false,
+        "command_topics_published": [],
+        "real_controller_topics_published": [],
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ],
+        "timestamp": 1785858207.3757026,
+        "status_profile": "shadow_connection_preview_only",
+        "source_status_raw": "{\"status\": \"VALID\", \"reason\": \"test_valid\", \"plan_id\": \"stage2d3c-valid\", \"active_plan_id\": \"stage2d3c-valid\", \"latest_upstream_plan_id\": \"stage2d3c-valid\", \"hardware_control_enabled\": false, \"published_controller_command_topics\": [], \"timestamp\": 54060.031}"
+      },
+      "command_gate_status": {
+        "status": "READY",
+        "reason": "shadow_execution_candidate_valid",
+        "plan_id": "conn_a04aba5c5e7f4fa5041d",
+        "current_joint_state_age_s": 0.0319999999992433,
+        "source_valid_heartbeat_age_s": 0.0319999999992433,
+        "maximum_start_state_error_rad_observed": 0.0,
+        "maximum_start_state_error_rad_limit": 0.08,
+        "minimum_current_joint_limit_margin_rad": 0.4712361086438559,
+        "minimum_trajectory_joint_limit_margin_rad": 0.2617965984045365,
+        "maximum_velocity_rad_s_observed": [
+          0.0798538564496789,
+          0.05323590429978591,
+          0.05323590429978591,
+          0.05323590429978566,
+          0.053235904299785926
+        ],
+        "maximum_acceleration_rad_s2_observed": [
+          0.19999021073060405,
+          0.13332680715373602,
+          0.13332680715373602,
+          0.13332680715373535,
+          0.13332680715373604
+        ],
+        "total_duration_s": 2.029430547,
+        "trajectory_point_count": 65,
+        "time_strictly_increasing": true,
+        "hardware_control_enabled": false,
+        "command_topics_published": [],
+        "shadow_execution_only": true,
+        "timestamp": 1785858207.3777487,
+        "status_profile": "shadow_execution_only",
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ],
+        "safe_timed_status_raw": "{\"status\": \"VALID\", \"reason\": \"connection_and_grasp_shadow_candidate_valid\", \"upstream_plan_id\": \"stage2d3c-valid\", \"latest_upstream_plan_id\": \"stage2d3c-valid\", \"connection_plan_id\": \"conn_a04aba5c5e7f4fa5041d\", \"plan_id\": \"conn_a04aba5c5e7f4fa5041d\", \"active_plan_id\": \"conn_a04aba5c5e7f4fa5041d\", \"current_joint_positions_rad\": [0.05235987755982989, -0.3141592653589793, 0.3141592653589793, 1.1868238913561442, 0.03490658503988659], \"target_start_positions_rad\": [0.0, -0.3490658503988659, 0.3490658503988659, 1.2217304763960306, 0.0], \"per_joint_start_error_rad\": [0.05235987755982989, 0.034906585039886584, 0.034906585039886584, 0.03490658503988642, 0.03490658503988659], \"maximum_start_error_rad\": 0.05235987755982989, \"connection_duration_s\": 1.2294305471213822, \"connection_point_count\": 63, \"original_trajectory_point_count\": 3, \"combined_trajectory_point_count\": 65, \"maximum_connection_velocity_rad_s_observed\": [0.0798538564496789, 0.05323590429978591, 0.05323590429978591, 0.05323590429978566, 0.053235904299785926], \"maximum_connection_acceleration_rad_s2_observed\": [0.19999021073060405, 0.13332680715373602, 0.13332680715373602, 0.13332680715373535, 0.13332680715373604], \"minimum_joint_limit_margin_rad\": 0.2617965984045365, \"minimum_tcp_z_m_observed\": 0.08483076359598142, \"tcp_x_range_m_observed\": [0.2389792499717086, 0.24799715313761075], \"tcp_y_range_m_observed\": [-0.011247698250552033, -9.800304415675824e-06], \"time_strictly_increasing\": true, \"current_joint_state_age_s\": 0.031000000002677552, \"source_valid_heartbeat_age_s\": 0.031000000002677552, \"shadow_connection_preview_only\": true, \"hardware_control_enabled\": false, \"command_topics_published\": [], \"real_controller_topics_published\": [], \"disabled_controller_command_topics\": [\"/joint_trajectory_controller/joint_trajectory\", \"/joint_trajectory_controller/follow_joint_trajectory\", \"/arm_controller/command\", \"/robot_command\", \"/hardware_command\"], \"timestamp\": 1785858207.3320005, \"status_profile\": \"shadow_connection_preview_only\", \"source_status_raw\": \"{\\\"status\\\": \\\"VALID\\\", \\\"reason\\\": \\\"test_valid\\\", \\\"plan_id\\\": \\\"stage2d3c-valid\\\", \\\"active_plan_id\\\": \\\"stage2d3c-valid\\\", \\\"latest_upstream_plan_id\\\": \\\"stage2d3c-valid\\\", \\\"hardware_control_enabled\\\": false, \\\"published_controller_command_topics\\\": [], \\\"timestamp\\\": 54059.968}\"}"
+      }
+    },
+    {
+      "name": "O.explicit_shadow_start_required",
+      "passed": true,
+      "before_start_state": "READY",
+      "before_start_active": false,
+      "start_service": {
+        "success": true,
+        "message": "shadow_execution_started"
+      },
+      "running_observed_after_start": true,
+      "after_start_status": {
+        "state": "RUNNING",
+        "reason": "shadow_execution_running",
+        "plan_id": "conn_a04aba5c5e7f4fa5041d",
+        "elapsed_s": 0.031000000002677552,
+        "total_duration_s": 2.029430547,
+        "progress_ratio": 0.015275220947325946,
+        "current_shadow_positions_rad": [
+          0.052349513293994045,
+          -0.3141661748695365,
+          0.3141661748695365,
+          1.1868308008667015,
+          0.03489967552932936
+        ],
+        "hardware_control_enabled": false,
+        "command_topics_published": [],
+        "shadow_execution_only": true,
+        "timestamp": 1785858208.4522657,
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ]
+      }
+    },
+    {
+      "name": "P.full_shadow_completes",
+      "passed": true,
+      "latest_shadow_status": {
+        "state": "COMPLETED",
+        "reason": "shadow_execution_completed",
+        "plan_id": "conn_a04aba5c5e7f4fa5041d",
+        "elapsed_s": 2.029430547,
+        "total_duration_s": 2.029430547,
+        "progress_ratio": 1.0,
+        "current_shadow_positions_rad": [
+          0.0,
+          -0.2617993877991494,
+          0.3490658503988659,
+          1.2217304763960306,
+          0.0
+        ],
+        "hardware_control_enabled": false,
+        "command_topics_published": [],
+        "shadow_execution_only": true,
+        "timestamp": 1785858211.3318622,
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ]
+      },
+      "expected_joint_state_count": 100
+    },
+    {
+      "name": "Q.remove_object_during_connection",
+      "passed": true,
+      "connection_status": {
+        "status": "INVALID",
+        "reason": "safe_trajectory_invalid",
+        "upstream_plan_id": null,
+        "connection_plan_id": null,
+        "plan_id": null,
+        "active_plan_id": null,
+        "current_joint_positions_rad": [],
+        "target_start_positions_rad": [],
+        "per_joint_start_error_rad": [],
+        "maximum_start_error_rad": null,
+        "connection_duration_s": 0.0,
+        "connection_point_count": 0,
+        "original_trajectory_point_count": 0,
+        "combined_trajectory_point_count": 0,
+        "maximum_connection_velocity_rad_s_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "maximum_connection_acceleration_rad_s2_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "minimum_joint_limit_margin_rad": null,
+        "minimum_tcp_z_m_observed": null,
+        "tcp_x_range_m_observed": null,
+        "tcp_y_range_m_observed": null,
+        "time_strictly_increasing": false,
+        "current_joint_state_age_s": 0.014999999999417923,
+        "source_valid_heartbeat_age_s": 0.17100000000209548,
+        "shadow_connection_preview_only": true,
+        "hardware_control_enabled": false,
+        "command_topics_published": [],
+        "real_controller_topics_published": [],
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ],
+        "timestamp": 1785858212.222812,
+        "status_profile": "shadow_connection_preview_only",
+        "source_status_raw": "{\"status\": \"INVALID\", \"reason\": \"test_invalid\", \"plan_id\": null, \"active_plan_id\": null, \"latest_upstream_plan_id\": \"stage2d3c-valid\", \"hardware_control_enabled\": false, \"published_controller_command_topics\": [], \"timestamp\": 54064.906}"
+      },
+      "command_gate_status": {
+        "status": "INVALID",
+        "reason": "safe_timed_grasp_invalid",
+        "plan_id": null,
+        "current_joint_state_age_s": 0.014999999999417923,
+        "source_valid_heartbeat_age_s": 0.07800000000133878,
+        "maximum_start_state_error_rad_observed": null,
+        "maximum_start_state_error_rad_limit": 0.08,
+        "minimum_current_joint_limit_margin_rad": null,
+        "minimum_trajectory_joint_limit_margin_rad": null,
+        "maximum_velocity_rad_s_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "maximum_acceleration_rad_s2_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "total_duration_s": 0.0,
+        "trajectory_point_count": 0,
+        "time_strictly_increasing": false,
+        "hardware_control_enabled": false,
+        "command_topics_published": [],
+        "shadow_execution_only": true,
+        "timestamp": 1785858212.2223577,
+        "status_profile": "shadow_execution_only",
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ],
+        "safe_timed_status_raw": "{\"status\": \"INVALID\", \"reason\": \"safe_trajectory_invalid\", \"upstream_plan_id\": null, \"connection_plan_id\": null, \"plan_id\": null, \"active_plan_id\": null, \"current_joint_positions_rad\": [], \"target_start_positions_rad\": [], \"per_joint_start_error_rad\": [], \"maximum_start_error_rad\": null, \"connection_duration_s\": 0.0, \"connection_point_count\": 0, \"original_trajectory_point_count\": 0, \"combined_trajectory_point_count\": 0, \"maximum_connection_velocity_rad_s_observed\": [0.0, 0.0, 0.0, 0.0, 0.0], \"maximum_connection_acceleration_rad_s2_observed\": [0.0, 0.0, 0.0, 0.0, 0.0], \"minimum_joint_limit_margin_rad\": null, \"minimum_tcp_z_m_observed\": null, \"tcp_x_range_m_observed\": null, \"tcp_y_range_m_observed\": null, \"time_strictly_increasing\": false, \"current_joint_state_age_s\": 0.0319999999992433, \"source_valid_heartbeat_age_s\": 0.125, \"shadow_connection_preview_only\": true, \"hardware_control_enabled\": false, \"command_topics_published\": [], \"real_controller_topics_published\": [], \"disabled_controller_command_topics\": [\"/joint_trajectory_controller/joint_trajectory\", \"/joint_trajectory_controller/follow_joint_trajectory\", \"/arm_controller/command\", \"/robot_command\", \"/hardware_command\"], \"timestamp\": 1785858212.177947, \"status_profile\": \"shadow_connection_preview_only\", \"source_status_raw\": \"{\\\"status\\\": \\\"INVALID\\\", \\\"reason\\\": \\\"test_invalid\\\", \\\"plan_id\\\": null, \\\"active_plan_id\\\": null, \\\"latest_upstream_plan_id\\\": \\\"stage2d3c-valid\\\", \\\"hardware_control_enabled\\\": false, \\\"published_controller_command_topics\\\": [], \\\"timestamp\\\": 54064.843}\"}"
+      },
+      "shadow_status": {
+        "state": "INVALIDATED",
+        "reason": "command_gate_invalidated",
+        "plan_id": "conn_a04aba5c5e7f4fa5041d",
+        "elapsed_s": 0.125,
+        "total_duration_s": 2.029430547,
+        "progress_ratio": 0.06159363284680074,
+        "current_shadow_positions_rad": [
+          0.05188370467056356,
+          -0.3144767139518235,
+          0.3144767139518235,
+          1.1871413399489885,
+          0.03458913644704237
+        ],
+        "hardware_control_enabled": false,
+        "command_topics_published": [],
+        "shadow_execution_only": true,
+        "timestamp": 1785858212.2548914,
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ]
+      }
+    },
+    {
+      "name": "R.real_joint_state_disconnect_during_shadow",
+      "passed": true,
+      "connection_status": {
+        "status": "INVALID",
+        "reason": "real_joint_state_invalid",
+        "upstream_plan_id": "stage2d3c-valid",
+        "connection_plan_id": null,
+        "plan_id": null,
+        "active_plan_id": null,
+        "current_joint_positions_rad": [],
+        "target_start_positions_rad": [],
+        "per_joint_start_error_rad": [],
+        "maximum_start_error_rad": null,
+        "connection_duration_s": 0.0,
+        "connection_point_count": 0,
+        "original_trajectory_point_count": 0,
+        "combined_trajectory_point_count": 0,
+        "maximum_connection_velocity_rad_s_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "maximum_connection_acceleration_rad_s2_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "minimum_joint_limit_margin_rad": null,
+        "minimum_tcp_z_m_observed": null,
+        "tcp_x_range_m_observed": null,
+        "tcp_y_range_m_observed": null,
+        "time_strictly_increasing": false,
+        "current_joint_state_age_s": 0.014999999999417923,
+        "source_valid_heartbeat_age_s": 0.014999999999417923,
+        "shadow_connection_preview_only": true,
+        "hardware_control_enabled": false,
+        "command_topics_published": [],
+        "real_controller_topics_published": [],
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ],
+        "timestamp": 1785858213.180488,
+        "status_profile": "shadow_connection_preview_only",
+        "source_status_raw": "{\"status\": \"VALID\", \"reason\": \"test_valid\", \"plan_id\": \"stage2d3c-valid\", \"active_plan_id\": \"stage2d3c-valid\", \"latest_upstream_plan_id\": \"stage2d3c-valid\", \"hardware_control_enabled\": false, \"published_controller_command_topics\": [], \"timestamp\": 54065.875}"
+      },
+      "command_gate_status": {
+        "status": "INVALID",
+        "reason": "current_joint_state_source_invalid",
+        "plan_id": null,
+        "current_joint_state_age_s": 0.031000000002677552,
+        "source_valid_heartbeat_age_s": 0.06300000000192085,
+        "maximum_start_state_error_rad_observed": null,
+        "maximum_start_state_error_rad_limit": 0.08,
+        "minimum_current_joint_limit_margin_rad": null,
+        "minimum_trajectory_joint_limit_margin_rad": null,
+        "maximum_velocity_rad_s_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "maximum_acceleration_rad_s2_observed": [
+          0.0,
+          0.0,
+          0.0,
+          0.0,
+          0.0
+        ],
+        "total_duration_s": 0.0,
+        "trajectory_point_count": 0,
+        "time_strictly_increasing": false,
+        "hardware_control_enabled": false,
+        "command_topics_published": [],
+        "shadow_execution_only": true,
+        "timestamp": 1785858213.2041852,
+        "status_profile": "shadow_execution_only",
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ],
+        "safe_timed_status_raw": "{\"status\": \"INVALID\", \"reason\": \"real_joint_state_invalid\", \"upstream_plan_id\": \"stage2d3c-valid\", \"connection_plan_id\": null, \"plan_id\": null, \"active_plan_id\": null, \"current_joint_positions_rad\": [], \"target_start_positions_rad\": [], \"per_joint_start_error_rad\": [], \"maximum_start_error_rad\": null, \"connection_duration_s\": 0.0, \"connection_point_count\": 0, \"original_trajectory_point_count\": 0, \"combined_trajectory_point_count\": 0, \"maximum_connection_velocity_rad_s_observed\": [0.0, 0.0, 0.0, 0.0, 0.0], \"maximum_connection_acceleration_rad_s2_observed\": [0.0, 0.0, 0.0, 0.0, 0.0], \"minimum_joint_limit_margin_rad\": null, \"minimum_tcp_z_m_observed\": null, \"tcp_x_range_m_observed\": null, \"tcp_y_range_m_observed\": null, \"time_strictly_increasing\": false, \"current_joint_state_age_s\": 0.014999999999417923, \"source_valid_heartbeat_age_s\": 0.014999999999417923, \"shadow_connection_preview_only\": true, \"hardware_control_enabled\": false, \"command_topics_published\": [], \"real_controller_topics_published\": [], \"disabled_controller_command_topics\": [\"/joint_trajectory_controller/joint_trajectory\", \"/joint_trajectory_controller/follow_joint_trajectory\", \"/arm_controller/command\", \"/robot_command\", \"/hardware_command\"], \"timestamp\": 1785858213.180488, \"status_profile\": \"shadow_connection_preview_only\", \"source_status_raw\": \"{\\\"status\\\": \\\"VALID\\\", \\\"reason\\\": \\\"test_valid\\\", \\\"plan_id\\\": \\\"stage2d3c-valid\\\", \\\"active_plan_id\\\": \\\"stage2d3c-valid\\\", \\\"latest_upstream_plan_id\\\": \\\"stage2d3c-valid\\\", \\\"hardware_control_enabled\\\": false, \\\"published_controller_command_topics\\\": [], \\\"timestamp\\\": 54065.875}\"}"
+      },
+      "shadow_status": {
+        "state": "INVALIDATED",
+        "reason": "command_gate_invalidated",
+        "plan_id": "conn_a04aba5c5e7f4fa5041d",
+        "elapsed_s": 0.0930000000007567,
+        "total_duration_s": 2.029430547,
+        "progress_ratio": 0.045825662838392615,
+        "current_shadow_positions_rad": [
+          0.05215309594878739,
+          -0.314297119766341,
+          0.314297119766341,
+          1.1869617457635058,
+          0.034768730632524926
+        ],
+        "hardware_control_enabled": false,
+        "command_topics_published": [],
+        "shadow_execution_only": true,
+        "timestamp": 1785858213.2201023,
+        "disabled_controller_command_topics": [
+          "/joint_trajectory_controller/joint_trajectory",
+          "/joint_trajectory_controller/follow_joint_trajectory",
+          "/arm_controller/command",
+          "/robot_command",
+          "/hardware_command"
+        ]
+      }
+    }
+  ],
+  "executables": {
+    "return_code": 0,
+    "raw_output": "so101_command_gate command_gate_node-script.py\nso101_command_gate command_gate_node.exe\nso101_command_gate connection_trajectory_node-script.py\nso101_command_gate connection_trajectory_node.exe\nso101_command_gate mock_joint_state_publisher-script.py\nso101_command_gate mock_joint_state_publisher.exe\nso101_command_gate real_joint_state_bridge_node-script.py\nso101_command_gate real_joint_state_bridge_node.exe\nso101_command_gate shadow_executor_node-script.py\nso101_command_gate shadow_executor_node.exe\n",
+    "connection_trajectory_node": true,
+    "command_gate_node": true,
+    "shadow_executor_node": true
+  },
+  "stage_2d3a_regression_includes_2d1_2d2": {
+    "return_code": 0,
+    "status": "PASS",
+    "report": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\stage_2d3a_report.json",
+    "report_status": "PASS",
+    "offline_status": null,
+    "report_failures": [],
+    "log_excerpt": "tarted | status=shadow_execution_only | requires explicit /start_shadow_execution trigger | hardware_control_enabled=False | controller command topics disabled\n[INFO] [1785858232.208363000] [command_gate_node]: SO-101 command gate started | status=shadow_execution_only | hardware_control_enabled=False | controller command topics disabled | maximum_start_state_error_rad=0.080\n[INFO] [1785858232.209779900] [command_gate_node]: Shadow candidate publisher only: /shadow_command_candidate_trajectory. Disabled real command topics: ['/joint_trajectory_controller/joint_trajectory', '/joint_trajectory_controller/follow_joint_trajectory', '/arm_controller/command', '/robot_command', '/hardware_command']\n[INFO] [1785858232.211179500] [command_gate_node]: Command gate current state source | topic=/joint_states | valid_topic=<none>\n[INFO] [1785858232.212633600] [command_gate_node]: Command gate upstream source | trajectory=/safe_timed_grasp_trajectory | valid=/safe_timed_grasp_valid | status=/safe_timed_grasp_status\n[WARN] [1785858232.212799600] [rcl.logging_rosout]: Publisher already registered for node name: 'shadow_executor_node'. If this is due to multiple nodes with the same name then all logs for the logger named 'shadow_executor_node' will go out over the existing publisher. As soon as any node with that name is destructed it will unregister the publisher, preventing any further logs for that name from being published on the rosout topic.\n[INFO] [1785858232.217692200] [shadow_executor_node]: SO-101 shadow executor started | status=shadow_execution_only | requires explicit /start_shadow_execution trigger | hardware_control_enabled=False | controller command topics disabled\n[WARN] [1785858232.838088200] [rcl.logging_rosout]: Publisher already registered for node name: 'command_gate_node'. If this is due to multiple nodes with the same name then all logs for the logger named 'command_gate_node' will go out over the existing publisher. As soon as any node with that name is destructed it will unregister the publisher, preventing any further logs for that name from being published on the rosout topic.\n[INFO] [1785858232.846539200] [command_gate_node]: SO-101 command gate started | status=shadow_execution_only | hardware_control_enabled=False | controller command topics disabled | maximum_start_state_error_rad=0.080\n[INFO] [1785858232.848028400] [command_gate_node]: Shadow candidate publisher only: /shadow_command_candidate_trajectory. Disabled real command topics: ['/joint_trajectory_controller/joint_trajectory', '/joint_trajectory_controller/follow_joint_trajectory', '/arm_controller/command', '/robot_command', '/hardware_command']\n[INFO] [1785858232.849438800] [command_gate_node]: Command gate current state source | topic=/joint_states | valid_topic=<none>\n[INFO] [1785858232.851076300] [command_gate_node]: Command gate upstream source | trajectory=/safe_timed_grasp_trajectory | valid=/safe_timed_grasp_valid | status=/safe_timed_grasp_status\n[INFO] [1785858232.856466500] [shadow_executor_node]: SO-101 shadow executor started | status=shadow_execution_only | requires explicit /start_shadow_execution trigger | hardware_control_enabled=False | controller command topics disabled\n2026-08-04T15:43:57.871967+00:00 Running stage_2d1_regression regression.\n2026-08-04T15:44:46.163940+00:00 Running stage_2d2_regression regression.\n2026-08-04T15:45:51.843774+00:00 Report written: E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\stage_2d3a_report.json\n2026-08-04T15:45:51.843774+00:00 Stage 2D-3A status: PASS\nThe following exception was never retrieved: cannot use Destroyable because destruction was requested\nThe following exception was never retrieved: cannot use Destroyable because destruction was requested\nThe following exception was never retrieved: cannot use Destroyable because destruction was requested\nThe following exception was never retrieved: cannot use Destroyable because destruction was requested\n",
+    "passed": true
+  },
+  "stage_2d3b_offline_regression": {
+    "return_code": 0,
+    "status": "PASS",
+    "report": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\stage_2d3b_report.json",
+    "report_status": "FAIL_BLOCKED_NO_COM_PORT",
+    "offline_status": "PASS",
+    "report_failures": [],
+    "log_excerpt": "2026-08-04T15:45:52.081290+00:00 Stage 2D-3B offline verification started inside ROS2 environment.\n2026-08-04T15:45:52.869350Z  WARN ThreadId(06) zenoh::net::runtime::orchestrator: Scouting delay elapsed before start conditions are met.\n[WARN] [1785858352.869460800] [rmw_zenoh_cpp]: Unable to connect to a Zenoh router. Have you started a router with `ros2 run rmw_zenoh_cpp rmw_zenohd`?\n[WARN] [1785858352.869488500] [rmw_zenoh_cpp]: Unable to connect to a Zenoh router after 1 attempt(s). Please ensure that a Zenoh router is running and can be reached. You may increase the number of attempts to check for a router by setting the ZENOH_ROUTER_CHECK_ATTEMPTS environment variable. Proceeding with initialization but other peers will not discover or receive data from peers in this session until a router is started.\n[WARN] [1785858353.443125100] [real_joint_state_bridge_node]: REAL SO-101 READ-ONLY JOINT STATE BRIDGE | publishes /real_joint_states only | hardware motion disabled | tcp=127.0.0.1:18766\n[INFO] [1785858353.488897500] [command_gate_node]: SO-101 command gate started | status=shadow_execution_only | hardware_control_enabled=False | controller command topics disabled | maximum_start_state_error_rad=0.080\n[INFO] [1785858353.490332800] [command_gate_node]: Shadow candidate publisher only: /shadow_command_candidate_trajectory. Disabled real command topics: ['/joint_trajectory_controller/joint_trajectory', '/joint_trajectory_controller/follow_joint_trajectory', '/arm_controller/command', '/robot_command', '/hardware_command']\n[INFO] [1785858353.491862600] [command_gate_node]: Command gate current state source | topic=/real_joint_states | valid_topic=/real_joint_state_valid\n[INFO] [1785858353.493300100] [command_gate_node]: Command gate upstream source | trajectory=/safe_timed_grasp_trajectory | valid=/safe_timed_grasp_valid | status=/safe_timed_grasp_status\n2026-08-04T15:46:04.930939+00:00 Report written: E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\stage_2d3b_report.json\n2026-08-04T15:46:04.932068+00:00 Stage 2D-3B offline status: PASS\n2026-08-04T15:46:04.933106+00:00 Stage 2D-3B real hardware status: FAIL_BLOCKED_NO_COM_PORT\n",
+    "passed": true
+  }
+}

@@ -1,0 +1,183 @@
+{
+  "stage": "2C-1B",
+  "status": "FAIL",
+  "timestamp": "2026-08-04T07:04:02.390280+00:00",
+  "description": "Planar rigid calibration from workspace_plane to base_link",
+  "input_csv": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\calibration\\workspace_to_base_correspondences.csv",
+  "fit_point_count": 6,
+  "holdout_point_count": 2,
+  "rotation_matrix_2d": [
+    [
+      0.011085627051283615,
+      -0.9999385525485454
+    ],
+    [
+      0.9999385525485454,
+      0.011085627051283539
+    ]
+  ],
+  "translation_xy_m": [
+    0.3582641975602481,
+    -0.09760551442824955
+  ],
+  "provisional_translation_z_m": 0.0,
+  "yaw_deg": 89.36482734673851,
+  "singular_values": [
+    0.02438862215613921,
+    0.009049720851093767
+  ],
+  "metrics": {
+    "fit_rms_mm": 4.021509102978556,
+    "fit_max_mm": 5.5040606267145895,
+    "holdout_max_mm": 4.313980796520203
+  },
+  "thresholds": {
+    "fit_rms_limit_mm": 3.0,
+    "fit_max_limit_mm": 5.0,
+    "holdout_max_limit_mm": 5.0
+  },
+  "points": [
+    {
+      "id": "F1",
+      "set": "fit",
+      "workspace_xy_m": [
+        0.09720752251216291,
+        0.20634026178296275
+      ],
+      "expected_base_xy_m": [
+        0.15,
+        0.0
+      ],
+      "predicted_base_xy_m": [
+        0.15301422120165348,
+        0.0018834461171828992
+      ],
+      "error_mm": 3.5542789323333515
+    },
+    {
+      "id": "F2",
+      "set": "fit",
+      "workspace_xy_m": [
+        0.17032722951280324,
+        0.20783140935283664
+      ],
+      "expected_base_xy_m": [
+        0.15,
+        0.08
+      ],
+      "predicted_base_xy_m": [
+        0.15233374306090572,
+        0.075015190404015
+      ],
+      "error_mm": 5.5040606267145895
+    },
+    {
+      "id": "F3",
+      "set": "fit",
+      "workspace_xy_m": [
+        0.01837452025033299,
+        0.20695009015735807
+      ],
+      "expected_base_xy_m": [
+        0.15,
+        -0.08
+      ],
+      "predicted_base_xy_m": [
+        0.15153051703724996,
+        -0.07693795172764367
+      ],
+      "error_mm": 3.42324729219973
+    },
+    {
+      "id": "F4",
+      "set": "fit",
+      "workspace_xy_m": [
+        0.09575441958410542,
+        0.13085651221072736
+      ],
+      "expected_base_xy_m": [
+        0.23,
+        0.0
+      ],
+      "predicted_base_xy_m": [
+        0.22847722393272382,
+        -0.0004063522175932338
+      ],
+      "error_mm": 1.5760612538261554
+    },
+    {
+      "id": "F5",
+      "set": "fit",
+      "workspace_xy_m": [
+        0.17281414346826482,
+        0.13324794647551827
+      ],
+      "expected_base_xy_m": [
+        0.23,
+        0.08
+      ],
+      "predicted_base_xy_m": [
+        0.2269401919751285,
+        0.0766751470913008
+      ],
+      "error_mm": 4.518525424688201
+    },
+    {
+      "id": "F6",
+      "set": "fit",
+      "workspace_xy_m": [
+        0.019927380739752153,
+        0.13078903893201987
+      ],
+      "expected_base_xy_m": [
+        0.23,
+        -0.08
+      ],
+      "predicted_base_xy_m": [
+        0.2277041027923386,
+        -0.07622947966726185
+      ],
+      "error_mm": 4.414517818260483
+    },
+    {
+      "id": "H1",
+      "set": "holdout",
+      "workspace_xy_m": [
+        0.09613648842773063,
+        0.16364061679101313
+      ],
+      "expected_base_xy_m": [
+        0.2,
+        0.0
+      ],
+      "predicted_base_xy_m": [
+        0.1956993693248211,
+        0.00033912550546258413
+      ],
+      "error_mm": 4.313980796520203
+    },
+    {
+      "id": "H2",
+      "set": "holdout",
+      "workspace_xy_m": [
+        0.13545200355315698,
+        0.18040923881392337
+      ],
+      "expected_base_xy_m": [
+        0.18,
+        0.04
+      ],
+      "predicted_base_xy_m": [
+        0.17936761482900815,
+        0.03983811548259175
+      ],
+      "error_mm": 0.6527768389479567
+    }
+  ],
+  "configuration_written": false,
+  "limitations": [
+    "Only planar X, Y and yaw are calibrated.",
+    "Translation Z remains provisional and must be validated separately.",
+    "The calibration becomes invalid if the camera, workspace board or robot base moves."
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "version": "1.0",
+  "quality": "PASS",
+  "coordinate_frame": "opencv_charuco_board_plane",
+  "coordinate_unit": "millimeter",
+  "input_pixel_space": "undistorted_pixels_using_original_camera_matrix",
+  "camera": {
+    "index": 1,
+    "backend": "dshow",
+    "width": 640,
+    "height": 480
+  },
+  "board": {
+    "board_type": "charuco",
+    "dictionary": "DICT_4X4_50",
+    "squares_x": 7,
+    "squares_y": 5,
+    "square_length_m": 0.027,
+    "marker_length_m": 0.02,
+    "measured_square_length_mm": 27.0,
+    "measured_marker_length_mm": 20.0,
+    "print_scale": 0.9,
+    "expected_pattern_width_mm": 189.0,
+    "expected_pattern_height_mm": 135.0
+  },
+  "sampling": {
+    "target_valid_frames": 60,
+    "minimum_corners_per_frame": 20,
+    "stable_corner_ids": [
+      0,
+      1,
+      2,
+      3,
+      4,
+      5,
+      6,
+      7,
+      8,
+      9,
+      10,
+      11,
+      12,
+      13,
+      14,
+      15,
+      16,
+      17,
+      18,
+      19,
+      20,
+      21,
+      22,
+      23
+    ],
+    "stable_corner_count": 24
+  },
+  "quality_metrics_mm": {
+    "fit_rms": 0.10406361362805774,
+    "fit_mean": 0.08676422417650229,
+    "fit_max": 0.21002832138580277,
+    "holdout_rms": 0.1350364469356475,
+    "holdout_mean": 0.12806203922634118,
+    "holdout_max": 0.214403328821588,
+    "all_point_rms": 0.10895717451610024,
+    "all_point_mean": 0.09476791482274911,
+    "all_point_max": 0.21954489556571138
+  },
+  "homography_undistorted_pixel_to_plane_mm": [
+    [
+      -0.009860127833821179,
+      0.8346433166316476,
+      -95.77956764187267
+    ],
+    [
+      -0.8109411257123534,
+      0.006707005571704502,
+      370.82744658067884
+    ],
+    [
+      3.0454066861836912e-05,
+      0.00015331870760427934,
+      1.0
+    ]
+  ],
+  "homography_plane_mm_to_undistorted_pixel": [
+    [
+      -0.07177349891714267,
+      -1.2155922255745923,
+      443.9005263987223
+    ],
+    [
+      1.1768145191536221,
+      -0.009937456607548892,
+      116.39986749849585
+    ],
+    [
+      -0.00017824188623165413,
+      3.854332491832078e-05,
+      0.9686351464388699
+    ]
+  ],
+  "notes": [
+    "The camera and workspace plane must remain fixed after this calibration.",
+    "This transform maps image points to the physical tabletop plane.",
+    "Object height above the plane may introduce parallax error."
+  ]
+}
