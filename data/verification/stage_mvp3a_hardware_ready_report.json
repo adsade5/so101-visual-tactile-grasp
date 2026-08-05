@@ -1,0 +1,229 @@
+{
+  "stage": "MVP-3A",
+  "git_branch": "refactor/mvp_simple_grasp",
+  "lerobot_version": "0.5.2",
+  "robot_class": "lerobot.robots.so_follower.so_follower.SOFollower",
+  "config_class": "lerobot.robots.so_follower.config_so_follower.SOFollowerRobotConfig (registered SOFollowerConfig with id)",
+  "observation_position_unit": "arm joints: calibrated degrees via *.pos; gripper: range_0_100",
+  "action_position_unit": "arm joints: calibrated degrees via *.pos; gripper: range_0_100",
+  "calibration_applied_by": "Robot loads my_follower.json; FeetechMotorsBus normalizes Present_Position/Goal_Position",
+  "connect_torque_behavior": "SOFollower.connect configures motors under torque_disabled; read-only preflight avoids SOFollower.connect",
+  "disconnect_torque_behavior": "SOFollower.disconnect calls bus.disconnect(disable_torque_on_disconnect=True by default)",
+  "action_key_names": [
+    "shoulder_pan.pos",
+    "shoulder_lift.pos",
+    "elbow_flex.pos",
+    "wrist_flex.pos",
+    "wrist_roll.pos",
+    "gripper.pos"
+  ],
+  "robot_id": "my_follower",
+  "follower_port": "COM4",
+  "detected_usb_serial_number": "5B7B009052",
+  "calibration_path": "C:\\Users\\82053\\.cache\\huggingface\\lerobot\\calibration\\robots\\so_follower\\my_follower.json",
+  "calibration_summary": {
+    "shoulder_pan": {
+      "id": 1,
+      "homing_offset": -1342,
+      "range_min": 774,
+      "range_max": 3466,
+      "drive_mode": 0,
+      "calibrated_degrees_min": -118.32967032967034,
+      "calibrated_degrees_max": 118.32967032967034
+    },
+    "shoulder_lift": {
+      "id": 2,
+      "homing_offset": -2020,
+      "range_min": 858,
+      "range_max": 3281,
+      "drive_mode": 0,
+      "calibrated_degrees_min": -106.50549450549451,
+      "calibrated_degrees_max": 106.50549450549451
+    },
+    "elbow_flex": {
+      "id": 3,
+      "homing_offset": -1947,
+      "range_min": 899,
+      "range_max": 3128,
+      "drive_mode": 0,
+      "calibrated_degrees_min": -97.97802197802197,
+      "calibrated_degrees_max": 97.97802197802197
+    },
+    "wrist_flex": {
+      "id": 4,
+      "homing_offset": 2013,
+      "range_min": 798,
+      "range_max": 3203,
+      "drive_mode": 0,
+      "calibrated_degrees_min": -105.71428571428571,
+      "calibrated_degrees_max": 105.71428571428571
+    },
+    "wrist_roll": {
+      "id": 5,
+      "homing_offset": -1878,
+      "range_min": 0,
+      "range_max": 4095,
+      "drive_mode": 0,
+      "calibrated_degrees_min": -180.0,
+      "calibrated_degrees_max": 180.0
+    },
+    "gripper": {
+      "id": 6,
+      "homing_offset": 1830,
+      "range_min": 905,
+      "range_max": 2401,
+      "drive_mode": 0,
+      "calibrated_degrees_min": 0.0,
+      "calibrated_degrees_max": 100.0
+    }
+  },
+  "unit_conversion": "internal radians <-> LeRobot calibrated degrees for five arm joints; gripper remains range_0_100",
+  "current_joint_positions_rad": {
+    "shoulder_pan": -0.07825212470480071,
+    "shoulder_lift": -1.8941617244720876,
+    "elbow_flex": 1.6701458380622662,
+    "wrist_flex": 0.9229147649007378,
+    "wrist_roll": -0.03298864080692579
+  },
+  "current_gripper_value": 46.85828877005348,
+  "test_joint": "wrist_roll",
+  "test_delta_deg": 2.0,
+  "test_speed_rad_s": 0.04,
+  "plan_point_count": 46,
+  "plan_duration_s": 2.25,
+  "per_cycle_max_step_rad": 0.002,
+  "positive_target_within_calibration": true,
+  "return_target_within_calibration": true,
+  "offline_test_cases": [
+    {
+      "name": "config_load",
+      "success": true
+    },
+    {
+      "name": "missing_com_port",
+      "success": true
+    },
+    {
+      "name": "wrong_usb_serial",
+      "success": true
+    },
+    {
+      "name": "missing_calibration",
+      "success": true
+    },
+    {
+      "name": "unit_conversion_round_trip",
+      "success": true
+    },
+    {
+      "name": "calibration_target_in_range",
+      "success": true
+    },
+    {
+      "name": "calibration_target_out_of_range",
+      "success": true
+    },
+    {
+      "name": "only_wrist_roll_changes",
+      "success": true
+    },
+    {
+      "name": "exact_return_target",
+      "success": true
+    },
+    {
+      "name": "fixed_step_limit",
+      "success": true,
+      "max_step": 0.0019392547244381463
+    },
+    {
+      "name": "confirmation_missing",
+      "success": true,
+      "reason": "confirmation_missing"
+    },
+    {
+      "name": "wrong_confirmation_text",
+      "success": true,
+      "reason": "confirmation_missing"
+    },
+    {
+      "name": "tracking_error_abort",
+      "success": true,
+      "reason": "tracking_error_exceeded"
+    },
+    {
+      "name": "timeout_abort",
+      "success": true,
+      "reason": "motion_timeout"
+    },
+    {
+      "name": "keyboard_interrupt_stop",
+      "success": true,
+      "reason": "keyboard_interrupt_stop"
+    },
+    {
+      "name": "no_gripper_motion",
+      "success": true
+    },
+    {
+      "name": "no_other_joint_motion",
+      "success": true
+    }
+  ],
+  "read_only_preflight": {
+    "mode": "read_state",
+    "config_path": "config\\mvp_hardware.json",
+    "read_only": true,
+    "success": true,
+    "reason": "read_only_state_ok",
+    "opened_com_ports": true,
+    "port_info": {
+      "device": "COM4",
+      "serial_number": "5B7B009052",
+      "vid": 6790,
+      "pid": 21971,
+      "description": "USB-Enhanced-SERIAL CH343 (COM4)",
+      "manufacturer": "wch.cn"
+    },
+    "raw_lerobot_positions": {
+      "shoulder_pan": 2069.0,
+      "shoulder_lift": 835.0,
+      "elbow_flex": 3102.0,
+      "wrist_flex": 2602.0,
+      "wrist_roll": 2026.0,
+      "gripper": 1606.0
+    },
+    "calibrated_lerobot_positions": {
+      "shoulder_pan": -4.483516483516484,
+      "shoulder_lift": -108.52747252747253,
+      "elbow_flex": 95.6923076923077,
+      "wrist_flex": 52.879120879120876,
+      "wrist_roll": -1.89010989010989,
+      "gripper": 46.85828877005348
+    },
+    "joint_positions_rad": {
+      "shoulder_pan": -0.07825212470480071,
+      "shoulder_lift": -1.8941617244720876,
+      "elbow_flex": 1.6701458380622662,
+      "wrist_flex": 0.9229147649007378,
+      "wrist_roll": -0.03298864080692579
+    },
+    "gripper_value": 46.85828877005348,
+    "all_current_within_calibration": false,
+    "positive_target_within_calibration": true,
+    "return_target_within_calibration": true,
+    "goal_position_written": false,
+    "motion_command_sent": false,
+    "torque_enable_written": false,
+    "torque_disable_written": false
+  },
+  "execute_command_generated": true,
+  "execute_command_not_run_by_codex": true,
+  "opened_com_ports": true,
+  "goal_position_written": false,
+  "motion_command_sent": false,
+  "torque_enable_written": false,
+  "torque_disable_written": false,
+  "physical_motion_observed": false,
+  "final_status": "READY_FOR_MANUAL_MOTION_TEST"
+}

@@ -1,0 +1,619 @@
+{
+  "mode": "plan_only",
+  "config_path": "config\\mvp_hardware.json",
+  "state_file": "data\\verification\\mvp3a_current_state.json",
+  "opens_serial_port": false,
+  "goal_position_written": false,
+  "motion_command_sent": false,
+  "test_joint": "wrist_roll",
+  "delta_deg": 2.0,
+  "speed_rad_s": 0.04,
+  "control_rate_hz": 20.0,
+  "per_cycle_max_step_rad": 0.002,
+  "positive_target_rad": 0.0019179442329608012,
+  "return_target_rad": -0.03298864080692579,
+  "positive_target_within_calibration": true,
+  "return_target_within_calibration": true,
+  "point_count": 46,
+  "duration_s": 2.25,
+  "points": [
+    {
+      "time_s": 0.0,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": -0.031049386082487647
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": "wrist_roll",
+      "phase": "positive"
+    },
+    {
+      "time_s": 0.05,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": -0.0291101313580495
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": "wrist_roll",
+      "phase": "positive"
+    },
+    {
+      "time_s": 0.1,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": -0.027170876633611358
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": "wrist_roll",
+      "phase": "positive"
+    },
+    {
+      "time_s": 0.15000000000000002,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": -0.025231621909173215
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": "wrist_roll",
+      "phase": "positive"
+    },
+    {
+      "time_s": 0.2,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": -0.02329236718473507
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": "wrist_roll",
+      "phase": "positive"
+    },
+    {
+      "time_s": 0.25,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": -0.021353112460296926
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": "wrist_roll",
+      "phase": "positive"
+    },
+    {
+      "time_s": 0.3,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": -0.019413857735858783
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": "wrist_roll",
+      "phase": "positive"
+    },
+    {
+      "time_s": 0.35,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": -0.01747460301142064
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": "wrist_roll",
+      "phase": "positive"
+    },
+    {
+      "time_s": 0.39999999999999997,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": -0.015535348286982494
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": "wrist_roll",
+      "phase": "positive"
+    },
+    {
+      "time_s": 0.44999999999999996,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": -0.013596093562544348
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": "wrist_roll",
+      "phase": "positive"
+    },
+    {
+      "time_s": 0.49999999999999994,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": -0.011656838838106205
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": "wrist_roll",
+      "phase": "positive"
+    },
+    {
+      "time_s": 0.5499999999999999,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": -0.009717584113668062
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": "wrist_roll",
+      "phase": "positive"
+    },
+    {
+      "time_s": 0.6,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": -0.00777832938922992
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": "wrist_roll",
+      "phase": "positive"
+    },
+    {
+      "time_s": 0.65,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": -0.005839074664791773
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": "wrist_roll",
+      "phase": "positive"
+    },
+    {
+      "time_s": 0.7000000000000001,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": -0.0038998199403536306
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": "wrist_roll",
+      "phase": "positive"
+    },
+    {
+      "time_s": 0.7500000000000001,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": -0.001960565215915488
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": "wrist_roll",
+      "phase": "positive"
+    },
+    {
+      "time_s": 0.8000000000000002,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": -2.1310491477341542e-05
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": "wrist_roll",
+      "phase": "positive"
+    },
+    {
+      "time_s": 0.8500000000000002,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": 0.0019179442329608012
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": "wrist_roll",
+      "phase": "positive"
+    },
+    {
+      "time_s": 0.9000000000000002,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": 0.0019179442329608012
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": null,
+      "phase": "hold"
+    },
+    {
+      "time_s": 0.9500000000000003,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": 0.0019179442329608012
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": null,
+      "phase": "hold"
+    },
+    {
+      "time_s": 1.0000000000000002,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": 0.0019179442329608012
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": null,
+      "phase": "hold"
+    },
+    {
+      "time_s": 1.0500000000000003,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": 0.0019179442329608012
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": null,
+      "phase": "hold"
+    },
+    {
+      "time_s": 1.1000000000000003,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": 0.0019179442329608012
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": null,
+      "phase": "hold"
+    },
+    {
+      "time_s": 1.1500000000000004,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": 0.0019179442329608012
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": null,
+      "phase": "hold"
+    },
+    {
+      "time_s": 1.2000000000000004,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": 0.0019179442329608012
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": null,
+      "phase": "hold"
+    },
+    {
+      "time_s": 1.2500000000000004,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": 0.0019179442329608012
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": null,
+      "phase": "hold"
+    },
+    {
+      "time_s": 1.3000000000000005,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": 0.0019179442329608012
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": null,
+      "phase": "hold"
+    },
+    {
+      "time_s": 1.3500000000000005,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": 0.0019179442329608012
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": null,
+      "phase": "hold"
+    },
+    {
+      "time_s": 1.4000000000000006,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": -2.1310491477342626e-05
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": "wrist_roll",
+      "phase": "return"
+    },
+    {
+      "time_s": 1.4500000000000006,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": -0.0019605652159154865
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": "wrist_roll",
+      "phase": "return"
+    },
+    {
+      "time_s": 1.5000000000000007,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": -0.0038998199403536306
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": "wrist_roll",
+      "phase": "return"
+    },
+    {
+      "time_s": 1.5500000000000007,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": -0.005839074664791774
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": "wrist_roll",
+      "phase": "return"
+    },
+    {
+      "time_s": 1.6000000000000008,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": -0.00777832938922992
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": "wrist_roll",
+      "phase": "return"
+    },
+    {
+      "time_s": 1.6500000000000008,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": -0.009717584113668062
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": "wrist_roll",
+      "phase": "return"
+    },
+    {
+      "time_s": 1.7000000000000008,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": -0.011656838838106207
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": "wrist_roll",
+      "phase": "return"
+    },
+    {
+      "time_s": 1.7500000000000009,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": -0.01359609356254435
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": "wrist_roll",
+      "phase": "return"
+    },
+    {
+      "time_s": 1.800000000000001,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": -0.015535348286982494
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": "wrist_roll",
+      "phase": "return"
+    },
+    {
+      "time_s": 1.850000000000001,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": -0.01747460301142064
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": "wrist_roll",
+      "phase": "return"
+    },
+    {
+      "time_s": 1.900000000000001,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": -0.019413857735858783
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": "wrist_roll",
+      "phase": "return"
+    },
+    {
+      "time_s": 1.950000000000001,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": -0.021353112460296926
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": "wrist_roll",
+      "phase": "return"
+    },
+    {
+      "time_s": 2.000000000000001,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": -0.02329236718473507
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": "wrist_roll",
+      "phase": "return"
+    },
+    {
+      "time_s": 2.0500000000000007,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": -0.025231621909173215
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": "wrist_roll",
+      "phase": "return"
+    },
+    {
+      "time_s": 2.1000000000000005,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": -0.027170876633611358
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": "wrist_roll",
+      "phase": "return"
+    },
+    {
+      "time_s": 2.1500000000000004,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": -0.0291101313580495
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": "wrist_roll",
+      "phase": "return"
+    },
+    {
+      "time_s": 2.2,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": -0.031049386082487647
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": "wrist_roll",
+      "phase": "return"
+    },
+    {
+      "time_s": 2.25,
+      "joint_positions_rad": {
+        "shoulder_pan": -0.07825212470480071,
+        "shoulder_lift": -1.8941617244720876,
+        "elbow_flex": 1.6701458380622662,
+        "wrist_flex": 0.9229147649007378,
+        "wrist_roll": -0.03298864080692579
+      },
+      "gripper_value": 46.85828877005348,
+      "active_joint_name": null,
+      "phase": "end"
+    }
+  ]
+}

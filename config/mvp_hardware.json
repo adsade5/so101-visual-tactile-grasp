@@ -1,8 +1,18 @@
 {
   "host": "127.0.0.1",
   "port": 8770,
+  "robot_type": "so_follower",
+  "robot_id": "my_follower",
   "follower_port": "COM4",
+  "expected_usb_serial_number": "5B7B009052",
   "calibration_path": "C:/Users/82053/.cache/huggingface/lerobot/calibration/robots/so_follower/my_follower.json",
-  "hardware_enabled": false
+  "hardware_enabled": false,
+  "control_rate_hz": 20.0,
+  "first_test_speed_rad_s": 0.04,
+  "maximum_speed_rad_s": 0.08,
+  "first_test_delta_deg": 2.0,
+  "first_test_joint": "wrist_roll",
+  "final_position_tolerance_deg": 1.5,
+  "maximum_tracking_error_deg": 8.0,
+  "motion_timeout_s": 5.0
 }
-

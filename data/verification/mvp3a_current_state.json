@@ -1,0 +1,47 @@
+{
+  "mode": "read_state",
+  "config_path": "config\\mvp_hardware.json",
+  "read_only": true,
+  "success": true,
+  "reason": "read_only_state_ok",
+  "opened_com_ports": true,
+  "port_info": {
+    "device": "COM4",
+    "serial_number": "5B7B009052",
+    "vid": 6790,
+    "pid": 21971,
+    "description": "USB-Enhanced-SERIAL CH343 (COM4)",
+    "manufacturer": "wch.cn"
+  },
+  "raw_lerobot_positions": {
+    "shoulder_pan": 2069.0,
+    "shoulder_lift": 835.0,
+    "elbow_flex": 3102.0,
+    "wrist_flex": 2602.0,
+    "wrist_roll": 2026.0,
+    "gripper": 1606.0
+  },
+  "calibrated_lerobot_positions": {
+    "shoulder_pan": -4.483516483516484,
+    "shoulder_lift": -108.52747252747253,
+    "elbow_flex": 95.6923076923077,
+    "wrist_flex": 52.879120879120876,
+    "wrist_roll": -1.89010989010989,
+    "gripper": 46.85828877005348
+  },
+  "joint_positions_rad": {
+    "shoulder_pan": -0.07825212470480071,
+    "shoulder_lift": -1.8941617244720876,
+    "elbow_flex": 1.6701458380622662,
+    "wrist_flex": 0.9229147649007378,
+    "wrist_roll": -0.03298864080692579
+  },
+  "gripper_value": 46.85828877005348,
+  "all_current_within_calibration": false,
+  "positive_target_within_calibration": true,
+  "return_target_within_calibration": true,
+  "goal_position_written": false,
+  "motion_command_sent": false,
+  "torque_enable_written": false,
+  "torque_disable_written": false
+}
