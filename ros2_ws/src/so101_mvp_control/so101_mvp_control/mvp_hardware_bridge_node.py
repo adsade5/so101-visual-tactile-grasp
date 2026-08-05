@@ -30,7 +30,7 @@ class MvpHardwareBridgeNode(Node):
         self.declare_parameter("port", 8770)
         self.declare_parameter("state_poll_rate_hz", 5.0)
         self.declare_parameter("hardware_motion_enabled", False)
-        self.declare_parameter("default_speed_rad_s", 0.04)
+        self.declare_parameter("default_speed_rad_s", 0.06)
 
         self.host = str(self.get_parameter("host").value)
         self.port = int(self.get_parameter("port").value)
@@ -69,7 +69,7 @@ class MvpHardwareBridgeNode(Node):
                 self.port,
                 connect_timeout_s=2.0,
                 state_request_timeout_s=2.0,
-                motion_request_timeout_s=15.0,
+                motion_request_timeout_s=120.0,
             )
         return self._client
 

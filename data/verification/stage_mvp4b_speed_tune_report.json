@@ -1,0 +1,158 @@
+{
+  "stage": "MVP-4B-SPEED-TUNE",
+  "previous_speed_rad_s": 0.04,
+  "new_speed_rad_s": 0.06,
+  "max_speed_rad_s": 0.08,
+  "speed_authoritative_config": "config\\mvp_hardware.json",
+  "speed_source_trace": {
+    "server_executor_speed_source": "config/mvp_hardware.json:first_test_speed_rad_s",
+    "server_max_speed_source": "config/mvp_hardware.json:maximum_speed_rad_s",
+    "ros2_bridge_default_speed": "mvp_hardware_bridge_node default_speed_rad_s and launch parameters",
+    "pregrasp_plan_only_speed_source": "scripts/mvp_move_to_pregrasp.py load_hardware_speed_config(config/mvp_hardware.json)",
+    "wrist_test_speed_source": "scripts/mvp_ros2_wrist_test.py load_default_speed_rad_s(config/mvp_hardware.json)",
+    "pregrasp_move_yaml_synced": true
+  },
+  "duplicate_speed_hardcodes_removed": true,
+  "estimated_duration_updated": true,
+  "selected_offset_parser_fixed": true,
+  "control_frequency_modified": false,
+  "motion_algorithm_modified": false,
+  "tcp_architecture_modified": false,
+  "gripper_behavior_modified": false,
+  "offline_test_cases": [
+    {
+      "name": "default_speed_is_0p06",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "max_speed_remains_0p08",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "speed_positive",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "speed_not_over_max",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "invalid_zero_speed_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "invalid_over_max_speed_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "executor_receives_0p06",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "motion_started_log_reports_0p06",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "plan_duration_uses_0p06",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "state_timeout_remains_2s",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "motion_timeout_remains_120s",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "execute_timeout_remains_120s",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "max_joint_delta_remains_0p8",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "final_tolerance_remains_0p035",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "control_frequency_unchanged",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "sequential_motion_unchanged",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "gripper_hold_unchanged",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_motion_retry",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "single_tcp_client_unchanged",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "selected_offset_parsed_as_three_floats",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "selected_offset_parse_failure_safe",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_stop_service",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_com_port_open",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_goal_position_write",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_physical_motion",
+      "passed": true,
+      "details": {}
+    }
+  ],
+  "offline_tests_passed": true,
+  "offline_test_count": 25,
+  "ros2_build_result": "PASS",
+  "opened_com_ports": false,
+  "tcp_started": false,
+  "hardware_bridge_started": false,
+  "goal_position_written": false,
+  "physical_motion_observed": false,
+  "final_status": "READY_FOR_MANUAL_SPEED_RETEST"
+}

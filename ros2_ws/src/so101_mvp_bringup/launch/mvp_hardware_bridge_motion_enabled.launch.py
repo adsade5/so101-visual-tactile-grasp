@@ -24,7 +24,7 @@ def generate_launch_description() -> LaunchDescription:
                         "port": 8770,
                         "state_poll_rate_hz": 5.0,
                         "hardware_motion_enabled": enable_hardware_motion,
-                        "default_speed_rad_s": 0.04,
+                        "default_speed_rad_s": 0.06,
                     }
                 ],
             ),

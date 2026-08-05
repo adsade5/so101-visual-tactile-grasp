@@ -5,9 +5,12 @@ import json
 import math
 import sys
 import time
+from pathlib import Path
 from typing import Any
 
 
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
+HARDWARE_CONFIG_PATH = PROJECT_ROOT / "config" / "mvp_hardware.json"
 ARM_JOINT_NAMES = [
     "shoulder_pan",
     "shoulder_lift",
@@ -15,6 +18,14 @@ ARM_JOINT_NAMES = [
     "wrist_flex",
     "wrist_roll",
 ]
+
+
+def load_default_speed_rad_s() -> float:
+    try:
+        data = json.loads(HARDWARE_CONFIG_PATH.read_text(encoding="utf-8"))
+    except (OSError, json.JSONDecodeError):
+        return 0.06
+    return float(data.get("first_test_speed_rad_s", 0.06))
 
 
 def plan_only(delta_deg: float, speed_rad_s: float) -> int:
@@ -31,7 +42,6 @@ def plan_only(delta_deg: float, speed_rad_s: float) -> int:
             "read_state": "/mvp/joint_states",
             "publish_target": "/mvp/joint_target",
             "execute_service": "/mvp/execute_target",
-            "stop_service": "/mvp/stop",
         },
     }
     print(json.dumps(payload, indent=2))
@@ -55,7 +65,6 @@ def execute(delta_deg: float, speed_rad_s: float, confirm: str) -> int:
             self.create_subscription(JointState, "/mvp/joint_states", self._state_cb, 10)
             self.target_pub = self.create_publisher(JointState, "/mvp/joint_target", 10)
             self.execute_client = self.create_client(Trigger, "/mvp/execute_target")
-            self.stop_client = self.create_client(Trigger, "/mvp/stop")
 
         def _state_cb(self, msg: JointState) -> None:
             if list(msg.name) == ARM_JOINT_NAMES and len(msg.position) >= len(ARM_JOINT_NAMES):
@@ -133,7 +142,7 @@ def main() -> int:
     parser.add_argument("--execute", action="store_true", help="Send the command through ROS2 services.")
     parser.add_argument("--confirm", default="", help="Must be MVP_MOVE for --execute.")
     parser.add_argument("--delta-deg", type=float, default=2.0)
-    parser.add_argument("--speed-rad-s", type=float, default=0.04)
+    parser.add_argument("--speed-rad-s", type=float, default=load_default_speed_rad_s())
     args = parser.parse_args()
 
     if args.plan_only or not args.execute:

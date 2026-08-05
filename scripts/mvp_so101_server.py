@@ -427,11 +427,11 @@ class MvpTcpServer:
         try:
             speed = float(request.get("speed_rad_s"))
         except (TypeError, ValueError):
-            return response(False, "invalid_speed")
+            return response(False, "invalid_speed_rad_s")
         if not math.isfinite(speed) or speed <= 0.0:
-            return response(False, "invalid_speed")
+            return response(False, "invalid_speed_rad_s")
         if speed > MAX_SPEED_RAD_S:
-            return response(False, "speed_above_limit")
+            return response(False, "invalid_speed_rad_s")
 
         order = request.get("joint_order")
         if not isinstance(order, list):

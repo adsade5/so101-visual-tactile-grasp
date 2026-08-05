@@ -1,0 +1,14 @@
+{
+  "stage": "MVP-4B-MANUAL-ACCEPTANCE",
+  "source": "user_manual_acceptance",
+  "pregrasp_motion_completed": true,
+  "motion_toward_object_observed": true,
+  "gripper_downward_orientation_observed": true,
+  "gripper_motion_observed": false,
+  "object_contact_observed": false,
+  "grasp_observed": false,
+  "abnormal_motion_observed": false,
+  "final_joint_error_rad": null,
+  "tcp_connected_after_motion": null,
+  "final_status": "PASS"
+}
