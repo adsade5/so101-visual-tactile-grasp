@@ -2,6 +2,6 @@ mvp_pregrasp_move:
   joint_state_max_age_s: 1.0
   pregrasp_target_max_age_s: 2.0
   speed_rad_s: 0.06
-  max_abs_joint_delta_rad: 0.80
+  max_abs_joint_delta_rad: 1.00
   final_joint_tolerance_rad: 0.035
   execute_service_timeout_s: 120.0

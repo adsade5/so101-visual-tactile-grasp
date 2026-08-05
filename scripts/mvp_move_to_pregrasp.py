@@ -48,7 +48,7 @@ class MoveConfig:
     joint_state_max_age_s: float = 1.0
     pregrasp_target_max_age_s: float = 2.0
     speed_rad_s: float = 0.06
-    max_abs_joint_delta_rad: float = 0.80
+    max_abs_joint_delta_rad: float = 1.00
     final_joint_tolerance_rad: float = 0.035
     execute_service_timeout_s: float = 120.0
     max_speed_rad_s: float = 0.08
@@ -82,7 +82,7 @@ def load_config(path: Path | None = None) -> MoveConfig:
         joint_state_max_age_s=values.get("joint_state_max_age_s", 1.0),
         pregrasp_target_max_age_s=values.get("pregrasp_target_max_age_s", 2.0),
         speed_rad_s=hardware_speed,
-        max_abs_joint_delta_rad=values.get("max_abs_joint_delta_rad", 0.80),
+        max_abs_joint_delta_rad=values.get("max_abs_joint_delta_rad", 1.00),
         final_joint_tolerance_rad=values.get("final_joint_tolerance_rad", 0.035),
         execute_service_timeout_s=values.get("execute_service_timeout_s", 120.0),
         max_speed_rad_s=hardware_max_speed,
@@ -379,6 +379,7 @@ def build_plan_summary(
         "current_joint_positions_rad": current,
         "frozen_target_rad": target,
         **delta,
+        "max_abs_joint_delta_limit_rad": float(config.max_abs_joint_delta_rad),
         "estimated_motion_duration_s": estimated_duration_s(current, target, config.speed_rad_s),
         "pregrasp_pose_base": pregrasp_pose,
         "compute_response_message": compute_message,

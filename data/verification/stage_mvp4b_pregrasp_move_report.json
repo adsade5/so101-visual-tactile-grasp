@@ -1,0 +1,198 @@
+{
+  "stage": "MVP-4B",
+  "mvp4a_manual_acceptance_recorded": true,
+  "orchestration_script": "scripts/mvp_move_to_pregrasp.py",
+  "user_confirmation_phrase": "MOVE_TO_PREGRASP",
+  "joint_state_max_age_s": 1.0,
+  "pregrasp_target_max_age_s": 2.0,
+  "speed_rad_s": 0.06,
+  "max_abs_joint_delta_rad": 1.0,
+  "final_joint_tolerance_rad": 0.035,
+  "state_request_timeout_s": 2.0,
+  "motion_request_timeout_s": 120.0,
+  "execute_service_timeout_s": 120.0,
+  "target_freeze_behavior": "single_snapshot",
+  "joint_target_publish_count": 1,
+  "execute_call_count": 1,
+  "motion_retry_after_send": false,
+  "gripper_target_added": false,
+  "stop_service_added": false,
+  "second_tcp_client_added": false,
+  "offline_test_cases": [
+    {
+      "name": "exact_joint_name_order",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "exactly_five_joint_values",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "current_joint_state_finite",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "target_joint_state_finite",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "current_state_stale_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "target_stale_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "pregrasp_invalid_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "accepted_status_list",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "target_frozen_after_compute",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "later_visual_update_ignored",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "joint_delta_computed",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "estimated_duration_computed",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "max_delta_under_limit",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "max_delta_over_1p0_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "plan_only_no_publish",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "plan_only_no_execute",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "wrong_confirmation_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "tcp_disconnected_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "tcp_status_not_connected_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "publish_once",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "execute_called_once",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_retry_after_execute_timeout",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "execute_timeout_120s",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "state_timeout_remains_2s",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "gripper_not_in_joint_target",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "final_joint_error_computed",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "final_tolerance_pass",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "final_tolerance_failure",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_stop_service",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_second_tcp_client",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_com_port_open",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_goal_position_write_to_real_robot",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_physical_motion",
+      "passed": true,
+      "details": {}
+    }
+  ],
+  "offline_tests_passed": true,
+  "offline_test_count": 33,
+  "ros2_build_result": "not_run",
+  "opened_com_ports": false,
+  "tcp_started": false,
+  "hardware_bridge_started": false,
+  "goal_position_written": false,
+  "physical_motion_observed": false,
+  "manual_acceptance_document": "docs/MVP4B_PREGRASP_MOVE_MANUAL_ACCEPTANCE.md",
+  "final_status": "OFFLINE_TESTS_PASS"
+}

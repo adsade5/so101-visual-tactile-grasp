@@ -1,0 +1,283 @@
+{
+  "stage": "MVP-4C",
+  "mvp4b_manual_acceptance_recorded": true,
+  "speed_manual_acceptance_recorded": true,
+  "pregrasp_max_abs_joint_delta_previous_rad": 0.8,
+  "pregrasp_max_abs_joint_delta_new_rad": 1.0,
+  "descent_waypoint_count": 3,
+  "descent_waypoint_drop_m": [
+    0.01,
+    0.02,
+    0.03
+  ],
+  "descent_max_abs_joint_delta_per_waypoint_rad": 0.25,
+  "start_pregrasp_joint_tolerance_rad": 0.1,
+  "position_tolerance_m": 0.008,
+  "approach_tolerance_deg": 5.0,
+  "max_xy_error_from_waypoint_m": 0.01,
+  "minimum_actual_z_drop_per_waypoint_m": 0.004,
+  "minimum_total_actual_z_drop_m": 0.02,
+  "speed_rad_s": 0.06,
+  "max_speed_rad_s": 0.08,
+  "execute_service_timeout_s": 120.0,
+  "all_waypoints_planned_before_execute": true,
+  "target_freeze_behavior": "single_snapshot",
+  "publish_count_expected": 3,
+  "execute_count_expected": 3,
+  "motion_retry_after_send": false,
+  "gripper_target_added": false,
+  "stop_service_added": false,
+  "second_tcp_client_added": false,
+  "offline_test_cases": [
+    {
+      "name": "pregrasp_move_limit_is_1p0",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "pregrasp_move_over_1p0_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "descent_limit_remains_0p25",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "exactly_three_waypoints",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "waypoint_drop_1cm",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "waypoint_drop_2cm",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "waypoint_drop_3cm",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "waypoint_xy_unchanged",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "downward_approach_preserved",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "current_state_seed_for_waypoint1",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "previous_solution_seed_for_waypoint2",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "previous_solution_seed_for_waypoint3",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "all_waypoints_planned_before_execute",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "start_not_at_pregrasp_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "stale_joint_state_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "stale_pregrasp_target_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "waypoint_joint_limits_valid",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "waypoint_joint_delta_under_0p25",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "waypoint_joint_delta_over_0p25_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "fk_position_validation",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "fk_approach_validation",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "xy_error_validation",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "monotonic_z_descent",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "non_monotonic_z_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "total_z_drop_validation",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "plan_only_no_publish",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "plan_only_no_execute",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "wrong_confirmation_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "publish_each_waypoint_once",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "execute_each_waypoint_once",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "three_total_publish_calls",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "three_total_execute_calls",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "failure_stops_later_waypoints",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_retry_after_failure",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "final_joint_tolerance",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "gripper_not_in_target",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "gripper_hold_unchanged",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "speed_is_0p06",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "max_speed_remains_0p08",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "single_tcp_client_unchanged",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_stop_service",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_contact_command",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_grasp_command",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_lift_command",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_return_command",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_com_port_open",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_goal_position_write_to_real_robot",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_physical_motion",
+      "passed": true,
+      "details": {}
+    }
+  ],
+  "offline_tests_passed": true,
+  "offline_test_count": 48,
+  "ros2_build_result": "PASS",
+  "opened_com_ports": false,
+  "tcp_started": false,
+  "hardware_bridge_started": false,
+  "goal_position_written": false,
+  "physical_motion_observed": false,
+  "manual_acceptance_document": "docs/MVP4C_SEGMENTED_DESCENT_MANUAL_ACCEPTANCE.md",
+  "final_status": "READY_FOR_MANUAL_SEGMENTED_DESCENT_RETEST"
+}

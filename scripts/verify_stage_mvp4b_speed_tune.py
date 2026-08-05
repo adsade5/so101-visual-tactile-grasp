@@ -186,7 +186,7 @@ def main() -> int:
         case("state_timeout_remains_2s", "state_request_timeout_s: float = 2.0" in ros_client_text and "state_request_timeout_s=2.0" in bridge_text),
         case("motion_timeout_remains_120s", "motion_request_timeout_s: float = 120.0" in ros_client_text and "motion_request_timeout_s=120.0" in bridge_text),
         case("execute_timeout_remains_120s", math.isclose(config.execute_service_timeout_s, 120.0)),
-        case("max_joint_delta_remains_0p8", math.isclose(config.max_abs_joint_delta_rad, 0.80)),
+        case("pregrasp_move_limit_is_1p0", math.isclose(config.max_abs_joint_delta_rad, 1.00)),
         case("final_tolerance_remains_0p035", math.isclose(config.final_joint_tolerance_rad, 0.035)),
         case("control_frequency_unchanged", float(hardware_config["control_rate_hz"]) == 20.0 and '"control_rate_hz": 20.0' in hardware_config_path.read_text(encoding="utf-8")),
         case("sequential_motion_unchanged", "move_joints_sequential" in server_text and "joint_order" in server_text and "for index in joint_order" in server_text),

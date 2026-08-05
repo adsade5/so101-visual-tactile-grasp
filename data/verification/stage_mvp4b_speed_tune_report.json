@@ -81,7 +81,7 @@
       "details": {}
     },
     {
-      "name": "max_joint_delta_remains_0p8",
+      "name": "pregrasp_move_limit_is_1p0",
       "passed": true,
       "details": {}
     },

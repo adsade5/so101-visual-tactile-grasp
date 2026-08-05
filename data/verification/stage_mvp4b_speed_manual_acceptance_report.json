@@ -1,0 +1,12 @@
+{
+  "stage": "MVP-4B-SPEED-MANUAL-ACCEPTANCE",
+  "source": "user_manual_acceptance",
+  "speed_rad_s": 0.06,
+  "max_speed_rad_s": 0.08,
+  "wrist_round_trip_completed": true,
+  "motion_stable": true,
+  "other_joint_motion_observed": false,
+  "gripper_motion_observed": false,
+  "tcp_checks_passed": true,
+  "final_status": "PASS"
+}
