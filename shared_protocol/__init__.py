@@ -1,0 +1,1 @@
+"""Shared MVP protocol helpers."""

@@ -1,0 +1,101 @@
+{
+  "stage": "MVP-3C",
+  "scope": "offline_tcp_protocol_and_bridge_readiness",
+  "opens_com4": false,
+  "sends_real_motion": false,
+  "case_count": 22,
+  "passed": 22,
+  "failed": 0,
+  "cases": [
+    {
+      "name": "get_state_success",
+      "status": "PASS",
+      "reason": "state_ok"
+    },
+    {
+      "name": "get_state_joint_order",
+      "status": "PASS"
+    },
+    {
+      "name": "get_state_units_rad",
+      "status": "PASS"
+    },
+    {
+      "name": "gripper_separate",
+      "status": "PASS"
+    },
+    {
+      "name": "read_only_move_rejected",
+      "status": "PASS"
+    },
+    {
+      "name": "one_request_one_response",
+      "status": "PASS"
+    },
+    {
+      "name": "no_plan_id_fields",
+      "status": "PASS"
+    },
+    {
+      "name": "no_trajectory_hash_fields",
+      "status": "PASS"
+    },
+    {
+      "name": "malformed_json_rejected",
+      "status": "PASS"
+    },
+    {
+      "name": "unknown_command_rejected",
+      "status": "PASS"
+    },
+    {
+      "name": "no_heartbeat_messages",
+      "status": "PASS"
+    },
+    {
+      "name": "motion_confirmation_missing",
+      "status": "PASS"
+    },
+    {
+      "name": "motion_wrong_confirmation",
+      "status": "PASS"
+    },
+    {
+      "name": "invalid_target_length",
+      "status": "PASS"
+    },
+    {
+      "name": "non_finite_target",
+      "status": "PASS"
+    },
+    {
+      "name": "calibration_out_of_range",
+      "status": "PASS"
+    },
+    {
+      "name": "speed_above_limit",
+      "status": "PASS"
+    },
+    {
+      "name": "invalid_joint_order",
+      "status": "PASS"
+    },
+    {
+      "name": "valid_motion_request_reaches_fake_executor",
+      "status": "PASS"
+    },
+    {
+      "name": "stop_request",
+      "status": "PASS"
+    },
+    {
+      "name": "client_timeout",
+      "status": "PASS"
+    },
+    {
+      "name": "disconnect_no_automatic_motion",
+      "status": "PASS"
+    }
+  ],
+  "final_status": "PASS"
+}

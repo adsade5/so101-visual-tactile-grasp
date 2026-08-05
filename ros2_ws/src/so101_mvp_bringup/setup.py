@@ -16,7 +16,11 @@ setup(
         (f"share/{PACKAGE_NAME}", ["package.xml", "README.md"]),
         (
             f"share/{PACKAGE_NAME}/launch",
-            ["launch/mvp_skeleton.launch.py"],
+            [
+                "launch/mvp_skeleton.launch.py",
+                "launch/mvp_hardware_bridge_read_only.launch.py",
+                "launch/mvp_hardware_bridge_motion_enabled.launch.py",
+            ],
         ),
     ],
     install_requires=["setuptools"],
@@ -26,4 +30,3 @@ setup(
     description="SO-101 MVP skeleton launch package.",
     license="Apache-2.0",
 )
-
