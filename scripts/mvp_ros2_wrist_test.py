@@ -22,7 +22,7 @@ def plan_only(delta_deg: float, speed_rad_s: float) -> int:
         "mode": "plan_only",
         "opens_com4": False,
         "sends_motion": False,
-        "required_for_execution": ["--execute", "--confirm", "MVP_MOVE"],
+        "required_for_execution": ["--execute", "--confirm", "ROS2_WRIST_ROLL_2DEG"],
         "joint": "wrist_roll",
         "delta_deg": float(delta_deg),
         "delta_rad": math.radians(float(delta_deg)),
@@ -39,8 +39,8 @@ def plan_only(delta_deg: float, speed_rad_s: float) -> int:
 
 
 def execute(delta_deg: float, speed_rad_s: float, confirm: str) -> int:
-    if confirm != "MVP_MOVE":
-        print("Refusing execution: --confirm MVP_MOVE is required", file=sys.stderr)
+    if confirm != "ROS2_WRIST_ROLL_2DEG":
+        print("Refusing execution: --confirm ROS2_WRIST_ROLL_2DEG is required", file=sys.stderr)
         return 2
 
     import rclpy
@@ -81,8 +81,24 @@ def execute(delta_deg: float, speed_rad_s: float, confirm: str) -> int:
         if not result["success"]:
             print(json.dumps(result, indent=2), file=sys.stderr)
             return 5
+        time.sleep(0.5)
         result_back = publish_and_execute(node, current)
-        print(json.dumps({"forward": result, "return": result_back}, indent=2))
+        deadline = time.monotonic() + 5.0
+        while rclpy.ok() and time.monotonic() < deadline:
+            rclpy.spin_once(node, timeout_sec=0.1)
+        final = None if node.latest is None else [float(value) for value in node.latest.position[: len(ARM_JOINT_NAMES)]]
+        final_wrist_roll_error_rad = None if final is None else abs(final[4] - current[4])
+        print(
+            json.dumps(
+                {
+                    "forward": result,
+                    "return": result_back,
+                    "final_positions_rad": final,
+                    "final_wrist_roll_error_rad": final_wrist_roll_error_rad,
+                },
+                indent=2,
+            )
+        )
         return 0 if result_back["success"] else 6
     finally:
         node.destroy_node()

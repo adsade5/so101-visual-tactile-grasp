@@ -1,0 +1,90 @@
+{
+  "stage": "MVP-3D-TCP-FIX",
+  "original_ros_service_response": {
+    "service": "/mvp/stop",
+    "success": false,
+    "message": "tcp_error"
+  },
+  "original_error_message": "tcp_error",
+  "diagnosed_server_behavior": {
+    "server_host": "config previously allowed host override; Stage MVP-3D now forces 127.0.0.1",
+    "server_port": "config previously allowed port override; Stage MVP-3D now forces 8770",
+    "persistent_connection": "server loop already used readline in a per-client loop; logging and per-client exception handling were insufficient",
+    "line_protocol": "server writes UTF-8 JSON followed by newline",
+    "stop_available_in_read_only_and_motion_enabled": true
+  },
+  "diagnosed_client_behavior": {
+    "previous_connection_assumption": "client kept a socket/file object but did not preserve explicit receive buffer or expose detailed connection state",
+    "previous_error_detail": "socket and protocol errors surfaced to ROS2 as generic tcp_error",
+    "new_behavior": "explicit socket, receive_buffer, last_error, one bounded reconnect for get_state/stop"
+  },
+  "diagnosed_launch_parameters": {
+    "read_only_launch": {
+      "host": "127.0.0.1",
+      "port": 8770,
+      "state_poll_rate_hz": 5.0,
+      "hardware_motion_enabled": false
+    },
+    "motion_enabled_launch": {
+      "launch_arg": "enable_hardware_motion",
+      "default": false,
+      "node_param": "hardware_motion_enabled"
+    },
+    "parameter_mismatch_found": false
+  },
+  "server_host": "127.0.0.1",
+  "server_port": 8770,
+  "json_lines_protocol": {
+    "request": "UTF-8 JSON + newline",
+    "response": "UTF-8 JSON + newline"
+  },
+  "persistent_connection_supported": true,
+  "reconnect_policy": {
+    "get_state": "one reconnect retry",
+    "stop": "one reconnect retry",
+    "infinite_retry": false,
+    "background_reconnect": false
+  },
+  "move_retry_policy": {
+    "retry_before_send_completed": true,
+    "retry_after_send_completed": false,
+    "uncertain_result": "motion_result_unknown"
+  },
+  "server_logging_added": [
+    "MVP TCP SERVER STARTING",
+    "server_host=127.0.0.1",
+    "server_port=8770",
+    "server_mode=read_only|motion_enabled",
+    "hardware_motion_enabled=true|false",
+    "waiting_for_client=true",
+    "TCP_LISTENING host=127.0.0.1 port=8770",
+    "TCP_CLIENT_CONNECTED address=...",
+    "TCP_REQUEST command=...",
+    "TCP_RESPONSE success=... reason=...",
+    "TCP_CLIENT_DISCONNECTED",
+    "TCP_CLIENT_ERROR type=... message=..."
+  ],
+  "client_error_details_added": true,
+  "bridge_error_details_added": true,
+  "tcp_connected_topic_added": "/mvp/tcp_connected",
+  "tcp_status_topic_added": "/mvp/tcp_status",
+  "tcp_probe_script": "scripts/mvp_tcp_probe.py",
+  "offline_test_script": "scripts/verify_stage_mvp3d_tcp_fix.py",
+  "files_modified": [
+    "scripts/mvp_so101_server.py",
+    "shared_protocol/mvp_tcp_client.py",
+    "ros2_ws/src/so101_mvp_control/so101_mvp_control/mvp_tcp_client.py",
+    "ros2_ws/src/so101_mvp_control/so101_mvp_control/mvp_hardware_bridge_node.py",
+    "scripts/mvp_tcp_probe.py",
+    "scripts/verify_stage_mvp3d_tcp_fix.py",
+    "docs/MVP3D_TCP_RETEST.md",
+    "data/verification/stage_mvp3d_tcp_fix_report.json"
+  ],
+  "commands_executed": [],
+  "opened_com_ports": false,
+  "ros2_started": false,
+  "hardware_motion_enabled": false,
+  "goal_position_written": false,
+  "physical_motion_observed": false,
+  "final_status": "READY_FOR_MANUAL_TCP_RETEST"
+}

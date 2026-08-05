@@ -1,0 +1,17 @@
+{
+  "stage": "MVP-3D-SINGLE-TCP-MOTION",
+  "source": "user_manual_acceptance",
+  "single_tcp_client_observed": true,
+  "wrist_roll_forward_motion_observed": true,
+  "wrist_roll_return_motion_observed": true,
+  "tcp_connected_after_motion": true,
+  "tcp_connection_closed_observed": false,
+  "motion_result_unknown_observed": false,
+  "other_joint_visible_motion_observed": null,
+  "gripper_visible_motion_observed": null,
+  "abnormal_motion_observed": false,
+  "final_return_error_deg": null,
+  "final_return_error_source": "not_recorded",
+  "user_confirmed_pass": true,
+  "final_status": "PASS"
+}

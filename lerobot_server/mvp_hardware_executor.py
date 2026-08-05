@@ -8,15 +8,26 @@ from pathlib import Path
 from typing import Any, Protocol
 
 
-ARM_JOINT_NAMES = [
+ARM_JOINT_NAMES = (
     "shoulder_pan",
     "shoulder_lift",
     "elbow_flex",
     "wrist_flex",
     "wrist_roll",
-]
+)
 GRIPPER_NAME = "gripper"
-ALL_MOTOR_NAMES = ARM_JOINT_NAMES + [GRIPPER_NAME]
+ALL_MOTOR_NAMES = ARM_JOINT_NAMES + (GRIPPER_NAME,)
+LEROBOT_POSITION_KEYS = {
+    "shoulder_pan": "shoulder_pan.pos",
+    "shoulder_lift": "shoulder_lift.pos",
+    "elbow_flex": "elbow_flex.pos",
+    "wrist_flex": "wrist_flex.pos",
+    "wrist_roll": "wrist_roll.pos",
+}
+GRIPPER_POSITION_KEY = "gripper.pos"
+LEROBOT_ACTION_KEYS = tuple(LEROBOT_POSITION_KEYS[name] for name in ARM_JOINT_NAMES) + (
+    GRIPPER_POSITION_KEY,
+)
 FEETECH_RESOLUTION = 4096
 FEETECH_MAX_STEP = FEETECH_RESOLUTION - 1
 LEROBOT_SRC = Path(__file__).resolve().parents[1].parents[0] / "repos" / "lerobot" / "src"
@@ -30,6 +41,10 @@ class HardwareAdapter(Protocol):
     def send_action(self, action: dict[str, float]) -> dict[str, float]: ...
 
     def disconnect(self) -> None: ...
+
+
+class LeRobotObservationKeyError(KeyError):
+    pass
 
 
 @dataclass(frozen=True)
@@ -55,6 +70,57 @@ def degrees_to_radians(value_deg: float) -> float:
 
 def radians_to_degrees(value_rad: float) -> float:
     return math.degrees(float(value_rad))
+
+
+def _available_keys_text(value: dict[str, Any]) -> str:
+    return "[" + ",".join(sorted(str(key) for key in value.keys())) + "]"
+
+
+def extract_arm_state_from_lerobot_observation(observation: dict[str, Any]) -> dict[str, Any]:
+    joints_rad: dict[str, float] = {}
+    for name in ARM_JOINT_NAMES:
+        key = LEROBOT_POSITION_KEYS[name]
+        if key not in observation:
+            raise LeRobotObservationKeyError(
+                f"missing={key}; available_keys={_available_keys_text(observation)}"
+            )
+        value = float(observation[key])
+        if not math.isfinite(value):
+            raise ValueError(f"Observation {key} is not finite")
+        joints_rad[name] = degrees_to_radians(value)
+    if GRIPPER_POSITION_KEY not in observation:
+        raise LeRobotObservationKeyError(
+            f"missing={GRIPPER_POSITION_KEY}; available_keys={_available_keys_text(observation)}"
+        )
+    gripper_value = float(observation[GRIPPER_POSITION_KEY])
+    if not math.isfinite(gripper_value):
+        raise ValueError(f"Observation {GRIPPER_POSITION_KEY} is not finite")
+    return {
+        "joint_positions_rad": joints_rad,
+        "gripper_value": gripper_value,
+    }
+
+
+def build_lerobot_action(
+    target_joint_positions_rad: dict[str, float],
+    gripper_value: float,
+) -> dict[str, float]:
+    missing = [name for name in ARM_JOINT_NAMES if name not in target_joint_positions_rad]
+    if missing:
+        raise ValueError(f"Missing target joints: {missing}")
+    action: dict[str, float] = {}
+    for name in ARM_JOINT_NAMES:
+        value_rad = float(target_joint_positions_rad[name])
+        if not math.isfinite(value_rad):
+            raise ValueError(f"Target {name} is not finite")
+        action[LEROBOT_POSITION_KEYS[name]] = float(radians_to_degrees(value_rad))
+    gripper = float(gripper_value)
+    if not math.isfinite(gripper):
+        raise ValueError("Gripper target is not finite")
+    action[GRIPPER_POSITION_KEY] = gripper
+    if tuple(action.keys()) != LEROBOT_ACTION_KEYS:
+        raise ValueError(f"Unexpected LeRobot action keys: {list(action.keys())}")
+    return action
 
 
 def calibrated_degree_range(entry: CalibrationEntry) -> tuple[float, float]:
@@ -191,27 +257,11 @@ class MvpSo101HardwareExecutor:
         return {"success": True, "reason": "valid", "port_info": port_info}
 
     def observation_to_internal_rad(self, observation: dict[str, float]) -> tuple[dict[str, float], float]:
-        joints_rad = {}
-        for name in ARM_JOINT_NAMES:
-            key = f"{name}.pos"
-            if key not in observation:
-                raise ValueError(f"Observation missing {key}")
-            value = float(observation[key])
-            if not math.isfinite(value):
-                raise ValueError(f"Observation {key} is not finite")
-            joints_rad[name] = degrees_to_radians(value)
-        gripper_value = float(observation[f"{GRIPPER_NAME}.pos"])
-        return joints_rad, gripper_value
+        state = extract_arm_state_from_lerobot_observation(observation)
+        return state["joint_positions_rad"], state["gripper_value"]
 
     def internal_rad_to_action(self, joints_rad: dict[str, float], gripper_value: float) -> dict[str, float]:
-        action = {}
-        for name in ARM_JOINT_NAMES:
-            value = float(joints_rad[name])
-            if not math.isfinite(value):
-                raise ValueError(f"Target {name} is not finite")
-            action[f"{name}.pos"] = radians_to_degrees(value)
-        action[f"{GRIPPER_NAME}.pos"] = float(gripper_value)
-        return action
+        return build_lerobot_action(joints_rad, gripper_value)
 
     def target_within_calibration(self, joint_name: str, target_rad: float) -> bool:
         entry = self.calibration[joint_name]
@@ -435,7 +485,7 @@ class MvpSo101HardwareExecutor:
                 if not self.target_within_calibration(active_joint, joints_rad[active_joint]):
                     return {"success": False, "reason": "calibration_target_out_of_range", "records": records}
 
-                action = {f"{active_joint}.pos": radians_to_degrees(joints_rad[active_joint])}
+                action = build_lerobot_action(joints_rad, point["gripper_value"])
                 sent = robot.send_action(action)
                 self.goal_position_written = True
                 self.motion_command_sent = True

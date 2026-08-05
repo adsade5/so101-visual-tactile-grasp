@@ -1,0 +1,59 @@
+{
+  "stage": "MVP-3D-STOP-CONFIRM-FIX",
+  "stop_timeout_root_cause": {
+    "main_client_shared_before": true,
+    "stop_used_main_socket_before": true,
+    "server_accept_behavior_before": "single accepted client was handled synchronously before returning to accept",
+    "motion_execution_behavior_before": "move_joints_sequential ran synchronously in the client handler, so the server could not accept a separate stop connection while the main client was busy",
+    "socket_lock_before": "MvpTcpClient did not protect the full connect/send/recv/parse cycle with one request lock"
+  },
+  "confirmation_mismatch_root_cause": {
+    "file": "scripts/mvp_ros2_wrist_test.py",
+    "before": "user-facing --confirm was checked against MVP_MOVE",
+    "after": "user-facing --confirm requires ROS2_WRIST_ROLL_2DEG; bridge keeps MVP_MOVE as internal TCP protocol confirmation"
+  },
+  "main_client_behavior_before": "ROS2 polling, execute, and stop could all use the same MvpTcpClient socket path.",
+  "stop_client_behavior_before": "stop did not create a dedicated short-lived client.",
+  "server_accept_behavior_before": "server accepted one client and handled it until disconnect before accepting another.",
+  "motion_execution_behavior_before": "motion execution could block the request handler that held the active client connection.",
+  "main_client_after": "ROS2 bridge uses _main_client for get_state and move_joints_sequential only.",
+  "dedicated_stop_client_after": {
+    "enabled": true,
+    "connect_timeout_s": 1.0,
+    "request_timeout_s": 1.0,
+    "lifetime": "one stop request then close"
+  },
+  "max_clients": 3,
+  "motion_stop_event_added": true,
+  "hardware_io_lock_added": true,
+  "motion_lock_added": true,
+  "motion_active_added": true,
+  "motion_thread_added": true,
+  "user_confirmation_phrase": "ROS2_WRIST_ROLL_2DEG",
+  "internal_protocol_confirmation": "MVP_MOVE",
+  "stop_response_expected": {
+    "success": true,
+    "reason": "stop_requested",
+    "motion_was_active": "true_or_false"
+  },
+  "files_modified": [
+    "scripts/mvp_so101_server.py",
+    "shared_protocol/mvp_tcp_client.py",
+    "ros2_ws/src/so101_mvp_control/so101_mvp_control/mvp_tcp_client.py",
+    "ros2_ws/src/so101_mvp_control/so101_mvp_control/mvp_hardware_bridge_node.py",
+    "lerobot_server/mvp_hardware_executor.py",
+    "scripts/mvp_ros2_wrist_test.py",
+    "scripts/verify_stage_mvp3d_stop_confirm_fix.py",
+    "docs/MVP3D_STOP_CONFIRM_RETEST.md",
+    "data/verification/stage_mvp3d_stop_confirm_fix_report.json"
+  ],
+  "offline_test_file": "scripts/verify_stage_mvp3d_stop_confirm_fix.py",
+  "manual_retest_document": "docs/MVP3D_STOP_CONFIRM_RETEST.md",
+  "commands_executed": [],
+  "opened_com_ports": false,
+  "ros2_started": false,
+  "hardware_motion_enabled": false,
+  "goal_position_written": false,
+  "physical_motion_observed": false,
+  "final_status": "READY_FOR_MANUAL_STOP_AND_CONFIRM_RETEST"
+}

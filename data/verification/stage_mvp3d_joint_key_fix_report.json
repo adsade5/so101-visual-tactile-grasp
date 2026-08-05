@@ -1,0 +1,183 @@
+{
+  "stage": "MVP-3D-JOINT-KEY-FIX",
+  "original_error": "TCP_APPLICATION_ERROR id=1 type=KeyError message='wrist_roll.pos'",
+  "exact_keyerror_file": "scripts/mvp_so101_server.py",
+  "exact_keyerror_function": "MotionFeetechBackend.move_joints_sequential",
+  "exact_keyerror_expression": "self.bus.sync_write('Goal_Position', {'wrist_roll.pos': ...}, normalize=True)",
+  "dictionary_actual_keys": [
+    "shoulder_pan",
+    "shoulder_lift",
+    "elbow_flex",
+    "wrist_flex",
+    "wrist_roll"
+  ],
+  "expected_lerobot_keys": [
+    "shoulder_pan.pos",
+    "shoulder_lift.pos",
+    "elbow_flex.pos",
+    "wrist_flex.pos",
+    "wrist_roll.pos",
+    "gripper.pos"
+  ],
+  "logical_joint_names": [
+    "shoulder_pan",
+    "shoulder_lift",
+    "elbow_flex",
+    "wrist_flex",
+    "wrist_roll"
+  ],
+  "mapping_added": {
+    "shoulder_pan": "shoulder_pan.pos",
+    "shoulder_lift": "shoulder_lift.pos",
+    "elbow_flex": "elbow_flex.pos",
+    "wrist_flex": "wrist_flex.pos",
+    "wrist_roll": "wrist_roll.pos"
+  },
+  "observation_conversion_function": "extract_arm_state_from_lerobot_observation",
+  "action_conversion_function": "build_lerobot_action",
+  "tracking_error_fixed": true,
+  "gripper_hold_behavior": "gripper.pos is copied from the initial observation and reused in every action",
+  "other_joint_hold_behavior": "all non-active arm joints keep their current or prior segment target radians in the complete six-motor action",
+  "fake_test_cases": [
+    "lerobot_observation_keys_exact",
+    "logical_joint_names_without_pos",
+    "observation_degrees_to_rad",
+    "gripper_range_preserved",
+    "action_keys_exact",
+    "action_rad_to_degrees",
+    "complete_six_motor_action",
+    "only_wrist_roll_changes",
+    "other_arm_joints_held",
+    "gripper_held",
+    "wrist_roll_positive_2deg",
+    "wrist_roll_return_target",
+    "no_wrist_roll_pos_keyerror",
+    "all_five_joints_use_same_mapping",
+    "missing_observation_key_readable_error",
+    "available_keys_in_error",
+    "tracking_error_uses_logical_names",
+    "result_is_json_serializable",
+    "application_failure_returns_dict",
+    "persistent_connection_not_modified",
+    "no_com_port_open",
+    "no_goal_position_write_to_real_robot",
+    "no_physical_motion"
+  ],
+  "fake_test_passed": true,
+  "commands_executed": [
+    "python scripts\\verify_stage_mvp3d_joint_key_fix.py"
+  ],
+  "tcp_architecture_modified": false,
+  "ros2_interface_modified": false,
+  "opened_com_ports": false,
+  "ros2_started": false,
+  "goal_position_written": false,
+  "physical_motion_observed": false,
+  "case_count": 23,
+  "passed": 23,
+  "failed": 0,
+  "cases": [
+    {
+      "name": "lerobot_observation_keys_exact",
+      "status": "PASS"
+    },
+    {
+      "name": "logical_joint_names_without_pos",
+      "status": "PASS"
+    },
+    {
+      "name": "observation_degrees_to_rad",
+      "status": "PASS"
+    },
+    {
+      "name": "gripper_range_preserved",
+      "status": "PASS"
+    },
+    {
+      "name": "action_keys_exact",
+      "status": "PASS"
+    },
+    {
+      "name": "action_rad_to_degrees",
+      "status": "PASS"
+    },
+    {
+      "name": "complete_six_motor_action",
+      "status": "PASS"
+    },
+    {
+      "name": "only_wrist_roll_changes",
+      "status": "PASS"
+    },
+    {
+      "name": "other_arm_joints_held",
+      "status": "PASS"
+    },
+    {
+      "name": "gripper_held",
+      "status": "PASS"
+    },
+    {
+      "name": "wrist_roll_positive_2deg",
+      "status": "PASS"
+    },
+    {
+      "name": "wrist_roll_return_target",
+      "status": "PASS"
+    },
+    {
+      "name": "no_wrist_roll_pos_keyerror",
+      "status": "PASS",
+      "actions_recorded": 8
+    },
+    {
+      "name": "all_five_joints_use_same_mapping",
+      "status": "PASS"
+    },
+    {
+      "name": "missing_observation_key_readable_error",
+      "status": "PASS",
+      "error": "'missing=wrist_roll.pos; available_keys=[elbow_flex.pos,gripper.pos,shoulder_lift.pos,shoulder_pan.pos,wrist_flex.pos]'"
+    },
+    {
+      "name": "available_keys_in_error",
+      "status": "PASS",
+      "error": "'missing=wrist_roll.pos; available_keys=[elbow_flex.pos,gripper.pos,shoulder_lift.pos,shoulder_pan.pos,wrist_flex.pos]'"
+    },
+    {
+      "name": "tracking_error_uses_logical_names",
+      "status": "PASS"
+    },
+    {
+      "name": "result_is_json_serializable",
+      "status": "PASS"
+    },
+    {
+      "name": "application_failure_returns_dict",
+      "status": "PASS",
+      "success": false,
+      "reason": "server_motion_error:Fake"
+    },
+    {
+      "name": "persistent_connection_not_modified",
+      "status": "PASS",
+      "tcp_architecture_modified": false
+    },
+    {
+      "name": "no_com_port_open",
+      "status": "PASS",
+      "opened_com_ports": false
+    },
+    {
+      "name": "no_goal_position_write_to_real_robot",
+      "status": "PASS",
+      "real_goal_position_written": false
+    },
+    {
+      "name": "no_physical_motion",
+      "status": "PASS",
+      "fake_robot_only": true
+    }
+  ],
+  "final_status": "READY_FOR_MANUAL_JOINT_KEY_RETEST"
+}

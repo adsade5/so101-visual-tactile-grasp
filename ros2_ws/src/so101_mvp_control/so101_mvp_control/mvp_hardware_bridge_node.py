@@ -6,10 +6,12 @@ from typing import Any
 import rclpy
 from rclpy.node import Node
 from sensor_msgs.msg import JointState
+from std_msgs.msg import Bool
 from std_msgs.msg import Float64
+from std_msgs.msg import String
 from std_srvs.srv import Trigger
 
-from so101_mvp_control.mvp_tcp_client import MvpTcpClient
+from so101_mvp_control.mvp_tcp_client import MvpTcpClient, MvpTcpError
 
 
 ARM_JOINT_NAMES = [
@@ -36,42 +38,88 @@ class MvpHardwareBridgeNode(Node):
         self.hardware_motion_enabled = bool(self.get_parameter("hardware_motion_enabled").value)
         self.default_speed_rad_s = float(self.get_parameter("default_speed_rad_s").value)
 
-        self.client: MvpTcpClient | None = None
+        self._client: MvpTcpClient | None = None
         self.last_valid_target: list[float] | None = None
         self.last_target_stamp = None
+        self.tcp_connected = False
+        self.tcp_status = "disconnected"
+        self.last_tcp_warning_time = 0.0
+        self._motion_request_active = False
 
         self.joint_pub = self.create_publisher(JointState, "/mvp/joint_states", 10)
         self.gripper_pub = self.create_publisher(Float64, "/mvp/gripper_state", 10)
+        self.tcp_connected_pub = self.create_publisher(Bool, "/mvp/tcp_connected", 10)
+        self.tcp_status_pub = self.create_publisher(String, "/mvp/tcp_status", 10)
         self.create_subscription(JointState, "/mvp/joint_target", self.handle_joint_target, 10)
         self.create_service(Trigger, "/mvp/execute_target", self.handle_execute_target)
-        self.create_service(Trigger, "/mvp/stop", self.handle_stop)
-
         timer_period = 1.0 / max(self.poll_rate_hz, 0.1)
         self.timer = self.create_timer(timer_period, self.poll_state_once)
-        self.get_logger().info(
-            f"MVP hardware bridge started host={self.host} port={self.port} "
-            f"motion_enabled={str(self.hardware_motion_enabled).lower()}"
-        )
+        self.get_logger().info("MVP hardware bridge starting")
+        self.get_logger().info(f"tcp_host={self.host}")
+        self.get_logger().info(f"tcp_port={self.port}")
+        self.get_logger().info(f"hardware_motion_enabled={str(self.hardware_motion_enabled).lower()}")
+        self.get_logger().info(f"state_poll_rate_hz={self.poll_rate_hz}")
+        self.get_logger().info("single_tcp_client=true")
+        self.publish_tcp_status(False, "disconnected")
 
     def get_client(self) -> MvpTcpClient:
-        if self.client is None:
-            self.client = MvpTcpClient(self.host, self.port, timeout_s=2.0)
-        return self.client
+        if self._client is None:
+            self._client = MvpTcpClient(
+                self.host,
+                self.port,
+                connect_timeout_s=2.0,
+                state_request_timeout_s=2.0,
+                motion_request_timeout_s=15.0,
+            )
+        return self._client
 
     def reset_client(self) -> None:
-        if self.client is not None:
-            self.client.close()
-        self.client = None
+        if self._client is not None:
+            self._client.close()
+        self._client = None
+
+    def publish_tcp_status(self, connected: bool, status: str) -> None:
+        self.tcp_connected = bool(connected)
+        self.tcp_status = str(status)
+        connected_msg = Bool()
+        connected_msg.data = self.tcp_connected
+        self.tcp_connected_pub.publish(connected_msg)
+        status_msg = String()
+        status_msg.data = self.tcp_status
+        self.tcp_status_pub.publish(status_msg)
+
+    def format_tcp_exception(self, exc: BaseException) -> tuple[str, str]:
+        if isinstance(exc, MvpTcpError):
+            return exc.kind, str(exc)
+        return type(exc).__name__, str(exc)
+
+    def service_error_message(self, exc: BaseException) -> str:
+        kind, message = self.format_tcp_exception(exc)
+        text = f"{kind}: {message}"
+        return text[:300]
+
+    def warn_tcp_failure(self, exc: BaseException) -> None:
+        kind, message = self.format_tcp_exception(exc)
+        now = self.get_clock().now().nanoseconds / 1.0e9
+        should_log = self.tcp_connected or (now - self.last_tcp_warning_time) >= 2.0
+        if should_log:
+            self.get_logger().warning(f"TCP_DISCONNECTED error_type={kind} error={message}")
+            self.last_tcp_warning_time = now
+        self.publish_tcp_status(False, kind)
+        self.reset_client()
 
     def poll_state_once(self) -> None:
+        if self._motion_request_active:
+            return
         try:
             state = self.get_client().get_state()
         except Exception as exc:
-            self.get_logger().warning(f"TCP get_state failed; will retry: {exc}")
-            self.reset_client()
+            self.warn_tcp_failure(exc)
             return
         if not state.get("success"):
-            self.get_logger().warning(f"TCP get_state returned failure: {state.get('reason')}")
+            reason = str(state.get("reason", "missing_reason"))
+            self.get_logger().warning(f"TCP get_state returned failure: {reason}")
+            self.publish_tcp_status(False, f"server_rejected:{reason}")
             return
         try:
             names = list(state["joint_names"])
@@ -79,13 +127,20 @@ class MvpHardwareBridgeNode(Node):
             gripper = float(state["gripper"])
         except (KeyError, TypeError, ValueError) as exc:
             self.get_logger().warning(f"Invalid TCP state payload: {exc}")
+            self.publish_tcp_status(False, "protocol_error")
             return
         if names != ARM_JOINT_NAMES or len(positions) != len(ARM_JOINT_NAMES):
             self.get_logger().warning("Invalid joint order or length from TCP state")
+            self.publish_tcp_status(False, "protocol_error")
             return
         if not all(math.isfinite(value) for value in positions):
             self.get_logger().warning("Non-finite joint position from TCP state")
+            self.publish_tcp_status(False, "protocol_error")
             return
+
+        if not self.tcp_connected:
+            self.get_logger().info(f"TCP_CONNECTED host={self.host} port={self.port}")
+        self.publish_tcp_status(True, "connected")
 
         msg = JointState()
         msg.header.stamp = self.get_clock().now().to_msg()
@@ -140,6 +195,7 @@ class MvpHardwareBridgeNode(Node):
             response.message = "no_valid_target"
             return response
         try:
+            self._motion_request_active = True
             result = self.get_client().move_joints_sequential(
                 self.last_valid_target,
                 self.default_speed_rad_s,
@@ -147,31 +203,16 @@ class MvpHardwareBridgeNode(Node):
                 confirm="MVP_MOVE",
             )
         except Exception as exc:
-            self.get_logger().warning(f"TCP move_joints_sequential failed: {exc}")
-            self.reset_client()
+            self.get_logger().warning(f"TCP move_joints_sequential failed: {type(exc).__name__}: {exc}")
+            self.warn_tcp_failure(exc)
             response.success = False
-            response.message = "tcp_error"
+            response.message = self.service_error_message(exc)
             return response
+        finally:
+            self._motion_request_active = False
         response.success = bool(result.get("success"))
-        response.message = str(result.get("reason", "missing_reason"))
-        return response
-
-    def handle_stop(
-        self,
-        request: Trigger.Request,
-        response: Trigger.Response,
-    ) -> Trigger.Response:
-        del request
-        try:
-            result = self.get_client().stop()
-        except Exception as exc:
-            self.get_logger().warning(f"TCP stop failed: {exc}")
-            self.reset_client()
-            response.success = False
-            response.message = "tcp_error"
-            return response
-        response.success = bool(result.get("success"))
-        response.message = str(result.get("reason", "missing_reason"))
+        reason = str(result.get("reason", "missing_reason"))
+        response.message = reason
         return response
 
     def destroy_node(self) -> bool:
