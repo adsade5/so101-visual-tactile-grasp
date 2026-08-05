@@ -169,6 +169,18 @@ def parse_float_list(value: str) -> list[float] | None:
     return parsed
 
 
+def optional_float(value: object) -> float | None:
+    if value is None or isinstance(value, bool):
+        return None
+    try:
+        parsed = float(value)
+    except (TypeError, ValueError):
+        return None
+    if not math.isfinite(parsed):
+        return None
+    return parsed
+
+
 def parse_compute_message(message: str) -> tuple[dict[str, Any], list[str]]:
     fields: dict[str, Any] = {}
     warnings: list[str] = []

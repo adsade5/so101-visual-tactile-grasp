@@ -1,0 +1,164 @@
+{
+  "stage": "MVP-4C-SNAPSHOT-OPTIONAL-FLOAT-HOTFIX",
+  "root_cause": "make_pregrasp_snapshot called undefined optional_float",
+  "undefined_symbol": "optional_float",
+  "affected_function": "make_pregrasp_snapshot",
+  "fix_strategy": "add minimal finite optional_float helper near existing parse helpers",
+  "existing_helper_reused": false,
+  "new_helper_added": true,
+  "optional_float_behavior": {
+    "none_returns_none": true,
+    "int_or_float_to_float": true,
+    "numeric_string_to_float": true,
+    "invalid_string_returns_none": true,
+    "nan_or_inf_returns_none": true,
+    "bool_returns_none": true
+  },
+  "planned_snapshot_constructed": true,
+  "position_error_saved_as_json_number": true,
+  "approach_error_saved_as_json_number": true,
+  "snapshot_schema_modified": false,
+  "snapshot_path_modified": false,
+  "occlusion_handoff_logic_modified": false,
+  "ik_algorithm_modified": false,
+  "camera_algorithm_modified": false,
+  "workspace_transform_modified": false,
+  "hardware_execution_modified": false,
+  "offline_test_cases": [
+    {
+      "name": "optional_float_defined",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "optional_float_none",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "optional_float_numeric_string",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "optional_float_float",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "optional_float_integer",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "optional_float_invalid_string",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "optional_float_nan_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "optional_float_inf_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "optional_float_bool_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "make_planned_snapshot_no_name_error",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "position_error_saved_as_number",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "approach_error_saved_as_number",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "planned_snapshot_state",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "plan_only_hardware_command_false",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "plan_only_motion_completed_false",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "planned_snapshot_atomic_write",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "snapshot_json_valid",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_nan_in_snapshot_json",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_inf_in_snapshot_json",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "existing_occlusion_handoff_tests_still_pass",
+      "passed": true,
+      "details": {
+        "returncode": 0,
+        "stdout_tail": [
+          "PASS no_com_port_open",
+          "PASS no_goal_position_write",
+          "PASS no_physical_motion",
+          "offline_tests_passed=48/48",
+          "report=E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\stage_mvp4c_occlusion_safe_handoff_report.json"
+        ],
+        "stderr_tail": []
+      }
+    },
+    {
+      "name": "no_com_port_open",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_goal_position_write",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_physical_motion",
+      "passed": true,
+      "details": {}
+    }
+  ],
+  "offline_tests_passed": true,
+  "offline_test_count": 23,
+  "occlusion_handoff_regression_tests_passed": true,
+  "ros2_build_result": "PASS",
+  "opened_com_ports": false,
+  "tcp_started": false,
+  "hardware_bridge_started": false,
+  "goal_position_written": false,
+  "physical_motion_observed": false,
+  "final_status": "READY_FOR_MANUAL_PREGRASP_SNAPSHOT_RETEST"
+}
