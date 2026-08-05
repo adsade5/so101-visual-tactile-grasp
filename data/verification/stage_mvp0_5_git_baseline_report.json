@@ -1,0 +1,83 @@
+﻿{
+    "stage":  "MVP-0.5",
+    "title":  "SO-101 MVP refactor git rollback baseline",
+    "generated_at":  "2026-08-05T09:13:08",
+    "git_root":  "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp",
+    "branch":  "refactor/mvp_simple_grasp",
+    "initial_commit_created":  true,
+    "initial_commit_hash":  "9a3810920da8f0a92d0974ebbb7e5e9038a97490",
+    "initial_commit_message":  "chore: establish SO-101 MVP refactor baseline",
+    "baseline_tag":  "mvp-0-baseline",
+    "baseline_tag_hash":  "9a3810920da8f0a92d0974ebbb7e5e9038a97490",
+    "head_tag_match":  true,
+    "committed_file_count":  302,
+    "committed_size_bytes":  61741738,
+    "git_status_after_commit_before_report":  [
+
+                                              ],
+    "ignored_generated_directories":  [
+                                          "audit_results/",
+                                          "ros2_ws/build/",
+                                          "ros2_ws/install/",
+                                          "ros2_ws/log/",
+                                          "__pycache__/",
+                                          "data/verification/*.log",
+                                          "data/verification/ros_logs*/"
+                                      ],
+    "excluded_large_files":  [
+                                 {
+                                     "path":  "audit_results/minimal_ros2_ws/build/stage_minus1_cpp_probe/cpp_probe_node.pdb",
+                                     "size_bytes":  14127104,
+                                     "reason":  "ignored generated build artifact"
+                                 }
+                             ],
+    "nested_git_repositories":  [
+                                    ".git"
+                                ],
+    "gitmodules_files":  [
+
+                         ],
+    "suspected_sensitive_files":  [
+
+                                  ],
+    "sensitive_keyword_matches_reviewed":  [
+                                               "audit/check_python_runtime.py",
+                                               "audit/check_opencv_camera.py",
+                                               "docs/MVP_TCP_PROTOCOL.md",
+                                               "docs/LEGACY_COMPONENTS.md",
+                                               "ros2_ws/src/so101_command_gate/so101_command_gate/command_gate_validator.py"
+                                           ],
+    "urdf_sha256":  {
+                        "data/robot_model/so101/so101_new_calib.urdf":  "3A65D2D35E68A8D2F0C2CC176D19B884506543C93BA72980145B80ABE276022C",
+                        "ros2_ws/src/so101_description/urdf/so101_visualization.urdf":  "79F1288C20966D4A9049E1A7BA9939C7E3AA6FF854FEEA1B288E00DCDDE3A546"
+                    },
+    "build_result":  {
+                         "command":  "colcon build --merge-install --packages-select so101_mvp_kinematics so101_mvp_control so101_mvp_bringup",
+                         "result":  "PASS",
+                         "summary":  "3 packages finished [13.5s]",
+                         "ros_distro":  "lyrical"
+                     },
+    "dry_run_result":  {
+                           "command":  "scripts/mvp_so101_server.py --config config/mvp_hardware.json --dry-run",
+                           "result":  "PASS",
+                           "hardware_enabled":  false,
+                           "opened_serial_port":  false,
+                           "sent_motor_command":  false,
+                           "output_markers":  [
+                                                  "hardware_enabled=false",
+                                                  "no serial port opened",
+                                                  "no motor command sent"
+                                              ]
+                       },
+    "safety_scope":  {
+                         "modified_urdf":  false,
+                         "modified_fk_ik":  false,
+                         "modified_trajectory_safety":  false,
+                         "modified_vision_tactile":  false,
+                         "opened_com_port":  false,
+                         "sent_motor_command":  false,
+                         "deleted_build_install_log":  false,
+                         "used_git_reset_clean_restore":  false
+                     },
+    "final_result":  "PASS"
+}
