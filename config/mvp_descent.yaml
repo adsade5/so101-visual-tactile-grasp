@@ -1,4 +1,7 @@
 mvp_descent:
+  saved_pregrasp_snapshot_path: data/runtime/mvp_last_pregrasp_snapshot.json
+  saved_pregrasp_snapshot_max_age_s: 300.0
+  snapshot_pregrasp_joint_tolerance_rad: 0.10
   waypoint_drop_m:
     - 0.01
     - 0.02

@@ -48,6 +48,9 @@ ACCEPTED_PREGRASP_STATUS = {
 
 @dataclass(frozen=True)
 class DescentConfig:
+    saved_pregrasp_snapshot_path: str = "data/runtime/mvp_last_pregrasp_snapshot.json"
+    saved_pregrasp_snapshot_max_age_s: float = 300.0
+    snapshot_pregrasp_joint_tolerance_rad: float = 0.10
     waypoint_drop_m: tuple[float, ...] = (0.01, 0.02, 0.03)
     start_pregrasp_joint_tolerance_rad: float = 0.10
     max_abs_joint_delta_per_waypoint_rad: float = 0.25
@@ -148,9 +151,15 @@ class DescentPlan:
             "pregrasp_joint_target_rad": None
             if self.frozen is None
             else self.frozen.pregrasp_joint_target_rad,
+            "saved_pregrasp_joint_target_rad": None
+            if self.frozen is None
+            else self.frozen.pregrasp_joint_target_rad,
             "start_pregrasp_joint_error_rad": self.start_pregrasp_joint_error_rad,
             "start_pregrasp_max_error_rad": self.start_pregrasp_max_error_rad,
             "start_pregrasp_tolerance_rad": config.start_pregrasp_joint_tolerance_rad,
+            "current_to_saved_pregrasp_error_rad": self.start_pregrasp_joint_error_rad,
+            "current_to_saved_pregrasp_max_error_rad": self.start_pregrasp_max_error_rad,
+            "snapshot_pregrasp_joint_tolerance_rad": config.snapshot_pregrasp_joint_tolerance_rad,
             "waypoint_count": len(self.waypoints),
             "waypoints": [waypoint.to_dict() for waypoint in self.waypoints],
             "total_requested_z_drop_m": self.total_requested_z_drop_m,
@@ -190,7 +199,7 @@ def load_config(path: Path | None = None) -> DescentConfig:
     config_path = path or PROJECT_ROOT / "config" / "mvp_descent.yaml"
     if not config_path.is_file():
         return DescentConfig(max_speed_rad_s=load_hardware_max_speed())
-    values: dict[str, float | list[float]] = {}
+    values: dict[str, float | str | list[float]] = {}
     current_list_key: str | None = None
     for raw_line in config_path.read_text(encoding="utf-8").splitlines():
         stripped = raw_line.strip()
@@ -210,12 +219,19 @@ def load_config(path: Path | None = None) -> DescentConfig:
         if ":" not in stripped:
             continue
         key, raw_value = stripped.split(":", 1)
+        key_text = key.strip()
+        raw_text = raw_value.strip()
         try:
-            values[key.strip()] = float(raw_value.strip())
+            values[key_text] = float(raw_text)
         except ValueError:
-            continue
+            values[key_text] = raw_text
     drops = values.get("waypoint_drop_m", [0.01, 0.02, 0.03])
     return DescentConfig(
+        saved_pregrasp_snapshot_path=str(
+            values.get("saved_pregrasp_snapshot_path", "data/runtime/mvp_last_pregrasp_snapshot.json")
+        ),
+        saved_pregrasp_snapshot_max_age_s=float(values.get("saved_pregrasp_snapshot_max_age_s", 300.0)),
+        snapshot_pregrasp_joint_tolerance_rad=float(values.get("snapshot_pregrasp_joint_tolerance_rad", 0.10)),
         waypoint_drop_m=tuple(float(value) for value in drops) if isinstance(drops, list) else (0.01, 0.02, 0.03),
         start_pregrasp_joint_tolerance_rad=float(values.get("start_pregrasp_joint_tolerance_rad", 0.10)),
         max_abs_joint_delta_per_waypoint_rad=float(values.get("max_abs_joint_delta_per_waypoint_rad", 0.25)),
@@ -238,6 +254,114 @@ def create_model() -> So101KinematicModel:
     return So101KinematicModel(
         PROJECT_ROOT / "data" / "robot_model" / "so101" / "so101_new_calib.urdf"
     )
+
+
+def resolve_project_path(path_text: str) -> Path:
+    path = Path(path_text)
+    return path if path.is_absolute() else PROJECT_ROOT / path
+
+
+def finite_vector(value: object, length: int) -> list[float] | None:
+    if not isinstance(value, list) or len(value) != length:
+        return None
+    try:
+        values = [float(item) for item in value]
+    except (TypeError, ValueError):
+        return None
+    return values if all(math.isfinite(item) for item in values) else None
+
+
+def snapshot_summary_fields(
+    *,
+    snapshot_path: Path,
+    snapshot: dict[str, Any] | None,
+    snapshot_age_s: float | None,
+    config: DescentConfig,
+    snapshot_valid: bool,
+) -> dict[str, Any]:
+    return {
+        "pregrasp_source": "saved_snapshot",
+        "snapshot_path": str(snapshot_path.relative_to(PROJECT_ROOT)) if snapshot_path.is_relative_to(PROJECT_ROOT) else str(snapshot_path),
+        "snapshot_state": None if snapshot is None else snapshot.get("snapshot_state"),
+        "snapshot_created_at_unix_s": None if snapshot is None else snapshot.get("created_at_unix_s"),
+        "snapshot_updated_at_unix_s": None if snapshot is None else snapshot.get("updated_at_unix_s"),
+        "snapshot_age_s": snapshot_age_s,
+        "snapshot_max_age_s": config.saved_pregrasp_snapshot_max_age_s,
+        "snapshot_valid": bool(snapshot_valid),
+        "live_object_visibility_required": False,
+        "object_must_not_have_moved": True,
+        "snapshot_strict_final_tolerance_pass": None
+        if snapshot is None
+        else snapshot.get("strict_final_tolerance_pass"),
+        "strict_final_tolerance_pass": None
+        if snapshot is None
+        else snapshot.get("strict_final_tolerance_pass"),
+        "pregrasp_reached_for_descent": None
+        if snapshot is None
+        else snapshot.get("pregrasp_reached_for_descent"),
+    }
+
+
+def load_saved_pregrasp_snapshot(
+    *,
+    path: Path,
+    config: DescentConfig,
+    model: So101KinematicModel,
+    now_unix_s: float,
+) -> tuple[bool, str, dict[str, Any] | None, FrozenPregrasp | None, float | None]:
+    if not path.is_file():
+        return False, "saved_pregrasp_snapshot_missing", None, None, None
+    try:
+        snapshot = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return False, "saved_pregrasp_snapshot_invalid_json", None, None, None
+    if not isinstance(snapshot, dict):
+        return False, "saved_pregrasp_snapshot_invalid_json", None, None, None
+    if snapshot.get("schema_version") != 1:
+        return False, "saved_pregrasp_snapshot_schema_unsupported", snapshot, None, None
+    updated = optional_float(snapshot.get("updated_at_unix_s"))
+    if updated is None:
+        return False, "saved_pregrasp_snapshot_invalid_json", snapshot, None, None
+    age_s = float(now_unix_s - updated)
+    if age_s > config.saved_pregrasp_snapshot_max_age_s:
+        return False, "saved_pregrasp_snapshot_stale", snapshot, None, age_s
+    state = str(snapshot.get("snapshot_state"))
+    if state != "executed_descent_ready":
+        if state in {"planned", "motion_failed"}:
+            return False, "saved_pregrasp_snapshot_not_executed", snapshot, None, age_s
+        return False, "saved_pregrasp_snapshot_not_descent_ready", snapshot, None, age_s
+    if not bool(snapshot.get("compute_pregrasp_success")):
+        return False, "saved_pregrasp_snapshot_not_executed", snapshot, None, age_s
+    if not bool(snapshot.get("pregrasp_valid")):
+        return False, "saved_pregrasp_snapshot_not_descent_ready", snapshot, None, age_s
+    if not bool(snapshot.get("motion_completed")):
+        return False, "saved_pregrasp_snapshot_not_executed", snapshot, None, age_s
+    if not bool(snapshot.get("pregrasp_reached_for_descent")):
+        return False, "saved_pregrasp_snapshot_not_descent_ready", snapshot, None, age_s
+
+    object_pose = finite_vector(snapshot.get("object_pose_base"), 3)
+    pregrasp_pose = finite_vector(snapshot.get("pregrasp_pose_base"), 3)
+    frozen_target = finite_vector(snapshot.get("frozen_target_rad"), len(ARM_JOINT_NAMES))
+    if object_pose is None or pregrasp_pose is None or frozen_target is None:
+        return False, "saved_pregrasp_snapshot_joint_contract_invalid", snapshot, None, age_s
+    if list(snapshot.get("joint_names", [])) != list(ARM_JOINT_NAMES):
+        return False, "saved_pregrasp_snapshot_joint_contract_invalid", snapshot, None, age_s
+    q = np.asarray(frozen_target, dtype=np.float64)
+    if not joints_within_limits(model, q):
+        return False, "saved_pregrasp_snapshot_joint_limits_invalid", snapshot, None, age_s
+
+    frozen = FrozenPregrasp(
+        object_pose_base=object_pose,
+        pregrasp_pose_base=pregrasp_pose,
+        pregrasp_joint_target_rad=frozen_target,
+        solution_type=None if snapshot.get("solution_type") is None else str(snapshot.get("solution_type")),
+        selected_offset_m=None
+        if snapshot.get("selected_offset_m") is None
+        else finite_vector(snapshot.get("selected_offset_m"), 3),
+        position_error_m=optional_float(snapshot.get("position_error_m")),
+        approach_error_deg=optional_float(snapshot.get("approach_error_deg")),
+    )
+    return True, "ok", snapshot, frozen, age_s
 
 
 def validate_joint_contract(names: list[str] | tuple[str, ...], positions: list[float] | tuple[float, ...]) -> tuple[bool, str]:
@@ -585,7 +709,6 @@ def json_print(payload: dict[str, Any]) -> None:
 class DescentNode:
     def __init__(self, config: DescentConfig) -> None:
         import rclpy
-        from geometry_msgs.msg import PoseStamped
         from rclpy.node import Node
         from sensor_msgs.msg import JointState
         from std_msgs.msg import Bool, String
@@ -600,24 +723,17 @@ class DescentNode:
         self.node = _Node("mvp_descend_from_pregrasp")
         self.config = config
         self.latest_joint_state: StampedJointState | None = None
-        self.latest_pregrasp_target: StampedJointState | None = None
-        self.latest_pregrasp_pose: StampedPose | None = None
-        self.latest_object_pose: StampedPose | None = None
         self.pregrasp_valid = False
         self.pregrasp_status = ""
         self.tcp_connected = False
         self.tcp_status = "unknown"
 
         self.node.create_subscription(JointState, "/mvp/joint_states", self._joint_state_cb, 10)
-        self.node.create_subscription(JointState, "/mvp/pregrasp_joint_target", self._pregrasp_target_cb, 10)
-        self.node.create_subscription(PoseStamped, "/mvp/pregrasp_pose", self._pregrasp_pose_cb, 10)
-        self.node.create_subscription(PoseStamped, "/object_pose_base", self._object_pose_cb, 10)
         self.node.create_subscription(Bool, "/mvp/pregrasp_valid", self._pregrasp_valid_cb, 10)
         self.node.create_subscription(String, "/mvp/pregrasp_status", self._pregrasp_status_cb, 10)
         self.node.create_subscription(Bool, "/mvp/tcp_connected", self._tcp_connected_cb, 10)
         self.node.create_subscription(String, "/mvp/tcp_status", self._tcp_status_cb, 10)
         self.target_pub = self.node.create_publisher(JointState, "/mvp/joint_target", 10)
-        self.compute_client = self.node.create_client(Trigger, "/mvp/compute_pregrasp")
         self.execute_client = self.node.create_client(Trigger, "/mvp/execute_target")
 
     def _joint_state_cb(self, msg: Any) -> None:
@@ -626,19 +742,6 @@ class DescentNode:
             positions_rad=tuple(float(value) for value in msg.position),
             received_monotonic_s=time.monotonic(),
         )
-
-    def _pregrasp_target_cb(self, msg: Any) -> None:
-        self.latest_pregrasp_target = StampedJointState(
-            names=tuple(str(name) for name in msg.name),
-            positions_rad=tuple(float(value) for value in msg.position),
-            received_monotonic_s=time.monotonic(),
-        )
-
-    def _pregrasp_pose_cb(self, msg: Any) -> None:
-        self.latest_pregrasp_pose = StampedPose(str(msg.header.frame_id), tuple(pose_to_xyz(msg)), time.monotonic())
-
-    def _object_pose_cb(self, msg: Any) -> None:
-        self.latest_object_pose = StampedPose(str(msg.header.frame_id), tuple(pose_to_xyz(msg)), time.monotonic())
 
     def _pregrasp_valid_cb(self, msg: Any) -> None:
         self.pregrasp_valid = bool(msg.data)
@@ -692,12 +795,50 @@ def run(args: argparse.Namespace) -> int:
 
     config = load_config()
     model = create_model()
+    snapshot_path = resolve_project_path(config.saved_pregrasp_snapshot_path)
+    snapshot_ok, snapshot_reason, snapshot, frozen, snapshot_age_s = load_saved_pregrasp_snapshot(
+        path=snapshot_path,
+        config=config,
+        model=model,
+        now_unix_s=time.time(),
+    )
+    if not snapshot_ok or frozen is None:
+        payload = {
+            "success": False,
+            "reason": snapshot_reason,
+            "mode": "execute" if args.execute else "plan_only",
+            **snapshot_summary_fields(
+                snapshot_path=snapshot_path,
+                snapshot=snapshot,
+                snapshot_age_s=snapshot_age_s,
+                config=config,
+                snapshot_valid=False,
+            ),
+            "hardware_command_sent": False,
+        }
+        json_print(payload)
+        return 3
+
     rclpy.init()
     node = DescentNode(config)
     try:
         if not node.spin_until(lambda: node.tcp_connected and node.tcp_status == "connected", 5.0):
-            json_print({"success": False, "reason": "tcp_not_connected"})
-            return 3
+            json_print(
+                {
+                    "success": False,
+                    "reason": "tcp_not_connected",
+                    "mode": "execute" if args.execute else "plan_only",
+                    **snapshot_summary_fields(
+                        snapshot_path=snapshot_path,
+                        snapshot=snapshot,
+                        snapshot_age_s=snapshot_age_s,
+                        config=config,
+                        snapshot_valid=True,
+                    ),
+                    "hardware_command_sent": False,
+                }
+            )
+            return 4
         if not node.spin_until(
             lambda: validate_fresh_joint_state(
                 node.latest_joint_state,
@@ -706,54 +847,50 @@ def run(args: argparse.Namespace) -> int:
             )[0],
             10.0,
         ):
-            json_print({"success": False, "reason": "joint_state_unavailable_or_stale"})
-            return 4
+            json_print(
+                {
+                    "success": False,
+                    "reason": "current_joint_state_stale",
+                    "mode": "execute" if args.execute else "plan_only",
+                    **snapshot_summary_fields(
+                        snapshot_path=snapshot_path,
+                        snapshot=snapshot,
+                        snapshot_age_s=snapshot_age_s,
+                        config=config,
+                        snapshot_valid=True,
+                    ),
+                    "hardware_command_sent": False,
+                }
+            )
+            return 5
         assert node.latest_joint_state is not None
         current = [float(value) for value in node.latest_joint_state.positions_rad]
-        if (
-            node.latest_object_pose is None
-            or time.monotonic() - node.latest_object_pose.received_monotonic_s
-            > config.pregrasp_target_max_age_s
-        ):
-            json_print({"success": False, "reason": "object_pose_unavailable_or_stale"})
-            return 5
-
-        compute_started = time.monotonic()
-        compute_success, compute_message, _ = node.call_trigger(node.compute_client, 10.0)
-        if not compute_success:
-            json_print({"success": False, "reason": "compute_pregrasp_failed", "message": compute_message})
+        current_errors, current_max_error = start_pregrasp_error(
+            current,
+            frozen.pregrasp_joint_target_rad,
+        )
+        if current_max_error > config.snapshot_pregrasp_joint_tolerance_rad:
+            json_print(
+                {
+                    "success": False,
+                    "reason": "not_at_saved_pregrasp",
+                    "mode": "execute" if args.execute else "plan_only",
+                    **snapshot_summary_fields(
+                        snapshot_path=snapshot_path,
+                        snapshot=snapshot,
+                        snapshot_age_s=snapshot_age_s,
+                        config=config,
+                        snapshot_valid=True,
+                    ),
+                    "current_joint_positions_rad": current,
+                    "saved_pregrasp_joint_target_rad": frozen.pregrasp_joint_target_rad,
+                    "current_to_saved_pregrasp_error_rad": current_errors,
+                    "current_to_saved_pregrasp_max_error_rad": current_max_error,
+                    "snapshot_pregrasp_joint_tolerance_rad": config.snapshot_pregrasp_joint_tolerance_rad,
+                    "hardware_command_sent": False,
+                }
+            )
             return 6
-        if not node.spin_until(
-            lambda: node.latest_pregrasp_target is not None
-            and node.latest_pregrasp_target.received_monotonic_s >= compute_started
-            and node.latest_pregrasp_pose is not None
-            and node.latest_pregrasp_pose.received_monotonic_s >= compute_started,
-            config.pregrasp_target_max_age_s,
-        ):
-            json_print({"success": False, "reason": "pregrasp_target_unavailable_or_stale"})
-            return 7
-        assert node.latest_pregrasp_target is not None
-        assert node.latest_pregrasp_pose is not None
-        valid_target, target_reason = validate_joint_contract(
-            node.latest_pregrasp_target.names,
-            node.latest_pregrasp_target.positions_rad,
-        )
-        if not valid_target:
-            json_print({"success": False, "reason": target_reason})
-            return 8
-        if not node.pregrasp_valid:
-            json_print({"success": False, "reason": "pregrasp_invalid"})
-            return 9
-        if not status_is_accepted(node.pregrasp_status, compute_message):
-            json_print({"success": False, "reason": "pregrasp_status_not_ready", "status": node.pregrasp_status})
-            return 10
-
-        frozen = make_frozen_pregrasp(
-            object_pose_base=None if node.latest_object_pose is None else list(node.latest_object_pose.xyz_m),
-            pregrasp_pose_base=list(node.latest_pregrasp_pose.xyz_m),
-            pregrasp_joint_target_rad=[float(value) for value in node.latest_pregrasp_target.positions_rad],
-            compute_message=compute_message,
-        )
         plan = plan_segmented_descent(
             model=model,
             frozen=frozen,
@@ -761,12 +898,26 @@ def run(args: argparse.Namespace) -> int:
             config=config,
         )
         summary = plan.to_summary("execute" if args.execute else "plan_only", config, False)
-        summary["compute_response_message"] = compute_message
+        summary.update(
+            snapshot_summary_fields(
+                snapshot_path=snapshot_path,
+                snapshot=snapshot,
+                snapshot_age_s=snapshot_age_s,
+                config=config,
+                snapshot_valid=True,
+            )
+        )
+        summary["compute_response_message"] = snapshot.get("compute_response_message")
         summary["tcp_connected"] = node.tcp_connected
         summary["tcp_status"] = node.tcp_status
+        summary["operator_warnings"] = [
+            "USING_SAVED_PREGRASP_SNAPSHOT",
+            "LIVE_OBJECT_VISIBILITY_NOT_REQUIRED",
+            "OBJECT_CAMERA_AND_TABLE_MUST_NOT_HAVE_MOVED",
+        ]
         if not plan.success:
             json_print(summary)
-            return 11
+            return 7
         if not args.execute:
             json_print(summary)
             return 0
@@ -798,7 +949,7 @@ def run(args: argparse.Namespace) -> int:
                     }
                 )
                 json_print(summary)
-                return 12
+                return 8
             if not node.spin_until(
                 lambda: validate_fresh_joint_state(
                     node.latest_joint_state,
@@ -818,7 +969,7 @@ def run(args: argparse.Namespace) -> int:
                     }
                 )
                 json_print(summary)
-                return 13
+                return 9
             assert node.latest_joint_state is not None
             final_positions = [float(value) for value in node.latest_joint_state.positions_rad]
             final_errors = final_joint_error(
@@ -839,7 +990,7 @@ def run(args: argparse.Namespace) -> int:
                     }
                 )
                 json_print(summary)
-                return 14
+                return 10
             completed += 1
             time.sleep(config.inter_waypoint_hold_s)
 
@@ -880,7 +1031,7 @@ def run(args: argparse.Namespace) -> int:
             }
         )
         json_print(summary)
-        return 0 if final_ok else 15
+        return 0 if final_ok else 11
     finally:
         node.destroy()
         if rclpy.ok():

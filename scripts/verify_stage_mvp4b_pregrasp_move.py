@@ -184,9 +184,17 @@ def main() -> int:
     cases.append(case("gripper_not_in_joint_target", "gripper" not in ARM_JOINT_NAMES))
     final_pass = final_joint_error([value + 0.01 for value in frozen], frozen, config.final_joint_tolerance_rad)
     final_fail = final_joint_error([value + 0.05 for value in frozen], frozen, config.final_joint_tolerance_rad)
+    real_pregrasp_error_rad = 0.04149463936181448
+    real_strict = final_joint_error(
+        [real_pregrasp_error_rad, 0.0, 0.0, 0.0, 0.0],
+        [0.0, 0.0, 0.0, 0.0, 0.0],
+        config.final_joint_tolerance_rad,
+    )
     cases.append(case("final_joint_error_computed", len(final_pass["final_joint_error_rad"]) == 5))
     cases.append(case("final_tolerance_pass", final_pass["final_target_reached"]))
     cases.append(case("final_tolerance_failure", not final_fail["final_target_reached"]))
+    cases.append(case("real_error_0p041494_fails_strict_0p035", not real_strict["final_target_reached"]))
+    cases.append(case("real_error_0p041494_passes_descent_ready_0p10", real_pregrasp_error_rad <= 0.10))
 
     script_text = SCRIPT_PATH.read_text(encoding="utf-8")
     bridge_text = (

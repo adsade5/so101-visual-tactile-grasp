@@ -160,6 +160,16 @@
       "details": {}
     },
     {
+      "name": "real_error_0p041494_fails_strict_0p035",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "real_error_0p041494_passes_descent_ready_0p10",
+      "passed": true,
+      "details": {}
+    },
+    {
       "name": "no_stop_service",
       "passed": true,
       "details": {}
@@ -186,7 +196,7 @@
     }
   ],
   "offline_tests_passed": true,
-  "offline_test_count": 33,
+  "offline_test_count": 35,
   "ros2_build_result": "not_run",
   "opened_com_ports": false,
   "tcp_started": false,

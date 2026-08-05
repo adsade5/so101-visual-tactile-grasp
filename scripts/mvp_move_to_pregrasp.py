@@ -3,6 +3,7 @@ from __future__ import annotations
 import argparse
 import json
 import math
+import os
 import re
 import sys
 import time
@@ -15,6 +16,7 @@ import numpy as np
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 HARDWARE_CONFIG_PATH = PROJECT_ROOT / "config" / "mvp_hardware.json"
+SNAPSHOT_PATH = PROJECT_ROOT / "data" / "runtime" / "mvp_last_pregrasp_snapshot.json"
 ROS_SRC = PROJECT_ROOT / "ros2_ws" / "src"
 for package_path in (
     ROS_SRC / "so101_mvp_control",
@@ -50,6 +52,7 @@ class MoveConfig:
     speed_rad_s: float = 0.06
     max_abs_joint_delta_rad: float = 1.00
     final_joint_tolerance_rad: float = 0.035
+    descent_ready_joint_tolerance_rad: float = 0.10
     execute_service_timeout_s: float = 120.0
     max_speed_rad_s: float = 0.08
 
@@ -84,6 +87,7 @@ def load_config(path: Path | None = None) -> MoveConfig:
         speed_rad_s=hardware_speed,
         max_abs_joint_delta_rad=values.get("max_abs_joint_delta_rad", 1.00),
         final_joint_tolerance_rad=values.get("final_joint_tolerance_rad", 0.035),
+        descent_ready_joint_tolerance_rad=values.get("descent_ready_joint_tolerance_rad", 0.10),
         execute_service_timeout_s=values.get("execute_service_timeout_s", 120.0),
         max_speed_rad_s=hardware_max_speed,
     )
@@ -245,6 +249,77 @@ def final_joint_error(final_rad: list[float], target_rad: list[float], tolerance
     }
 
 
+def atomic_write_json(path: Path, payload: dict[str, Any]) -> None:
+    path.parent.mkdir(parents=True, exist_ok=True)
+    tmp_path = path.with_name(path.name + ".tmp")
+    with tmp_path.open("w", encoding="utf-8") as file:
+        json.dump(payload, file, indent=2, ensure_ascii=False, allow_nan=False)
+        file.write("\n")
+        file.flush()
+        os.fsync(file.fileno())
+    os.replace(tmp_path, path)
+
+
+def make_pregrasp_snapshot(
+    *,
+    snapshot_state: str,
+    created_at_unix_s: float,
+    object_pose_base: list[float] | None,
+    pregrasp_pose_base: list[float] | None,
+    frozen_target_rad: list[float],
+    compute_message: str,
+    compute_pregrasp_success: bool,
+    pregrasp_valid: bool,
+    pregrasp_status: str,
+    hardware_command_sent: bool,
+    execute_response_message: str | None,
+    motion_completed: bool | None,
+    final_joint_positions_rad: list[float] | None,
+    final_errors: dict[str, Any] | None,
+    config: MoveConfig,
+    tcp_connected_after_motion: bool | None,
+    tcp_status_after_motion: str | None,
+) -> dict[str, Any]:
+    fields, _ = parse_compute_message(compute_message)
+    maximum_error = None if final_errors is None else final_errors.get("maximum_final_joint_error_rad")
+    strict_pass = None
+    descent_ready = None
+    if maximum_error is not None:
+        strict_pass = bool(float(maximum_error) <= config.final_joint_tolerance_rad)
+        descent_ready = bool(motion_completed and float(maximum_error) <= config.descent_ready_joint_tolerance_rad)
+    return {
+        "schema_version": 1,
+        "created_at_unix_s": float(created_at_unix_s),
+        "updated_at_unix_s": time.time(),
+        "stage": "MVP-4B-PREGRASP",
+        "snapshot_state": snapshot_state,
+        "object_pose_base": object_pose_base,
+        "pregrasp_pose_base": pregrasp_pose_base,
+        "frozen_target_rad": frozen_target_rad,
+        "joint_names": list(ARM_JOINT_NAMES),
+        "solution_type": fields.get("solution_type"),
+        "selected_offset_m": fields.get("offset_m"),
+        "position_error_m": None if fields.get("position_error_m") is None else optional_float(fields.get("position_error_m")),
+        "approach_error_deg": None if fields.get("approach_error_deg") is None else optional_float(fields.get("approach_error_deg")),
+        "compute_response_message": compute_message,
+        "compute_pregrasp_success": bool(compute_pregrasp_success),
+        "pregrasp_valid": bool(pregrasp_valid),
+        "pregrasp_status": str(pregrasp_status),
+        "hardware_command_sent": bool(hardware_command_sent),
+        "execute_response_message": execute_response_message,
+        "motion_completed": motion_completed,
+        "final_joint_positions_rad": final_joint_positions_rad,
+        "final_joint_error_rad": None if final_errors is None else final_errors.get("final_joint_error_rad"),
+        "maximum_final_joint_error_rad": maximum_error,
+        "strict_final_joint_tolerance_rad": float(config.final_joint_tolerance_rad),
+        "strict_final_tolerance_pass": strict_pass,
+        "descent_ready_joint_tolerance_rad": float(config.descent_ready_joint_tolerance_rad),
+        "pregrasp_reached_for_descent": descent_ready,
+        "tcp_connected_after_motion": tcp_connected_after_motion,
+        "tcp_status_after_motion": tcp_status_after_motion,
+    }
+
+
 def json_print(payload: dict[str, Any]) -> None:
     print(json.dumps(payload, indent=2, ensure_ascii=False, allow_nan=False))
 
@@ -269,6 +344,8 @@ class PregraspMoveNode:
         self.latest_joint_state: StampedJointState | None = None
         self.latest_pregrasp_target: StampedJointState | None = None
         self.latest_pregrasp_pose: PoseStamped | None = None
+        self.latest_object_pose: PoseStamped | None = None
+        self.latest_object_pose_time = 0.0
         self.latest_pregrasp_target_time = 0.0
         self.pregrasp_valid = False
         self.pregrasp_status = ""
@@ -278,6 +355,7 @@ class PregraspMoveNode:
         self.node.create_subscription(JointState, "/mvp/joint_states", self._joint_state_cb, 10)
         self.node.create_subscription(JointState, "/mvp/pregrasp_joint_target", self._pregrasp_target_cb, 10)
         self.node.create_subscription(PoseStamped, "/mvp/pregrasp_pose", self._pregrasp_pose_cb, 10)
+        self.node.create_subscription(PoseStamped, "/object_pose_base", self._object_pose_cb, 10)
         self.node.create_subscription(Bool, "/mvp/pregrasp_valid", self._pregrasp_valid_cb, 10)
         self.node.create_subscription(String, "/mvp/pregrasp_status", self._pregrasp_status_cb, 10)
         self.node.create_subscription(Bool, "/mvp/tcp_connected", self._tcp_connected_cb, 10)
@@ -303,6 +381,10 @@ class PregraspMoveNode:
 
     def _pregrasp_pose_cb(self, msg: Any) -> None:
         self.latest_pregrasp_pose = msg
+
+    def _object_pose_cb(self, msg: Any) -> None:
+        self.latest_object_pose = msg
+        self.latest_object_pose_time = time.monotonic()
 
     def _pregrasp_valid_cb(self, msg: Any) -> None:
         self.pregrasp_valid = bool(msg.data)
@@ -421,6 +503,13 @@ def run(args: argparse.Namespace) -> int:
             return 3
         assert mover.latest_joint_state is not None
         current = [float(value) for value in mover.latest_joint_state.positions_rad]
+        if not mover.spin_until(
+            lambda: mover.latest_object_pose is not None
+            and time.monotonic() - mover.latest_object_pose_time <= config.pregrasp_target_max_age_s,
+            config.pregrasp_target_max_age_s,
+        ):
+            json_print({"success": False, "reason": "object_pose_unavailable_or_stale"})
+            return 4
 
         compute_started = time.monotonic()
         compute_success, compute_message, _ = mover.call_trigger(mover.compute_client, 10.0)
@@ -431,6 +520,7 @@ def run(args: argparse.Namespace) -> int:
         if not mover.spin_until(
             lambda: mover.latest_pregrasp_target is not None
             and mover.latest_pregrasp_target_time >= compute_started
+            and mover.latest_pregrasp_pose is not None
             and time.monotonic() - mover.latest_pregrasp_target.received_monotonic_s <= config.pregrasp_target_max_age_s,
             config.pregrasp_target_max_age_s,
         ):
@@ -451,12 +541,14 @@ def run(args: argparse.Namespace) -> int:
 
         frozen_target = [float(value) for value in target_state.positions_rad]
         joint_limits_valid = target_within_urdf_limits(model, frozen_target)
+        object_pose_base = pose_to_list(mover.latest_object_pose)
+        pregrasp_pose_base = pose_to_list(mover.latest_pregrasp_pose)
         summary = build_plan_summary(
             mode="plan_only" if args.plan_only or not args.execute else "execute",
             current=current,
             target=frozen_target,
             config=config,
-            pregrasp_pose=pose_to_list(mover.latest_pregrasp_pose),
+            pregrasp_pose=pregrasp_pose_base,
             compute_message=compute_message,
             pregrasp_valid=mover.pregrasp_valid,
             pregrasp_status=mover.pregrasp_status,
@@ -465,6 +557,29 @@ def run(args: argparse.Namespace) -> int:
             joint_limits_valid=joint_limits_valid,
             hardware_command_sent=False,
         )
+        created_at_unix_s = time.time()
+        planned_snapshot = make_pregrasp_snapshot(
+            snapshot_state="planned",
+            created_at_unix_s=created_at_unix_s,
+            object_pose_base=object_pose_base,
+            pregrasp_pose_base=pregrasp_pose_base,
+            frozen_target_rad=frozen_target,
+            compute_message=compute_message,
+            compute_pregrasp_success=True,
+            pregrasp_valid=mover.pregrasp_valid,
+            pregrasp_status=mover.pregrasp_status,
+            hardware_command_sent=False,
+            execute_response_message=None,
+            motion_completed=None,
+            final_joint_positions_rad=None,
+            final_errors=None,
+            config=config,
+            tcp_connected_after_motion=None,
+            tcp_status_after_motion=None,
+        )
+        atomic_write_json(SNAPSHOT_PATH, planned_snapshot)
+        summary["snapshot_path"] = str(SNAPSHOT_PATH.relative_to(PROJECT_ROOT))
+        summary["snapshot_state"] = "planned"
         if args.plan_only or not args.execute:
             json_print(summary)
             return 0
@@ -487,6 +602,7 @@ def run(args: argparse.Namespace) -> int:
             return 9
 
         mover.publish_frozen_target_once(frozen_target)
+        execute_started = time.monotonic()
         execute_success, execute_message, _ = mover.call_trigger(
             mover.execute_client,
             config.execute_service_timeout_s,
@@ -495,31 +611,135 @@ def run(args: argparse.Namespace) -> int:
             summary["success"] = False
             summary["reason"] = f"motion_result_unknown: {execute_message}" if "timeout" in execute_message else execute_message
             summary["hardware_command_sent"] = True
+            atomic_write_json(
+                SNAPSHOT_PATH,
+                make_pregrasp_snapshot(
+                    snapshot_state="motion_failed",
+                    created_at_unix_s=created_at_unix_s,
+                    object_pose_base=object_pose_base,
+                    pregrasp_pose_base=pregrasp_pose_base,
+                    frozen_target_rad=frozen_target,
+                    compute_message=compute_message,
+                    compute_pregrasp_success=True,
+                    pregrasp_valid=mover.pregrasp_valid,
+                    pregrasp_status=mover.pregrasp_status,
+                    hardware_command_sent=True,
+                    execute_response_message=execute_message,
+                    motion_completed=False,
+                    final_joint_positions_rad=None,
+                    final_errors=None,
+                    config=config,
+                    tcp_connected_after_motion=mover.tcp_connected,
+                    tcp_status_after_motion=mover.tcp_status,
+                ),
+            )
             json_print(summary)
             return 10
 
-        mover.spin_until(
+        final_state_fresh = mover.spin_until(
             lambda: validate_fresh_joint_state(
                 mover.latest_joint_state,
                 now_monotonic_s=time.monotonic(),
                 max_age_s=config.joint_state_max_age_s,
-            )[0],
+            )[0]
+            and mover.latest_joint_state is not None
+            and mover.latest_joint_state.received_monotonic_s >= execute_started,
             3.0,
         )
-        final = current if mover.latest_joint_state is None else [float(value) for value in mover.latest_joint_state.positions_rad]
+        if not final_state_fresh or mover.latest_joint_state is None:
+            summary.update(
+                {
+                    "success": False,
+                    "reason": "final_joint_state_unavailable",
+                    "execute_response_message": execute_message,
+                    "hardware_command_sent": True,
+                }
+            )
+            atomic_write_json(
+                SNAPSHOT_PATH,
+                make_pregrasp_snapshot(
+                    snapshot_state="motion_failed",
+                    created_at_unix_s=created_at_unix_s,
+                    object_pose_base=object_pose_base,
+                    pregrasp_pose_base=pregrasp_pose_base,
+                    frozen_target_rad=frozen_target,
+                    compute_message=compute_message,
+                    compute_pregrasp_success=True,
+                    pregrasp_valid=mover.pregrasp_valid,
+                    pregrasp_status=mover.pregrasp_status,
+                    hardware_command_sent=True,
+                    execute_response_message=execute_message,
+                    motion_completed=False,
+                    final_joint_positions_rad=None,
+                    final_errors=None,
+                    config=config,
+                    tcp_connected_after_motion=mover.tcp_connected,
+                    tcp_status_after_motion=mover.tcp_status,
+                ),
+            )
+            json_print(summary)
+            return 11
+        final = [float(value) for value in mover.latest_joint_state.positions_rad]
         final_errors = final_joint_error(final, frozen_target, config.final_joint_tolerance_rad)
+        maximum_final_error = float(final_errors["maximum_final_joint_error_rad"])
+        motion_completed = bool(execute_success and execute_message == "motion_completed")
+        strict_pass = bool(maximum_final_error <= config.final_joint_tolerance_rad)
+        descent_ready = bool(
+            motion_completed
+            and maximum_final_error <= config.descent_ready_joint_tolerance_rad
+        )
+        snapshot_state = (
+            "executed_descent_ready"
+            if descent_ready
+            else ("executed_not_descent_ready" if motion_completed else "motion_failed")
+        )
+        atomic_write_json(
+            SNAPSHOT_PATH,
+            make_pregrasp_snapshot(
+                snapshot_state=snapshot_state,
+                created_at_unix_s=created_at_unix_s,
+                object_pose_base=object_pose_base,
+                pregrasp_pose_base=pregrasp_pose_base,
+                frozen_target_rad=frozen_target,
+                compute_message=compute_message,
+                compute_pregrasp_success=True,
+                pregrasp_valid=mover.pregrasp_valid,
+                pregrasp_status=mover.pregrasp_status,
+                hardware_command_sent=True,
+                execute_response_message=execute_message,
+                motion_completed=motion_completed,
+                final_joint_positions_rad=final,
+                final_errors=final_errors,
+                config=config,
+                tcp_connected_after_motion=mover.tcp_connected,
+                tcp_status_after_motion=mover.tcp_status,
+            ),
+        )
         summary.update(
             {
-                "success": bool(final_errors["final_target_reached"]),
-                "reason": "ok" if final_errors["final_target_reached"] else "final_joint_tolerance_failed",
+                "success": descent_ready,
+                "reason": "ok"
+                if strict_pass
+                else (
+                    "pregrasp_reached_with_stage_tolerance"
+                    if descent_ready
+                    else "pregrasp_not_reached_for_descent"
+                ),
                 "execute_response_message": execute_message,
                 "hardware_command_sent": True,
                 "final_joint_positions_rad": final,
                 **final_errors,
+                "strict_final_joint_tolerance_rad": float(config.final_joint_tolerance_rad),
+                "strict_final_tolerance_pass": strict_pass,
+                "descent_ready_joint_tolerance_rad": float(config.descent_ready_joint_tolerance_rad),
+                "pregrasp_reached_for_descent": descent_ready,
+                "snapshot_state": snapshot_state,
+                "tcp_connected_after_motion": mover.tcp_connected,
+                "tcp_status_after_motion": mover.tcp_status,
             }
         )
         json_print(summary)
-        return 0 if summary["success"] else 11
+        return 0 if summary["success"] else 12
     finally:
         mover.destroy()
         if rclpy.ok():

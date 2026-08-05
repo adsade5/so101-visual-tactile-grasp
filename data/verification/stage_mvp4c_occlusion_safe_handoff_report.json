@@ -1,0 +1,284 @@
+{
+  "stage": "MVP-4C-OCCLUSION-SAFE-SNAPSHOT-HANDOFF-FIX",
+  "root_cause": "live object reacquisition is invalid after expected gripper occlusion",
+  "normal_descent_source": "saved_snapshot",
+  "live_object_visibility_required_during_descent": false,
+  "compute_pregrasp_called_during_descent": false,
+  "snapshot_path": "data/runtime/mvp_last_pregrasp_snapshot.json",
+  "snapshot_max_age_s": 300.0,
+  "snapshot_atomic_write": true,
+  "snapshot_states": [
+    "planned",
+    "executed_descent_ready",
+    "executed_not_descent_ready",
+    "motion_failed"
+  ],
+  "snapshot_requires_motion_completed": true,
+  "snapshot_requires_descent_ready": true,
+  "snapshot_requires_current_joint_match": true,
+  "snapshot_current_joint_tolerance_rad": 0.1,
+  "strict_final_joint_tolerance_rad": 0.035,
+  "descent_ready_joint_tolerance_rad": 0.1,
+  "real_pregrasp_max_error_rad": 0.04149463936181448,
+  "real_pregrasp_strict_pass": false,
+  "real_pregrasp_descent_ready": true,
+  "descent_waypoints_modified": false,
+  "descent_limits_modified": false,
+  "ik_algorithm_modified": false,
+  "camera_algorithm_modified": false,
+  "workspace_transform_modified": false,
+  "tcp_architecture_modified": false,
+  "gripper_behavior_modified": false,
+  "offline_test_cases": [
+    {
+      "name": "strict_tolerance_remains_0p035",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "descent_ready_tolerance_is_0p10",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "real_error_0p041494_fails_strict",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "real_error_0p041494_passes_descent_ready",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "over_0p10_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "motion_completed_required",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "snapshot_written_after_pregrasp_compute",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "snapshot_updated_after_pregrasp_motion",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "snapshot_atomic_write",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "snapshot_state_planned",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "snapshot_state_executed_descent_ready",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "snapshot_has_five_joint_names",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "snapshot_excludes_gripper",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "snapshot_values_finite",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "descent_does_not_subscribe_object_pose",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "descent_does_not_require_object_pose_base",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "descent_does_not_call_compute_pregrasp",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "stale_live_object_pose_does_not_block_snapshot_mode",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "missing_live_object_pose_does_not_block_snapshot_mode",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "snapshot_missing_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "snapshot_invalid_json_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "snapshot_stale_over_300s_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "snapshot_not_executed_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "snapshot_not_descent_ready_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "snapshot_wrong_joint_order_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "snapshot_joint_limits_checked",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "current_joint_state_stale_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "current_within_0p10_accepted",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "current_over_0p10_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "exactly_three_waypoints",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "snapshot_pose_used_for_waypoints",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "waypoint_xy_unchanged",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "waypoint_z_drop_1_2_3cm",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "all_waypoints_planned_before_execute",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "waypoint_joint_delta_limit_remains_0p25",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "plan_only_no_publish",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "plan_only_no_execute",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "execute_confirmation_unchanged",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "each_waypoint_published_once",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "each_waypoint_executed_once",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "failure_stops_remaining_waypoints",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_motion_retry",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "gripper_hold_unchanged",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "single_tcp_client_unchanged",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_stop_service",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_com_port_open",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_goal_position_write",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_physical_motion",
+      "passed": true,
+      "details": {}
+    }
+  ],
+  "offline_tests_passed": true,
+  "offline_test_count": 48,
+  "ros2_build_result": "PASS",
+  "opened_com_ports": false,
+  "tcp_started": false,
+  "hardware_bridge_started": false,
+  "goal_position_written": false,
+  "physical_motion_observed": false,
+  "manual_acceptance_document": "docs/MVP4C_OCCLUSION_SAFE_HANDOFF_MANUAL_ACCEPTANCE.md",
+  "final_status": "READY_FOR_MANUAL_OCCLUSION_SAFE_DESCENT_RETEST"
+}
