@@ -8,9 +8,10 @@
   <buildtool_depend>ament_python</buildtool_depend>
   <exec_depend>launch</exec_depend>
   <exec_depend>launch_ros</exec_depend>
+  <exec_depend>so101_frame_transform</exec_depend>
   <exec_depend>so101_mvp_control</exec_depend>
+  <exec_depend>so101_object_perception</exec_depend>
   <export>
     <build_type>ament_python</build_type>
   </export>
 </package>
-

@@ -20,6 +20,7 @@ setup(
                 "launch/mvp_skeleton.launch.py",
                 "launch/mvp_hardware_bridge_read_only.launch.py",
                 "launch/mvp_hardware_bridge_motion_enabled.launch.py",
+                "launch/mvp_pregrasp_preview.launch.py",
             ],
         ),
     ],

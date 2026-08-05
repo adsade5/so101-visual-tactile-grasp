@@ -25,6 +25,7 @@ setup(
         "console_scripts": [
             "mvp_grasp_controller_node = so101_mvp_control.mvp_grasp_controller_node:main",
             "mvp_hardware_bridge_node = so101_mvp_control.mvp_hardware_bridge_node:main",
+            "mvp_pregrasp_planner_node = so101_mvp_control.mvp_pregrasp_planner_node:main",
         ],
     },
 )

@@ -1,0 +1,11 @@
+mvp_pregrasp_planner_node:
+  ros__parameters:
+    object_pose_topic: /object_pose_base
+    base_frame: base_link
+    max_object_pose_age_s: 1.0
+    pregrasp_height_m: 0.08
+    use_joint_state_seed: true
+    joint_state_topic: /mvp/joint_states
+    max_joint_state_age_s: 1.0
+    position_tolerance_m: 0.002
+    approach_tolerance_deg: 5.0
