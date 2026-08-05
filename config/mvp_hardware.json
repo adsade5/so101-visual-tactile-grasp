@@ -14,5 +14,6 @@
   "first_test_joint": "wrist_roll",
   "final_position_tolerance_deg": 1.5,
   "maximum_tracking_error_deg": 8.0,
-  "motion_timeout_s": 5.0
+  "motion_timeout_s": 5.0,
+  "gripper_only_motion_duration_s": 2.0
 }

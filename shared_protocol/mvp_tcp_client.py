@@ -46,7 +46,7 @@ class MvpTcpClient:
         *,
         connect_timeout_s: float = 2.0,
         state_request_timeout_s: float = 2.0,
-        motion_request_timeout_s: float = 15.0,
+        motion_request_timeout_s: float = 120.0,
         request_timeout_s: float | None = None,
     ) -> None:
         if timeout_s is not None:
@@ -149,6 +149,7 @@ class MvpTcpClient:
         joint_order: list[int],
         *,
         confirm: str = "MVP_MOVE",
+        gripper_target_pos: float | None = None,
     ) -> dict[str, Any]:
         payload = {
             "command": "move_joints_sequential",
@@ -157,6 +158,8 @@ class MvpTcpClient:
             "joint_order": joint_order,
             "confirm": confirm,
         }
+        if gripper_target_pos is not None:
+            payload["gripper_target_pos"] = float(gripper_target_pos)
         with self._request_lock:
             try:
                 return self._request_once(payload, self.motion_request_timeout_s)
@@ -174,6 +177,7 @@ class MvpTcpClient:
                 float(payload["speed_rad_s"]),
                 [int(value) for value in payload["joint_order"]],
                 confirm=str(payload.get("confirm", "MVP_MOVE")),
+                gripper_target_pos=payload.get("gripper_target_pos"),
             )
         return self.get_state()
 

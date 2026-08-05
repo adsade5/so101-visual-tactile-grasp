@@ -47,6 +47,7 @@ class HardwareBackend(Protocol):
         target_rad: list[float],
         speed_rad_s: float,
         joint_order: list[int],
+        gripper_target_pos: float | None = None,
     ) -> dict[str, Any]: ...
 
     def stop(self) -> dict[str, Any]: ...
@@ -131,8 +132,9 @@ class ReadOnlyFeetechBackend:
         target_rad: list[float],
         speed_rad_s: float,
         joint_order: list[int],
+        gripper_target_pos: float | None = None,
     ) -> dict[str, Any]:
-        del target_rad, speed_rad_s, joint_order
+        del target_rad, speed_rad_s, joint_order, gripper_target_pos
         return response(False, "hardware_motion_disabled")
 
     def stop(self) -> dict[str, Any]:
@@ -202,6 +204,7 @@ class MotionFeetechBackend(ReadOnlyFeetechBackend):
         target_rad: list[float],
         speed_rad_s: float,
         joint_order: list[int],
+        gripper_target_pos: float | None = None,
     ) -> dict[str, Any]:
         if self.robot is None:
             return response(False, "backend_not_connected")
@@ -218,17 +221,45 @@ class MotionFeetechBackend(ReadOnlyFeetechBackend):
             for name, value in zip(ARM_JOINT_NAMES, target_rad, strict=True)
         }
         gripper = float(current_state["gripper"])
+        target_gripper = gripper if gripper_target_pos is None else float(gripper_target_pos)
+        if not math.isfinite(target_gripper):
+            return response(False, "invalid_gripper_target_pos")
+        if not self.executor.all_targets_within_calibration(target_positions, target_gripper):
+            return response(False, "gripper_target_out_of_calibration_range")
         self.stop_requested = False
         threshold_rad = math.radians(float(self.executor.config["maximum_tracking_error_deg"]))
         bad_tracking_count = 0
+        gripper_only_duration_s = float(self.executor.config.get("gripper_only_motion_duration_s", 2.0))
+        total_arm_delta = sum(abs(target_positions[name] - positions[name]) for name in ARM_JOINT_NAMES)
+        total_steps = 0
+        for index in joint_order:
+            joint_name = ARM_JOINT_NAMES[index]
+            distance = abs(target_positions[joint_name] - positions[joint_name])
+            if distance > 1.0e-6:
+                total_steps += max(1, int(math.ceil(distance / (speed_rad_s / 20.0))))
+        if total_arm_delta <= 1.0e-9 and abs(target_gripper - gripper) > 1.0e-9:
+            total_steps = max(1, int(math.ceil(gripper_only_duration_s * 20.0)))
+            joint_order = [0]
+        gripper_step_index = 0
         for index in joint_order:
             joint_name = ARM_JOINT_NAMES[index]
             target = target_positions[joint_name]
-            while abs(positions[joint_name] - target) > 1.0e-6:
+            while abs(positions[joint_name] - target) > 1.0e-6 or (
+                total_arm_delta <= 1.0e-9
+                and abs(target_gripper - gripper) > 1.0e-9
+                and gripper_step_index < total_steps
+            ):
                 delta = target - positions[joint_name]
                 step = math.copysign(min(abs(delta), speed_rad_s / 20.0), delta)
                 positions[joint_name] += step
+                gripper_step_index += 1
+                gripper_fraction = min(1.0, gripper_step_index / max(total_steps, 1))
+                gripper_command = gripper + gripper_fraction * (target_gripper - gripper)
+                if abs(positions[joint_name] - target) <= 1.0e-6:
+                    positions[joint_name] = target
                 action = build_lerobot_action(positions, gripper)
+                if gripper_target_pos is not None:
+                    action = build_lerobot_action(positions, gripper_command)
                 self._log_action_keys_once(action)
                 self.robot.send_action(action)
                 self.goal_position_write_count += 1
@@ -433,6 +464,17 @@ class MvpTcpServer:
         if speed > MAX_SPEED_RAD_S:
             return response(False, "invalid_speed_rad_s")
 
+        gripper_target_pos = None
+        if "gripper_target_pos" in request:
+            try:
+                gripper_target_pos = float(request.get("gripper_target_pos"))
+            except (TypeError, ValueError):
+                return response(False, "invalid_gripper_target_pos")
+            if not math.isfinite(gripper_target_pos):
+                return response(False, "invalid_gripper_target_pos")
+            if not 0.0 <= gripper_target_pos <= 100.0:
+                return response(False, "gripper_target_out_of_calibration_range")
+
         order = request.get("joint_order")
         if not isinstance(order, list):
             return response(False, "invalid_joint_order")
@@ -449,12 +491,22 @@ class MvpTcpServer:
             for name, value in targets.items():
                 if not executor.target_within_calibration(name, value):
                     return response(False, "calibration_out_of_range")
+            if gripper_target_pos is not None and not executor.all_targets_within_calibration(
+                targets,
+                gripper_target_pos,
+            ):
+                return response(False, "gripper_target_out_of_calibration_range")
 
         print(f"MOTION_INPUT_KEYS logical_joint_names={list(ARM_JOINT_NAMES)}", flush=True)
         print(f"MOTION_STARTED speed_rad_s={speed}", flush=True)
         started = time.monotonic()
         try:
-            result = self.backend.move_joints_sequential(target_rad, speed, joint_order)
+            result = self.backend.move_joints_sequential(
+                target_rad,
+                speed,
+                joint_order,
+                gripper_target_pos,
+            )
         except Exception as exc:
             return self._application_error(client_id, exc, "server_motion_error")
         duration = time.monotonic() - started

@@ -1,0 +1,14 @@
+{
+  "stage": "MVP-4C-MANUAL-ACCEPTANCE",
+  "source": "user_manual_acceptance",
+  "three_waypoint_descent_completed": true,
+  "overall_downward_motion_observed": true,
+  "gripper_downward_orientation_observed": true,
+  "gripper_motion_observed": false,
+  "abnormal_motion_observed": false,
+  "tcp_problem_observed": false,
+  "saved_precise_joint_errors": null,
+  "saved_fk_descent_m": null,
+  "saved_tcp_log_values": null,
+  "final_status": "PASS"
+}

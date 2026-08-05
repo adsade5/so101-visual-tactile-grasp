@@ -1,0 +1,40 @@
+total_descent_m: 0.07
+descent_waypoint_drop_m:
+  - 0.01
+  - 0.02
+  - 0.03
+  - 0.04
+  - 0.05
+  - 0.06
+  - 0.07
+pregrasp_max_abs_joint_delta_rad: 1.00
+max_abs_joint_delta_per_descent_waypoint_rad: 0.25
+position_tolerance_m: 0.008
+approach_tolerance_deg: 5.0
+max_xy_error_from_waypoint_m: 0.010
+minimum_actual_z_drop_per_waypoint_m: 0.004
+minimum_total_actual_z_drop_m: 0.050
+arm_final_joint_tolerance_rad: 0.035
+speed_rad_s: 0.06
+max_speed_rad_s: 0.08
+execute_service_timeout_s: 120.0
+inter_waypoint_hold_s: 0.3
+joint_state_max_age_s: 1.0
+object_pose_max_age_s: 2.0
+pregrasp_target_max_age_s: 2.0
+gripper_state_max_age_s: 1.0
+gripper_target_max_age_s: 2.0
+gripper_open_target_pos: null
+gripper_open_target_verified: false
+gripper_close_target_source: initial_gripper_position
+gripper_close_hold_s: 1.0
+gripper_interpolation_enabled: true
+gripper_only_motion_duration_s: 2.0
+gripper_open_ramp_fraction:
+  - 0.15
+  - 0.30
+  - 0.45
+  - 0.60
+  - 0.75
+  - 0.90
+  - 1.00

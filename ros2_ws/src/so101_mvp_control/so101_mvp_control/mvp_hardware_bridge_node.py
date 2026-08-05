@@ -31,16 +31,20 @@ class MvpHardwareBridgeNode(Node):
         self.declare_parameter("state_poll_rate_hz", 5.0)
         self.declare_parameter("hardware_motion_enabled", False)
         self.declare_parameter("default_speed_rad_s", 0.06)
+        self.declare_parameter("gripper_target_max_age_s", 2.0)
 
         self.host = str(self.get_parameter("host").value)
         self.port = int(self.get_parameter("port").value)
         self.poll_rate_hz = float(self.get_parameter("state_poll_rate_hz").value)
         self.hardware_motion_enabled = bool(self.get_parameter("hardware_motion_enabled").value)
         self.default_speed_rad_s = float(self.get_parameter("default_speed_rad_s").value)
+        self.gripper_target_max_age_s = float(self.get_parameter("gripper_target_max_age_s").value)
 
         self._client: MvpTcpClient | None = None
         self.last_valid_target: list[float] | None = None
         self.last_target_stamp = None
+        self.last_valid_gripper_target: float | None = None
+        self.last_gripper_target_monotonic_s: float | None = None
         self.tcp_connected = False
         self.tcp_status = "disconnected"
         self.last_tcp_warning_time = 0.0
@@ -51,6 +55,7 @@ class MvpHardwareBridgeNode(Node):
         self.tcp_connected_pub = self.create_publisher(Bool, "/mvp/tcp_connected", 10)
         self.tcp_status_pub = self.create_publisher(String, "/mvp/tcp_status", 10)
         self.create_subscription(JointState, "/mvp/joint_target", self.handle_joint_target, 10)
+        self.create_subscription(Float64, "/mvp/gripper_target", self.handle_gripper_target, 10)
         self.create_service(Trigger, "/mvp/execute_target", self.handle_execute_target)
         timer_period = 1.0 / max(self.poll_rate_hz, 0.1)
         self.timer = self.create_timer(timer_period, self.poll_state_once)
@@ -160,6 +165,16 @@ class MvpHardwareBridgeNode(Node):
         self.last_valid_target = target
         self.last_target_stamp = msg.header.stamp
 
+    def handle_gripper_target(self, msg: Float64) -> None:
+        target = float(msg.data)
+        if not math.isfinite(target):
+            self.get_logger().warning("Rejected /mvp/gripper_target: non-finite target")
+            self.last_valid_gripper_target = None
+            self.last_gripper_target_monotonic_s = None
+            return
+        self.last_valid_gripper_target = target
+        self.last_gripper_target_monotonic_s = self.get_clock().now().nanoseconds / 1.0e9
+
     def _validate_joint_target(self, msg: JointState) -> list[float] | None:
         if len(msg.position) < len(ARM_JOINT_NAMES):
             self.get_logger().warning("Rejected /mvp/joint_target: not enough positions")
@@ -179,6 +194,14 @@ class MvpHardwareBridgeNode(Node):
             self.get_logger().warning("Rejected /mvp/joint_target: non-finite target")
             return None
         return values
+
+    def fresh_gripper_target(self) -> float | None:
+        if self.last_valid_gripper_target is None or self.last_gripper_target_monotonic_s is None:
+            return None
+        now = self.get_clock().now().nanoseconds / 1.0e9
+        if now - self.last_gripper_target_monotonic_s > self.gripper_target_max_age_s:
+            return None
+        return float(self.last_valid_gripper_target)
 
     def handle_execute_target(
         self,
@@ -201,6 +224,7 @@ class MvpHardwareBridgeNode(Node):
                 self.default_speed_rad_s,
                 list(range(len(ARM_JOINT_NAMES))),
                 confirm="MVP_MOVE",
+                gripper_target_pos=self.fresh_gripper_target(),
             )
         except Exception as exc:
             self.get_logger().warning(f"TCP move_joints_sequential failed: {type(exc).__name__}: {exc}")

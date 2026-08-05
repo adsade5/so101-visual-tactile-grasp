@@ -585,7 +585,7 @@ def plan_segmented_descent(
         return DescentPlan(False, "not_at_pregrasp", **base_plan_args)
 
     waypoints_xyz = build_waypoint_xyz(frozen.pregrasp_pose_base, config.waypoint_drop_m)
-    if len(waypoints_xyz) != 3:
+    if len(waypoints_xyz) != len(config.waypoint_drop_m):
         return DescentPlan(False, "invalid_waypoint_count", **base_plan_args)
 
     previous_joint = list(current_joint_positions_rad)
@@ -655,6 +655,7 @@ def plan_segmented_descent(
             False,
             "total_z_drop_too_small",
             waypoints=planned,
+            total_requested_z_drop_m=max(config.waypoint_drop_m),
             total_actual_z_drop_m=total_actual_drop,
             **base_plan_args,
         )
@@ -662,6 +663,7 @@ def plan_segmented_descent(
         True,
         "segmented_descent_ready",
         waypoints=planned,
+        total_requested_z_drop_m=max(config.waypoint_drop_m),
         total_actual_z_drop_m=total_actual_drop,
         **base_plan_args,
     )

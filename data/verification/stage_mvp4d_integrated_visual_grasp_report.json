@@ -1,0 +1,379 @@
+{
+  "stage": "MVP-4D-INTEGRATED-VISUAL-GRASP",
+  "mvp4c_manual_acceptance_recorded": true,
+  "integrated_script": "scripts/mvp_visual_grasp.py",
+  "user_confirmation_phrase": "VISUAL_GRASP",
+  "gripper_logical_key": "gripper.pos",
+  "gripper_hardware_id": 6,
+  "wrist_roll_hardware_id": 5,
+  "motor_mapping_verified": true,
+  "motor_id_5_name": "wrist_roll",
+  "motor_id_6_name": "gripper",
+  "gripper_close_target_source": "initial_gripper_position",
+  "gripper_open_target_source": "unverified_config_required",
+  "gripper_open_target_value": null,
+  "gripper_open_target_verified": false,
+  "total_descent_m": 0.07,
+  "descent_waypoint_count": 7,
+  "descent_waypoint_drop_m": [
+    0.01,
+    0.02,
+    0.03,
+    0.04,
+    0.05,
+    0.06,
+    0.07
+  ],
+  "gripper_open_ramp_fraction": [
+    0.15,
+    0.3,
+    0.45,
+    0.6,
+    0.75,
+    0.9,
+    1.0
+  ],
+  "pregrasp_execute_count_expected": 1,
+  "descent_execute_count_expected": 7,
+  "close_execute_count_expected": 1,
+  "total_execute_count_expected": 9,
+  "live_visual_used_before_motion": true,
+  "live_visual_required_after_motion": false,
+  "all_motion_planned_before_execute": true,
+  "arm_motion_mode": "sequential_joint_motion",
+  "gripper_motion_mode": "concurrent_linear_interpolation",
+  "gripper_only_close_supported": true,
+  "gripper_only_close_duration_s": 2.0,
+  "ik_algorithm_modified": false,
+  "camera_algorithm_modified": false,
+  "workspace_transform_modified": false,
+  "tcp_client_count": 1,
+  "motion_retry_after_send": false,
+  "lift_added": false,
+  "return_added": false,
+  "grasp_success_claimed": false,
+  "offline_test_cases": [
+    {
+      "name": "motor_id5_not_assumed_gripper",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "gripper_logical_key_is_gripper_pos",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "expected_gripper_id_mapping_checked",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "initial_gripper_position_used_as_close_target",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "unverified_open_target_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "null_open_target_rejected_for_execute",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "verified_open_target_accepted",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "open_target_in_calibration_range",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "open_target_out_of_range_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "exactly_seven_descent_waypoints",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "waypoint_drop_1_to_7cm",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "waypoint_xy_unchanged",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "all_waypoints_planned_before_motion",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "full_five_arm_joint_targets_used",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_hardcoded_only_motor2_motor3",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "pregrasp_limit_remains_1p0",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "descent_waypoint_limit_remains_0p25",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "gripper_ramp_has_seven_values",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "gripper_ramp_monotonic",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "gripper_ramp_ends_at_open_target",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "close_target_equals_initial_gripper_position",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "plan_only_no_arm_publish",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "plan_only_no_gripper_publish",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "plan_only_no_execute",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "wrong_confirmation_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "live_visual_only_before_motion",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_live_visual_required_after_motion",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "pregrasp_executed_once",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "seven_descent_execute_calls",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "final_close_executed_once",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "total_nine_execute_calls",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "each_arm_target_published_once",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "each_gripper_target_published_once",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "optional_gripper_target_backward_compatible",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "absent_gripper_target_holds_initial",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "concurrent_gripper_interpolation",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "arm_motion_remains_sequential",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "gripper_only_close_supported",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "gripper_only_close_duration_2s",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "full_six_motor_action_written",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_second_tcp_client",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_motion_retry",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "failure_stops_remaining_steps",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_lift_command",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_return_command",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_grasp_success_claim_without_evidence",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "speed_remains_0p06",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "max_speed_remains_0p08",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "control_frequency_remains_20hz",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_stop_service",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_com_port_open",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_real_goal_position_write",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_physical_motion",
+      "passed": true,
+      "details": {}
+    }
+  ],
+  "offline_tests_passed": true,
+  "offline_test_count": 53,
+  "legacy_regression_tests_passed": true,
+  "legacy_regression_details": [
+    {
+      "returncode": 0,
+      "stdout_tail": [
+        "PASS no_com_port_open",
+        "PASS no_goal_position_write_to_real_robot",
+        "PASS no_physical_motion",
+        "offline_tests_passed=35/35",
+        "report=E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\stage_mvp4b_pregrasp_move_report.json"
+      ],
+      "stderr_tail": []
+    },
+    {
+      "returncode": 0,
+      "stdout_tail": [
+        "PASS no_com_port_open",
+        "PASS no_goal_position_write_to_real_robot",
+        "PASS no_physical_motion",
+        "offline_tests_passed=48/48",
+        "report=E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\stage_mvp4c_segmented_descent_report.json"
+      ],
+      "stderr_tail": []
+    },
+    {
+      "returncode": 0,
+      "stdout_tail": [
+        "PASS no_com_port_open",
+        "PASS no_goal_position_write",
+        "PASS no_physical_motion",
+        "offline_tests_passed=48/48",
+        "report=E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\stage_mvp4c_occlusion_safe_handoff_report.json"
+      ],
+      "stderr_tail": []
+    },
+    {
+      "returncode": 0,
+      "stdout_tail": [
+        "PASS no_com_port_open",
+        "PASS no_goal_position_write",
+        "PASS no_physical_motion",
+        "offline_tests_passed=23/23",
+        "report=E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\stage_mvp4c_snapshot_optional_float_hotfix_report.json"
+      ],
+      "stderr_tail": []
+    }
+  ],
+  "ros2_build_result": "PASS",
+  "opened_com_ports": false,
+  "tcp_started": false,
+  "hardware_bridge_started": false,
+  "goal_position_written": false,
+  "physical_motion_observed": false,
+  "manual_acceptance_document": "docs/MVP4D_INTEGRATED_VISUAL_GRASP_MANUAL_ACCEPTANCE.md",
+  "final_status": "READY_FOR_MANUAL_GRIPPER_TARGET_SETUP"
+}
