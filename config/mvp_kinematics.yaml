@@ -1,0 +1,26 @@
+kinematics:
+  base_link: base_link
+  tip_link: gripper_frame_link
+  joint_names:
+    - shoulder_pan
+    - shoulder_lift
+    - elbow_flex
+    - wrist_flex
+    - wrist_roll
+
+ik:
+  tool_approach_axis_local: [0.0, 0.0, 1.0]
+  desired_approach_base: [0.0, 0.0, -1.0]
+  position_tolerance_m: 0.002
+  approach_tolerance_deg: 5.0
+  maximum_iterations: 200
+  damping: 0.05
+  maximum_step_rad: 0.10
+  orientation_weight: 0.25
+
+reference_joint_positions_rad:
+  - 0.0
+  - -0.35
+  - 0.35
+  - 1.22
+  - 0.0

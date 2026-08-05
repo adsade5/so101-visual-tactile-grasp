@@ -19,7 +19,6 @@ setup(
     zip_safe=False,
     maintainer="so101_visual_tactile_grasp",
     maintainer_email="maintainer@example.com",
-    description="Minimal SO-101 MVP kinematics skeleton.",
+    description="Simplified offline SO-101 MVP kinematics.",
     license="Apache-2.0",
 )
-

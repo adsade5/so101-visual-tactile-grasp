@@ -2,7 +2,7 @@
 <package format="3">
   <name>so101_mvp_kinematics</name>
   <version>0.1.0</version>
-  <description>Minimal SO-101 MVP kinematics skeleton.</description>
+  <description>Simplified offline SO-101 MVP kinematics.</description>
   <maintainer email="maintainer@example.com">so101_visual_tactile_grasp</maintainer>
   <license>Apache-2.0</license>
   <buildtool_depend>ament_python</buildtool_depend>
@@ -11,4 +11,3 @@
     <build_type>ament_python</build_type>
   </export>
 </package>
-
