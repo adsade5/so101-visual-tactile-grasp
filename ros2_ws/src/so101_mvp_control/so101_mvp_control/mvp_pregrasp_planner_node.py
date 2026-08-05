@@ -1,7 +1,6 @@
 from __future__ import annotations
 
 import json
-import math
 import time
 from pathlib import Path
 
@@ -17,11 +16,16 @@ from .pregrasp_planner import (
     ARM_JOINT_NAMES,
     DEFAULT_APPROACH_TOLERANCE_DEG,
     DEFAULT_POSITION_TOLERANCE_M,
+    DESIRED_APPROACH_BASE,
     JointStateSnapshot,
     PoseSnapshot,
     PregraspPlan,
     compute_pregrasp_plan,
     create_model,
+    fmt_xyz,
+    listf,
+    make_failure_message,
+    make_success_message,
     top_down_quaternion_xyzw,
 )
 
@@ -74,6 +78,12 @@ class MvpPregraspPlannerNode(Node):
         )
 
         self.model = create_model(self.project_root)
+        self.diagnostic_path = (
+            self.project_root
+            / "data"
+            / "verification"
+            / "mvp4a_last_pregrasp_diagnostic.json"
+        )
         self.latest_object_pose: PoseSnapshot | None = None
         self.latest_joint_state: JointStateSnapshot | None = None
         self.current_plan: PregraspPlan | None = None
@@ -173,13 +183,16 @@ class MvpPregraspPlannerNode(Node):
             position_tolerance_m=self.position_tolerance_m,
             approach_tolerance_deg=self.approach_tolerance_deg,
         )
+        self.log_pregrasp_input(plan)
+        self.log_ik_attempts(plan)
+        self.write_last_diagnostic(plan)
         self.current_plan = plan if plan.success else None
 
         if not plan.success:
             self.publish_valid(False)
             self.publish_status(plan.reason)
             response.success = False
-            response.message = plan.reason
+            response.message = make_failure_message(plan)
             return response
 
         self.publish_pregrasp_plan(plan)
@@ -188,14 +201,7 @@ class MvpPregraspPlannerNode(Node):
 
         assert plan.pregrasp_position_m is not None
         response.success = True
-        response.message = (
-            "pregrasp_ready "
-            f"x={plan.pregrasp_position_m[0]:.6f} "
-            f"y={plan.pregrasp_position_m[1]:.6f} "
-            f"z={plan.pregrasp_position_m[2]:.6f} "
-            f"position_error_m={plan.position_error_m:.6f} "
-            f"approach_error_deg={plan.approach_error_deg:.3f}"
-        )
+        response.message = make_success_message(plan)
         return response
 
     def handle_clear_pregrasp(
@@ -238,9 +244,67 @@ class MvpPregraspPlannerNode(Node):
         self.get_logger().info(
             "pregrasp_ready | "
             f"seed_source={plan.seed_source} | "
+            f"attempt_index={plan.selected_attempt_index} | "
             f"position_error_m={plan.position_error_m:.6f} | "
             f"approach_error_deg={plan.approach_error_deg:.3f}"
         )
+
+    def log_pregrasp_input(self, plan: PregraspPlan) -> None:
+        seed_source = "none"
+        first_seed_source = "none"
+        if plan.seeds_attempted:
+            first_seed_source = plan.seeds_attempted[0].source
+            seed_source = "multiseed" if len(plan.seeds_attempted) > 1 else first_seed_source
+        self.get_logger().info(
+            "PREGRASP_INPUT "
+            f"object_frame={self.base_frame} "
+            f"object_xyz_m={fmt_xyz(plan.object_position_m)} "
+            f"pregrasp_xyz_m={fmt_xyz(plan.pregrasp_position_m)} "
+            f"target_radius_xy_m={self.format_optional(plan.target_radius_xy_m, 6)} "
+            f"target_distance_3d_m={self.format_optional(plan.target_distance_3d_m, 6)} "
+            f"approx_max_reach_m={self.format_optional(plan.approx_max_reach_m, 6)} "
+            f"desired_approach={listf(DESIRED_APPROACH_BASE)} "
+            f"seed_source={seed_source} "
+            f"first_seed_source={first_seed_source}"
+        )
+
+    def log_ik_attempts(self, plan: PregraspPlan) -> None:
+        for attempt in plan.attempt_results:
+            self.get_logger().info(
+                "IK_ATTEMPT "
+                f"index={attempt.attempt_index} "
+                f"source={attempt.seed_source} "
+                f"success={str(attempt.solver_success).lower()} "
+                f"reason={attempt.solver_reason} "
+                f"iterations={attempt.iterations} "
+                f"position_error_m={self.format_optional(attempt.position_error_m, 6)} "
+                f"approach_error_deg={self.format_optional(attempt.approach_error_deg, 3)} "
+                f"joint_limit_valid={str(attempt.joint_limit_valid).lower()} "
+                f"final_reason={attempt.final_reason}"
+            )
+
+    def write_last_diagnostic(self, plan: PregraspPlan) -> None:
+        try:
+            self.diagnostic_path.parent.mkdir(parents=True, exist_ok=True)
+            self.diagnostic_path.write_text(
+                json.dumps(
+                    plan.diagnostic_dict(
+                        timestamp_s=self.get_clock().now().nanoseconds * 1.0e-9
+                    ),
+                    indent=2,
+                    ensure_ascii=False,
+                    allow_nan=False,
+                )
+                + "\n",
+                encoding="utf-8",
+            )
+        except OSError as error:
+            self.get_logger().warning(
+                f"Failed to write pregrasp diagnostic: {self.diagnostic_path}: {error}"
+            )
+
+    def format_optional(self, value: float | None, digits: int) -> str:
+        return "null" if value is None else f"{float(value):.{digits}f}"
 
     def publish_valid(self, valid: bool) -> None:
         message = Bool()

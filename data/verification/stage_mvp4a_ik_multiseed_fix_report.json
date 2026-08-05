@@ -1,0 +1,168 @@
+{
+  "stage": "MVP-4A-IK-MULTISEED-FIX",
+  "original_live_error": "ik_failed",
+  "exact_failure_path": "mvp_pregrasp_planner_node.handle_compute_pregrasp -> pregrasp_planner.compute_pregrasp_plan -> so101_mvp_kinematics.ik.solve_ik",
+  "previous_seed_count": 1,
+  "previous_seed_source": "joint_state if fresh by name mapping else reference",
+  "multiseed_enabled": true,
+  "maximum_seed_count": 7,
+  "seed_sources": [
+    "joint_state",
+    "target_yaw",
+    "reference",
+    "target_yaw_plus_15deg",
+    "target_yaw_minus_15deg",
+    "elbow_high",
+    "elbow_low"
+  ],
+  "target_yaw_seed_formula": "shoulder_pan=clamp_to_urdf_limits(atan2(pregrasp_y, pregrasp_x)); remaining joints=[-0.35,0.35,1.22,0.0]",
+  "ik_algorithm_modified": false,
+  "workspace_transform_modified": false,
+  "target_clipping_added": false,
+  "detailed_diagnostics_added": true,
+  "replay_script": "scripts/mvp_pregrasp_replay.py",
+  "offline_test_cases": [
+    {
+      "name": "reference_seed_still_supported",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "target_yaw_seed_created",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "target_yaw_uses_atan2",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "all_seeds_within_limits",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "seed_list_deduplicated",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "seed_count_at_most_7",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "fresh_joint_state_seed_first",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "stale_joint_state_not_used",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "target_yaw_seed_solves_side_target",
+      "passed": true,
+      "details": {
+        "seed_source": "target_yaw"
+      }
+    },
+    {
+      "name": "reference_seed_solves_reference_target",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "fallback_to_later_seed",
+      "passed": true,
+      "details": {
+        "selected_attempt": 2
+      }
+    },
+    {
+      "name": "all_seed_failure_reason",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "object_xyz_in_failure_message",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "pregrasp_xyz_in_failure_message",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "attempt_count_in_failure_message",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "success_reports_seed_source",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "fk_position_validation",
+      "passed": true,
+      "details": {
+        "position_error_m": 0.0010626801989733325
+      }
+    },
+    {
+      "name": "fk_approach_validation",
+      "passed": true,
+      "details": {
+        "approach_error_deg": 0.649012863789351
+      }
+    },
+    {
+      "name": "target_not_clipped",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "workspace_transform_not_modified",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_joint_target_publish",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_execute_service_call",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_tcp_connection",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_com_port_open",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_physical_motion",
+      "passed": true,
+      "details": {}
+    }
+  ],
+  "offline_tests_passed": true,
+  "offline_test_count": 25,
+  "ros2_build_result": "PASS: python -m colcon build --merge-install --packages-select so101_mvp_control so101_mvp_bringup",
+  "opened_com_ports": false,
+  "tcp_started": false,
+  "hardware_bridge_started": false,
+  "goal_position_written": false,
+  "physical_motion_observed": false,
+  "final_status": "READY_FOR_MANUAL_MULTISEED_PREGRASP_RETEST"
+}
