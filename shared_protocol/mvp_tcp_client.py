@@ -150,6 +150,7 @@ class MvpTcpClient:
         *,
         confirm: str = "MVP_MOVE",
         gripper_target_pos: float | None = None,
+        stop_gripper_on_tactile_contact: bool = False,
     ) -> dict[str, Any]:
         payload = {
             "command": "move_joints_sequential",
@@ -160,6 +161,8 @@ class MvpTcpClient:
         }
         if gripper_target_pos is not None:
             payload["gripper_target_pos"] = float(gripper_target_pos)
+        if stop_gripper_on_tactile_contact:
+            payload["stop_gripper_on_tactile_contact"] = True
         with self._request_lock:
             try:
                 return self._request_once(payload, self.motion_request_timeout_s)
@@ -178,6 +181,7 @@ class MvpTcpClient:
                 [int(value) for value in payload["joint_order"]],
                 confirm=str(payload.get("confirm", "MVP_MOVE")),
                 gripper_target_pos=payload.get("gripper_target_pos"),
+                stop_gripper_on_tactile_contact=bool(payload.get("stop_gripper_on_tactile_contact", False)),
             )
         return self.get_state()
 

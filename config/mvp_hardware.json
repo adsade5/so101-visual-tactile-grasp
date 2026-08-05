@@ -15,5 +15,15 @@
   "final_position_tolerance_deg": 1.5,
   "maximum_tracking_error_deg": 8.0,
   "motion_timeout_s": 5.0,
-  "gripper_only_motion_duration_s": 2.0
+  "gripper_only_motion_duration_s": 2.0,
+  "tactile_enabled": true,
+  "tactile_source": "udp_guard_receiver",
+  "tactile_guard_host": "127.0.0.1",
+  "tactile_guard_port": 5006,
+  "tactile_guard_timeout_s": 0.5,
+  "tactile_port_source": "so101_ros2_tactile_guard UDP guard command_port=5006; no committed FlexiTac COM port found",
+  "tactile_contact_on_score": 0.80,
+  "tactile_contact_off_score": 0.20,
+  "tactile_confirm_frames": 3,
+  "tactile_release_frames": 3
 }

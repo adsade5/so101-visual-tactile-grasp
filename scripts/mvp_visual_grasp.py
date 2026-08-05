@@ -9,6 +9,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+import numpy as np
+
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 HARDWARE_CONFIG_PATH = PROJECT_ROOT / "config" / "mvp_hardware.json"
@@ -25,12 +27,21 @@ if str(PROJECT_ROOT / "scripts") not in sys.path:
 
 from mvp_descend_from_pregrasp import (  # noqa: E402
     ARM_JOINT_NAMES,
+    DESIRED_APPROACH_BASE,
     DescentConfig,
     FrozenPregrasp,
+    TOOL_APPROACH_AXIS_LOCAL,
+    build_descent_seeds,
     create_model,
+    estimated_total_duration_s,
+    forward_kinematics,
+    joints_within_limits,
+    listf,
     plan_segmented_descent,
+    solve_ik,
     validate_fresh_joint_state,
 )
+from so101_mvp_kinematics.transforms import normalize_vector, rotation_angle_error  # noqa: E402
 from mvp_move_to_pregrasp import (  # noqa: E402
     MoveConfig,
     SNAPSHOT_PATH,
@@ -72,18 +83,41 @@ class GraspConfig:
     pregrasp_target_max_age_s: float = 2.0
     gripper_state_max_age_s: float = 1.0
     gripper_target_max_age_s: float = 2.0
-    gripper_open_target_pos: float | None = None
-    gripper_open_target_verified: bool = False
+    gripper_open_delta: float = 10.0
     gripper_close_target_source: str = "initial_gripper_position"
     gripper_close_hold_s: float = 1.0
     gripper_interpolation_enabled: bool = True
     gripper_only_motion_duration_s: float = 2.0
     gripper_open_ramp_fraction: tuple[float, ...] = (0.15, 0.30, 0.45, 0.60, 0.75, 0.90, 1.00)
+    tactile_stop_enabled: bool = True
+    tactile_state_max_age_s: float = 0.5
+    tactile_require_clear_before_grasp: bool = True
+    tactile_static_test_timeout_s: float = 30.0
+    lift_enabled: bool = True
+    lift_total_m: float = 0.03
+    lift_waypoint_rise_m: tuple[float, ...] = (0.01, 0.02, 0.03)
+    max_abs_joint_delta_per_lift_waypoint_rad: float = 0.25
+    lift_position_tolerance_m: float = 0.008
+    lift_approach_tolerance_deg: float = 5.0
+    lift_max_xy_error_m: float = 0.010
+    minimum_actual_lift_per_waypoint_m: float = 0.004
+    minimum_total_actual_lift_m: float = 0.020
+    lift_speed_rad_s: float = 0.06
+    inter_lift_waypoint_hold_s: float = 0.3
 
 
 @dataclass(frozen=True)
 class StampedGripperState:
     position: float
+    received_monotonic_s: float
+
+
+@dataclass(frozen=True)
+class StampedTactileState:
+    ready: bool
+    contact_detected: bool
+    contact_score: float
+    status: str
     received_monotonic_s: float
 
 
@@ -144,15 +178,27 @@ def load_grasp_config(path: Path | None = None) -> GraspConfig:
         pregrasp_target_max_age_s=float(values.get("pregrasp_target_max_age_s", 2.0)),
         gripper_state_max_age_s=float(values.get("gripper_state_max_age_s", 1.0)),
         gripper_target_max_age_s=float(values.get("gripper_target_max_age_s", 2.0)),
-        gripper_open_target_pos=None
-        if values.get("gripper_open_target_pos") is None
-        else float(values.get("gripper_open_target_pos")),
-        gripper_open_target_verified=bool(values.get("gripper_open_target_verified", False)),
+        gripper_open_delta=float(values.get("gripper_open_delta", 10.0)),
         gripper_close_target_source=str(values.get("gripper_close_target_source", "initial_gripper_position")),
         gripper_close_hold_s=float(values.get("gripper_close_hold_s", 1.0)),
         gripper_interpolation_enabled=bool(values.get("gripper_interpolation_enabled", True)),
         gripper_only_motion_duration_s=float(values.get("gripper_only_motion_duration_s", 2.0)),
         gripper_open_ramp_fraction=tuple(float(v) for v in values.get("gripper_open_ramp_fraction", [0.15, 0.30, 0.45, 0.60, 0.75, 0.90, 1.00])),
+        tactile_stop_enabled=bool(values.get("tactile_stop_enabled", True)),
+        tactile_state_max_age_s=float(values.get("tactile_state_max_age_s", 0.5)),
+        tactile_require_clear_before_grasp=bool(values.get("tactile_require_clear_before_grasp", True)),
+        tactile_static_test_timeout_s=float(values.get("tactile_static_test_timeout_s", 30.0)),
+        lift_enabled=bool(values.get("lift_enabled", True)),
+        lift_total_m=float(values.get("lift_total_m", 0.03)),
+        lift_waypoint_rise_m=tuple(float(v) for v in values.get("lift_waypoint_rise_m", [0.01, 0.02, 0.03])),
+        max_abs_joint_delta_per_lift_waypoint_rad=float(values.get("max_abs_joint_delta_per_lift_waypoint_rad", 0.25)),
+        lift_position_tolerance_m=float(values.get("lift_position_tolerance_m", 0.008)),
+        lift_approach_tolerance_deg=float(values.get("lift_approach_tolerance_deg", 5.0)),
+        lift_max_xy_error_m=float(values.get("lift_max_xy_error_m", 0.010)),
+        minimum_actual_lift_per_waypoint_m=float(values.get("minimum_actual_lift_per_waypoint_m", 0.004)),
+        minimum_total_actual_lift_m=float(values.get("minimum_total_actual_lift_m", 0.020)),
+        lift_speed_rad_s=float(values.get("lift_speed_rad_s", 0.06)),
+        inter_lift_waypoint_hold_s=float(values.get("inter_lift_waypoint_hold_s", 0.3)),
     )
 
 
@@ -181,29 +227,40 @@ def gripper_target_in_range(value: float | None) -> bool:
     return value is not None and math.isfinite(float(value)) and 0.0 <= float(value) <= 100.0
 
 
-def validate_gripper_open_config(config: GraspConfig) -> tuple[bool, str]:
-    if config.gripper_open_target_pos is None or not config.gripper_open_target_verified:
-        return False, "gripper_open_target_not_configured_or_unverified"
-    if not gripper_target_in_range(config.gripper_open_target_pos):
-        return False, "gripper_target_out_of_calibration_range"
-    return True, "ok"
+def validate_runtime_gripper_targets(
+    initial_gripper_position: float,
+    open_delta: float,
+) -> tuple[bool, str, float | None]:
+    if not gripper_target_in_range(initial_gripper_position):
+        return False, "invalid_initial_gripper_position", None
+    if not math.isfinite(float(open_delta)):
+        return False, "invalid_gripper_open_delta", None
+    open_target = float(initial_gripper_position + open_delta)
+    if not gripper_target_in_range(open_target):
+        return False, "gripper_open_delta_out_of_calibration_range", open_target
+    return True, "ok", open_target
 
 
 def build_gripper_ramp_targets(
     initial_gripper_position: float,
-    open_target: float | None,
+    open_delta: float,
     fractions: tuple[float, ...],
-) -> list[float | None]:
-    if open_target is None:
-        return [None for _ in fractions]
+) -> list[float]:
     return [
-        float(initial_gripper_position + fraction * (float(open_target) - initial_gripper_position))
+        float(initial_gripper_position + fraction * float(open_delta))
         for fraction in fractions
     ]
 
 
-def validate_gripper_ramp_targets(targets: list[float | None]) -> bool:
-    return all(value is not None and gripper_target_in_range(value) for value in targets)
+def gripper_delta_from_initial(
+    initial_gripper_position: float,
+    targets: list[float],
+) -> list[float]:
+    return [float(value - initial_gripper_position) for value in targets]
+
+
+def validate_gripper_ramp_targets(targets: list[float]) -> bool:
+    return all(gripper_target_in_range(value) for value in targets)
 
 
 def make_descent_config(config: GraspConfig) -> DescentConfig:
@@ -226,6 +283,159 @@ def make_descent_config(config: GraspConfig) -> DescentConfig:
     )
 
 
+def validate_fresh_tactile_state(
+    state: StampedTactileState | None,
+    *,
+    now_monotonic_s: float,
+    max_age_s: float,
+    require_clear: bool,
+) -> tuple[bool, str]:
+    if state is None:
+        return False, "tactile_state_unavailable_or_stale"
+    if now_monotonic_s - state.received_monotonic_s > max_age_s:
+        return False, "tactile_state_unavailable_or_stale"
+    if not state.ready:
+        return False, "tactile_not_ready"
+    if require_clear and state.contact_detected:
+        return False, "tactile_contact_already_active"
+    return True, "ok"
+
+
+def build_lift_waypoint_xyz(start_xyz_m: list[float], rises_m: tuple[float, ...]) -> list[list[float]]:
+    x, y, z = [float(value) for value in start_xyz_m]
+    return [[x, y, z + float(rise)] for rise in rises_m]
+
+
+def lift_fk_metrics(
+    *,
+    model: Any,
+    q_rad: np.ndarray,
+    requested_xyz_m: np.ndarray,
+    previous_actual_xyz_m: np.ndarray,
+) -> tuple[float, float, float, float, np.ndarray]:
+    fk = forward_kinematics(model, q_rad)
+    actual = np.asarray(fk["position_m"], dtype=np.float64)
+    rotation = np.asarray(fk["rotation_matrix"], dtype=np.float64)
+    current_approach = normalize_vector(rotation @ TOOL_APPROACH_AXIS_LOCAL, "lift approach")
+    position_error_m = float(np.linalg.norm(requested_xyz_m - actual))
+    approach_error_deg = math.degrees(rotation_angle_error(current_approach, DESIRED_APPROACH_BASE))
+    xy_error_m = float(np.linalg.norm(requested_xyz_m[:2] - actual[:2]))
+    actual_lift_m = float(actual[2] - previous_actual_xyz_m[2])
+    return position_error_m, approach_error_deg, xy_error_m, actual_lift_m, actual
+
+
+def plan_lift_waypoints(
+    *,
+    model: Any,
+    start_joint_positions_rad: list[float],
+    start_xyz_m: list[float],
+    config: GraspConfig,
+) -> dict[str, Any]:
+    if not config.lift_enabled:
+        return {"success": True, "reason": "lift_disabled", "lift_waypoints": [], "total_actual_lift_m": 0.0}
+    waypoints_xyz = build_lift_waypoint_xyz(start_xyz_m, config.lift_waypoint_rise_m)
+    previous_joint = list(start_joint_positions_rad)
+    previous_actual = np.asarray(start_xyz_m, dtype=np.float64)
+    first_seed = np.asarray(start_joint_positions_rad, dtype=np.float64)
+    planned: list[dict[str, Any]] = []
+    failure_reason = "lift_ik_failed"
+    for index, requested in enumerate(waypoints_xyz, start=1):
+        requested_xyz = np.asarray(requested, dtype=np.float64)
+        waypoint: dict[str, Any] | None = None
+        seed_source = "contact_hold_joint_state" if index == 1 else f"previous_lift_waypoint_{index - 1}"
+        for source, seed in build_descent_seeds(model, requested_xyz, first_seed, seed_source):
+            result = solve_ik(
+                model,
+                requested_xyz,
+                seed,
+                DESIRED_APPROACH_BASE,
+                TOOL_APPROACH_AXIS_LOCAL,
+                position_tolerance_m=config.lift_position_tolerance_m,
+                approach_tolerance_deg=config.lift_approach_tolerance_deg,
+            )
+            raw_q = result.get("joint_positions_rad")
+            if raw_q is None:
+                failure_reason = str(result.get("reason", "lift_ik_failed"))
+                continue
+            q = np.asarray(raw_q, dtype=np.float64)
+            if q.shape != (len(ARM_JOINT_NAMES),) or not np.all(np.isfinite(q)):
+                failure_reason = "lift_non_finite_joint_solution"
+                continue
+            if not joints_within_limits(model, q):
+                failure_reason = "lift_joint_limit_failed"
+                continue
+            delta_values = [float(t) - float(p) for p, t in zip(previous_joint, listf(q), strict=True)]
+            max_delta = max(abs(value) for value in delta_values)
+            if max_delta > config.max_abs_joint_delta_per_lift_waypoint_rad:
+                failure_reason = "lift_joint_delta_exceeded"
+                continue
+            try:
+                pos_error, approach_error, xy_error, actual_lift, actual = lift_fk_metrics(
+                    model=model,
+                    q_rad=q,
+                    requested_xyz_m=requested_xyz,
+                    previous_actual_xyz_m=previous_actual,
+                )
+            except (ValueError, np.linalg.LinAlgError, KeyError):
+                failure_reason = "lift_fk_validation_failed"
+                continue
+            if xy_error > config.lift_max_xy_error_m:
+                failure_reason = "lift_xy_error_exceeded"
+                continue
+            if pos_error > config.lift_position_tolerance_m:
+                failure_reason = "lift_fk_position_validation_failed"
+                continue
+            if approach_error > config.lift_approach_tolerance_deg:
+                failure_reason = "lift_fk_approach_validation_failed"
+                continue
+            if actual_lift < config.minimum_actual_lift_per_waypoint_m:
+                failure_reason = "non_monotonic_lift"
+                continue
+            waypoint = {
+                "index": index,
+                "requested_xyz_m": listf(requested_xyz),
+                "actual_fk_xyz_m": listf(actual),
+                "arm_joint_target_rad": listf(q),
+                "arm_joint_delta_rad": delta_values,
+                "maximum_abs_arm_joint_delta_rad": float(max_delta),
+                "position_error_m": float(pos_error),
+                "approach_error_deg": float(approach_error),
+                "xy_error_m": float(xy_error),
+                "actual_lift_from_previous_m": float(actual_lift),
+                "solution_type": "exact_solution" if bool(result.get("success")) else "accepted_near_solution",
+                "seed_source": source,
+            }
+            break
+        if waypoint is None:
+            return {
+                "success": False,
+                "reason": failure_reason,
+                "lift_waypoints": planned,
+                "total_requested_lift_m": max(config.lift_waypoint_rise_m),
+                "total_actual_lift_m": None,
+            }
+        planned.append(waypoint)
+        previous_joint = waypoint["arm_joint_target_rad"]
+        previous_actual = np.asarray(waypoint["actual_fk_xyz_m"], dtype=np.float64)
+        first_seed = np.asarray(waypoint["arm_joint_target_rad"], dtype=np.float64)
+    total_actual_lift = float(np.asarray(planned[-1]["actual_fk_xyz_m"], dtype=np.float64)[2] - float(start_xyz_m[2]))
+    if total_actual_lift < config.minimum_total_actual_lift_m:
+        return {
+            "success": False,
+            "reason": "total_lift_too_small",
+            "lift_waypoints": planned,
+            "total_requested_lift_m": max(config.lift_waypoint_rise_m),
+            "total_actual_lift_m": total_actual_lift,
+        }
+    return {
+        "success": True,
+        "reason": "lift_plan_ready",
+        "lift_waypoints": planned,
+        "total_requested_lift_m": max(config.lift_waypoint_rise_m),
+        "total_actual_lift_m": total_actual_lift,
+    }
+
+
 def build_integrated_plan_summary(
     *,
     mode: str,
@@ -237,6 +447,7 @@ def build_integrated_plan_summary(
     pregrasp_joint_target_rad: list[float],
     initial_gripper_position: float,
     compute_message: str,
+    tactile_state: StampedTactileState | None = None,
 ) -> dict[str, Any]:
     model = create_model()
     frozen = FrozenPregrasp(
@@ -258,11 +469,29 @@ def build_integrated_plan_summary(
     )
     ramp_targets = build_gripper_ramp_targets(
         initial_gripper_position,
-        config.gripper_open_target_pos,
+        config.gripper_open_delta,
         config.gripper_open_ramp_fraction,
     )
+    ramp_deltas = gripper_delta_from_initial(initial_gripper_position, ramp_targets)
     all_gripper_targets_valid = validate_gripper_ramp_targets(ramp_targets)
-    open_valid, open_reason = validate_gripper_open_config(config)
+    open_valid, open_reason, open_target = validate_runtime_gripper_targets(
+        initial_gripper_position,
+        config.gripper_open_delta,
+    )
+    lift_plan = {"success": False, "reason": "descent_plan_unavailable", "lift_waypoints": []}
+    if descent_plan.success and descent_plan.waypoints:
+        lift_plan = plan_lift_waypoints(
+            model=model,
+            start_joint_positions_rad=descent_plan.waypoints[-1].selected_joint_target_rad,
+            start_xyz_m=descent_plan.waypoints[-1].actual_fk_xyz_m,
+            config=config,
+        )
+    tactile_ok, tactile_reason = validate_fresh_tactile_state(
+        tactile_state,
+        now_monotonic_s=time.monotonic(),
+        max_age_s=config.tactile_state_max_age_s,
+        require_clear=config.tactile_require_clear_before_grasp,
+    )
     waypoints = []
     for index, waypoint in enumerate(descent_plan.waypoints):
         waypoints.append(
@@ -278,6 +507,7 @@ def build_integrated_plan_summary(
                 "xy_error_m": waypoint.xy_error_m,
                 "actual_z_drop_from_previous_m": waypoint.actual_z_drop_from_previous_m,
                 "gripper_ramp_fraction": config.gripper_open_ramp_fraction[index],
+                "gripper_delta_from_initial": ramp_deltas[index],
                 "gripper_target_position": ramp_targets[index],
             }
         )
@@ -293,11 +523,25 @@ def build_integrated_plan_summary(
         previous = waypoint.selected_joint_target_rad
     reason = (
         "integrated_visual_grasp_plan_ready"
-        if descent_plan.success and all_gripper_targets_valid and open_valid
-        else (open_reason if not open_valid else descent_plan.reason)
+        if descent_plan.success and all_gripper_targets_valid and open_valid and lift_plan["success"] and tactile_ok
+        else (
+            tactile_reason
+            if not tactile_ok
+            else open_reason
+            if not open_valid
+            else lift_plan["reason"]
+            if not lift_plan["success"]
+            else descent_plan.reason
+        )
+    )
+    all_motion_waypoints = 1 + len(waypoints) + len(lift_plan.get("lift_waypoints", [])) + 1
+    estimated_lift = estimated_total_duration_s(
+        descent_plan.waypoints[-1].selected_joint_target_rad if descent_plan.waypoints else [],
+        [waypoint["arm_joint_target_rad"] for waypoint in lift_plan.get("lift_waypoints", [])],
+        config.lift_speed_rad_s,
     )
     return {
-        "success": bool(descent_plan.success and all_gripper_targets_valid and open_valid),
+        "success": bool(descent_plan.success and all_gripper_targets_valid and open_valid and lift_plan["success"] and tactile_ok),
         "reason": reason,
         "mode": mode,
         "object_pose_base": object_pose_base,
@@ -311,12 +555,27 @@ def build_integrated_plan_summary(
         "gripper_motor_logical_name": GRIPPER_LOGICAL_NAME,
         "gripper_motor_hardware_id": motor_mapping["gripper_hardware_id"],
         "wrist_roll_motor_hardware_id": motor_mapping["wrist_roll_hardware_id"],
-        "gripper_open_target_position": config.gripper_open_target_pos,
-        "gripper_open_target_verified": bool(config.gripper_open_target_verified),
+        "gripper_open_delta": float(config.gripper_open_delta),
+        "gripper_open_target_position": open_target,
         "gripper_close_target_source": config.gripper_close_target_source,
         "gripper_close_target_position": float(initial_gripper_position),
+        "gripper_close_target_equals_initial": True,
+        "tactile_stop_enabled": bool(config.tactile_stop_enabled),
+        "tactile_ready_before_motion": None if tactile_state is None else bool(tactile_state.ready),
+        "tactile_contact_before_motion": None if tactile_state is None else bool(tactile_state.contact_detected),
+        "tactile_contact_score_before_motion": None if tactile_state is None else float(tactile_state.contact_score),
+        "tactile_status_before_motion": None if tactile_state is None else tactile_state.status,
+        "tactile_pre_motion_check": tactile_reason,
+        "gripper_contact_preload_offset": 0.0,
         "waypoint_count": len(waypoints),
         "descent_waypoints": waypoints,
+        "lift_enabled": bool(config.lift_enabled),
+        "lift_waypoint_count": len(lift_plan.get("lift_waypoints", [])),
+        "lift_waypoints": lift_plan.get("lift_waypoints", []),
+        "total_requested_lift_m": lift_plan.get("total_requested_lift_m"),
+        "total_actual_lift_m": lift_plan.get("total_actual_lift_m"),
+        "all_lift_waypoints_valid": bool(lift_plan["success"]),
+        "all_motion_waypoint_count": all_motion_waypoints,
         "total_requested_z_drop_m": config.total_descent_m,
         "total_actual_z_drop_m": descent_plan.total_actual_z_drop_m,
         "all_arm_waypoints_valid": bool(descent_plan.success),
@@ -324,7 +583,8 @@ def build_integrated_plan_summary(
         "estimated_pregrasp_duration_s": estimated_pregrasp,
         "estimated_descent_duration_s": estimated_descent,
         "estimated_gripper_close_duration_s": config.gripper_only_motion_duration_s,
-        "estimated_total_duration_s": estimated_pregrasp + estimated_descent + config.gripper_only_motion_duration_s,
+        "estimated_lift_duration_s": estimated_lift,
+        "estimated_total_duration_s": estimated_pregrasp + estimated_descent + config.gripper_only_motion_duration_s + estimated_lift,
         "live_visual_used_before_motion": True,
         "live_visual_required_after_motion": False,
         "all_motion_planned_before_execute": True,
@@ -373,6 +633,11 @@ class VisualGraspNode:
         self.pregrasp_status = ""
         self.tcp_connected = False
         self.tcp_status = "unknown"
+        self.latest_tactile_ready = False
+        self.latest_tactile_contact = False
+        self.latest_tactile_score = 0.0
+        self.latest_tactile_status = "unknown"
+        self.latest_tactile_state: StampedTactileState | None = None
         self.node.create_subscription(JointState, "/mvp/joint_states", self._joint_state_cb, 10)
         self.node.create_subscription(Float64, "/mvp/gripper_state", self._gripper_state_cb, 10)
         self.node.create_subscription(PoseStamped, "/object_pose_base", self._object_pose_cb, 10)
@@ -382,8 +647,13 @@ class VisualGraspNode:
         self.node.create_subscription(String, "/mvp/pregrasp_status", self._pregrasp_status_cb, 10)
         self.node.create_subscription(Bool, "/mvp/tcp_connected", self._tcp_connected_cb, 10)
         self.node.create_subscription(String, "/mvp/tcp_status", self._tcp_status_cb, 10)
+        self.node.create_subscription(Bool, "/mvp/tactile_ready", self._tactile_ready_cb, 10)
+        self.node.create_subscription(Bool, "/mvp/tactile_contact", self._tactile_contact_cb, 10)
+        self.node.create_subscription(Float64, "/mvp/tactile_score", self._tactile_score_cb, 10)
+        self.node.create_subscription(String, "/mvp/tactile_status", self._tactile_status_cb, 10)
         self.arm_target_pub = self.node.create_publisher(JointState, "/mvp/joint_target", 10)
         self.gripper_target_pub = self.node.create_publisher(Float64, "/mvp/gripper_target", 10)
+        self.stop_gripper_on_tactile_pub = self.node.create_publisher(Bool, "/mvp/stop_gripper_on_tactile_contact", 10)
         self.compute_client = self.node.create_client(Trigger, "/mvp/compute_pregrasp")
         self.execute_client = self.node.create_client(Trigger, "/mvp/execute_target")
 
@@ -428,6 +698,31 @@ class VisualGraspNode:
     def _tcp_status_cb(self, msg: Any) -> None:
         self.tcp_status = str(msg.data)
 
+    def _refresh_tactile_state(self) -> None:
+        self.latest_tactile_state = StampedTactileState(
+            ready=bool(self.latest_tactile_ready),
+            contact_detected=bool(self.latest_tactile_contact),
+            contact_score=float(self.latest_tactile_score),
+            status=str(self.latest_tactile_status),
+            received_monotonic_s=time.monotonic(),
+        )
+
+    def _tactile_ready_cb(self, msg: Any) -> None:
+        self.latest_tactile_ready = bool(msg.data)
+        self._refresh_tactile_state()
+
+    def _tactile_contact_cb(self, msg: Any) -> None:
+        self.latest_tactile_contact = bool(msg.data)
+        self._refresh_tactile_state()
+
+    def _tactile_score_cb(self, msg: Any) -> None:
+        self.latest_tactile_score = float(msg.data)
+        self._refresh_tactile_state()
+
+    def _tactile_status_cb(self, msg: Any) -> None:
+        self.latest_tactile_status = str(msg.data)
+        self._refresh_tactile_state()
+
     def spin_until(self, predicate, timeout_s: float) -> bool:
         deadline = time.monotonic() + timeout_s
         while self.rclpy.ok() and time.monotonic() < deadline:
@@ -460,8 +755,114 @@ class VisualGraspNode:
         self.gripper_target_pub.publish(msg)
         self.rclpy.spin_once(self.node, timeout_sec=0.2)
 
+    def publish_stop_gripper_on_tactile_once(self, enabled: bool) -> None:
+        from std_msgs.msg import Bool
+
+        msg = Bool()
+        msg.data = bool(enabled)
+        self.stop_gripper_on_tactile_pub.publish(msg)
+        self.rclpy.spin_once(self.node, timeout_sec=0.2)
+
     def destroy(self) -> None:
         self.node.destroy_node()
+
+
+class TactileTestNode:
+    def __init__(self) -> None:
+        import rclpy
+        from rclpy.node import Node
+        from std_msgs.msg import Bool, Float64, String
+
+        class _Node(Node):
+            pass
+
+        self.rclpy = rclpy
+        self.node = _Node("mvp_visual_grasp_tactile_test")
+        self.ready = False
+        self.contact = False
+        self.score = 0.0
+        self.status = "unknown"
+        self.latest: StampedTactileState | None = None
+        self.ready_seen = False
+        self.false_seen = False
+        self.true_seen = False
+        self.release_seen_after_true = False
+        self.node.create_subscription(Bool, "/mvp/tactile_ready", self._ready_cb, 10)
+        self.node.create_subscription(Bool, "/mvp/tactile_contact", self._contact_cb, 10)
+        self.node.create_subscription(Float64, "/mvp/tactile_score", self._score_cb, 10)
+        self.node.create_subscription(String, "/mvp/tactile_status", self._status_cb, 10)
+
+    def _record(self) -> None:
+        self.latest = StampedTactileState(self.ready, self.contact, self.score, self.status, time.monotonic())
+        if self.ready:
+            self.ready_seen = True
+        if not self.contact:
+            if self.true_seen:
+                self.release_seen_after_true = True
+            self.false_seen = True
+        if self.contact and self.false_seen:
+            self.true_seen = True
+
+    def _ready_cb(self, msg: Any) -> None:
+        self.ready = bool(msg.data)
+        self._record()
+
+    def _contact_cb(self, msg: Any) -> None:
+        self.contact = bool(msg.data)
+        self._record()
+
+    def _score_cb(self, msg: Any) -> None:
+        self.score = float(msg.data)
+        self._record()
+
+    def _status_cb(self, msg: Any) -> None:
+        self.status = str(msg.data)
+        self._record()
+
+    def run(self, timeout_s: float) -> dict[str, Any]:
+        started = time.monotonic()
+        while self.rclpy.ok() and time.monotonic() - started <= timeout_s:
+            self.rclpy.spin_once(self.node, timeout_sec=0.05)
+            if self.ready_seen and self.false_seen and self.true_seen and self.release_seen_after_true:
+                break
+        observed_transition = self.false_seen and self.true_seen and self.release_seen_after_true
+        return {
+            "success": bool(self.ready_seen and observed_transition),
+            "reason": "tactile_static_test_pass" if self.ready_seen and observed_transition else "tactile_static_test_timeout",
+            "mode": "tactile_test",
+            "timeout_s": float(timeout_s),
+            "tactile_ready_seen": bool(self.ready_seen),
+            "tactile_false_seen": bool(self.false_seen),
+            "tactile_true_seen": bool(self.true_seen),
+            "tactile_release_seen_after_true": bool(self.release_seen_after_true),
+            "tactile_contact_detected": bool(self.contact),
+            "tactile_contact_score": float(self.score),
+            "tactile_status": self.status,
+            "hardware_command_sent": False,
+            "camera_used": False,
+            "pregrasp_compute_called": False,
+            "ros_publish_count": 0,
+        }
+
+    def destroy(self) -> None:
+        self.node.destroy_node()
+
+
+def run_tactile_test(args: argparse.Namespace) -> int:
+    del args
+    config = load_grasp_config()
+    import rclpy
+
+    rclpy.init()
+    node = TactileTestNode()
+    try:
+        result = node.run(config.tactile_static_test_timeout_s)
+        json_print(result)
+        return 0 if result["success"] else 18
+    finally:
+        node.destroy()
+        if rclpy.ok():
+            rclpy.shutdown()
 
 
 def run(args: argparse.Namespace) -> int:
@@ -469,19 +870,6 @@ def run(args: argparse.Namespace) -> int:
     motor_mapping = load_motor_mapping()
     if not motor_mapping["motor_mapping_verified"]:
         json_print({"success": False, "reason": "gripper_motor_mapping_mismatch", **motor_mapping})
-        return 2
-    open_valid, open_reason = validate_gripper_open_config(config)
-    if args.execute and not open_valid:
-        json_print(
-            {
-                "success": False,
-                "reason": open_reason,
-                "mode": "execute",
-                "gripper_open_target_position": config.gripper_open_target_pos,
-                "gripper_open_target_verified": config.gripper_open_target_verified,
-                "hardware_command_sent": False,
-            }
-        )
         return 2
 
     import rclpy
@@ -510,6 +898,36 @@ def run(args: argparse.Namespace) -> int:
         if not node.tcp_connected or node.tcp_status != "connected":
             json_print({"success": False, "reason": "tcp_not_connected"})
             return 5
+        if config.tactile_stop_enabled:
+            if not node.spin_until(
+                lambda: validate_fresh_tactile_state(
+                    node.latest_tactile_state,
+                    now_monotonic_s=time.monotonic(),
+                    max_age_s=config.tactile_state_max_age_s,
+                    require_clear=config.tactile_require_clear_before_grasp,
+                )[0],
+                10.0,
+            ):
+                tactile_ok, tactile_reason = validate_fresh_tactile_state(
+                    node.latest_tactile_state,
+                    now_monotonic_s=time.monotonic(),
+                    max_age_s=config.tactile_state_max_age_s,
+                    require_clear=config.tactile_require_clear_before_grasp,
+                )
+                del tactile_ok
+                json_print(
+                    {
+                        "success": False,
+                        "reason": tactile_reason,
+                        "mode": "plan_only" if args.plan_only or not args.execute else "execute",
+                        "tactile_ready": None if node.latest_tactile_state is None else node.latest_tactile_state.ready,
+                        "tactile_contact_detected": None if node.latest_tactile_state is None else node.latest_tactile_state.contact_detected,
+                        "tactile_contact_score": None if node.latest_tactile_state is None else node.latest_tactile_state.contact_score,
+                        "tactile_status": None if node.latest_tactile_state is None else node.latest_tactile_state.status,
+                        "hardware_command_sent": False,
+                    }
+                )
+                return 5
         if not node.spin_until(
             lambda: node.latest_object_pose is not None
             and time.monotonic() - node.latest_object_pose_time <= config.object_pose_max_age_s,
@@ -523,6 +941,23 @@ def run(args: argparse.Namespace) -> int:
         assert node.latest_object_pose is not None
         current = [float(value) for value in node.latest_joint_state.positions_rad]
         initial_gripper = float(node.latest_gripper_state.position)
+        open_valid, open_reason, open_target = validate_runtime_gripper_targets(
+            initial_gripper,
+            config.gripper_open_delta,
+        )
+        if not open_valid:
+            json_print(
+                {
+                    "success": False,
+                    "reason": open_reason,
+                    "mode": "plan_only" if args.plan_only or not args.execute else "execute",
+                    "initial_gripper_position": initial_gripper,
+                    "gripper_open_delta": config.gripper_open_delta,
+                    "gripper_open_target_position": open_target,
+                    "hardware_command_sent": False,
+                }
+            )
+            return 5
         compute_started = time.monotonic()
         compute_success, compute_message = node.call_trigger(node.compute_client, 10.0)
         if not compute_success:
@@ -589,6 +1024,7 @@ def run(args: argparse.Namespace) -> int:
             pregrasp_joint_target_rad=frozen_target,
             initial_gripper_position=initial_gripper,
             compute_message=compute_message,
+            tactile_state=node.latest_tactile_state,
         )
         atomic_write_json(
             INTEGRATED_SNAPSHOT_PATH,
@@ -616,6 +1052,10 @@ def run(args: argparse.Namespace) -> int:
         execute_count = 0
         arm_publish_count = 0
         gripper_publish_count = 0
+        tactile_stop_publish_count = 0
+        lift_execute_count = 0
+        node.publish_stop_gripper_on_tactile_once(False)
+        tactile_stop_publish_count += 1
         node.publish_arm_target_once(frozen_target)
         arm_publish_count += 1
         pregrasp_success, pregrasp_message = node.call_trigger(node.execute_client, config.execute_service_timeout_s)
@@ -654,34 +1094,91 @@ def run(args: argparse.Namespace) -> int:
         arm_publish_count += 1
         node.publish_gripper_target_once(initial_gripper)
         gripper_publish_count += 1
+        node.publish_stop_gripper_on_tactile_once(True)
+        tactile_stop_publish_count += 1
         close_success, close_message = node.call_trigger(node.execute_client, config.execute_service_timeout_s)
         execute_count += 1
+        node.spin_until(
+            lambda: node.latest_gripper_state is not None
+            and time.monotonic() - node.latest_gripper_state.received_monotonic_s <= config.gripper_state_max_age_s,
+            2.0,
+        )
+        node.spin_until(
+            lambda: node.latest_tactile_state is not None
+            and time.monotonic() - node.latest_tactile_state.received_monotonic_s <= config.tactile_state_max_age_s,
+            2.0,
+        )
         time.sleep(config.gripper_close_hold_s)
         gripper_final = None if node.latest_gripper_state is None else float(node.latest_gripper_state.position)
         gripper_error = None if gripper_final is None else abs(gripper_final - initial_gripper)
+        tactile_contact_confirmed = bool(close_success and close_message == "tactile_contact_stop")
+        lift_completed = False
+        lift_failure_reason: str | None = None
+        if close_success and close_message == "gripper_closed_without_tactile_contact":
+            close_success = False
+        if tactile_contact_confirmed:
+            node.publish_stop_gripper_on_tactile_once(False)
+            tactile_stop_publish_count += 1
+            held_gripper = gripper_final if gripper_final is not None else initial_gripper
+            for lift_waypoint in summary["lift_waypoints"]:
+                if not node.spin_until(
+                    lambda: node.latest_tactile_state is not None
+                    and time.monotonic() - node.latest_tactile_state.received_monotonic_s <= config.tactile_state_max_age_s
+                    and node.latest_tactile_state.ready
+                    and node.latest_tactile_state.contact_detected,
+                    2.0,
+                ):
+                    lift_failure_reason = "tactile_contact_lost_during_lift"
+                    break
+                node.publish_arm_target_once(lift_waypoint["arm_joint_target_rad"])
+                arm_publish_count += 1
+                node.publish_gripper_target_once(float(held_gripper))
+                gripper_publish_count += 1
+                lift_success, lift_message = node.call_trigger(node.execute_client, config.execute_service_timeout_s)
+                execute_count += 1
+                lift_execute_count += 1
+                if not lift_success:
+                    lift_failure_reason = lift_message
+                    break
+                time.sleep(config.inter_lift_waypoint_hold_s)
+            lift_completed = lift_failure_reason is None and lift_execute_count == len(summary["lift_waypoints"])
         summary.update(
             {
-                "success": bool(close_success),
-                "reason": "grasp_close_attempt_completed" if close_success else "grasp_close_attempt_failed",
+                "success": bool(tactile_contact_confirmed and lift_completed),
+                "reason": "tactile_grasp_lift_completed"
+                if tactile_contact_confirmed and lift_completed
+                else close_message
+                if close_message == "gripper_closed_without_tactile_contact"
+                else lift_failure_reason
+                if lift_failure_reason is not None
+                else "grasp_close_attempt_failed",
                 "close_execute_response_message": close_message,
                 "hardware_command_sent": True,
                 "arm_target_publish_count": arm_publish_count,
                 "gripper_target_publish_count": gripper_publish_count,
+                "tactile_stop_publish_count": tactile_stop_publish_count,
                 "execute_call_count": execute_count,
+                "lift_execute_count": lift_execute_count,
                 "gripper_initial_position": initial_gripper,
-                "gripper_open_target_position": config.gripper_open_target_pos,
+                "gripper_open_target_position": initial_gripper + config.gripper_open_delta,
                 "gripper_position_before_close": gripper_before_close,
                 "gripper_close_target_position": initial_gripper,
                 "gripper_final_position": gripper_final,
                 "gripper_final_error": gripper_error,
-                "gripper_close_command_completed": bool(close_success),
+                "gripper_close_command_completed": bool(close_success or tactile_contact_confirmed),
+                "gripper_stop_triggered": bool(tactile_contact_confirmed),
+                "gripper_closed_without_tactile_contact": close_message == "gripper_closed_without_tactile_contact",
                 "gripper_close_target_reached": None if gripper_error is None else gripper_error <= 1.0,
-                "possible_object_blocking_gripper": None if gripper_error is None else gripper_error > 1.0,
-                "object_may_be_grasped": None,
+                "possible_object_blocking_gripper": bool(tactile_contact_confirmed),
+                "object_may_be_grasped": bool(tactile_contact_confirmed),
+                "lift_completed": bool(lift_completed),
+                "lift_failure_reason": lift_failure_reason,
+                "lift_waypoints_executed": lift_execute_count,
+                "tactile_contact_confirmed": bool(tactile_contact_confirmed),
             }
         )
         json_print(summary)
-        return 0 if close_success else 17
+        return 0 if summary["success"] else 17
     finally:
         node.destroy()
         if rclpy.ok():
@@ -692,11 +1189,17 @@ def main() -> int:
     parser = argparse.ArgumentParser(description="Integrated SO-101 visual pregrasp, 7 cm descent, and gripper close.")
     parser.add_argument("--plan-only", action="store_true")
     parser.add_argument("--execute", action="store_true")
+    parser.add_argument("--tactile-test", action="store_true")
     parser.add_argument("--confirm", default="")
     args = parser.parse_args()
+    if args.tactile_test and (args.execute or args.plan_only):
+        print("--tactile-test cannot be combined with --plan-only or --execute", file=sys.stderr)
+        return 2
     if args.execute and args.plan_only:
         print("--plan-only and --execute are mutually exclusive", file=sys.stderr)
         return 2
+    if args.tactile_test:
+        return run_tactile_test(args)
     return run(args)
 
 

@@ -4,9 +4,11 @@ import argparse
 import json
 import math
 import socket
+import struct
 import sys
 import threading
 import time
+from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Protocol
 
@@ -27,6 +29,9 @@ from lerobot_server.mvp_hardware_executor import (
 
 MAX_SPEED_RAD_S = 0.08
 MOVE_CONFIRMATION = "MVP_MOVE"
+GUARD_PACKET_STRUCT = struct.Struct("!4sBBI")
+GUARD_MAGIC = b"GRIP"
+GUARD_VERSION = 1
 STOP_BANNER = (
     "SERVER STOPPING\n"
     "NO FURTHER MOTION COMMANDS\n"
@@ -48,6 +53,7 @@ class HardwareBackend(Protocol):
         speed_rad_s: float,
         joint_order: list[int],
         gripper_target_pos: float | None = None,
+        stop_gripper_on_tactile_contact: bool = False,
     ) -> dict[str, Any]: ...
 
     def stop(self) -> dict[str, Any]: ...
@@ -71,9 +77,145 @@ def bool_text(value: bool) -> str:
     return str(bool(value)).lower()
 
 
+@dataclass(frozen=True)
+class TactileSnapshot:
+    ready: bool
+    contact_detected: bool
+    contact_score: float
+    state_age_s: float | None
+    error: str | None
+    status: str
+    source: str
+
+    def to_tcp_fields(self) -> dict[str, Any]:
+        return {
+            "tactile_ready": bool(self.ready),
+            "tactile_contact_detected": bool(self.contact_detected),
+            "tactile_contact_score": float(self.contact_score),
+            "tactile_state_age_s": self.state_age_s,
+            "tactile_error": self.error,
+            "tactile_status": self.status,
+            "tactile_source": self.source,
+        }
+
+
+class TactileUdpGuardReceiver:
+    """Non-blocking receiver compatible with the old SO-101 FlexiTac UDP guard."""
+
+    def __init__(self, host: str, port: int, timeout_s: float) -> None:
+        self.host = host
+        self.port = int(port)
+        self.timeout_s = float(timeout_s)
+        self._socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+        self._socket.bind((self.host, self.port))
+        self._socket.setblocking(False)
+        self._contact = False
+        self._sequence: int | None = None
+        self._last_receive_time: float | None = None
+
+    def poll(self) -> TactileSnapshot:
+        newest_state: bool | None = None
+        newest_sequence: int | None = None
+        while True:
+            try:
+                packet, _ = self._socket.recvfrom(1024)
+            except BlockingIOError:
+                break
+            parsed = self._parse_packet(packet)
+            if parsed is None:
+                continue
+            newest_state, newest_sequence = parsed
+        if newest_state is not None:
+            self._contact = newest_state
+            self._sequence = newest_sequence
+            self._last_receive_time = time.monotonic()
+        age = None if self._last_receive_time is None else time.monotonic() - self._last_receive_time
+        ready = age is not None and age <= self.timeout_s
+        status = "udp_guard_packet"
+        if self._sequence is not None:
+            status = f"{status}:sequence={self._sequence}"
+        return TactileSnapshot(
+            ready=bool(ready),
+            contact_detected=bool(self._contact),
+            contact_score=1.0 if self._contact else 0.0,
+            state_age_s=None if age is None else float(age),
+            error=None if ready else "tactile_state_unavailable_or_stale",
+            status=status,
+            source=f"udp_guard:{self.host}:{self.port}",
+        )
+
+    def _parse_packet(self, packet: bytes) -> tuple[bool, int] | None:
+        if len(packet) != GUARD_PACKET_STRUCT.size:
+            return None
+        magic, version, state, sequence = GUARD_PACKET_STRUCT.unpack(packet)
+        if magic != GUARD_MAGIC or version != GUARD_VERSION or state not in (0, 1):
+            return None
+        return bool(state), int(sequence)
+
+    def close(self) -> None:
+        self._socket.close()
+
+
+class TactileRuntime:
+    def __init__(self, config: dict[str, Any]) -> None:
+        self.enabled = bool(config.get("tactile_enabled", True))
+        self.source = str(config.get("tactile_source", "udp_guard_receiver"))
+        self.host = str(config.get("tactile_guard_host", "127.0.0.1"))
+        self.port = int(config.get("tactile_guard_port", 5006))
+        self.timeout_s = float(config.get("tactile_guard_timeout_s", 0.5))
+        self.receiver: TactileUdpGuardReceiver | None = None
+        self.error: str | None = None
+
+    def connect(self) -> None:
+        if not self.enabled:
+            self.error = "tactile_disabled"
+            return
+        if self.source != "udp_guard_receiver":
+            self.error = f"unsupported_tactile_source:{self.source}"
+            return
+        try:
+            self.receiver = TactileUdpGuardReceiver(self.host, self.port, self.timeout_s)
+            self.error = None
+        except OSError as exc:
+            self.receiver = None
+            self.error = f"tactile_udp_bind_failed:{type(exc).__name__}:{exc}"
+
+    def close(self) -> None:
+        if self.receiver is not None:
+            self.receiver.close()
+        self.receiver = None
+
+    def snapshot(self) -> TactileSnapshot:
+        if self.receiver is None:
+            return TactileSnapshot(
+                ready=False,
+                contact_detected=False,
+                contact_score=0.0,
+                state_age_s=None,
+                error=self.error or "tactile_receiver_not_started",
+                status=self.error or "tactile_receiver_not_started",
+                source=f"{self.source}:{self.host}:{self.port}",
+            )
+        try:
+            return self.receiver.poll()
+        except OSError as exc:
+            self.error = f"tactile_poll_failed:{type(exc).__name__}:{exc}"
+            return TactileSnapshot(
+                ready=False,
+                contact_detected=False,
+                contact_score=0.0,
+                state_age_s=None,
+                error=self.error,
+                status=self.error,
+                source=f"{self.source}:{self.host}:{self.port}",
+            )
+
+
 class ReadOnlyFeetechBackend:
     def __init__(self, config_path: Path) -> None:
         self.executor = MvpSo101HardwareExecutor(config_path)
+        self.config = load_config(config_path)
+        self.tactile = TactileRuntime(self.config)
         self.bus: Any | None = None
         self.connected = False
         self.stop_requested = False
@@ -84,6 +226,7 @@ class ReadOnlyFeetechBackend:
         self.torque_disable_write_count = 0
 
     def connect(self) -> None:
+        self.tactile.connect()
         port_check = self.executor.check_port_and_usb()
         if not port_check["success"]:
             raise RuntimeError(port_check["reason"])
@@ -100,6 +243,7 @@ class ReadOnlyFeetechBackend:
             self.bus.disconnect(disable_torque=False)
         self.connected = False
         self.bus = None
+        self.tactile.close()
 
     def _read_bus_state(self) -> tuple[dict[str, float], dict[str, float]]:
         if self.bus is None:
@@ -125,6 +269,7 @@ class ReadOnlyFeetechBackend:
             within_calibration=bool(within),
             raw_lerobot_positions=raw,
             calibrated_lerobot_positions=calibrated,
+            **self.tactile.snapshot().to_tcp_fields(),
         )
 
     def move_joints_sequential(
@@ -133,8 +278,9 @@ class ReadOnlyFeetechBackend:
         speed_rad_s: float,
         joint_order: list[int],
         gripper_target_pos: float | None = None,
+        stop_gripper_on_tactile_contact: bool = False,
     ) -> dict[str, Any]:
-        del target_rad, speed_rad_s, joint_order, gripper_target_pos
+        del target_rad, speed_rad_s, joint_order, gripper_target_pos, stop_gripper_on_tactile_contact
         return response(False, "hardware_motion_disabled")
 
     def stop(self) -> dict[str, Any]:
@@ -148,6 +294,9 @@ class ReadOnlyFeetechBackend:
             "goal_position_write_count": self.goal_position_write_count,
             "torque_enable_write_count": self.torque_enable_write_count,
             "torque_disable_write_count": self.torque_disable_write_count,
+            "tactile_port_source": self.tactile.source,
+            "tactile_guard_host": self.tactile.host,
+            "tactile_guard_port": self.tactile.port,
         }
 
 
@@ -159,6 +308,7 @@ class MotionFeetechBackend(ReadOnlyFeetechBackend):
         self.logged_action_keys = False
 
     def connect(self) -> None:
+        self.tactile.connect()
         port_check = self.executor.check_port_and_usb()
         if not port_check["success"]:
             raise RuntimeError(port_check["reason"])
@@ -181,6 +331,7 @@ class MotionFeetechBackend(ReadOnlyFeetechBackend):
                 self.robot.disconnect()
         self.connected = False
         self.robot = None
+        self.tactile.close()
 
     def get_state(self) -> dict[str, Any]:
         if self.robot is None:
@@ -197,6 +348,7 @@ class MotionFeetechBackend(ReadOnlyFeetechBackend):
             positions_rad=[float(joints_rad[name]) for name in ARM_JOINT_NAMES],
             gripper=float(gripper),
             within_calibration=bool(self.executor.all_targets_within_calibration(joints_rad, gripper)),
+            **self.tactile.snapshot().to_tcp_fields(),
         )
 
     def move_joints_sequential(
@@ -205,6 +357,7 @@ class MotionFeetechBackend(ReadOnlyFeetechBackend):
         speed_rad_s: float,
         joint_order: list[int],
         gripper_target_pos: float | None = None,
+        stop_gripper_on_tactile_contact: bool = False,
     ) -> dict[str, Any]:
         if self.robot is None:
             return response(False, "backend_not_connected")
@@ -263,6 +416,29 @@ class MotionFeetechBackend(ReadOnlyFeetechBackend):
                 self._log_action_keys_once(action)
                 self.robot.send_action(action)
                 self.goal_position_write_count += 1
+                if gripper_target_pos is not None and stop_gripper_on_tactile_contact:
+                    tactile = self.tactile.snapshot()
+                    if not tactile.ready:
+                        return response(
+                            False,
+                            "tactile_unavailable_during_gripper_close",
+                            gripper_stop_triggered=False,
+                            gripper_stop_position=float(gripper_command),
+                            **tactile.to_tcp_fields(),
+                        )
+                    if tactile.contact_detected:
+                        hold_action = build_lerobot_action(positions, gripper_command)
+                        self.robot.send_action(hold_action)
+                        self.goal_position_write_count += 1
+                        return response(
+                            True,
+                            "tactile_contact_stop",
+                            gripper_stop_triggered=True,
+                            gripper_stop_position=float(gripper_command),
+                            gripper_target_pos=float(target_gripper),
+                            gripper_contact_preload_offset=0.0,
+                            **tactile.to_tcp_fields(),
+                        )
                 measured_observation = self.robot.get_observation()
                 self._log_observation_keys_once(measured_observation)
                 measured = extract_arm_state_from_lerobot_observation(measured_observation)[
@@ -282,6 +458,14 @@ class MotionFeetechBackend(ReadOnlyFeetechBackend):
         final_state = self.get_state()
         if not final_state["success"]:
             return final_state
+        if gripper_target_pos is not None and stop_gripper_on_tactile_contact:
+            return response(
+                False,
+                "gripper_closed_without_tactile_contact",
+                gripper_stop_triggered=False,
+                gripper_stop_position=float(target_gripper),
+                **self.tactile.snapshot().to_tcp_fields(),
+            )
         return response(True, "motion_completed")
 
     def _log_observation_keys_once(self, observation: dict[str, Any]) -> None:
@@ -506,6 +690,7 @@ class MvpTcpServer:
                 speed,
                 joint_order,
                 gripper_target_pos,
+                bool(request.get("stop_gripper_on_tactile_contact", False)),
             )
         except Exception as exc:
             return self._application_error(client_id, exc, "server_motion_error")

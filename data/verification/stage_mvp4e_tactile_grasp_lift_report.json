@@ -1,0 +1,277 @@
+{
+  "stage": "MVP-4E-TACTILE-STOP-GRASP-AND-LIFT",
+  "success": true,
+  "passed": 53,
+  "total": 53,
+  "ros2_build_result": "PASS",
+  "opened_tactile_com_port": false,
+  "hardware_command_sent": false,
+  "tactile_port_source": "so101_ros2_tactile_guard UDP guard command_port=5006; no committed FlexiTac COM port found",
+  "cases": [
+    {
+      "name": "compileall_core_files",
+      "passed": true,
+      "details": ""
+    },
+    {
+      "name": "tactile_config_enabled",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "tactile_source_udp_guard_receiver",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "tactile_guard_host_loopback",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "tactile_guard_port_5006",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "tactile_timeout_positive",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "old_on_score_recorded",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "old_off_score_recorded",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "old_confirm_frames_recorded",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "old_release_frames_recorded",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_fake_flexitac_com_port",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "gripper_open_delta_10",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "tactile_stop_enabled_config",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "tactile_require_clear_config",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "tactile_static_test_timeout_30s",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "lift_enabled_config",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "lift_total_3cm",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "lift_waypoints_1_2_3cm",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "lift_speed_006",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "lift_xy_tolerance_1cm",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "server_guard_packet_struct_reused",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "server_tactile_snapshot_fields",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "server_udp_guard_receiver_class",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "server_nonblocking_udp_poll",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "server_get_state_extends_tactile",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "server_move_optional_stop_flag",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "server_tactile_unavailable_abort",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "server_contact_stop_reason",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "server_no_contact_no_lift_reason",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "server_zero_preload",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "client_accepts_stop_flag",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "shared_client_accepts_stop_flag",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "bridge_tactile_ready_pub",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "bridge_tactile_contact_pub",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "bridge_tactile_score_pub",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "bridge_tactile_status_pub",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "bridge_stop_flag_sub",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "bridge_execute_passes_stop_flag",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "bridge_old_behavior_default_false",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "visual_tactile_test_arg",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "visual_tactile_test_no_publish_contract",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "visual_tactile_precheck_ready_clear",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "visual_lift_plan_function",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "visual_lift_xy_unchanged",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "visual_lift_uses_fk_ik",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "visual_close_sets_stop_true",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "visual_lift_only_after_contact",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "visual_no_contact_no_lift",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "visual_contact_lost_abort",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "visual_all_motion_count_12",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "manual_doc_two_major_steps",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "manual_doc_uses_single_script",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "grasp_yaml_contains_lift_fields",
+      "passed": true,
+      "details": null
+    }
+  ]
+}

@@ -45,6 +45,8 @@ class MvpHardwareBridgeNode(Node):
         self.last_target_stamp = None
         self.last_valid_gripper_target: float | None = None
         self.last_gripper_target_monotonic_s: float | None = None
+        self.last_stop_gripper_on_tactile_contact = False
+        self.last_stop_gripper_flag_monotonic_s: float | None = None
         self.tcp_connected = False
         self.tcp_status = "disconnected"
         self.last_tcp_warning_time = 0.0
@@ -54,8 +56,13 @@ class MvpHardwareBridgeNode(Node):
         self.gripper_pub = self.create_publisher(Float64, "/mvp/gripper_state", 10)
         self.tcp_connected_pub = self.create_publisher(Bool, "/mvp/tcp_connected", 10)
         self.tcp_status_pub = self.create_publisher(String, "/mvp/tcp_status", 10)
+        self.tactile_ready_pub = self.create_publisher(Bool, "/mvp/tactile_ready", 10)
+        self.tactile_contact_pub = self.create_publisher(Bool, "/mvp/tactile_contact", 10)
+        self.tactile_score_pub = self.create_publisher(Float64, "/mvp/tactile_score", 10)
+        self.tactile_status_pub = self.create_publisher(String, "/mvp/tactile_status", 10)
         self.create_subscription(JointState, "/mvp/joint_target", self.handle_joint_target, 10)
         self.create_subscription(Float64, "/mvp/gripper_target", self.handle_gripper_target, 10)
+        self.create_subscription(Bool, "/mvp/stop_gripper_on_tactile_contact", self.handle_stop_gripper_on_tactile_contact, 10)
         self.create_service(Trigger, "/mvp/execute_target", self.handle_execute_target)
         timer_period = 1.0 / max(self.poll_rate_hz, 0.1)
         self.timer = self.create_timer(timer_period, self.poll_state_once)
@@ -66,6 +73,7 @@ class MvpHardwareBridgeNode(Node):
         self.get_logger().info(f"state_poll_rate_hz={self.poll_rate_hz}")
         self.get_logger().info("single_tcp_client=true")
         self.publish_tcp_status(False, "disconnected")
+        self.publish_tactile_state(False, False, 0.0, "unknown")
 
     def get_client(self) -> MvpTcpClient:
         if self._client is None:
@@ -92,6 +100,20 @@ class MvpHardwareBridgeNode(Node):
         status_msg = String()
         status_msg.data = self.tcp_status
         self.tcp_status_pub.publish(status_msg)
+
+    def publish_tactile_state(self, ready: bool, contact: bool, score: float, status: str) -> None:
+        ready_msg = Bool()
+        ready_msg.data = bool(ready)
+        self.tactile_ready_pub.publish(ready_msg)
+        contact_msg = Bool()
+        contact_msg.data = bool(contact)
+        self.tactile_contact_pub.publish(contact_msg)
+        score_msg = Float64()
+        score_msg.data = float(score)
+        self.tactile_score_pub.publish(score_msg)
+        status_msg = String()
+        status_msg.data = str(status)
+        self.tactile_status_pub.publish(status_msg)
 
     def format_tcp_exception(self, exc: BaseException) -> tuple[str, str]:
         if isinstance(exc, MvpTcpError):
@@ -142,6 +164,14 @@ class MvpHardwareBridgeNode(Node):
             self.get_logger().warning("Non-finite joint position from TCP state")
             self.publish_tcp_status(False, "protocol_error")
             return
+        tactile_ready = bool(state.get("tactile_ready", False))
+        tactile_contact = bool(state.get("tactile_contact_detected", False))
+        try:
+            tactile_score = float(state.get("tactile_contact_score", 0.0))
+        except (TypeError, ValueError):
+            tactile_score = 0.0
+        tactile_status = str(state.get("tactile_status", state.get("tactile_error", "missing_tactile_status")))
+        self.publish_tactile_state(tactile_ready, tactile_contact, tactile_score, tactile_status)
 
         if not self.tcp_connected:
             self.get_logger().info(f"TCP_CONNECTED host={self.host} port={self.port}")
@@ -175,6 +205,10 @@ class MvpHardwareBridgeNode(Node):
         self.last_valid_gripper_target = target
         self.last_gripper_target_monotonic_s = self.get_clock().now().nanoseconds / 1.0e9
 
+    def handle_stop_gripper_on_tactile_contact(self, msg: Bool) -> None:
+        self.last_stop_gripper_on_tactile_contact = bool(msg.data)
+        self.last_stop_gripper_flag_monotonic_s = self.get_clock().now().nanoseconds / 1.0e9
+
     def _validate_joint_target(self, msg: JointState) -> list[float] | None:
         if len(msg.position) < len(ARM_JOINT_NAMES):
             self.get_logger().warning("Rejected /mvp/joint_target: not enough positions")
@@ -203,6 +237,14 @@ class MvpHardwareBridgeNode(Node):
             return None
         return float(self.last_valid_gripper_target)
 
+    def fresh_stop_gripper_on_tactile_contact(self) -> bool:
+        if self.last_stop_gripper_flag_monotonic_s is None:
+            return False
+        now = self.get_clock().now().nanoseconds / 1.0e9
+        if now - self.last_stop_gripper_flag_monotonic_s > self.gripper_target_max_age_s:
+            return False
+        return bool(self.last_stop_gripper_on_tactile_contact)
+
     def handle_execute_target(
         self,
         request: Trigger.Request,
@@ -225,6 +267,7 @@ class MvpHardwareBridgeNode(Node):
                 list(range(len(ARM_JOINT_NAMES))),
                 confirm="MVP_MOVE",
                 gripper_target_pos=self.fresh_gripper_target(),
+                stop_gripper_on_tactile_contact=self.fresh_stop_gripper_on_tactile_contact(),
             )
         except Exception as exc:
             self.get_logger().warning(f"TCP move_joints_sequential failed: {type(exc).__name__}: {exc}")
