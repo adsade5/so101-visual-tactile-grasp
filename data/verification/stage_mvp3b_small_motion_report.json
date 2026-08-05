@@ -1,0 +1,41 @@
+{
+  "stage": "MVP-3B",
+  "source": "user_manual_acceptance",
+  "before_state": {
+    "shoulder_pan_rad": -0.162641670955076,
+    "shoulder_lift_rad": -1.3525342730839574,
+    "elbow_flex_rad": 1.06714417121939,
+    "wrist_flex_rad": 1.1929613129016186,
+    "wrist_roll_rad": -0.03452299619329443,
+    "gripper": 46.92513368983957
+  },
+  "after_state": {
+    "shoulder_pan_rad": -0.162641670955076,
+    "shoulder_lift_rad": -1.3525342730839574,
+    "elbow_flex_rad": 1.06714417121939,
+    "wrist_flex_rad": 1.1929613129016186,
+    "wrist_roll_rad": -0.02531686387508258,
+    "gripper": 46.92513368983957
+  },
+  "final_error_rad": 0.00920613231821185,
+  "final_error_deg": 0.5274725274725295,
+  "return_tolerance_deg": 1.5,
+  "only_wrist_roll_visibly_moved": true,
+  "gripper_unchanged": true,
+  "other_joint_readbacks_unchanged": true,
+  "abnormal_motion_observed": false,
+  "timeout_observed": false,
+  "tracking_error_observed": false,
+  "user_observations": [
+    "wrist_roll发生缓慢小角度旋转",
+    "wrist_roll随后回正",
+    "用户通过触碰和观察确认发生旋转",
+    "其他关节没有可见运动",
+    "夹爪没有运动",
+    "无异常抖动",
+    "无超时",
+    "无tracking error"
+  ],
+  "user_confirmed_rotation_and_return": true,
+  "final_status": "PASS"
+}
