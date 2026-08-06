@@ -6,7 +6,7 @@
   "ros2_build_result": "PASS",
   "opened_tactile_com_port": false,
   "hardware_command_sent": false,
-  "tactile_port_source": "so101_ros2_tactile_guard UDP guard command_port=5006; no committed FlexiTac COM port found",
+  "tactile_port_source": "direct_serial:COM8",
   "cases": [
     {
       "name": "compileall_core_files",
@@ -19,42 +19,42 @@
       "details": null
     },
     {
-      "name": "tactile_source_udp_guard_receiver",
+      "name": "tactile_source_direct_serial",
       "passed": true,
       "details": null
     },
     {
-      "name": "tactile_guard_host_loopback",
+      "name": "tactile_port_com8",
       "passed": true,
       "details": null
     },
     {
-      "name": "tactile_guard_port_5006",
+      "name": "tactile_baudrate_2000000",
       "passed": true,
       "details": null
     },
     {
-      "name": "tactile_timeout_positive",
+      "name": "tactile_state_timeout_positive",
       "passed": true,
       "details": null
     },
     {
-      "name": "old_on_score_recorded",
+      "name": "direct_on_score_recorded",
       "passed": true,
       "details": null
     },
     {
-      "name": "old_off_score_recorded",
+      "name": "direct_off_score_recorded",
       "passed": true,
       "details": null
     },
     {
-      "name": "old_confirm_frames_recorded",
+      "name": "direct_confirm_frames_recorded",
       "passed": true,
       "details": null
     },
     {
-      "name": "old_release_frames_recorded",
+      "name": "direct_release_frames_recorded",
       "passed": true,
       "details": null
     },

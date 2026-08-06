@@ -59,6 +59,7 @@ def main() -> int:
     client = read("ros2_ws/src/so101_mvp_control/so101_mvp_control/mvp_tcp_client.py")
     shared_client = read("shared_protocol/mvp_tcp_client.py")
     hardware_config = json.loads(read("config/mvp_hardware.json"))
+    tactile_config = hardware_config.get("tactile", {})
     grasp_config_text = read("config/mvp_grasp.yaml")
     doc = read("docs/MVP4E_TACTILE_GRASP_LIFT_MANUAL_ACCEPTANCE.md")
     cfg = load_grasp_config()
@@ -74,16 +75,16 @@ def main() -> int:
 
     cases: list[Case] = []
     cases.append(case("compileall_core_files", compile_ok, compile_output))
-    cases.append(case("tactile_config_enabled", hardware_config.get("tactile_enabled") is True))
-    cases.append(case("tactile_source_udp_guard_receiver", hardware_config.get("tactile_source") == "udp_guard_receiver"))
-    cases.append(case("tactile_guard_host_loopback", hardware_config.get("tactile_guard_host") == "127.0.0.1"))
-    cases.append(case("tactile_guard_port_5006", hardware_config.get("tactile_guard_port") == 5006))
-    cases.append(case("tactile_timeout_positive", float(hardware_config.get("tactile_guard_timeout_s", 0.0)) > 0.0))
-    cases.append(case("old_on_score_recorded", abs(float(hardware_config.get("tactile_contact_on_score")) - 0.80) < 1e-9))
-    cases.append(case("old_off_score_recorded", abs(float(hardware_config.get("tactile_contact_off_score")) - 0.20) < 1e-9))
-    cases.append(case("old_confirm_frames_recorded", int(hardware_config.get("tactile_confirm_frames")) == 3))
-    cases.append(case("old_release_frames_recorded", int(hardware_config.get("tactile_release_frames")) == 3))
-    cases.append(case("no_fake_flexitac_com_port", "tactile_port" not in hardware_config and "tactile_baudrate" not in hardware_config))
+    cases.append(case("tactile_config_enabled", tactile_config.get("enabled") is True))
+    cases.append(case("tactile_source_direct_serial", tactile_config.get("source") == "direct_serial"))
+    cases.append(case("tactile_port_com8", tactile_config.get("port") == "COM8"))
+    cases.append(case("tactile_baudrate_2000000", int(tactile_config.get("baudrate", 0)) == 2_000_000))
+    cases.append(case("tactile_state_timeout_positive", float(tactile_config.get("state_max_age_s", 0.0)) > 0.0))
+    cases.append(case("direct_on_score_recorded", abs(float(tactile_config.get("contact_on_threshold")) - 40.0) < 1e-9))
+    cases.append(case("direct_off_score_recorded", abs(float(tactile_config.get("contact_off_threshold")) - 30.0) < 1e-9))
+    cases.append(case("direct_confirm_frames_recorded", int(tactile_config.get("contact_confirm_frames")) == 3))
+    cases.append(case("direct_release_frames_recorded", int(tactile_config.get("release_confirm_frames")) == 5))
+    cases.append(case("no_fake_flexitac_com_port", tactile_config.get("port") == "COM8" and hardware_config.get("follower_port") == "COM4"))
     cases.append(case("gripper_open_delta_10", abs(float(cfg["gripper_open_delta"]) - 10.0) < 1e-9))
     cases.append(case("tactile_stop_enabled_config", cfg["tactile_stop_enabled"] is True))
     cases.append(case("tactile_require_clear_config", cfg["tactile_require_clear_before_grasp"] is True))
@@ -139,7 +140,7 @@ def main() -> int:
         "ros2_build_result": args.ros2_build_result,
         "opened_tactile_com_port": False,
         "hardware_command_sent": False,
-        "tactile_port_source": hardware_config.get("tactile_port_source"),
+        "tactile_port_source": "direct_serial:COM8",
         "cases": [item.__dict__ for item in cases],
     }
     REPORT_PATH.parent.mkdir(parents=True, exist_ok=True)

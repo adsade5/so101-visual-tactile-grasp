@@ -171,6 +171,16 @@ class MvpHardwareBridgeNode(Node):
         except (TypeError, ValueError):
             tactile_score = 0.0
         tactile_status = str(state.get("tactile_status", state.get("tactile_error", "missing_tactile_status")))
+        tactile_source = str(state.get("tactile_source", "unknown"))
+        tactile_port = str(state.get("tactile_port", ""))
+        tactile_error = str(state.get("tactile_error", ""))
+        tactile_age = state.get("tactile_state_age_s")
+        tactile_frame_count = state.get("tactile_frame_count", 0)
+        tactile_status = (
+            f"{tactile_status};source={tactile_source};port={tactile_port};"
+            f"age_s={'' if tactile_age is None else tactile_age};error={tactile_error};"
+            f"frame_count={tactile_frame_count}"
+        )
         self.publish_tactile_state(tactile_ready, tactile_contact, tactile_score, tactile_status)
 
         if not self.tcp_connected:

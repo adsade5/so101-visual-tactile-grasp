@@ -1,0 +1,259 @@
+{
+  "stage": "MVP-4E-DIRECT-FLEXITAC-COM8-INTEGRATION",
+  "root_cause": "no process was reading the real FlexiTac serial port",
+  "previous_tactile_source": "udp_guard_receiver",
+  "new_tactile_source": "direct_serial",
+  "robot_port": "COM4",
+  "tactile_port": "COM8",
+  "tactile_baudrate": 2000000,
+  "tactile_rows": 12,
+  "tactile_cols": 32,
+  "tactile_serial_owner": "mvp_so101_server",
+  "external_guard_required": false,
+  "udp5005_required": false,
+  "udp5006_required": false,
+  "baseline_frames": 30,
+  "contact_on_threshold": 40.0,
+  "contact_off_threshold": 30.0,
+  "contact_confirm_frames": 3,
+  "release_confirm_frames": 5,
+  "stable_contact_3s_used": false,
+  "tactile_test_entry": "scripts/mvp_visual_grasp.py --tactile-test",
+  "final_grasp_entry": "scripts/mvp_visual_grasp.py --execute --confirm VISUAL_GRASP",
+  "manual_acceptance_major_step_count": 2,
+  "visual_algorithm_modified": false,
+  "ik_algorithm_modified": false,
+  "fk_algorithm_modified": false,
+  "descent_waypoints_modified": false,
+  "lift_waypoints_modified": false,
+  "gripper_stop_logic_modified": false,
+  "offline_test_cases": 43,
+  "offline_tests_passed": true,
+  "legacy_regression_tests_passed": "4B_PASS;4C_PASS;4C_HOTFIX_PASS;4E_PASS;4D_40_OF_44_PASS_WITH_SUPERSEDED_4E_STOP_LIFT_CHECKS",
+  "ros2_build_result": "PASS",
+  "opened_robot_com_port": false,
+  "opened_tactile_com_port": false,
+  "tcp_started": false,
+  "hardware_bridge_started": false,
+  "goal_position_written": false,
+  "physical_motion_observed": false,
+  "manual_acceptance_document": "docs/MVP4E_TACTILE_GRASP_LIFT_MANUAL_ACCEPTANCE.md",
+  "final_status": "READY_FOR_DIRECT_COM8_TACTILE_RETEST",
+  "cases": [
+    {
+      "name": "tactile_source_is_direct_serial",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "robot_port_remains_com4",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "tactile_port_is_com8",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "tactile_baudrate_is_2000000",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "tactile_rows_12",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "tactile_cols_32",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "direct_reader_reuses_existing_frame_parser",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "direct_reader_reuses_existing_contact_logic",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "server_is_single_serial_owner",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "bridge_does_not_open_com8",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "visual_script_does_not_open_com8",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_external_guard_required",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_udp5005_required",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_udp5006_required",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "baseline_runs_once_at_startup",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "tactile_not_ready_during_baseline",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "tactile_ready_after_baseline",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "contact_on_40",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "contact_off_30",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "contact_confirm_3_frames",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "release_confirm_5_frames",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_stable_3s_for_stop",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "state_age_updated",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "serial_error_exposed",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "contact_change_logging",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "tactile_test_false_true_false",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "tactile_test_no_motion",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "tactile_test_failure_has_diagnostics",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "contact_stop_close_unchanged",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "zero_preload_unchanged",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_contact_no_lift_unchanged",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "three_lift_waypoints_unchanged",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "lift_uses_five_joint_ik",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "single_tcp_client_unchanged",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "control_frequency_20hz",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "arm_speed_0p06",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_motion_retry",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_return",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_place",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_com4_open_in_test",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_com8_open_in_test",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_goal_position_write",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_physical_motion",
+      "passed": true,
+      "details": ""
+    }
+  ]
+}

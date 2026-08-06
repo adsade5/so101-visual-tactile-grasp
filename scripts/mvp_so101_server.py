@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+import importlib.util
 import json
 import math
 import socket
@@ -8,9 +9,12 @@ import struct
 import sys
 import threading
 import time
+import traceback
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Protocol
+
+import numpy as np
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 if str(PROJECT_ROOT) not in sys.path:
@@ -29,6 +33,7 @@ from lerobot_server.mvp_hardware_executor import (
 
 MAX_SPEED_RAD_S = 0.08
 MOVE_CONFIRMATION = "MVP_MOVE"
+DEBUG_TACTILE = False
 GUARD_PACKET_STRUCT = struct.Struct("!4sBBI")
 GUARD_MAGIC = b"GRIP"
 GUARD_VERSION = 1
@@ -86,6 +91,8 @@ class TactileSnapshot:
     error: str | None
     status: str
     source: str
+    port: str | None = None
+    frame_count: int = 0
 
     def to_tcp_fields(self) -> dict[str, Any]:
         return {
@@ -96,6 +103,8 @@ class TactileSnapshot:
             "tactile_error": self.error,
             "tactile_status": self.status,
             "tactile_source": self.source,
+            "tactile_port": self.port,
+            "tactile_frame_count": int(self.frame_count),
         }
 
 
@@ -158,57 +167,254 @@ class TactileUdpGuardReceiver:
 
 class TactileRuntime:
     def __init__(self, config: dict[str, Any]) -> None:
-        self.enabled = bool(config.get("tactile_enabled", True))
-        self.source = str(config.get("tactile_source", "udp_guard_receiver"))
-        self.host = str(config.get("tactile_guard_host", "127.0.0.1"))
-        self.port = int(config.get("tactile_guard_port", 5006))
-        self.timeout_s = float(config.get("tactile_guard_timeout_s", 0.5))
-        self.receiver: TactileUdpGuardReceiver | None = None
+        tactile_config = config.get("tactile", {})
+        if not isinstance(tactile_config, dict):
+            tactile_config = {}
+        self.enabled = bool(tactile_config.get("enabled", True))
+        self.source = str(tactile_config.get("source", "direct_serial"))
+        self.port = str(tactile_config.get("port", "COM8"))
+        self.baudrate = int(tactile_config.get("baudrate", 2_000_000))
+        self.rows = int(tactile_config.get("rows", 12))
+        self.cols = int(tactile_config.get("cols", 32))
+        self.baseline_frames = int(tactile_config.get("baseline_frames", 30))
+        self.serial_timeout_s = float(tactile_config.get("serial_timeout_s", 0.05))
+        self.state_max_age_s = float(tactile_config.get("state_max_age_s", 0.25))
+        self.top_k = int(tactile_config.get("top_k", 20))
+        self.contact_on_threshold = float(tactile_config.get("contact_on_threshold", 40.0))
+        self.contact_off_threshold = float(tactile_config.get("contact_off_threshold", 30.0))
+        self.contact_confirm_frames = int(tactile_config.get("contact_confirm_frames", 3))
+        self.release_confirm_frames = int(tactile_config.get("release_confirm_frames", 5))
+        self.reader_source = str(tactile_config.get("frame_reader_source", "Evo-RL/src/lerobot/utils/flexitac_reader.py"))
+        self.contact_logic_source = str(tactile_config.get("contact_logic_source", "Evo-RL/src/lerobot/utils/episode_success_source.py"))
+        self.reader: Any | None = None
+        self.monitor_thread: threading.Thread | None = None
+        self.stop_event = threading.Event()
+        self.lock = threading.Lock()
         self.error: str | None = None
+        self.ready = False
+        self.contact_detected = False
+        self.contact_score = 0.0
+        self.last_update_monotonic_s: float | None = None
+        self.frame_count = 0
+        self.above_count = 0
+        self.below_count = 0
+        self.last_logged_contact: bool | None = None
 
     def connect(self) -> None:
         if not self.enabled:
             self.error = "tactile_disabled"
             return
-        if self.source != "udp_guard_receiver":
+        print(
+            f"TACTILE_CONFIG source={self.source} port={self.port} baudrate={self.baudrate} rows={self.rows} cols={self.cols}",
+            flush=True,
+        )
+        if self.source != "direct_serial":
             self.error = f"unsupported_tactile_source:{self.source}"
             return
+        if self.port.upper() != "COM8":
+            self.error = f"tactile_port_must_be_COM8:configured={self.port}"
+            print(
+                f"TACTILE_READER_INIT_FAILED port={self.port} error_type=ValueError error={self.error} stage=reader_init",
+                flush=True,
+            )
+            return
         try:
-            self.receiver = TactileUdpGuardReceiver(self.host, self.port, self.timeout_s)
+            reader_cls = self._load_existing_flexitac_reader()
+            print("TACTILE_MODULE_LOADED", flush=True)
+        except Exception as exc:
+            self.reader = None
+            self.error = f"tactile_module_load_failed:{type(exc).__name__}:{exc}"
+            print(
+                f"TACTILE_MODULE_LOAD_FAILED module_path={self._reader_path()} error_type={type(exc).__name__} error={exc} stage=module_load",
+                flush=True,
+            )
+            self._print_debug_traceback()
+            return
+        try:
+            self.reader = reader_cls(
+                port=self.port,
+                baud=self.baudrate,
+                rows=self.rows,
+                cols=self.cols,
+                baseline_frames=self.baseline_frames,
+            )
+            print(f"TACTILE_READER_INITIALIZED port={self.port}", flush=True)
+        except Exception as exc:
+            self.reader = None
+            self.error = f"tactile_reader_init_failed:{type(exc).__name__}:{exc}"
+            print(
+                f"TACTILE_READER_INIT_FAILED port={self.port} error_type={type(exc).__name__} error={exc} stage=reader_init",
+                flush=True,
+            )
+            self._print_debug_traceback()
+            return
+        try:
+            print(f"TACTILE_SERIAL_OPENING port={self.port}", flush=True)
+            print("DO_NOT_TOUCH_FLEXITAC_DURING_BASELINE", flush=True)
+            print(f"TACTILE_BASELINE_STARTED frames={self.baseline_frames}", flush=True)
+            self.reader.start()
+            print(f"TACTILE_SERIAL_OPENED port={self.port}", flush=True)
+            print("TACTILE_BASELINE_COMPLETED", flush=True)
+            self.stop_event.clear()
+            self.monitor_thread = threading.Thread(
+                target=self._monitor_loop,
+                name="mvp-flexitac-contact-monitor",
+                daemon=True,
+            )
+            self.monitor_thread.start()
+            print("TACTILE_READER_STARTED", flush=True)
             self.error = None
-        except OSError as exc:
-            self.receiver = None
-            self.error = f"tactile_udp_bind_failed:{type(exc).__name__}:{exc}"
+            with self.lock:
+                self.ready = True
+            print("TACTILE_READY true", flush=True)
+        except Exception as exc:
+            stage, event, possible_reason = self._classify_reader_start_error(exc)
+            self.reader = None
+            self.error = f"{stage}:{type(exc).__name__}:{exc}"
+            possible_text = "" if possible_reason is None else f" possible_reason={possible_reason}"
+            print(
+                f"{event} port={self.port} error_type={type(exc).__name__} error={exc} stage={stage}{possible_text}",
+                flush=True,
+            )
+            self._print_debug_traceback()
 
     def close(self) -> None:
-        if self.receiver is not None:
-            self.receiver.close()
-        self.receiver = None
+        self.stop_event.set()
+        if self.monitor_thread is not None:
+            self.monitor_thread.join(timeout=1.0)
+        self.monitor_thread = None
+        if self.reader is not None:
+            self.reader.close()
+        self.reader = None
+        with self.lock:
+            self.ready = False
 
     def snapshot(self) -> TactileSnapshot:
-        if self.receiver is None:
-            return TactileSnapshot(
-                ready=False,
-                contact_detected=False,
-                contact_score=0.0,
-                state_age_s=None,
-                error=self.error or "tactile_receiver_not_started",
-                status=self.error or "tactile_receiver_not_started",
-                source=f"{self.source}:{self.host}:{self.port}",
-            )
+        with self.lock:
+            age = None if self.last_update_monotonic_s is None else time.monotonic() - self.last_update_monotonic_s
+            ready = bool(self.ready and age is not None and age <= self.state_max_age_s)
+            contact = bool(self.contact_detected)
+            score = float(self.contact_score)
+            frame_count = int(self.frame_count)
+            error = self.error
+        if not ready and error is None:
+            error = "tactile_state_unavailable_or_stale"
+        status = (
+            f"source={self.source};port={self.port};ready={bool(ready)};contact={bool(contact)};"
+            f"score={score:.3f};age_s={'' if age is None else f'{age:.3f}'};error={'' if error is None else error};"
+            f"frame_count={frame_count}"
+        )
+        return TactileSnapshot(
+            ready=ready,
+            contact_detected=contact,
+            contact_score=score,
+            state_age_s=None if age is None else float(age),
+            error=error,
+            status=status,
+            source=self.source,
+            port=self.port,
+            frame_count=frame_count,
+        )
+
+    def _reader_path(self) -> Path:
+        return (PROJECT_ROOT.parents[0] / self.reader_source).resolve()
+
+    def _load_existing_flexitac_reader(self) -> type:
+        reader_path = self._reader_path()
+        if not reader_path.is_file():
+            raise RuntimeError(f"existing_flexitac_reader_not_found:{reader_path}")
+        module_name = "so101_mvp_reused_flexitac_reader"
+        spec = importlib.util.spec_from_file_location(module_name, reader_path)
+        if spec is None or spec.loader is None:
+            raise RuntimeError(f"existing_flexitac_reader_import_failed:{reader_path}")
+        module = importlib.util.module_from_spec(spec)
+        sys.modules[module_name] = module
         try:
-            return self.receiver.poll()
-        except OSError as exc:
-            self.error = f"tactile_poll_failed:{type(exc).__name__}:{exc}"
-            return TactileSnapshot(
-                ready=False,
-                contact_detected=False,
-                contact_score=0.0,
-                state_age_s=None,
-                error=self.error,
-                status=self.error,
-                source=f"{self.source}:{self.host}:{self.port}",
-            )
+            spec.loader.exec_module(module)
+        except Exception:
+            sys.modules.pop(module_name, None)
+            raise
+        reader_cls = getattr(module, "FlexiTacReader", None)
+        if reader_cls is None:
+            raise RuntimeError("FlexiTacReader class missing from existing source")
+        return reader_cls
+
+    def _classify_reader_start_error(self, exc: Exception) -> tuple[str, str, str | None]:
+        root = exc.__cause__ or exc
+        text = str(root).lower()
+        type_name = type(root).__name__
+        if type_name in {"PermissionError"} or "access is denied" in text or "permission" in text:
+            return "serial_open", "TACTILE_SERIAL_OPEN_FAILED", "port_in_use"
+        if type_name in {"FileNotFoundError"} or "cannot find" in text or "could not open port" in text:
+            return "serial_open", "TACTILE_SERIAL_OPEN_FAILED", "wrong_port_or_device_disconnected"
+        if "serial" in type_name.lower() or "serial" in text:
+            return "serial_open", "TACTILE_SERIAL_OPEN_FAILED", "serial_configuration_or_driver_error"
+        if isinstance(root, TimeoutError) or "baseline" in text or "timed out waiting for a complete flexitac frame" in text:
+            return "baseline", "TACTILE_BASELINE_FAILED", None
+        return "reader_start", "TACTILE_READER_START_FAILED", None
+
+    def _print_debug_traceback(self) -> None:
+        if DEBUG_TACTILE:
+            traceback.print_exc()
+
+    def _monitor_loop(self) -> None:
+        while not self.stop_event.is_set():
+            try:
+                if self.reader is None:
+                    time.sleep(0.01)
+                    continue
+                delta = self.reader.get_latest_delta()
+                if delta is None:
+                    time.sleep(0.01)
+                    continue
+                score = self._calculate_top_k_score(delta)
+                changed = self._update_contact_state(score)
+                with self.lock:
+                    self.contact_score = score
+                    self.last_update_monotonic_s = time.monotonic()
+                    self.frame_count += 1
+                    contact = self.contact_detected
+                    self.error = None
+                if changed or self.last_logged_contact is None:
+                    print(f"TACTILE_CONTACT_CHANGED contact={str(contact).lower()} score={score:.2f}", flush=True)
+                    self.last_logged_contact = contact
+                time.sleep(0.005)
+            except Exception as exc:
+                with self.lock:
+                    self.error = f"tactile_reader_failed:{type(exc).__name__}:{exc}"
+                    self.ready = False
+                return
+
+    def _calculate_top_k_score(self, delta: np.ndarray) -> float:
+        flat = np.asarray(delta, dtype=np.float32).reshape(-1)
+        top_k = min(self.top_k, flat.size)
+        top_values = np.partition(flat, -top_k)[-top_k:]
+        return float(top_values.mean())
+
+    def _update_contact_state(self, score: float) -> bool:
+        changed = False
+        with self.lock:
+            if not self.contact_detected:
+                if score >= self.contact_on_threshold:
+                    self.above_count += 1
+                else:
+                    self.above_count = 0
+                if self.above_count >= self.contact_confirm_frames:
+                    self.contact_detected = True
+                    self.above_count = 0
+                    self.below_count = 0
+                    changed = True
+            else:
+                if score <= self.contact_off_threshold:
+                    self.below_count += 1
+                else:
+                    self.below_count = 0
+                if self.below_count >= self.release_confirm_frames:
+                    self.contact_detected = False
+                    self.above_count = 0
+                    self.below_count = 0
+                    changed = True
+        return changed
 
 
 class ReadOnlyFeetechBackend:
@@ -294,9 +500,10 @@ class ReadOnlyFeetechBackend:
             "goal_position_write_count": self.goal_position_write_count,
             "torque_enable_write_count": self.torque_enable_write_count,
             "torque_disable_write_count": self.torque_disable_write_count,
-            "tactile_port_source": self.tactile.source,
-            "tactile_guard_host": self.tactile.host,
-            "tactile_guard_port": self.tactile.port,
+            "tactile_source": self.tactile.source,
+            "tactile_port": self.tactile.port,
+            "tactile_baudrate": self.tactile.baudrate,
+            "tactile_frame_count": self.tactile.snapshot().frame_count,
         }
 
 
@@ -752,7 +959,14 @@ def main() -> int:
         action="store_true",
         help="Allow validated move_joints_sequential requests.",
     )
+    parser.add_argument(
+        "--debug-tactile",
+        action="store_true",
+        help="Print full tactile initialization traceback on failure.",
+    )
     args = parser.parse_args()
+    global DEBUG_TACTILE
+    DEBUG_TACTILE = bool(args.debug_tactile)
 
     if args.dry_run:
         return run_dry_run(args.config)

@@ -1,0 +1,118 @@
+{
+  "stage": "MVP-4E-DIRECT-COM8-DYNAMIC-IMPORT-HOTFIX",
+  "observed_error": "AttributeError: 'NoneType' object has no attribute '__dict__'",
+  "root_cause": "dynamically loaded dataclass module was not registered in sys.modules before exec_module",
+  "error_occurred_before_serial_open": true,
+  "dynamic_import_used": true,
+  "module_registered_before_exec": true,
+  "dataclass_import_regression_fixed": true,
+  "robot_port": "COM4",
+  "tactile_port": "COM8",
+  "tactile_baudrate": 2000000,
+  "udp_guard_required": false,
+  "offline_tests_passed": true,
+  "legacy_regression_tests_passed": "4B_PASS;4C_PASS;4C_HOTFIX_PASS;4E_PASS;4D_40_OF_44_PASS_WITH_SUPERSEDED_4E_STOP_LIFT_CHECKS",
+  "ros2_build_result": "PASS",
+  "opened_robot_com_port": false,
+  "opened_tactile_com_port": false,
+  "goal_position_written": false,
+  "physical_motion_observed": false,
+  "final_status": "READY_FOR_DIRECT_COM8_SERVER_RETEST",
+  "cases": [
+    {
+      "name": "reused_sensor_module_loads_successfully",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "loaded_module_registered_in_sys_modules",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "FlexiTacFrame_dataclass_created",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "FlexiTacSensor_class_available",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "failed_module_load_cleans_sys_modules",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "module_load_error_not_reported_as_serial_open_error",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "reader_init_error_not_reported_as_serial_open_error",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "serial_exception_reported_as_serial_open_error",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "permission_error_reports_port_in_use",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "file_not_found_reports_wrong_port_or_disconnected",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "config_robot_port_remains_com4",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "config_tactile_port_remains_com8",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "config_baudrate_remains_2000000",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_udp_guard_required",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_com4_open",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_com8_open",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_tcp_started",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_goal_position_write",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_physical_motion",
+      "passed": true,
+      "details": ""
+    }
+  ]
+}

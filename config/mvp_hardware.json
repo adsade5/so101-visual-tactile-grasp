@@ -16,14 +16,22 @@
   "maximum_tracking_error_deg": 8.0,
   "motion_timeout_s": 5.0,
   "gripper_only_motion_duration_s": 2.0,
-  "tactile_enabled": true,
-  "tactile_source": "udp_guard_receiver",
-  "tactile_guard_host": "127.0.0.1",
-  "tactile_guard_port": 5006,
-  "tactile_guard_timeout_s": 0.5,
-  "tactile_port_source": "so101_ros2_tactile_guard UDP guard command_port=5006; no committed FlexiTac COM port found",
-  "tactile_contact_on_score": 0.80,
-  "tactile_contact_off_score": 0.20,
-  "tactile_confirm_frames": 3,
-  "tactile_release_frames": 3
+  "tactile": {
+    "enabled": true,
+    "source": "direct_serial",
+    "port": "COM8",
+    "baudrate": 2000000,
+    "rows": 12,
+    "cols": 32,
+    "baseline_frames": 30,
+    "serial_timeout_s": 0.05,
+    "state_max_age_s": 0.25,
+    "top_k": 20,
+    "contact_on_threshold": 40.0,
+    "contact_off_threshold": 30.0,
+    "contact_confirm_frames": 3,
+    "release_confirm_frames": 5,
+    "frame_reader_source": "Evo-RL/src/lerobot/utils/flexitac_reader.py",
+    "contact_logic_source": "Evo-RL/src/lerobot/utils/episode_success_source.py"
+  }
 }

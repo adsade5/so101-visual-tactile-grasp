@@ -119,6 +119,11 @@ class StampedTactileState:
     contact_score: float
     status: str
     received_monotonic_s: float
+    source: str = ""
+    port: str = ""
+    state_age_s: float | None = None
+    error: str | None = None
+    frame_count: int = 0
 
 
 def parse_yaml_scalar(value: str) -> float | bool | None | str:
@@ -561,9 +566,14 @@ def build_integrated_plan_summary(
         "gripper_close_target_position": float(initial_gripper_position),
         "gripper_close_target_equals_initial": True,
         "tactile_stop_enabled": bool(config.tactile_stop_enabled),
+        "tactile_source": None if tactile_state is None else tactile_state.source,
+        "tactile_port": None if tactile_state is None else tactile_state.port,
         "tactile_ready_before_motion": None if tactile_state is None else bool(tactile_state.ready),
         "tactile_contact_before_motion": None if tactile_state is None else bool(tactile_state.contact_detected),
         "tactile_contact_score_before_motion": None if tactile_state is None else float(tactile_state.contact_score),
+        "tactile_state_age_s_before_motion": None if tactile_state is None else tactile_state.state_age_s,
+        "tactile_error_before_motion": None if tactile_state is None else tactile_state.error,
+        "tactile_frame_count_before_motion": None if tactile_state is None else tactile_state.frame_count,
         "tactile_status_before_motion": None if tactile_state is None else tactile_state.status,
         "tactile_pre_motion_check": tactile_reason,
         "gripper_contact_preload_offset": 0.0,
@@ -602,6 +612,35 @@ def pose_to_list(msg: Any) -> list[float]:
 
 def json_print(payload: dict[str, Any]) -> None:
     print(json.dumps(payload, indent=2, ensure_ascii=False, allow_nan=False))
+
+
+def parse_tactile_status_fields(status: str) -> dict[str, str]:
+    fields: dict[str, str] = {}
+    for part in str(status).split(";"):
+        if "=" not in part:
+            continue
+        key, value = part.split("=", 1)
+        fields[key.strip()] = value.strip()
+    return fields
+
+
+def optional_status_float(value: str | None) -> float | None:
+    if value is None or value == "":
+        return None
+    try:
+        number = float(value)
+    except ValueError:
+        return None
+    return number if math.isfinite(number) else None
+
+
+def optional_status_int(value: str | None) -> int:
+    if value is None or value == "":
+        return 0
+    try:
+        return int(float(value))
+    except ValueError:
+        return 0
 
 
 class VisualGraspNode:
@@ -699,12 +738,18 @@ class VisualGraspNode:
         self.tcp_status = str(msg.data)
 
     def _refresh_tactile_state(self) -> None:
+        fields = parse_tactile_status_fields(self.latest_tactile_status)
         self.latest_tactile_state = StampedTactileState(
             ready=bool(self.latest_tactile_ready),
             contact_detected=bool(self.latest_tactile_contact),
             contact_score=float(self.latest_tactile_score),
             status=str(self.latest_tactile_status),
             received_monotonic_s=time.monotonic(),
+            source=fields.get("source", ""),
+            port=fields.get("port", ""),
+            state_age_s=optional_status_float(fields.get("age_s")),
+            error=fields.get("error") or None,
+            frame_count=optional_status_int(fields.get("frame_count")),
         )
 
     def _tactile_ready_cb(self, msg: Any) -> None:
@@ -787,13 +832,26 @@ class TactileTestNode:
         self.false_seen = False
         self.true_seen = False
         self.release_seen_after_true = False
+        self.last_logged_contact: bool | None = None
         self.node.create_subscription(Bool, "/mvp/tactile_ready", self._ready_cb, 10)
         self.node.create_subscription(Bool, "/mvp/tactile_contact", self._contact_cb, 10)
         self.node.create_subscription(Float64, "/mvp/tactile_score", self._score_cb, 10)
         self.node.create_subscription(String, "/mvp/tactile_status", self._status_cb, 10)
 
     def _record(self) -> None:
-        self.latest = StampedTactileState(self.ready, self.contact, self.score, self.status, time.monotonic())
+        fields = parse_tactile_status_fields(self.status)
+        self.latest = StampedTactileState(
+            self.ready,
+            self.contact,
+            self.score,
+            self.status,
+            time.monotonic(),
+            source=fields.get("source", ""),
+            port=fields.get("port", ""),
+            state_age_s=optional_status_float(fields.get("age_s")),
+            error=fields.get("error") or None,
+            frame_count=optional_status_int(fields.get("frame_count")),
+        )
         if self.ready:
             self.ready_seen = True
         if not self.contact:
@@ -802,6 +860,9 @@ class TactileTestNode:
             self.false_seen = True
         if self.contact and self.false_seen:
             self.true_seen = True
+        if self.last_logged_contact is None or self.last_logged_contact != self.contact:
+            print(f"TACTILE_TEST contact={str(self.contact).lower()} score={self.score:.2f}", flush=True)
+            self.last_logged_contact = self.contact
 
     def _ready_cb(self, msg: Any) -> None:
         self.ready = bool(msg.data)
@@ -826,17 +887,24 @@ class TactileTestNode:
             if self.ready_seen and self.false_seen and self.true_seen and self.release_seen_after_true:
                 break
         observed_transition = self.false_seen and self.true_seen and self.release_seen_after_true
+        latest = self.latest
         return {
             "success": bool(self.ready_seen and observed_transition),
             "reason": "tactile_static_test_pass" if self.ready_seen and observed_transition else "tactile_static_test_timeout",
             "mode": "tactile_test",
             "timeout_s": float(timeout_s),
+            "tactile_source": "" if latest is None else latest.source,
+            "tactile_port": "" if latest is None else latest.port,
             "tactile_ready_seen": bool(self.ready_seen),
             "tactile_false_seen": bool(self.false_seen),
             "tactile_true_seen": bool(self.true_seen),
             "tactile_release_seen_after_true": bool(self.release_seen_after_true),
+            "tactile_ready": bool(self.ready),
             "tactile_contact_detected": bool(self.contact),
             "tactile_contact_score": float(self.score),
+            "tactile_state_age_s": None if latest is None else latest.state_age_s,
+            "tactile_error": None if latest is None else latest.error,
+            "tactile_frame_count": 0 if latest is None else latest.frame_count,
             "tactile_status": self.status,
             "hardware_command_sent": False,
             "camera_used": False,
@@ -920,9 +988,14 @@ def run(args: argparse.Namespace) -> int:
                         "success": False,
                         "reason": tactile_reason,
                         "mode": "plan_only" if args.plan_only or not args.execute else "execute",
+                        "tactile_source": None if node.latest_tactile_state is None else node.latest_tactile_state.source,
+                        "tactile_port": None if node.latest_tactile_state is None else node.latest_tactile_state.port,
                         "tactile_ready": None if node.latest_tactile_state is None else node.latest_tactile_state.ready,
                         "tactile_contact_detected": None if node.latest_tactile_state is None else node.latest_tactile_state.contact_detected,
                         "tactile_contact_score": None if node.latest_tactile_state is None else node.latest_tactile_state.contact_score,
+                        "tactile_state_age_s": None if node.latest_tactile_state is None else node.latest_tactile_state.state_age_s,
+                        "tactile_error": None if node.latest_tactile_state is None else node.latest_tactile_state.error,
+                        "tactile_frame_count": None if node.latest_tactile_state is None else node.latest_tactile_state.frame_count,
                         "tactile_status": None if node.latest_tactile_state is None else node.latest_tactile_state.status,
                         "hardware_command_sent": False,
                     }

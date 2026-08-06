@@ -1,8 +1,14 @@
-# MVP-4E Tactile Stop Grasp And Lift Manual Acceptance
+# MVP-4E Direct COM8 Tactile Grasp Lift Manual Acceptance
+
+Long-running terminals:
+
+- Terminal 0: Zenoh.
+- Terminal 1: `scripts\mvp_so101_server.py`; this process owns SO-101 Follower `COM4` and FlexiTac `COM8`.
+- Terminal 2: ROS2 MVP hardware bridge.
 
 ## 1. Tactile Static Test
 
-Prerequisite: keep the normal MVP TCP server and ROS2 MVP bridge running, with the existing FlexiTac guard stream available through the reused UDP guard path from `so101_ros2_tactile_guard` (`127.0.0.1:5006`). This step does not publish motion targets, does not call pregrasp compute, and does not use the camera.
+Keep the long-running terminals above active. Do not touch FlexiTac while Terminal 1 prints `DO_NOT_TOUCH_FLEXITAC_DURING_BASELINE`; wait until it prints `TACTILE_READY true`.
 
 ```powershell
 python scripts\mvp_visual_grasp.py --tactile-test
@@ -12,18 +18,25 @@ Pass criteria:
 
 - `success=true`
 - `reason=tactile_static_test_pass`
+- `tactile_source=direct_serial`
+- `tactile_port=COM8`
 - `tactile_ready_seen=true`
 - `tactile_false_seen=true`
 - `tactile_true_seen=true`
 - `tactile_release_seen_after_true=true`
 - `hardware_command_sent=false`
-- `camera_used=false`
-- `pregrasp_compute_called=false`
-- `ros_publish_count=0`
+
+Expected status-change lines:
+
+```text
+TACTILE_TEST contact=false score=<value>
+TACTILE_TEST contact=true score=<value>
+TACTILE_TEST contact=false score=<value>
+```
 
 ## 2. Final Plan-Only And Execute
 
-Plan all visual, descent, tactile stop, and lift waypoints before motion:
+Start the visual launch for object pose and pregrasp planning, then plan the full grasp without motion:
 
 ```powershell
 python scripts\mvp_visual_grasp.py --plan-only
@@ -33,6 +46,8 @@ Pass criteria:
 
 - `success=true`
 - `tactile_stop_enabled=true`
+- `tactile_source=direct_serial`
+- `tactile_port=COM8`
 - `tactile_ready_before_motion=true`
 - `tactile_contact_before_motion=false`
 - `waypoint_count=7`
