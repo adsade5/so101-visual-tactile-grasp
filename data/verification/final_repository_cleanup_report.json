@@ -95,8 +95,9 @@
     "readme": "data/verification/README.md explains FINAL vs ARCHIVED organization"
   },
 
-  "git_commit": "pending",
+  "git_commit": "1de5f82",
   "git_commit_message": "docs: finalize SO-101 visual-tactile grasp repository",
+  "git_commit_stats": "94 files changed, 2632 insertions(+), 311 deletions(-)",
 
   "final_status": "REPOSITORY_READY_FOR_GITHUB"
 }
