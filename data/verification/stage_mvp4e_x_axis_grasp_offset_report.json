@@ -1,10 +1,9 @@
 {
   "stage": "MVP-4E-X-AXIS-GRASP-OFFSET-HOTFIX",
-  "observed_real_failure": "robot reaches approximately 2cm too far forward along base_link +X, so gripper closes in front of the object instead of around it",
-  "base_link_x_direction": "+X = forward (away from robot base/mount)",
-  "offset_direction": "-X (backward toward robot base)",
-  "offset_magnitude_m": 0.02,
-  "grasp_x_offset_m": -0.02,
+  "current_physical_error": "actual grasp position is approximately 2 cm behind the desired object position",
+  "requested_physical_correction": "move the complete grasp trajectory approximately 2 cm forward",
+  "base_x_positive_direction": "+X = forward (away from robot base/mount)",
+  "applied_x_offset_m": 0.02,
   "offset_applied_in": "mvp_visual_grasp.py run(), after pose_to_list, before build_integrated_plan_summary()",
   "object_pose_base_not_modified": true,
   "entire_trajectory_uses_corrected_x": true,
@@ -37,7 +36,7 @@
       "details": "None"
     },
     {
-      "name": "config_grasp_x_offset_m_negative",
+      "name": "config_grasp_x_offset_m_positive",
       "passed": true,
       "details": "None"
     },

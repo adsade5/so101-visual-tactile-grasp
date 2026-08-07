@@ -17,7 +17,7 @@
   "motion_timeout_s": 5.0,
   "gripper_only_motion_duration_s": 2.0,
   "gripper_close_step_per_tick": 0.5,
-  "grasp_x_offset_m": -0.020,
+  "grasp_x_offset_m": 0.020,
   "tactile": {
     "enabled": true,
     "source": "direct_serial",

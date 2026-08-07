@@ -82,9 +82,9 @@ def main() -> int:
     cases.append(case("config_grasp_x_offset_m_present",
                       "grasp_x_offset_m" in hardware_config))
 
-    # ---- 3. config: offset is negative (backward toward base) ----
+    # ---- 3. config: offset is positive (forward away from base) ----
     offset_val = float(hardware_config.get("grasp_x_offset_m", 0.0))
-    cases.append(case("config_grasp_x_offset_m_negative", offset_val < 0.0))
+    cases.append(case("config_grasp_x_offset_m_positive", offset_val > 0.0))
 
     # ---- 4. config: |offset| ≈ 0.020 (2cm) ----
     cases.append(case("config_grasp_x_offset_m_magnitude_2cm",
@@ -209,14 +209,14 @@ def main() -> int:
 
     report = {
         "stage": "MVP-4E-X-AXIS-GRASP-OFFSET-HOTFIX",
-        "observed_real_failure": (
-            "robot reaches approximately 2cm too far forward along base_link +X, "
-            "so gripper closes in front of the object instead of around it"
+        "current_physical_error": (
+            "actual grasp position is approximately 2 cm behind the desired object position"
         ),
-        "base_link_x_direction": "+X = forward (away from robot base/mount)",
-        "offset_direction": "-X (backward toward robot base)",
-        "offset_magnitude_m": 0.020,
-        "grasp_x_offset_m": offset_val,
+        "requested_physical_correction": (
+            "move the complete grasp trajectory approximately 2 cm forward"
+        ),
+        "base_x_positive_direction": "+X = forward (away from robot base/mount)",
+        "applied_x_offset_m": offset_val,
         "offset_applied_in": "mvp_visual_grasp.py run(), after pose_to_list, before build_integrated_plan_summary()",
         "object_pose_base_not_modified": True,
         "entire_trajectory_uses_corrected_x": True,
