@@ -211,6 +211,7 @@ def main() -> int:
     cases.append(case("unrelated_python_not_killed", "taskkill /IM python.exe" not in launcher and "Test-CommandLineOwned" in launcher))
     cases.append(case("unrelated_powershell_not_killed", "taskkill /IM powershell.exe" not in launcher and "Test-CommandLineOwned" in launcher))
     cases.append(case("root_and_descendant_pids_recorded", "root_pid" in launcher and "descendant_pids" in launcher and "COMPONENT_PROCESS_STARTED" in launcher))
+    cases.append(case("component_command_lines_property_predeclared", "CommandLines = @()" in launcher and "$entry.CommandLines" in launcher))
     cases.append(case("server_command_uses_python_u", "python -u scripts\\mvp_so101_server.py" in launcher and "--no-capture-output" in launcher))
     cases.append(case("server_critical_logs_flush", all(token in server for token in ("SERVER_PROCESS_STARTED", "ROBOT_CONNECTING", "ROBOT_CONNECTED", "TCP_SERVER_STARTING")) and "flush=True" in server))
     cases.append(case("server_log_created_late_supported", "Test-Path -LiteralPath $Path" in launcher and "return \"\"" in launcher))

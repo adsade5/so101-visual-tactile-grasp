@@ -1,348 +1,351 @@
-﻿{
-    "stage":  "MVP-4E-ONE-LAUNCH-PROCESS-AND-READINESS-HOTFIX",
-    "observed_launcher_failure":  "FinalAcceptance marked Zenoh ready about 20 ms after spawning it, then server timed out waiting for TCP_SERVER_LISTENING",
-    "launcher_log_findings":  {
-                                  "zenoh_started_pid":  11504,
-                                  "server_started_pid":  17544,
-                                  "zenoh_ready_delta_s":  0.02,
-                                  "server_tcp_listen_timeout_s":  30.0,
-                                  "cleanup_reported_zenoh_exit_code":  1
-                              },
-    "zenoh_log_summary":  {
-                              "log_exists":  true,
-                              "log_empty":  false,
-                              "line_count":  4,
-                              "contains_vs_prompt":  true,
-                              "contains_ready_marker":  false,
-                              "contains_error_text":  false,
-                              "port_in_use_evidence":  false,
-                              "missing_ros2_environment_evidence":  true,
-                              "command_error_evidence":  false,
-                              "dll_or_rmw_load_failure_evidence":  false,
-                              "normal_start_then_exit_evidence":  false,
-                              "exit_code":  1,
-                              "root_cause_from_log":  "zenoh process exited with code 1 after only the ROS2 wrapper/Visual Studio banner; zenoh.log contains no real ready marker and no specific port/DLL/RMW error text",
-                              "tail":  [
-                                           "**********************************************************************",
-                                           "** Visual Studio 2026 Developer Command Prompt v18.4.3",
-                                           "** Copyright (c) 2026 Microsoft Corporation",
-                                           "**********************************************************************"
-                                       ]
-                          },
-    "server_log_summary":  {
-                               "log_exists":  true,
-                               "log_empty":  true,
-                               "line_count":  0,
-                               "last_completed_stage":  "none",
-                               "stopped_in_import_stage_evidence":  true,
-                               "stopped_in_com4_connect_evidence":  false,
-                               "stopped_in_com8_open_evidence":  false,
-                               "stopped_in_baseline_evidence":  false,
-                               "tcp_listen_emitted":  false,
-                               "different_listen_format_emitted":  false,
-                               "traceback":  false,
-                               "stdout_buffering_possible_in_old_launcher":  true,
-                               "hardware_init_exceeded_old_30s_possible":  true,
-                               "root_cause_from_log":  "server.log was empty; the old launcher started server with conda capture and non-unbuffered python, so no completed startup stage is evidenced before the launcher killed the still-running server",
-                               "tail":  [
-
-                                        ]
-                           },
-    "zenoh_false_ready_confirmed":  true,
-    "zenoh_exit_code":  1,
-    "zenoh_root_cause":  "zenoh process exited with code 1 after only the ROS2 wrapper/Visual Studio banner; zenoh.log contains no real ready marker and no specific port/DLL/RMW error text",
-    "server_process_exited_before_timeout":  false,
-    "server_exit_code":  null,
-    "server_last_completed_stage":  "none",
-    "server_root_cause":  "server.log was empty; the old launcher started server with conda capture and non-unbuffered python, so no completed startup stage is evidenced before the launcher killed the still-running server",
-    "old_launcher_check_previous_behavior":  "checked only launch_mvp4e_system.ps1 command line and missed failed child readiness/stale child ownership",
-    "stale_child_process_handling":  "active manifest records owned root and descendant PIDs; stale children are cleaned only when command line matches this project or expected component",
-    "process_manifest_path":  "logs/runtime/active_launcher.json",
-    "owned_process_tree_tracking":  true,
-    "zenoh_ready_marker":  "actual marker must be present in zenoh.log; current failed log had no marker",
-    "zenoh_stability_window_s":  1.0,
-    "zenoh_exit_detected_immediately":  true,
-    "zenoh_failure_aborts_server_start":  true,
-    "server_command_unbuffered":  true,
-    "server_startup_order":  [
-                                 "SERVER_PROCESS_STARTED",
-                                 "TCP_SERVER_STARTING",
-                                 "TACTILE_SERIAL_OPENED",
-                                 "TACTILE_BASELINE_COMPLETED",
-                                 "TACTILE_READY true",
-                                 "ROBOT_CONNECTED port=COM4",
-                                 "TCP_SERVER_LISTENING"
-                             ],
-    "server_stage_timeouts":  {
-                                  "server_process_start_timeout_s":  10,
-                                  "tactile_serial_open_timeout_s":  15,
-                                  "tactile_baseline_timeout_s":  30,
-                                  "robot_connect_timeout_s":  30,
-                                  "tcp_listen_timeout_s":  15
-                              },
-    "process_exit_detected_immediately":  true,
-    "failure_log_tail_printed":  true,
-    "tcp_server_owner":  "mvp_so101_server",
-    "tcp_client_owner":  "mvp_hardware_bridge_node",
-    "visual_opens_tcp":  false,
-    "tcp_status_hotfix_preserved":  true,
-    "offline_tests_passed":  true,
-    "tcp_readiness_regression_passed":  "PASS",
-    "launcher_regression_passed":  true,
-    "legacy_regression_tests_passed":  "4B_PASS;4C_SEGMENTED_PASS;4C_OCCLUSION_PASS;4C_OPTIONAL_FLOAT_PASS;4E_PASS;COM8_DIRECT_PASS;DATACLASS_IMPORT_PASS;4D_40_OF_44_PASS_WITH_SUPERSEDED_4E_STOP_LIFT_CHECKS",
-    "ros2_build_result":  "PASS",
-    "opened_robot_com_port":  false,
-    "opened_tactile_com_port":  false,
-    "camera_opened":  false,
-    "real_zenoh_started":  false,
-    "real_tcp_server_started":  false,
-    "goal_position_written":  false,
-    "physical_motion_observed":  false,
-    "git_commit":  "fdaf8f6026d954960dc023b6e7bc72c47370b072",
-    "final_status":  "READY_FOR_ONE_LAUNCH_TACTILE_TEST_RETEST",
-    "passed":  43,
-    "total":  43,
-    "cases":  [
-                  {
-                      "name":  "zenoh_not_ready_immediately_after_spawn",
-                      "passed":  true,
-                      "details":  null
-                  },
-                  {
-                      "name":  "zenoh_ready_requires_real_marker",
-                      "passed":  true,
-                      "details":  null
-                  },
-                  {
-                      "name":  "zenoh_ready_requires_process_alive",
-                      "passed":  true,
-                      "details":  null
-                  },
-                  {
-                      "name":  "zenoh_stability_window_required",
-                      "passed":  true,
-                      "details":  null
-                  },
-                  {
-                      "name":  "zenoh_exit_code_1_detected_immediately",
-                      "passed":  true,
-                      "details":  null
-                  },
-                  {
-                      "name":  "zenoh_failure_aborts_before_server_start",
-                      "passed":  true,
-                      "details":  null
-                  },
-                  {
-                      "name":  "zenoh_failure_prints_log_tail",
-                      "passed":  true,
-                      "details":  null
-                  },
-                  {
-                      "name":  "old_launcher_lock_detected",
-                      "passed":  true,
-                      "details":  null
-                  },
-                  {
-                      "name":  "stale_owned_children_detected",
-                      "passed":  true,
-                      "details":  null
-                  },
-                  {
-                      "name":  "only_recorded_owned_children_cleaned",
-                      "passed":  true,
-                      "details":  null
-                  },
-                  {
-                      "name":  "unrelated_python_not_killed",
-                      "passed":  true,
-                      "details":  null
-                  },
-                  {
-                      "name":  "unrelated_powershell_not_killed",
-                      "passed":  true,
-                      "details":  null
-                  },
-                  {
-                      "name":  "root_and_descendant_pids_recorded",
-                      "passed":  true,
-                      "details":  null
-                  },
-                  {
-                      "name":  "server_command_uses_python_u",
-                      "passed":  true,
-                      "details":  null
-                  },
-                  {
-                      "name":  "server_critical_logs_flush",
-                      "passed":  true,
-                      "details":  null
-                  },
-                  {
-                      "name":  "server_log_created_late_supported",
-                      "passed":  true,
-                      "details":  null
-                  },
-                  {
-                      "name":  "incremental_log_write_supported",
-                      "passed":  true,
-                      "details":  null
-                  },
-                  {
-                      "name":  "split_marker_write_supported",
-                      "passed":  true,
-                      "details":  {
-                                      "order":  [
-                                                    "ROBOT_CONNECTED",
-                                                    "TACTILE_SERIAL_OPENED",
-                                                    "TACTILE_BASELINE_STARTED",
-                                                    "TACTILE_BASELINE_COMPLETED",
-                                                    "TACTILE_READY",
-                                                    "TCP_SERVER_LISTENING"
-                                                ],
-                                      "split_marker_detected":  true,
-                                      "all_detected":  true
-                                  }
-                  },
-                  {
-                      "name":  "utf8_log_supported",
-                      "passed":  true,
-                      "details":  null
-                  },
-                  {
-                      "name":  "server_exit_detected_immediately",
-                      "passed":  true,
-                      "details":  null
-                  },
-                  {
-                      "name":  "server_exit_code_reported",
-                      "passed":  true,
-                      "details":  null
-                  },
-                  {
-                      "name":  "server_log_tail_printed",
-                      "passed":  true,
-                      "details":  null
-                  },
-                  {
-                      "name":  "empty_server_log_reported",
-                      "passed":  true,
-                      "details":  null
-                  },
-                  {
-                      "name":  "robot_stage_has_independent_timeout",
-                      "passed":  true,
-                      "details":  null
-                  },
-                  {
-                      "name":  "tactile_open_stage_has_independent_timeout",
-                      "passed":  true,
-                      "details":  null
-                  },
-                  {
-                      "name":  "baseline_stage_has_independent_timeout",
-                      "passed":  true,
-                      "details":  null
-                  },
-                  {
-                      "name":  "tcp_listen_stage_has_independent_timeout",
-                      "passed":  true,
-                      "details":  null
-                  },
-                  {
-                      "name":  "passed_stage_does_not_consume_next_timeout",
-                      "passed":  true,
-                      "details":  null
-                  },
-                  {
-                      "name":  "launcher_wait_order_matches_server_order",
-                      "passed":  true,
-                      "details":  null
-                  },
-                  {
-                      "name":  "bridge_not_started_before_server_ready",
-                      "passed":  true,
-                      "details":  null
-                  },
-                  {
-                      "name":  "configured_tcp_port_single_source",
-                      "passed":  true,
-                      "details":  null
-                  },
-                  {
-                      "name":  "tcp_probe_closes_immediately",
-                      "passed":  true,
-                      "details":  null
-                  },
-                  {
-                      "name":  "bridge_remains_only_long_lived_client",
-                      "passed":  true,
-                      "details":  null
-                  },
-                  {
-                      "name":  "tactile_test_mode_does_not_start_vision",
-                      "passed":  true,
-                      "details":  null
-                  },
-                  {
-                      "name":  "no_com4_open",
-                      "passed":  true,
-                      "details":  null
-                  },
-                  {
-                      "name":  "no_com8_open",
-                      "passed":  true,
-                      "details":  null
-                  },
-                  {
-                      "name":  "no_camera_open",
-                      "passed":  true,
-                      "details":  null
-                  },
-                  {
-                      "name":  "no_goal_position_write",
-                      "passed":  true,
-                      "details":  null
-                  },
-                  {
-                      "name":  "no_physical_motion",
-                      "passed":  true,
-                      "details":  null
-                  },
-                  {
-                      "name":  "fake_zenoh_delayed_ready_passes",
-                      "passed":  true,
-                      "details":  {
-                                      "ready":  true,
-                                      "failure":  null,
-                                      "server_started":  true
-                                  }
-                  },
-                  {
-                      "name":  "fake_server_stages_detected",
-                      "passed":  true,
-                      "details":  {
-                                      "order":  [
-                                                    "ROBOT_CONNECTED",
-                                                    "TACTILE_SERIAL_OPENED",
-                                                    "TACTILE_BASELINE_STARTED",
-                                                    "TACTILE_BASELINE_COMPLETED",
-                                                    "TACTILE_READY",
-                                                    "TCP_SERVER_LISTENING"
-                                                ],
-                                      "split_marker_detected":  true,
-                                      "all_detected":  true
-                                  }
-                  },
-                  {
-                      "name":  "fake_server_traceback_failure_tail",
-                      "passed":  true,
-                      "details":  null
-                  },
-                  {
-                      "name":  "doc_tactile_test_before_final",
-                      "passed":  true,
-                      "details":  null
-                  }
-              ]
+{
+  "stage": "MVP-4E-ONE-LAUNCH-PROCESS-AND-READINESS-HOTFIX",
+  "observed_launcher_failure": "FinalAcceptance marked Zenoh ready about 20 ms after spawning it, then server timed out waiting for TCP_SERVER_LISTENING",
+  "launcher_log_findings": {
+    "zenoh_started_pid": 11504,
+    "server_started_pid": 17544,
+    "zenoh_ready_delta_s": 0.02,
+    "server_tcp_listen_timeout_s": 30.0,
+    "cleanup_reported_zenoh_exit_code": 1
+  },
+  "zenoh_log_summary": {
+    "log_exists": true,
+    "log_empty": false,
+    "line_count": 4,
+    "contains_vs_prompt": true,
+    "contains_ready_marker": false,
+    "contains_error_text": false,
+    "port_in_use_evidence": false,
+    "missing_ros2_environment_evidence": true,
+    "command_error_evidence": false,
+    "dll_or_rmw_load_failure_evidence": false,
+    "normal_start_then_exit_evidence": false,
+    "exit_code": 1,
+    "root_cause_from_log": "zenoh process exited with code 1 after only the ROS2 wrapper/Visual Studio banner; zenoh.log contains no real ready marker and no specific port/DLL/RMW error text",
+    "tail": [
+      "**********************************************************************",
+      "** Visual Studio 2026 Developer Command Prompt v18.4.3",
+      "** Copyright (c) 2026 Microsoft Corporation",
+      "**********************************************************************"
+    ]
+  },
+  "server_log_summary": {
+    "log_exists": true,
+    "log_empty": true,
+    "line_count": 0,
+    "last_completed_stage": "none",
+    "stopped_in_import_stage_evidence": true,
+    "stopped_in_com4_connect_evidence": false,
+    "stopped_in_com8_open_evidence": false,
+    "stopped_in_baseline_evidence": false,
+    "tcp_listen_emitted": false,
+    "different_listen_format_emitted": false,
+    "traceback": false,
+    "stdout_buffering_possible_in_old_launcher": true,
+    "hardware_init_exceeded_old_30s_possible": true,
+    "root_cause_from_log": "server.log was empty; the old launcher started server with conda capture and non-unbuffered python, so no completed startup stage is evidenced before the launcher killed the still-running server",
+    "tail": []
+  },
+  "zenoh_false_ready_confirmed": true,
+  "zenoh_exit_code": 1,
+  "zenoh_root_cause": "zenoh process exited with code 1 after only the ROS2 wrapper/Visual Studio banner; zenoh.log contains no real ready marker and no specific port/DLL/RMW error text",
+  "server_process_exited_before_timeout": false,
+  "server_exit_code": null,
+  "server_last_completed_stage": "none",
+  "server_root_cause": "server.log was empty; the old launcher started server with conda capture and non-unbuffered python, so no completed startup stage is evidenced before the launcher killed the still-running server",
+  "old_launcher_check_previous_behavior": "checked only launch_mvp4e_system.ps1 command line and missed failed child readiness/stale child ownership",
+  "stale_child_process_handling": "active manifest records owned root and descendant PIDs; stale children are cleaned only when command line matches this project or expected component",
+  "process_manifest_path": "logs/runtime/active_launcher.json",
+  "owned_process_tree_tracking": true,
+  "zenoh_ready_marker": "actual marker must be present in zenoh.log; current failed log had no marker",
+  "zenoh_stability_window_s": 1.0,
+  "zenoh_exit_detected_immediately": true,
+  "zenoh_failure_aborts_server_start": true,
+  "server_command_unbuffered": true,
+  "server_startup_order": [
+    "SERVER_PROCESS_STARTED",
+    "TCP_SERVER_STARTING",
+    "TACTILE_SERIAL_OPENED",
+    "TACTILE_BASELINE_COMPLETED",
+    "TACTILE_READY true",
+    "ROBOT_CONNECTED port=COM4",
+    "TCP_SERVER_LISTENING"
+  ],
+  "server_stage_timeouts": {
+    "server_process_start_timeout_s": 10,
+    "tactile_serial_open_timeout_s": 15,
+    "tactile_baseline_timeout_s": 30,
+    "robot_connect_timeout_s": 30,
+    "tcp_listen_timeout_s": 15
+  },
+  "process_exit_detected_immediately": true,
+  "failure_log_tail_printed": true,
+  "tcp_server_owner": "mvp_so101_server",
+  "tcp_client_owner": "mvp_hardware_bridge_node",
+  "visual_opens_tcp": false,
+  "tcp_status_hotfix_preserved": true,
+  "offline_tests_passed": true,
+  "tcp_readiness_regression_passed": "PASS",
+  "launcher_regression_passed": true,
+  "legacy_regression_tests_passed": "4B_PASS;4C_SEGMENTED_PASS;4C_OCCLUSION_PASS;4C_OPTIONAL_FLOAT_PASS;4E_PASS;COM8_DIRECT_PASS;DATACLASS_IMPORT_PASS;4D_40_OF_44_PASS_WITH_SUPERSEDED_4E_STOP_LIFT_CHECKS",
+  "ros2_build_result": "PASS",
+  "opened_robot_com_port": false,
+  "opened_tactile_com_port": false,
+  "camera_opened": false,
+  "real_zenoh_started": false,
+  "real_tcp_server_started": false,
+  "goal_position_written": false,
+  "physical_motion_observed": false,
+  "git_commit": "PENDING_COMMIT",
+  "final_status": "READY_FOR_ONE_LAUNCH_TACTILE_TEST_RETEST",
+  "passed": 44,
+  "total": 44,
+  "cases": [
+    {
+      "name": "zenoh_not_ready_immediately_after_spawn",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "zenoh_ready_requires_real_marker",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "zenoh_ready_requires_process_alive",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "zenoh_stability_window_required",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "zenoh_exit_code_1_detected_immediately",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "zenoh_failure_aborts_before_server_start",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "zenoh_failure_prints_log_tail",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "old_launcher_lock_detected",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "stale_owned_children_detected",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "only_recorded_owned_children_cleaned",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "unrelated_python_not_killed",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "unrelated_powershell_not_killed",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "root_and_descendant_pids_recorded",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "component_command_lines_property_predeclared",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "server_command_uses_python_u",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "server_critical_logs_flush",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "server_log_created_late_supported",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "incremental_log_write_supported",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "split_marker_write_supported",
+      "passed": true,
+      "details": {
+        "order": [
+          "ROBOT_CONNECTED",
+          "TACTILE_SERIAL_OPENED",
+          "TACTILE_BASELINE_STARTED",
+          "TACTILE_BASELINE_COMPLETED",
+          "TACTILE_READY",
+          "TCP_SERVER_LISTENING"
+        ],
+        "split_marker_detected": true,
+        "all_detected": true
+      }
+    },
+    {
+      "name": "utf8_log_supported",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "server_exit_detected_immediately",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "server_exit_code_reported",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "server_log_tail_printed",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "empty_server_log_reported",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "robot_stage_has_independent_timeout",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "tactile_open_stage_has_independent_timeout",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "baseline_stage_has_independent_timeout",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "tcp_listen_stage_has_independent_timeout",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "passed_stage_does_not_consume_next_timeout",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "launcher_wait_order_matches_server_order",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "bridge_not_started_before_server_ready",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "configured_tcp_port_single_source",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "tcp_probe_closes_immediately",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "bridge_remains_only_long_lived_client",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "tactile_test_mode_does_not_start_vision",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_com4_open",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_com8_open",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_camera_open",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_goal_position_write",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_physical_motion",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "fake_zenoh_delayed_ready_passes",
+      "passed": true,
+      "details": {
+        "ready": true,
+        "failure": null,
+        "server_started": true
+      }
+    },
+    {
+      "name": "fake_server_stages_detected",
+      "passed": true,
+      "details": {
+        "order": [
+          "ROBOT_CONNECTED",
+          "TACTILE_SERIAL_OPENED",
+          "TACTILE_BASELINE_STARTED",
+          "TACTILE_BASELINE_COMPLETED",
+          "TACTILE_READY",
+          "TCP_SERVER_LISTENING"
+        ],
+        "split_marker_detected": true,
+        "all_detected": true
+      }
+    },
+    {
+      "name": "fake_server_traceback_failure_tail",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "doc_tactile_test_before_final",
+      "passed": true,
+      "details": null
+    }
+  ]
 }

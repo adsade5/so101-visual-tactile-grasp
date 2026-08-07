@@ -254,6 +254,7 @@ function Start-ManagedCommand {
         Process = $process
         RootPid = [int]$process.Id
         DescendantPids = @()
+        CommandLines = @()
         Log = $logFile
         Script = $scriptPath
         CommandLine = Get-ProcessCommandLine -ProcessId ([int]$process.Id)
