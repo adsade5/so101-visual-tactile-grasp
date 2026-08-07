@@ -40,6 +40,10 @@ data/logs/*
 runtime/
 tmp/
 temp/
+
+# Runtime log directories (launcher, bridge, server, ROS2 session logs)
+logs/runtime/
+logs/ros2/
 data/verification/ros_logs*/
 data/verification/stage_mvp0_*.cmd
 data/verification/*_job.log
@@ -75,6 +79,9 @@ audit_results/**/log/
 # Windows
 Thumbs.db
 Desktop.ini
+
+# macOS
+.DS_Store
 
 # Secrets and local overrides
 .env

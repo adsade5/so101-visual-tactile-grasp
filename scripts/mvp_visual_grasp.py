@@ -1,5 +1,14 @@
 from __future__ import annotations
 
+"""Visual-tactile grasp planner/executor for the SO-101 MVP.
+
+Uses frozen object pose, 5-joint IK, segmented Cartesian descent,
+incremental tactile-guided gripper closing, and contact-gated lift.
+
+Modes: --plan-only (validate only), --execute --confirm VISUAL_GRASP (run on hardware),
+--tactile-test (test FlexiTac contact detection).
+"""
+
 import argparse
 import json
 import math

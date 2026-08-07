@@ -1,0 +1,239 @@
+﻿SO-101 Visual-Tactile Grasp - Repository Tree
+Generated: 2026-08-07
+
+├── .claude/
+│   └── settings.local.json
+├── audit/
+│   ├── check_combined_import.py
+│   ├── check_environment.ps1
+│   ├── check_lerobot_import.py
+│   ├── check_opencv_camera.py
+│   ├── check_python_runtime.py
+│   ├── check_ros2_import.py
+│   ├── open_ros2_lyrical_shell.cmd
+│   ├── ros2_stage_minus1b_runtime_checks.py
+│   ├── run_in_ros2_lyrical.ps1
+│   ├── run_stage_minus1_audit.ps1
+│   ├── scan_linux_dependencies.py
+│   └── verify_ros2_lyrical_setup.ps1
+├── audit_results/
+├── config/
+│   ├── bridge.yaml
+│   ├── camera.yaml
+│   ├── command_gate.json
+│   ├── connection_trajectory.json
+│   ├── kinematics.json
+│   ├── mvp_descent.yaml
+│   ├── mvp_grasp.yaml
+│   ├── mvp_hardware.json
+│   ├── mvp_kinematics.yaml
+│   ├── mvp_motion.yaml
+│   ├── mvp_pregrasp.yaml
+│   ├── mvp_pregrasp_move.yaml
+│   ├── object_marker.json
+│   ├── real_joint_state_mapping.json
+│   ├── trajectory_safety.json
+│   ├── workspace_to_base.json
+│   └── workspace_to_base_before_stage_2d1.json
+├── data/
+│   ├── calibration/
+│   │   ├── captures/
+│   │   ├── results_session_20260803_221455/
+│   │   ├── camera_calibration_report.json
+│   │   ├── camera_intrinsics.yaml
+│   │   ├── charuco_board_5x7.json
+│   │   ├── charuco_board_5x7.png
+│   │   ├── charuco_board_5x7_actual.json
+│   │   ├── workspace_plane_calibration.json
+│   │   ├── workspace_plane_calibration.png
+│   │   ├── workspace_to_base_calibration_report.json
+│   │   └── workspace_to_base_correspondences.csv
+│   ├── camera_probe/
+│   │   ├── camera_1_default.png
+│   │   ├── camera_1_dshow.png
+│   │   └── camera_1_msmf.png
+│   ├── logs/
+│   ├── robot_model/
+│   │   └── so101/
+│   ├── runtime/
+│   │   ├── mvp_last_integrated_grasp_snapshot.json
+│   │   └── mvp_last_pregrasp_snapshot.json
+│   └── verification/
+│       ├── archive/
+│       ├── final/
+│       ├── ros_logs/
+│       ├── ros_logs_mvp0/
+│       ├── stage_2a3_logs/
+│       ├── stage_2d1_logs/
+│       ├── final_repository_inventory.md
+│       ├── final_repository_tree.txt
+│       ├── mock_joint_state_publisher_runtime_stdout.log
+│       ├── mock_joint_state_publisher_verify_node.log
+│       ├── mock_joint_state_publisher_verify_pub.log
+│       ├── mock_joint_state_publisher_verify_router.log
+│       ├── README.md
+│       ├── stage_2a3_verification.log
+│       ├── stage_2b1_verification.log
+│       ├── stage_2b2_verification.log
+│       ├── stage_2b3_verification.log
+│       ├── stage_2d1_verification.log
+│       ├── stage_2d2_live_hold.log
+│       ├── stage_2d2_verification.log
+│       ├── stage_mvp0.log
+│       ├── stage_mvp0_5_git_baseline.log
+│       ├── stage_mvp0_bridge_smoke.cmd
+│       ├── stage_mvp0_controller_smoke.cmd
+│       ├── stage_mvp0_launch.cmd
+│       ├── stage_mvp0_launch_fastrtps.cmd
+│       ├── stage_mvp0_launch_fastrtps.log
+│       ├── stage_mvp0_launch_job.log
+│       ├── stage_mvp0_launch_smoke.cmd
+│       ├── stage_mvp0_node_list.cmd
+│       ├── stage_mvp0_node_list_fastrtps.cmd
+│       ├── stage_mvp0_router.cmd
+│       ├── stage_mvp0_router_job.log
+│       ├── stage_mvp0_router_stderr.log
+│       ├── stage_mvp0_router_stdout.log
+│       ├── stage_mvp0_run_launch.cmd
+│       ├── stage_mvp0_run_router.cmd
+│       ├── stage_mvp1_kinematics.log
+│       ├── stage_mvp2_trajectory.log
+│       ├── stage_mvp3a_hardware_ready.log
+│       ├── stage_mvp3c_bridge.pid
+│       ├── stage_mvp3c_tcp_server.pid
+│       └── stage_mvp3c_zenoh.pid
+├── docs/
+│   ├── architecture/
+│   ├── test_records/
+│   ├── ARCHITECTURE.md
+│   ├── FINAL_ACCEPTANCE.md
+│   ├── LEGACY_COMPONENTS.md
+│   ├── MVP_ARCHITECTURE.md
+│   ├── MVP_HARDWARE_TEST.md
+│   ├── MVP_KINEMATICS.md
+│   ├── MVP_SCOPE.md
+│   ├── MVP_TCP_PROTOCOL.md
+│   ├── MVP_TRAJECTORY.md
+│   ├── MVP3C_LIVE_MANUAL_ACCEPTANCE.md
+│   ├── MVP3D_SINGLE_TCP_RETEST.md
+│   ├── MVP3D_STOP_CONFIRM_RETEST.md
+│   ├── MVP3D_TCP_RETEST.md
+│   ├── MVP4A_IK_MULTISEED_RETEST.md
+│   ├── MVP4A_PREGRASP_MANUAL_ACCEPTANCE.md
+│   ├── MVP4A_PREGRASP_NEAR_SOLUTION_RETEST.md
+│   ├── MVP4B_PREGRASP_MOVE_MANUAL_ACCEPTANCE.md
+│   ├── MVP4B_SPEED_0P06_MANUAL_RETEST.md
+│   ├── MVP4C_OCCLUSION_SAFE_HANDOFF_MANUAL_ACCEPTANCE.md
+│   ├── MVP4C_SEGMENTED_DESCENT_MANUAL_ACCEPTANCE.md
+│   ├── MVP4D_INTEGRATED_VISUAL_GRASP_MANUAL_ACCEPTANCE.md
+│   ├── MVP4E_TACTILE_GRASP_LIFT_MANUAL_ACCEPTANCE.md
+│   ├── stage_minus1_windows_audit.md
+│   ├── stage_minus1b_ros2_lyrical_setup.md
+│   ├── TROUBLESHOOTING.md
+│   ├── VERIFICATION.md
+│   └── windows_environment_usage.md
+├── lerobot_server/
+│   ├── __init__.py
+│   ├── mock_hardware_server.py
+│   └── mvp_hardware_executor.py
+├── logs/
+├── ros2_ws/
+│   └── src/
+│       ├── so101_command_gate/
+│       ├── so101_description/
+│       ├── so101_frame_transform/
+│       ├── so101_grasp_planner/
+│       ├── so101_kinematics/
+│       ├── so101_mvp_bringup/
+│       ├── so101_mvp_control/
+│       ├── so101_mvp_kinematics/
+│       ├── so101_object_perception/
+│       ├── so101_robot_bridge/
+│       └── so101_trajectory_safety/
+├── scripts/
+│   ├── legacy/
+│   │   └── mvp_tcp_probe.py
+│   ├── calibrate_charuco_intrinsics.py
+│   ├── calibrate_workspace_plane.py
+│   ├── camera_probe.py
+│   ├── capture_charuco_calibration.py
+│   ├── fit_workspace_to_base_planar.py
+│   ├── generate_charuco_board.py
+│   ├── inspect_object_aruco.py
+│   ├── launch_mvp4e_system.ps1
+│   ├── monitor_stage_2d2_live_validity.py
+│   ├── mvp_descend_from_pregrasp.py
+│   ├── mvp_move_to_pregrasp.py
+│   ├── mvp_pregrasp_preview.py
+│   ├── mvp_pregrasp_replay.py
+│   ├── mvp_ros2_wrist_test.py
+│   ├── mvp_so101_hardware_test.py
+│   ├── mvp_so101_server.py
+│   ├── mvp_visual_grasp.py
+│   ├── open_mvp4e_terminals.ps1
+│   ├── prepare_so101_description.py
+│   ├── probe_real_joint_state_bridge_status.py
+│   ├── run_mvp4e_bridge.ps1
+│   ├── run_stage_mvp3c_live_read_only.ps1
+│   ├── sample_workspace_object_pose.py
+│   ├── so101_read_only_joint_state_server.py
+│   ├── track_object_workspace_pose.py
+│   ├── verify_so101_fk.py
+│   ├── verify_so101_position_ik.py
+│   ├── verify_so101_safe_continuous_ik.py
+│   ├── verify_so101_top_down_ik.py
+│   ├── verify_stage_2a3.py
+│   ├── verify_stage_2d1_visual_to_ik.py
+│   ├── verify_stage_2d2_timed_trajectory.py
+│   ├── verify_stage_2d3a_command_gate_shadow.py
+│   ├── verify_stage_2d3b_real_joint_state_bridge.py
+│   ├── verify_stage_2d3c_connection_shadow.py
+│   ├── verify_stage_2d3c_heartbeat_plan_refresh.py
+│   ├── verify_stage_mvp1_kinematics.py
+│   ├── verify_stage_mvp2_trajectory.py
+│   ├── verify_stage_mvp3a_hardware_executor.py
+│   ├── verify_stage_mvp3c_live_read_only.py
+│   ├── verify_stage_mvp3c_tcp_bridge.py
+│   ├── verify_stage_mvp3d_joint_key_fix.py
+│   ├── verify_stage_mvp3d_single_tcp_fix.py
+│   ├── verify_stage_mvp3d_stop_confirm_fix.py
+│   ├── verify_stage_mvp3d_tcp_fix.py
+│   ├── verify_stage_mvp4a_ik_multiseed_fix.py
+│   ├── verify_stage_mvp4a_pregrasp_near_solution.py
+│   ├── verify_stage_mvp4a_pregrasp_planner.py
+│   ├── verify_stage_mvp4b_pregrasp_move.py
+│   ├── verify_stage_mvp4b_speed_tune.py
+│   ├── verify_stage_mvp4c_occlusion_safe_handoff.py
+│   ├── verify_stage_mvp4c_segmented_descent.py
+│   ├── verify_stage_mvp4c_snapshot_optional_float_hotfix.py
+│   ├── verify_stage_mvp4d_integrated_visual_grasp.py
+│   ├── verify_stage_mvp4e_bridge_command_file_syntax.py
+│   ├── verify_stage_mvp4e_bridge_process_spawn.py
+│   ├── verify_stage_mvp4e_close_until_tactile_contact.py
+│   ├── verify_stage_mvp4e_direct_com8_import_hotfix.py
+│   ├── verify_stage_mvp4e_direct_com8_tactile.py
+│   ├── verify_stage_mvp4e_launcher_process_readiness.py
+│   ├── verify_stage_mvp4e_log_severity_classifier.py
+│   ├── verify_stage_mvp4e_tactile_grasp_lift.py
+│   ├── verify_stage_mvp4e_tcp_readiness_hotfix.py
+│   ├── verify_stage_mvp4e_x_axis_grasp_offset.py
+│   └── verify_workspace_coordinates.py
+├── shared_protocol/
+│   ├── examples/
+│   │   └── protocol_examples.jsonl
+│   ├── __init__.py
+│   ├── message_envelope.schema.json
+│   ├── mvp_tcp_client.py
+│   └── protocol_v1.md
+├── tests/
+│   ├── integration/
+│   │   ├── __init__.py
+│   │   └── probe_mock_server.py
+│   ├── protocol/
+│   │   ├── __init__.py
+│   │   └── test_protocol_contract.py
+│   └── __init__.py
+├── .gitignore
+├── README.md
+├── README_zh-CN.md
+└── start_claude_deepseek.bat

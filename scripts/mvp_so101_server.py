@@ -1,5 +1,14 @@
 from __future__ import annotations
 
+"""SO-101 MVP LeRobot hardware server with tactile feedback.
+
+Manages the SO-101 follower arm (COM4), FlexiTac tactile sensor (COM8),
+and a single-client TCP server (localhost:8770) for the ROS2 hardware bridge.
+
+Supports: get_state, move_joints_sequential (with tactile-contact stop),
+and graceful shutdown. No ROS2 dependency.
+"""
+
 import argparse
 import importlib.util
 import json
