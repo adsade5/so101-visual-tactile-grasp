@@ -4,22 +4,22 @@ Use one PowerShell entry point for normal acceptance. It starts Zenoh, the LeRob
 
 ## 1. Normal Commands
 
-Static tactile test:
+First retest only the static tactile path:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts\launch_mvp4e_system.ps1 -Mode TactileTest
 ```
 
-Plan only:
-
-```powershell
-powershell -ExecutionPolicy Bypass -File scripts\launch_mvp4e_system.ps1 -Mode PlanOnly
-```
-
-Final acceptance:
+Only after `TactileTest` starts all required components, completes FlexiTac baseline, and reports static tactile pass, run final acceptance:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts\launch_mvp4e_system.ps1 -Mode FinalAcceptance
+```
+
+Optional planning-only diagnosis:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\launch_mvp4e_system.ps1 -Mode PlanOnly
 ```
 
 `FinalAcceptance` runs:
@@ -27,7 +27,7 @@ powershell -ExecutionPolicy Bypass -File scripts\launch_mvp4e_system.ps1 -Mode F
 ```text
 start Zenoh
 start mvp_so101_server.py
-wait TCP_SERVER_LISTENING, TACTILE_SERIAL_OPENED port=COM8, TACTILE_BASELINE_COMPLETED, TACTILE_READY true
+wait TACTILE_SERIAL_OPENED port=COM8, TACTILE_BASELINE_COMPLETED, TACTILE_READY true, ROBOT_CONNECTED port=COM4, TCP_SERVER_LISTENING
 start ROS2 hardware bridge
 wait BRIDGE_TCP_CONNECTED, /mvp/tcp_connected=true, fresh JointState, tactile_ready=true
 start visual launch
@@ -56,6 +56,12 @@ vision.log
 action.log
 launcher.log
 ```
+
+Failure output prints the failing component, exit code when available, and the last 100 log lines. The most useful files are:
+
+- `logs/runtime/<timestamp>/launcher.log`: launcher state machine, owned PIDs, cleanup order, and failed stage.
+- `logs/runtime/<timestamp>/zenoh.log`: ROS2 wrapper and Zenoh startup output.
+- `logs/runtime/<timestamp>/server.log`: LeRobot server, COM8 FlexiTac, baseline, COM4 robot, and TCP listener startup output.
 
 Pass criteria remain unchanged:
 

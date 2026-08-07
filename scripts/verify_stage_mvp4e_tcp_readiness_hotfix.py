@@ -272,7 +272,7 @@ def main() -> int:
     cases.append(case("no_physical_motion", True))
 
     cases.append(case("launcher_starts_zenoh_first", "Start-Zenoh" in launcher and "Start-Server" in launcher))
-    cases.append(case("launcher_waits_for_zenoh", "Wait-ManagedAlive -Name \"zenoh\"" in launcher))
+    cases.append(case("launcher_waits_for_zenoh", "Wait-ZenohReady" in launcher and "zenoh_ready_marker" in launcher))
     cases.append(case("launcher_starts_server_second", "Start-Server" in launcher and "mvp_so101_server.py" in launcher))
     cases.append(case("launcher_waits_for_server_listening", "TCP_SERVER_LISTENING" in launcher))
     cases.append(case("launcher_waits_for_tactile_ready", "TACTILE_READY true" in launcher and "TACTILE_BASELINE_COMPLETED" in launcher))
@@ -291,7 +291,7 @@ def main() -> int:
     cases.append(case("cleanup_order_correct", "action,visual_nodes,ros2_bridge,lerobot_server,zenoh" in launcher and "@(\"vision\", \"bridge\", \"server\", \"zenoh\")" in launcher))
     cases.append(case("only_owned_pids_terminated", "Stop-OwnedProcessTree" in launcher and "taskkill /IM python.exe" not in launcher))
     cases.append(case("logs_created", "zenoh.log" in launcher and "server.log" in launcher and "bridge.log" in launcher and "vision.log" in launcher and "action.log" in launcher))
-    cases.append(case("no_fixed_sleep_only_readiness", "Start-Sleep 5" not in launcher and "Wait-LogPattern" in launcher))
+    cases.append(case("no_fixed_sleep_only_readiness", "Start-Sleep 5" not in launcher and "Wait-ComponentLogPattern" in launcher))
     cases.append(case("no_com4_open_launcher_offline", True))
     cases.append(case("no_com8_open_launcher_offline", True))
     cases.append(case("no_camera_open", True))

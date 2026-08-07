@@ -433,6 +433,8 @@ class ReadOnlyFeetechBackend:
 
     def connect(self) -> None:
         self.tactile.connect()
+        port = str(self.executor.config.get("follower_port", ""))
+        print(f"ROBOT_CONNECTING port={port}", flush=True)
         port_check = self.executor.check_port_and_usb()
         if not port_check["success"]:
             raise RuntimeError(port_check["reason"])
@@ -442,6 +444,7 @@ class ReadOnlyFeetechBackend:
         self.bus.connect(handshake=False)
         self.connected = True
         self.opened_com_ports = True
+        print(f"ROBOT_CONNECTED port={port}", flush=True)
         self._read_bus_state()
 
     def close(self) -> None:
@@ -516,6 +519,8 @@ class MotionFeetechBackend(ReadOnlyFeetechBackend):
 
     def connect(self) -> None:
         self.tactile.connect()
+        port = str(self.executor.config.get("follower_port", ""))
+        print(f"ROBOT_CONNECTING port={port}", flush=True)
         port_check = self.executor.check_port_and_usb()
         if not port_check["success"]:
             raise RuntimeError(port_check["reason"])
@@ -528,6 +533,7 @@ class MotionFeetechBackend(ReadOnlyFeetechBackend):
             self.robot.connect()
         self.connected = True
         self.opened_com_ports = True
+        print(f"ROBOT_CONNECTED port={port}", flush=True)
 
     def close(self) -> None:
         if self.robot is not None and self.connected:
@@ -714,6 +720,7 @@ class MvpTcpServer:
         self.client_threads: list[threading.Thread] = []
 
     def serve_forever(self) -> None:
+        print("TCP_SERVER_STARTING", flush=True)
         self.backend.connect()
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as sock:
             sock.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
@@ -1015,6 +1022,7 @@ def main() -> int:
     if args.dry_run:
         return run_dry_run(args.config)
 
+    print("SERVER_PROCESS_STARTED", flush=True)
     load_config(args.config)
     host = "127.0.0.1"
     port = 8770
