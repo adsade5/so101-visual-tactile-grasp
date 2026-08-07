@@ -1,0 +1,53 @@
+{
+  "joint_state_received": true,
+  "joint_state_message_count": 27,
+  "joint_state_sample": {
+    "name": [
+      "shoulder_pan",
+      "shoulder_lift",
+      "elbow_flex",
+      "wrist_flex",
+      "wrist_roll"
+    ],
+    "position": [
+      -0.162641670955076,
+      -1.3525342730839574,
+      1.0686785266057588,
+      1.1944956682879873,
+      -0.02531686387508258
+    ]
+  },
+  "joint_state_order_valid": true,
+  "all_joint_values_finite": true,
+  "joint_state_publish_rate_observed_hz": 5.003126954345966,
+  "publish_rate_valid": true,
+  "gripper_state_received": true,
+  "gripper_state_sample": {
+    "data": 46.92513368983957
+  },
+  "execute_service_success": false,
+  "execute_service_message": "hardware_motion_disabled",
+  "execute_target_rejection": {
+    "success": false,
+    "message": "hardware_motion_disabled",
+    "valid": true
+  },
+  "after_execute_joint_state_sample": {
+    "name": [
+      "shoulder_pan",
+      "shoulder_lift",
+      "elbow_flex",
+      "wrist_flex",
+      "wrist_roll"
+    ],
+    "position": [
+      -0.162641670955076,
+      -1.3525342730839574,
+      1.0686785266057588,
+      1.1944956682879873,
+      -0.02531686387508258
+    ]
+  },
+  "physical_motion_command_requested": false,
+  "failure_reasons": []
+}

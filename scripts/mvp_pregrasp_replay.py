@@ -55,7 +55,14 @@ def main() -> int:
     )
 
     print(f"object_pose_base_m={plan.diagnostic_dict()['object_pose_base']}")
-    print(f"pregrasp_pose_base_m={plan.diagnostic_dict()['pregrasp_pose_base']}")
+    print(f"requested_pregrasp_pose_base_m={plan.diagnostic_dict()['requested_pregrasp_xyz_m']}")
+    print(f"selected_pregrasp_pose_base_m={plan.diagnostic_dict()['selected_pregrasp_xyz_m']}")
+    print(f"selected_candidate_index={plan.selected_candidate_index}")
+    print(
+        "selected_offset_m="
+        f"{None if plan.selected_offset_m is None else plan.selected_offset_m.tolist()}"
+    )
+    print(f"solution_type={plan.solution_type}")
     print(f"target_radius_xy_m={plan.target_radius_xy_m}")
     print(f"target_distance_3d_m={plan.target_distance_3d_m}")
     print(f"approx_max_reach_m={plan.approx_max_reach_m}")

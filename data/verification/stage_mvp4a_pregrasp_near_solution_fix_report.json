@@ -1,0 +1,225 @@
+{
+  "stage": "MVP-4A-PREGRASP-NEAR-SOLUTION-FIX",
+  "original_live_target": {
+    "object_xyz_m": [
+      0.199194,
+      -0.000891,
+      0.025
+    ],
+    "requested_pregrasp_xyz_m": [
+      0.199194,
+      -0.000891,
+      0.105
+    ]
+  },
+  "original_best_position_error_m": 0.006607,
+  "original_best_approach_error_deg": 3.078,
+  "original_solver_reason": "max_iterations",
+  "exact_ik_algorithm_modified": false,
+  "pregrasp_position_tolerance_m": 0.01,
+  "pregrasp_approach_tolerance_deg": 5.0,
+  "best_candidate_acceptance_added": true,
+  "local_candidate_search_added": true,
+  "candidate_offsets": [
+    [
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.005
+    ],
+    [
+      0.0,
+      0.0,
+      0.01
+    ],
+    [
+      0.005,
+      0.0,
+      0.0
+    ],
+    [
+      -0.005,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.005,
+      0.0
+    ],
+    [
+      0.0,
+      -0.005,
+      0.0
+    ]
+  ],
+  "target_clipping_added": false,
+  "workspace_transform_modified": false,
+  "fk_revalidation_added": true,
+  "offline_test_cases": [
+    {
+      "name": "exact_solution_accepted",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "max_iterations_with_valid_best_q",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "near_solution_6p607mm_accepted",
+      "passed": true,
+      "details": {
+        "position_error_m": 0.006606732506255723
+      }
+    },
+    {
+      "name": "near_solution_3p078deg_accepted",
+      "passed": true,
+      "details": {
+        "approach_error_deg": 3.966691272747889
+      }
+    },
+    {
+      "name": "position_over_1cm_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "approach_over_5deg_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "non_finite_best_q_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "joint_limit_violation_rejected",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "fk_revalidation_required",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "original_target_first",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "offset_candidate_count_at_most_7",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "horizontal_offset_at_most_5mm",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "vertical_offset_only_upward",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_random_search",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "original_target_preferred",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "lower_cost_candidate_selected",
+      "passed": true,
+      "details": {
+        "selected_candidate_index": 4,
+        "selected_offset_m": [
+          -0.005,
+          0.0,
+          0.0
+        ]
+      }
+    },
+    {
+      "name": "nonzero_offset_reported",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "requested_target_not_modified",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "object_pose_not_modified",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "exact_status",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "near_status",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "offset_status",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "all_candidates_failure_status",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_joint_target_publish",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_execute_service_call",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_tcp_connection",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_com_port_open",
+      "passed": true,
+      "details": {}
+    },
+    {
+      "name": "no_physical_motion",
+      "passed": true,
+      "details": {}
+    }
+  ],
+  "offline_tests_passed": true,
+  "offline_test_count": 28,
+  "ros2_build_result": "not_run",
+  "opened_com_ports": false,
+  "tcp_started": false,
+  "hardware_bridge_started": false,
+  "goal_position_written": false,
+  "physical_motion_observed": false,
+  "final_status": "OFFLINE_TESTS_PASS"
+}

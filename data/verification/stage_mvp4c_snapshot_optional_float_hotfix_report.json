@@ -154,11 +154,11 @@
   "offline_tests_passed": true,
   "offline_test_count": 23,
   "occlusion_handoff_regression_tests_passed": true,
-  "ros2_build_result": "PASS",
+  "ros2_build_result": "not_run",
   "opened_com_ports": false,
   "tcp_started": false,
   "hardware_bridge_started": false,
   "goal_position_written": false,
   "physical_motion_observed": false,
-  "final_status": "READY_FOR_MANUAL_PREGRASP_SNAPSHOT_RETEST"
+  "final_status": "OFFLINE_TESTS_PASS"
 }

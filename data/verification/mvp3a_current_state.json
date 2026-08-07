@@ -14,27 +14,27 @@
     "manufacturer": "wch.cn"
   },
   "raw_lerobot_positions": {
-    "shoulder_pan": 2014.0,
-    "shoulder_lift": 1188.0,
-    "elbow_flex": 2709.0,
-    "wrist_flex": 2778.0,
-    "wrist_roll": 2031.0,
+    "shoulder_pan": 2099.0,
+    "shoulder_lift": 1601.0,
+    "elbow_flex": 2228.0,
+    "wrist_flex": 3081.0,
+    "wrist_roll": 2190.0,
     "gripper": 1607.0
   },
   "calibrated_lerobot_positions": {
-    "shoulder_pan": -9.31868131868132,
-    "shoulder_lift": -77.49450549450549,
-    "elbow_flex": 61.142857142857146,
-    "wrist_flex": 68.35164835164835,
-    "wrist_roll": -1.4505494505494505,
+    "shoulder_pan": -1.8461538461538463,
+    "shoulder_lift": -41.18681318681319,
+    "elbow_flex": 18.857142857142858,
+    "wrist_flex": 94.98901098901099,
+    "wrist_roll": 12.527472527472527,
     "gripper": 46.92513368983957
   },
   "joint_positions_rad": {
-    "shoulder_pan": -0.162641670955076,
-    "shoulder_lift": -1.3525342730839574,
-    "elbow_flex": 1.06714417121939,
-    "wrist_flex": 1.1929613129016186,
-    "wrist_roll": -0.02531686387508258
+    "shoulder_pan": -0.03222146311374147,
+    "shoulder_lift": -0.7188454985137085,
+    "elbow_flex": 0.3291192303760736,
+    "wrist_flex": 1.657870994971317,
+    "wrist_roll": 0.21864564255753138
   },
   "gripper_value": 46.92513368983957,
   "all_current_within_calibration": true,

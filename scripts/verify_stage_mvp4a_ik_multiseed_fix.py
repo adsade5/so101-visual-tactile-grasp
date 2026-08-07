@@ -218,9 +218,9 @@ def main() -> int:
         ik_solver=always_fail_solver,
     )
     failure_message = make_failure_message(fail_plan)
-    cases.append(case("all_seed_failure_reason", fail_plan.reason == "ik_failed_all_seeds"))
+    cases.append(case("all_seed_failure_reason", fail_plan.reason == "ik_failed_all_candidates"))
     cases.append(case("object_xyz_in_failure_message", "object_xyz_m=[" in failure_message))
-    cases.append(case("pregrasp_xyz_in_failure_message", "pregrasp_xyz_m=[" in failure_message))
+    cases.append(case("pregrasp_xyz_in_failure_message", "requested_xyz=[" in failure_message))
     cases.append(case("attempt_count_in_failure_message", "attempt_count=" in failure_message))
     cases.append(case("success_reports_seed_source", "seed_source=" in make_success_message(reference_plan)))
     cases.append(

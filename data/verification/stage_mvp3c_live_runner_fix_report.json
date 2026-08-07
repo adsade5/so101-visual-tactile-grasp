@@ -1,0 +1,38 @@
+﻿{
+    "stage":  "MVP-3C-LIVE-RUNNER-FIX",
+    "original_issue":  "Temporary PowerShell runner used ambiguous $$root and foreground long-running processes could block without bounded waits.",
+    "root_variable_typo_fixed":  true,
+    "old_value":  "$$root",
+    "new_value":  "$root",
+    "long_running_foreground_processes_fixed":  true,
+    "powershell_parse_result":  "PASS",
+    "dry_run_result":  "not_run",
+    "zenoh_started":  true,
+    "server_started":  true,
+    "tcp_8770_ready":  true,
+    "bridge_started":  false,
+    "verification_started":  false,
+    "verification_exit_code":  null,
+    "timeout_stage":  "ROS2_BRIDGE_START_TIMEOUT",
+    "process_ids":  {
+                        "zenoh":  2364,
+                        "server":  6560,
+                        "bridge":  28528
+                    },
+    "log_paths":  {
+                      "zenoh_stdout":  "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\mvp3c_live_runtime\\zenoh_stdout.log",
+                      "zenoh_stderr":  "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\mvp3c_live_runtime\\zenoh_stderr.log",
+                      "server_stdout":  "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\mvp3c_live_runtime\\server_stdout.log",
+                      "server_stderr":  "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\mvp3c_live_runtime\\server_stderr.log",
+                      "bridge_stdout":  "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\mvp3c_live_runtime\\bridge_stdout.log",
+                      "bridge_stderr":  "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\mvp3c_live_runtime\\bridge_stderr.log",
+                      "verification_stdout":  "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\mvp3c_live_runtime\\verification_stdout.log",
+                      "verification_stderr":  "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\mvp3c_live_runtime\\verification_stderr.log"
+                  },
+    "cleanup_completed":  true,
+    "opened_com_ports":  true,
+    "goal_position_write_count":  0,
+    "move_request_executed_count":  0,
+    "physical_motion_observed":  false,
+    "final_status":  "FAIL"
+}

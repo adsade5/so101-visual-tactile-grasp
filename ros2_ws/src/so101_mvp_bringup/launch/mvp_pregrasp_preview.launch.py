@@ -76,6 +76,8 @@ def generate_launch_description() -> LaunchDescription:
                         "max_joint_state_age_s": 1.0,
                         "position_tolerance_m": 0.002,
                         "approach_tolerance_deg": 5.0,
+                        "pregrasp_position_tolerance_m": 0.010,
+                        "pregrasp_approach_tolerance_deg": 5.0,
                     }
                 ],
             ),

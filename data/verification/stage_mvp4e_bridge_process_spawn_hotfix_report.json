@@ -1,0 +1,312 @@
+{
+  "stage": "MVP-4E-BRIDGE-PROCESS-SPAWN-AND-LOGGING-HOTFIX",
+  "observed_failure": "Bridge runner root exited with code 1 before TCP connection; bridge.log was empty and no ROS2 node child remained.",
+  "root_cause": "ROS2 launch logging fell back to the default user .ros log directory and hit a PermissionError before the bridge node could start; the old launcher also merged streams into a single bridge.log, leaving no stderr evidence when the wrapper exited.",
+  "previous_bridge_root_pid": 4676,
+  "previous_bridge_exit_code": 1,
+  "previous_bridge_descendant_pids": [],
+  "previous_bridge_log_empty": true,
+  "failure_occurred_before_ros2_launch": true,
+  "old_bridge_executable": "powershell.exe",
+  "old_bridge_argument_list": [
+    "-NoProfile",
+    "-ExecutionPolicy",
+    "Bypass",
+    "-File",
+    "logs/runtime/20260807_103053/bridge.ps1"
+  ],
+  "old_bridge_working_directory": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp",
+  "old_stdout_path": "logs/runtime/20260807_103053/bridge.log",
+  "old_stderr_path": "logs/runtime/20260807_103053/bridge.log",
+  "old_command_line_problem": "& \"E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\audit\\run_in_ros2_lyrical.ps1\" -Command \"cd /d E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\ros2_ws && call install\\local_setup.bat && if /I not \"%RMW_IMPLEMENTATION%\"==\"rmw_zenoh_cpp\" (echo BRIDGE_RMW_MISMATCH actual=%RMW_IMPLEMENTATION% && exit /b 121) && echo BRIDGE_RMW_IMPLEMENTATION %RMW_IMPLEMENTATION% && ros2 launch so101_mvp_bringup mvp_hardware_bridge_motion_enabled.launch.py enable_hardware_motion:=true\"",
+  "dedicated_bridge_runner": "scripts/run_mvp4e_bridge.ps1",
+  "runner_derives_project_root": true,
+  "runner_calls_wrapper_synchronously": true,
+  "runner_stays_alive_with_launch": true,
+  "runner_exit_code_propagated": true,
+  "bridge_stdout_log": "bridge.stdout.log",
+  "bridge_stderr_log": "bridge.stderr.log",
+  "combined_bridge_log": "bridge.log",
+  "stderr_visible_on_failure": true,
+  "bridge_failure_stages": [
+    "bridge_spawn",
+    "bridge_wrapper",
+    "bridge_launch",
+    "bridge_node",
+    "bridge_tcp"
+  ],
+  "bridge_ready_requirements": [
+    "runner process alive",
+    "ROS2 launch child process alive",
+    "bridge node child process alive",
+    "no fatal log entry",
+    "BRIDGE_TCP_CONNECTED",
+    "BRIDGE_TCP_READY true",
+    "/mvp/tcp_connected true",
+    "fresh TCP status",
+    "15 second TCP timeout not exceeded"
+  ],
+  "bridge_tcp_timeout_s": 15,
+  "tcp_server_owner": "mvp_so101_server",
+  "tcp_client_owner": "mvp_hardware_bridge_node",
+  "visual_opens_tcp": false,
+  "log_severity_hotfix_preserved": true,
+  "launcher_readiness_hotfix_preserved": true,
+  "tcp_readiness_hotfix_preserved": true,
+  "com8_direct_hotfix_preserved": true,
+  "dataclass_import_hotfix_preserved": true,
+  "offline_tests_passed": true,
+  "wrapper_smoke_test_passed": "PASS",
+  "overlay_lookup_passed": "PASS",
+  "launch_show_args_passed": "PASS",
+  "launcher_regression_passed": "PASS",
+  "tcp_regression_passed": "PASS",
+  "legacy_regression_tests_passed": "PASS",
+  "ros2_build_result": "PASS",
+  "opened_robot_com_port": false,
+  "opened_tactile_com_port": false,
+  "camera_opened": false,
+  "real_bridge_started": false,
+  "goal_position_written": false,
+  "physical_motion_observed": false,
+  "git_commit": "HEAD",
+  "final_status": "READY_FOR_ONE_LAUNCH_TACTILE_TEST_RETEST",
+  "passed": 34,
+  "total": 34,
+  "safe_evidence": {
+    "wrapper_smoke_command": "run_in_ros2_lyrical.ps1 -Command echo BRIDGE_WRAPPER_OK",
+    "overlay_lookup": "ros2 pkg prefix so101_mvp_bringup",
+    "show_args": "ros2 launch so101_mvp_bringup mvp_hardware_bridge_motion_enabled.launch.py --show-args",
+    "real_launcher_log_tail": [
+      "2026-08-07 10:31:10.931 already_exited name=bridge pid=4676 exit_code=1",
+      "2026-08-07 10:31:11.293 COMPONENT_PROCESS_STARTED name=server root_pid=15408 descendants=[26728,24436,4048,5028,300]",
+      "2026-08-07 10:31:11.305 COMPONENT_PROCESS_STOPPING name=server pid=26728",
+      "2026-08-07 10:31:11.430 COMPONENT_PROCESS_STOPPED name=server pid=26728 exit_code=stopped",
+      "2026-08-07 10:31:11.434 COMPONENT_PROCESS_STOPPING name=server pid=24436",
+      "2026-08-07 10:31:11.554 COMPONENT_PROCESS_STOPPED name=server pid=24436 exit_code=stopped",
+      "2026-08-07 10:31:11.561 COMPONENT_PROCESS_STOPPING name=server pid=15408",
+      "2026-08-07 10:31:11.680 COMPONENT_PROCESS_STOPPED name=server pid=15408 exit_code=stopped",
+      "2026-08-07 10:31:11.684 COMPONENT_PROCESS_STOPPING name=server pid=5028",
+      "2026-08-07 10:31:11.806 COMPONENT_PROCESS_STOPPED name=server pid=5028 exit_code=stopped",
+      "2026-08-07 10:31:11.812 COMPONENT_PROCESS_STOPPING name=server pid=300",
+      "2026-08-07 10:31:11.930 COMPONENT_PROCESS_STOPPED name=server pid=300 exit_code=stopped",
+      "2026-08-07 10:31:12.252 COMPONENT_PROCESS_STARTED name=zenoh root_pid=32260 descendants=[6828,8356,9432,25348,31256,10140]",
+      "2026-08-07 10:31:12.256 COMPONENT_PROCESS_STOPPING name=zenoh pid=32260",
+      "2026-08-07 10:31:12.379 COMPONENT_PROCESS_STOPPED name=zenoh pid=32260 exit_code=stopped",
+      "2026-08-07 10:31:12.384 COMPONENT_PROCESS_STOPPING name=zenoh pid=31256",
+      "2026-08-07 10:31:12.504 COMPONENT_PROCESS_STOPPED name=zenoh pid=31256 exit_code=stopped",
+      "2026-08-07 10:31:12.508 COMPONENT_PROCESS_STOPPING name=zenoh pid=10140",
+      "2026-08-07 10:31:12.629 COMPONENT_PROCESS_STOPPED name=zenoh pid=10140 exit_code=stopped",
+      "2026-08-07 10:31:12.650 cleanup_complete"
+    ]
+  },
+  "cases": [
+    {
+      "name": "launcher_uses_dedicated_bridge_runner",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "launcher_no_long_nested_bridge_command",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "bridge_runner_derives_project_root",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "bridge_runner_uses_correct_ros2_workspace",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "bridge_runner_calls_ros2_wrapper_synchronously",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "bridge_runner_sets_rmw_zenoh_cpp",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "bridge_runner_passes_enable_hardware_motion",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "runner_stays_alive_while_fake_launch_alive",
+      "passed": true,
+      "details": {
+        "returncode": 0,
+        "alive_after_one_second": true,
+        "stdout": "BRIDGE_RUNNER_STARTED\nBRIDGE_RUNNER_PROJECT_ROOT E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\nBRIDGE_RUNNER_WORKSPACE E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\mvp4e_bridge_spawn_fake_ws\nBRIDGE_RUNNER_RMW rmw_zenoh_cpp\nBRIDGE_RUNNER_ROS_HOME E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\logs\\runtime\\bridge_ros_home\nBRIDGE_RUNNER_ROS_LOG_DIR E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\logs\\runtime\\bridge_ros2\nBRIDGE_RUNNER_WRAPPER E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\mvp4e_bridge_spawn_fake\\fake_wrapper_success.ps1\nBRIDGE_RUNNER_COMMAND_FILE C:\\Users\\82053\\AppData\\Local\\Temp\\mvp4e_bridge_launch_655a05fc7ba748b1b4abd7e5cc44ebfe.cmd\nFAKE_WRAPPER_STARTED\nFAKE_LAUNCH_DONE\nBRIDGE_RUNNER_WRAPPER_EXIT code=0\n",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "runner_returns_fake_launch_exit_code",
+      "passed": true,
+      "details": {
+        "returncode": 7,
+        "alive_after_one_second": false,
+        "stdout": "BRIDGE_RUNNER_STARTED\nBRIDGE_RUNNER_PROJECT_ROOT E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\nBRIDGE_RUNNER_WORKSPACE E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\mvp4e_bridge_spawn_fake_ws\nBRIDGE_RUNNER_RMW rmw_zenoh_cpp\nBRIDGE_RUNNER_ROS_HOME E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\logs\\runtime\\bridge_ros_home\nBRIDGE_RUNNER_ROS_LOG_DIR E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\logs\\runtime\\bridge_ros2\nBRIDGE_RUNNER_WRAPPER E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\mvp4e_bridge_spawn_fake\\fake_wrapper_exit7.ps1\nBRIDGE_RUNNER_COMMAND_FILE C:\\Users\\82053\\AppData\\Local\\Temp\\mvp4e_bridge_launch_7775f047e4e44c85a3397196757b6f21.cmd\nFAKE_WRAPPER_STARTED\nFAKE_LAUNCH_EXIT7\nBRIDGE_RUNNER_WRAPPER_EXIT code=7\n",
+        "stderr": ""
+      }
+    },
+    {
+      "name": "runner_exception_written_to_stderr",
+      "passed": true,
+      "details": {
+        "returncode": 1,
+        "alive_after_one_second": false,
+        "stdout": "BRIDGE_RUNNER_STARTED\nBRIDGE_RUNNER_PROJECT_ROOT E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\nBRIDGE_RUNNER_WORKSPACE E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\mvp4e_bridge_spawn_fake_ws\nBRIDGE_RUNNER_RMW rmw_zenoh_cpp\nBRIDGE_RUNNER_ROS_HOME E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\logs\\runtime\\bridge_ros_home\nBRIDGE_RUNNER_ROS_LOG_DIR E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\logs\\runtime\\bridge_ros2\nBRIDGE_RUNNER_WRAPPER E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\mvp4e_bridge_spawn_fake\\fake_wrapper_throw.ps1\nBRIDGE_RUNNER_COMMAND_FILE C:\\Users\\82053\\AppData\\Local\\Temp\\mvp4e_bridge_launch_6c070c4e9f8d4fe386ce737fba938908.cmd\n",
+        "stderr": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\scripts\\run_mvp4e_bridge.ps1 : BRIDGE_RUNNER_\nEXCEPTION type=System.Management.Automation.RuntimeException message=fake wrapper boom\nAt E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\scripts\\run_mvp4e_bridge.ps1:51 char:92\n+ ... e=$($_.Exception.GetType().FullName) message=$($_.Exception.Message)\"\n+                                                    ~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : NotSpecified: (:) [Write-Error], WriteErrorException\n    + FullyQualifiedErrorId : Microsoft.PowerShell.Commands.WriteErrorException,run_mvp4e_bridge.ps1\n \n"
+      }
+    },
+    {
+      "name": "stdout_and_stderr_are_separate",
+      "passed": true,
+      "details": {
+        "returncode": 0,
+        "alive_after_one_second": false,
+        "stdout": "BRIDGE_RUNNER_STARTED\nBRIDGE_RUNNER_PROJECT_ROOT E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\nBRIDGE_RUNNER_WORKSPACE E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\mvp4e_bridge_spawn_fake_ws\nBRIDGE_RUNNER_RMW rmw_zenoh_cpp\nBRIDGE_RUNNER_ROS_HOME E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\logs\\runtime\\bridge_ros_home\nBRIDGE_RUNNER_ROS_LOG_DIR E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\logs\\runtime\\bridge_ros2\nBRIDGE_RUNNER_WRAPPER E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\mvp4e_bridge_spawn_fake\\fake_wrapper_stderr.ps1\nBRIDGE_RUNNER_COMMAND_FILE C:\\Users\\82053\\AppData\\Local\\Temp\\mvp4e_bridge_launch_c7a7c336179342a48e9ce0a10f88ccc7.cmd\nFAKE_STDOUT\nBRIDGE_RUNNER_WRAPPER_EXIT code=0\n",
+        "stderr": "FAKE_STDERR\n"
+      }
+    },
+    {
+      "name": "empty_stdout_with_stderr_error_is_reported",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "wrapper_argument_error_is_visible",
+      "passed": true,
+      "details": {
+        "returncode": 1,
+        "alive_after_one_second": false,
+        "stdout": "BRIDGE_RUNNER_STARTED\nBRIDGE_RUNNER_PROJECT_ROOT E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\nBRIDGE_RUNNER_WORKSPACE E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\mvp4e_bridge_spawn_fake_ws\nBRIDGE_RUNNER_RMW rmw_zenoh_cpp\nBRIDGE_RUNNER_ROS_HOME E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\logs\\runtime\\bridge_ros_home\nBRIDGE_RUNNER_ROS_LOG_DIR E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\logs\\runtime\\bridge_ros2\nBRIDGE_RUNNER_WRAPPER E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\data\\verification\\mvp4e_bridge_spawn_fake\\fake_wrapper_binding_error.ps1\nBRIDGE_RUNNER_COMMAND_FILE C:\\Users\\82053\\AppData\\Local\\Temp\\mvp4e_bridge_launch_31faa09f01bf488e981e1e0c4cf80119.cmd\n",
+        "stderr": "E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\scripts\\run_mvp4e_bridge.ps1 : BRIDGE_RUNNER_\nEXCEPTION type=System.Management.Automation.RuntimeException message=ParameterBindingException: unexpected -CommandFile\n binding\nAt E:\\PycharmProjects\\Embodied_AI\\LeRobot_Project\\so101_visual_tactile_grasp\\scripts\\run_mvp4e_bridge.ps1:51 char:92\n+ ... e=$($_.Exception.GetType().FullName) message=$($_.Exception.Message)\"\n+                                                    ~~~~~~~~~~~~~~~~~~~~\n    + CategoryInfo          : NotSpecified: (:) [Write-Error], WriteErrorException\n    + FullyQualifiedErrorId : Microsoft.PowerShell.Commands.WriteErrorException,run_mvp4e_bridge.ps1\n \n"
+      }
+    },
+    {
+      "name": "bridge_runner_started_marker_required",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "exit_before_runner_marker_is_spawn_failure",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "wrapper_exit_is_not_reported_as_tcp_timeout",
+      "passed": true,
+      "details": {
+        "stage": "bridge_wrapper",
+        "reason": "bridge_wrapper_exited"
+      }
+    },
+    {
+      "name": "ros2_launch_exit_is_not_reported_as_tcp_timeout",
+      "passed": true,
+      "details": {
+        "stage": "bridge_launch",
+        "reason": "ros2_launch_failed"
+      }
+    },
+    {
+      "name": "bridge_node_exit_is_not_reported_as_tcp_timeout",
+      "passed": true,
+      "details": {
+        "stage": "bridge_node",
+        "reason": "bridge_process_exited"
+      }
+    },
+    {
+      "name": "true_tcp_wait_timeout_is_reported_as_tcp_timeout",
+      "passed": true,
+      "details": {
+        "stage": "bridge_tcp",
+        "reason": "bridge_tcp_timeout"
+      }
+    },
+    {
+      "name": "root_and_descendant_pids_recorded",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_orphan_fake_bridge_process",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "cleanup_terminates_owned_runner_tree",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "unrelated_powershell_not_terminated",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "unrelated_ros2_process_not_terminated",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "winerror_1314_still_warning",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "rti_warning_still_warning",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "real_ros_error_still_fatal",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "bridge_ready_requires_tcp_connected",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "bridge_ready_requires_process_alive",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_com4_open",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_com8_open",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_camera_open",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_goal_position_write",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_physical_motion",
+      "passed": true,
+      "details": null
+    }
+  ]
+}

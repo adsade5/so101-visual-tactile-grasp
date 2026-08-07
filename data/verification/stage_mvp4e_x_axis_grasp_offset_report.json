@@ -1,0 +1,166 @@
+{
+  "stage": "MVP-4E-X-AXIS-GRASP-OFFSET-HOTFIX",
+  "observed_real_failure": "robot reaches approximately 2cm too far forward along base_link +X, so gripper closes in front of the object instead of around it",
+  "base_link_x_direction": "+X = forward (away from robot base/mount)",
+  "offset_direction": "-X (backward toward robot base)",
+  "offset_magnitude_m": 0.02,
+  "grasp_x_offset_m": -0.02,
+  "offset_applied_in": "mvp_visual_grasp.py run(), after pose_to_list, before build_integrated_plan_summary()",
+  "object_pose_base_not_modified": true,
+  "entire_trajectory_uses_corrected_x": true,
+  "close_logic_modified": false,
+  "descent_modified": false,
+  "lift_modified": false,
+  "visual_modified": false,
+  "fk_modified": false,
+  "ik_modified": false,
+  "tcp_modified": false,
+  "offline_tests_passed": 27,
+  "offline_tests_total": 27,
+  "offline_tests_failed": 0,
+  "offline_tests_all_pass": true,
+  "ros2_build_result": "PASSED",
+  "opened_robot_com_port": false,
+  "opened_tactile_com_port": false,
+  "goal_position_written": false,
+  "physical_motion_observed": false,
+  "git_commit": "",
+  "cases": [
+    {
+      "name": "compileall_core_files",
+      "passed": true,
+      "details": "ok"
+    },
+    {
+      "name": "config_grasp_x_offset_m_present",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "config_grasp_x_offset_m_negative",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "config_grasp_x_offset_m_magnitude_2cm",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "visual_reads_hardware_config",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "visual_reads_grasp_x_offset_m_field",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "object_x_raw_stored",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "object_x_corrected_field_present",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "grasp_x_offset_m_passed_to_summary",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "object_pose_base_x_offset_applied",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "pregrasp_pose_base_x_offset_applied",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "offset_applied_exactly_once",
+      "passed": true,
+      "details": "object_pose_base[0] assignment lines: 2"
+    },
+    {
+      "name": "object_pose_topic_not_modified",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "y_coordinate_unchanged",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "z_coordinate_unchanged",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "descent_x_inherits_offset",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "lift_x_inherits_offset",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "close_logic_unchanged",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "safe_close_limit_unchanged",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "descent_config_unchanged",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "lift_config_unchanged",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "COM4_unchanged",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "COM8_unchanged",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "grasp_config_yaml_no_x_offset",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "gripper_calibration_unchanged",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "fk_unchanged",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "ik_unchanged",
+      "passed": true,
+      "details": "None"
+    }
+  ],
+  "final_status": "READY_FOR_FINAL_MANUAL_GRASP_RETEST"
+}

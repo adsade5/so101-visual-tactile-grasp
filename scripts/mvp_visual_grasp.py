@@ -473,6 +473,8 @@ def build_integrated_plan_summary(
     initial_gripper_position: float,
     compute_message: str,
     tactile_state: StampedTactileState | None = None,
+    object_x_raw: float = 0.0,
+    grasp_x_offset_m: float = 0.0,
 ) -> dict[str, Any]:
     model = create_model()
     frozen = FrozenPregrasp(
@@ -570,6 +572,9 @@ def build_integrated_plan_summary(
         "reason": reason,
         "mode": mode,
         "object_pose_base": object_pose_base,
+        "object_x_raw": object_x_raw,
+        "grasp_x_offset_m": grasp_x_offset_m,
+        "object_x_corrected": float(object_pose_base[0]),
         "pregrasp_pose_base": pregrasp_pose_base,
         "current_joint_positions_rad": current_joint_positions_rad,
         "pregrasp_joint_target_rad": pregrasp_joint_target_rad,
@@ -1237,6 +1242,14 @@ def run(args: argparse.Namespace) -> int:
 
         object_pose_base = pose_to_list(node.latest_object_pose)
         pregrasp_pose_base = pose_to_list(node.latest_pregrasp_pose)
+
+        # ---- MVP-4E-X-AXIS-GRASP-OFFSET: apply grasp_x_offset_m ----
+        object_x_raw = float(object_pose_base[0])
+        hardware_raw = json.loads(HARDWARE_CONFIG_PATH.read_text(encoding="utf-8"))
+        grasp_x_offset_m = float(hardware_raw.get("grasp_x_offset_m", 0.0))
+        object_pose_base[0] = object_x_raw + grasp_x_offset_m
+        pregrasp_pose_base[0] = float(pregrasp_pose_base[0]) + grasp_x_offset_m
+
         created_at_unix_s = time.time()
         planned_snapshot = make_pregrasp_snapshot(
             snapshot_state="planned",
@@ -1270,6 +1283,8 @@ def run(args: argparse.Namespace) -> int:
             initial_gripper_position=initial_gripper,
             compute_message=compute_message,
             tactile_state=node.latest_tactile_state,
+            object_x_raw=object_x_raw,
+            grasp_x_offset_m=grasp_x_offset_m,
         )
         atomic_write_json(
             INTEGRATED_SNAPSHOT_PATH,

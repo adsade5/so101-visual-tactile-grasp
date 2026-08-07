@@ -1,0 +1,311 @@
+{
+  "timestamp": 1786077204.744901,
+  "object_pose_base": [
+    0.20582023042858463,
+    -0.001516824867458605,
+    0.025
+  ],
+  "pregrasp_pose_base": [
+    0.20582023042858463,
+    -0.001516824867458605,
+    0.10500000000000001
+  ],
+  "requested_pregrasp_xyz_m": [
+    0.20582023042858463,
+    -0.001516824867458605,
+    0.10500000000000001
+  ],
+  "candidate_offsets_m": [
+    [
+      0.0,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.0,
+      0.005
+    ],
+    [
+      0.0,
+      0.0,
+      0.01
+    ],
+    [
+      0.005,
+      0.0,
+      0.0
+    ],
+    [
+      -0.005,
+      0.0,
+      0.0
+    ],
+    [
+      0.0,
+      0.005,
+      0.0
+    ],
+    [
+      0.0,
+      -0.005,
+      0.0
+    ]
+  ],
+  "candidate_results": [
+    {
+      "candidate_index": 0,
+      "offset_m": [
+        0.0,
+        0.0,
+        0.0
+      ],
+      "requested_pregrasp_xyz_m": [
+        0.20582023042858463,
+        -0.001516824867458605,
+        0.10500000000000001
+      ],
+      "selected_pregrasp_xyz_m": [
+        0.20582023042858463,
+        -0.001516824867458605,
+        0.10500000000000001
+      ],
+      "success": true,
+      "selected_attempt_index": 2,
+      "seed_source": "target_yaw",
+      "solution_type": "accepted_near_solution",
+      "solution_rad": [
+        0.007408536122097204,
+        -0.18774486678161945,
+        0.021732281543905316,
+        1.65806,
+        0.01391491256664491
+      ],
+      "position_error_m": 0.008114425634159836,
+      "approach_error_deg": 4.512503876280124,
+      "cost": 0.01262692951043996,
+      "attempt_results": [
+        {
+          "attempt_index": 1,
+          "seed_source": "joint_state",
+          "seed_rad": [
+            -0.1703134478869192,
+            -0.6973645231045476,
+            0.1894928902165272,
+            1.65806,
+            0.006904599238658886
+          ],
+          "solver_success": false,
+          "solver_reason": "max_iterations",
+          "iterations": 200,
+          "position_error_m": 0.007003539158278611,
+          "approach_error_deg": 7.022010570525488,
+          "joint_limit_valid": true,
+          "solution_rad": [
+            -0.037903506549518226,
+            -0.2973645231045476,
+            0.08755289655443349,
+            1.65806,
+            0.12941357441207454
+          ],
+          "fk_valid": false,
+          "final_reason": "fk_validation_failed",
+          "solution_type": null
+        },
+        {
+          "attempt_index": 2,
+          "seed_source": "target_yaw",
+          "seed_rad": [
+            -0.007369525360374211,
+            -0.35,
+            0.35,
+            1.22,
+            0.0
+          ],
+          "solver_success": false,
+          "solver_reason": "max_iterations",
+          "iterations": 200,
+          "position_error_m": 0.008114425634159836,
+          "approach_error_deg": 4.512503876280124,
+          "joint_limit_valid": true,
+          "solution_rad": [
+            0.007408536122097204,
+            -0.18774486678161945,
+            0.021732281543905316,
+            1.65806,
+            0.01391491256664491
+          ],
+          "fk_valid": false,
+          "final_reason": "pregrasp_ready_near",
+          "solution_type": "accepted_near_solution"
+        }
+      ]
+    }
+  ],
+  "selected_candidate_index": 0,
+  "selected_offset_m": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "selected_pregrasp_xyz_m": [
+    0.20582023042858463,
+    -0.001516824867458605,
+    0.10500000000000001
+  ],
+  "solution_type": "accepted_near_solution",
+  "acceptance_tolerances": {
+    "strict_position_tolerance_m": 0.002,
+    "strict_approach_tolerance_deg": 5.0,
+    "pregrasp_position_tolerance_m": 0.01,
+    "pregrasp_approach_tolerance_deg": 5.0
+  },
+  "best_q_within_joint_limits": true,
+  "object_pose_age_s": 0.031999999999982265,
+  "target_radius_xy_m": 0.20582581959354423,
+  "target_distance_3d_m": 0.23106117807055823,
+  "approx_max_reach_m": 0.5514430191453165,
+  "desired_approach": [
+    0.0,
+    0.0,
+    -1.0
+  ],
+  "joint_state_seed_available": true,
+  "seeds_attempted": [
+    {
+      "source": "joint_state",
+      "seed_rad": [
+        -0.1703134478869192,
+        -0.6973645231045476,
+        0.1894928902165272,
+        1.65806,
+        0.006904599238658886
+      ]
+    },
+    {
+      "source": "target_yaw",
+      "seed_rad": [
+        -0.007369525360374211,
+        -0.35,
+        0.35,
+        1.22,
+        0.0
+      ]
+    },
+    {
+      "source": "reference",
+      "seed_rad": [
+        0.0,
+        -0.35,
+        0.35,
+        1.22,
+        0.0
+      ]
+    },
+    {
+      "source": "target_yaw_plus_15deg",
+      "seed_rad": [
+        0.2544298624387752,
+        -0.35,
+        0.35,
+        1.22,
+        0.0
+      ]
+    },
+    {
+      "source": "target_yaw_minus_15deg",
+      "seed_rad": [
+        -0.2691689131595236,
+        -0.35,
+        0.35,
+        1.22,
+        0.0
+      ]
+    },
+    {
+      "source": "elbow_high",
+      "seed_rad": [
+        -0.007369525360374211,
+        -0.55,
+        0.55,
+        1.1,
+        0.0
+      ]
+    },
+    {
+      "source": "elbow_low",
+      "seed_rad": [
+        -0.007369525360374211,
+        -0.2,
+        0.2,
+        1.35,
+        0.0
+      ]
+    }
+  ],
+  "attempt_results": [
+    {
+      "attempt_index": 1,
+      "seed_source": "joint_state",
+      "seed_rad": [
+        -0.1703134478869192,
+        -0.6973645231045476,
+        0.1894928902165272,
+        1.65806,
+        0.006904599238658886
+      ],
+      "solver_success": false,
+      "solver_reason": "max_iterations",
+      "iterations": 200,
+      "position_error_m": 0.007003539158278611,
+      "approach_error_deg": 7.022010570525488,
+      "joint_limit_valid": true,
+      "solution_rad": [
+        -0.037903506549518226,
+        -0.2973645231045476,
+        0.08755289655443349,
+        1.65806,
+        0.12941357441207454
+      ],
+      "fk_valid": false,
+      "final_reason": "fk_validation_failed",
+      "solution_type": null
+    },
+    {
+      "attempt_index": 2,
+      "seed_source": "target_yaw",
+      "seed_rad": [
+        -0.007369525360374211,
+        -0.35,
+        0.35,
+        1.22,
+        0.0
+      ],
+      "solver_success": false,
+      "solver_reason": "max_iterations",
+      "iterations": 200,
+      "position_error_m": 0.008114425634159836,
+      "approach_error_deg": 4.512503876280124,
+      "joint_limit_valid": true,
+      "solution_rad": [
+        0.007408536122097204,
+        -0.18774486678161945,
+        0.021732281543905316,
+        1.65806,
+        0.01391491256664491
+      ],
+      "fk_valid": false,
+      "final_reason": "pregrasp_ready_near",
+      "solution_type": "accepted_near_solution"
+    }
+  ],
+  "selected_attempt": 2,
+  "selected_solution_rad": [
+    0.007408536122097204,
+    -0.18774486678161945,
+    0.021732281543905316,
+    1.65806,
+    0.01391491256664491
+  ],
+  "final_reason": "pregrasp_ready_near"
+}

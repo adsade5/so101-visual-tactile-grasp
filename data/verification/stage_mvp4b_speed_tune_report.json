@@ -52,7 +52,7 @@
     },
     {
       "name": "executor_receives_0p06",
-      "passed": true,
+      "passed": false,
       "details": {}
     },
     {
@@ -142,17 +142,17 @@
     },
     {
       "name": "no_physical_motion",
-      "passed": true,
+      "passed": false,
       "details": {}
     }
   ],
-  "offline_tests_passed": true,
+  "offline_tests_passed": false,
   "offline_test_count": 25,
-  "ros2_build_result": "PASS",
+  "ros2_build_result": "not_run",
   "opened_com_ports": false,
   "tcp_started": false,
   "hardware_bridge_started": false,
   "goal_position_written": false,
   "physical_motion_observed": false,
-  "final_status": "READY_FOR_MANUAL_SPEED_RETEST"
+  "final_status": "OFFLINE_TESTS_FAIL"
 }

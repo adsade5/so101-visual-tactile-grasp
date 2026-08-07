@@ -11,13 +11,13 @@
   "tactile_baudrate": 2000000,
   "udp_guard_required": false,
   "offline_tests_passed": true,
-  "legacy_regression_tests_passed": "4B_PASS;4C_PASS;4C_HOTFIX_PASS;4E_PASS;4D_40_OF_44_PASS_WITH_SUPERSEDED_4E_STOP_LIFT_CHECKS",
-  "ros2_build_result": "PASS",
+  "legacy_regression_tests_passed": "NOT_RUN",
+  "ros2_build_result": "NOT_RUN",
   "opened_robot_com_port": false,
   "opened_tactile_com_port": false,
   "goal_position_written": false,
   "physical_motion_observed": false,
-  "final_status": "READY_FOR_DIRECT_COM8_SERVER_RETEST",
+  "final_status": "NOT_RUN",
   "cases": [
     {
       "name": "reused_sensor_module_loads_successfully",

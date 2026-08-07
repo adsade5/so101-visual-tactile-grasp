@@ -1,0 +1,38 @@
+{
+  "stage": "MVP-4A-MANUAL-ACCEPTANCE",
+  "source": "user_manual_acceptance",
+  "compute_pregrasp_success": true,
+  "solution_type": "accepted_near_solution",
+  "seed_source": "elbow_high",
+  "attempt_index": 5,
+  "selected_candidate_index": 0,
+  "requested_pregrasp_xyz_m": [
+    0.199081,
+    -0.000868,
+    0.105
+  ],
+  "selected_pregrasp_xyz_m": [
+    0.199081,
+    -0.000868,
+    0.105
+  ],
+  "selected_offset_m": [
+    0.0,
+    0.0,
+    0.0
+  ],
+  "position_error_m": 0.006613,
+  "approach_error_deg": 3.968,
+  "position_tolerance_m": 0.008,
+  "approach_tolerance_deg": 5.0,
+  "pregrasp_status_received": true,
+  "pregrasp_valid_received": true,
+  "pregrasp_pose_received": true,
+  "pregrasp_joint_target_received": true,
+  "hardware_bridge_started": false,
+  "tcp_started": false,
+  "opened_com_ports": false,
+  "motion_command_sent": false,
+  "physical_motion_observed": false,
+  "final_status": "PASS"
+}

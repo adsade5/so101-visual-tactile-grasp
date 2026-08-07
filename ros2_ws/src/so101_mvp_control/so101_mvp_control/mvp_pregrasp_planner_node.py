@@ -16,6 +16,8 @@ from .pregrasp_planner import (
     ARM_JOINT_NAMES,
     DEFAULT_APPROACH_TOLERANCE_DEG,
     DEFAULT_POSITION_TOLERANCE_M,
+    DEFAULT_PREGRASP_APPROACH_TOLERANCE_DEG,
+    DEFAULT_PREGRASP_POSITION_TOLERANCE_M,
     DESIRED_APPROACH_BASE,
     JointStateSnapshot,
     PoseSnapshot,
@@ -53,6 +55,14 @@ class MvpPregraspPlannerNode(Node):
             "approach_tolerance_deg",
             DEFAULT_APPROACH_TOLERANCE_DEG,
         )
+        self.declare_parameter(
+            "pregrasp_position_tolerance_m",
+            DEFAULT_PREGRASP_POSITION_TOLERANCE_M,
+        )
+        self.declare_parameter(
+            "pregrasp_approach_tolerance_deg",
+            DEFAULT_PREGRASP_APPROACH_TOLERANCE_DEG,
+        )
 
         self.project_root = Path(str(self.get_parameter("project_root").value))
         self.object_pose_topic = str(self.get_parameter("object_pose_topic").value)
@@ -75,6 +85,12 @@ class MvpPregraspPlannerNode(Node):
         )
         self.approach_tolerance_deg = float(
             self.get_parameter("approach_tolerance_deg").value
+        )
+        self.pregrasp_position_tolerance_m = float(
+            self.get_parameter("pregrasp_position_tolerance_m").value
+        )
+        self.pregrasp_approach_tolerance_deg = float(
+            self.get_parameter("pregrasp_approach_tolerance_deg").value
         )
 
         self.model = create_model(self.project_root)
@@ -182,6 +198,8 @@ class MvpPregraspPlannerNode(Node):
             max_joint_state_age_s=self.max_joint_state_age_s,
             position_tolerance_m=self.position_tolerance_m,
             approach_tolerance_deg=self.approach_tolerance_deg,
+            pregrasp_position_tolerance_m=self.pregrasp_position_tolerance_m,
+            pregrasp_approach_tolerance_deg=self.pregrasp_approach_tolerance_deg,
         )
         self.log_pregrasp_input(plan)
         self.log_ik_attempts(plan)
@@ -197,7 +215,7 @@ class MvpPregraspPlannerNode(Node):
 
         self.publish_pregrasp_plan(plan)
         self.publish_valid(True)
-        self.publish_status("pregrasp_ready")
+        self.publish_status(plan.reason)
 
         assert plan.pregrasp_position_m is not None
         response.success = True
@@ -245,6 +263,8 @@ class MvpPregraspPlannerNode(Node):
             "pregrasp_ready | "
             f"seed_source={plan.seed_source} | "
             f"attempt_index={plan.selected_attempt_index} | "
+            f"candidate_index={plan.selected_candidate_index} | "
+            f"solution_type={plan.solution_type} | "
             f"position_error_m={plan.position_error_m:.6f} | "
             f"approach_error_deg={plan.approach_error_deg:.3f}"
         )

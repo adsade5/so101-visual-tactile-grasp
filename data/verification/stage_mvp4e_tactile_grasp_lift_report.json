@@ -1,9 +1,9 @@
 {
   "stage": "MVP-4E-TACTILE-STOP-GRASP-AND-LIFT",
-  "success": true,
-  "passed": 53,
+  "success": false,
+  "passed": 51,
   "total": 53,
-  "ros2_build_result": "PASS",
+  "ros2_build_result": "PASSED",
   "opened_tactile_com_port": false,
   "hardware_command_sent": false,
   "tactile_port_source": "direct_serial:COM8",
@@ -260,12 +260,12 @@
     },
     {
       "name": "manual_doc_two_major_steps",
-      "passed": true,
+      "passed": false,
       "details": null
     },
     {
       "name": "manual_doc_uses_single_launcher",
-      "passed": true,
+      "passed": false,
       "details": null
     },
     {
