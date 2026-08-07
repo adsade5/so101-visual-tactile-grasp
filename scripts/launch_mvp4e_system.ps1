@@ -17,6 +17,11 @@ $TimeStamp = Get-Date -Format "yyyyMMdd_HHmmss"
 $LogDir = Join-Path $ProjectRoot "logs\runtime\$TimeStamp"
 $LauncherLog = Join-Path $LogDir "launcher.log"
 $ActionLog = Join-Path $LogDir "action.log"
+$BridgeStdoutLog = Join-Path $LogDir "bridge.stdout.log"
+$BridgeStderrLog = Join-Path $LogDir "bridge.stderr.log"
+$BridgeCombinedLog = Join-Path $LogDir "bridge.log"
+$BridgeCommandFile = Join-Path $LogDir "bridge_command.cmd"
+$BridgeRunnerScript = Join-Path $ProjectRoot "scripts\run_mvp4e_bridge.ps1"
 $RosLogDir = Join-Path $LogDir "ros2"
 
 $ZenohStartTimeoutS = 10.0
@@ -102,6 +107,93 @@ function Get-LogTail {
     }
 }
 
+function Merge-BridgeLogs {
+    param([string]$StdoutPath, [string]$StderrPath, [string]$CombinedPath)
+    $stdout = Read-TextFileLive -Path $StdoutPath
+    $stderr = Read-TextFileLive -Path $StderrPath
+    $merged = @()
+    if ($stdout) {
+        $merged += $stdout.TrimEnd()
+    }
+    if ($stderr) {
+        $merged += $stderr.TrimEnd()
+    }
+    $text = ($merged -join "`r`n")
+    Set-Content -LiteralPath $CombinedPath -Value $text -Encoding UTF8
+}
+
+function Get-ComponentLogText {
+    param([string]$Name)
+    if (-not $script:Managed.Contains($Name)) {
+        return ""
+    }
+    $entry = $script:Managed[$Name]
+    if ($entry.PSObject.Properties.Name -contains "StdoutLog" -and $entry.StdoutLog -and $entry.StderrLog -and $entry.CombinedLog) {
+        Merge-BridgeLogs -StdoutPath $entry.StdoutLog -StderrPath $entry.StderrLog -CombinedPath $entry.CombinedLog
+        return (Read-TextFileLive -Path $entry.CombinedLog)
+    }
+    if ($entry.Log) {
+        return Read-TextFileLive -Path $entry.Log
+    }
+    return ""
+}
+
+function Get-BridgeReportedExitCode {
+    param([string]$Name)
+    if (-not $script:Managed.Contains($Name)) {
+        return $null
+    }
+    $text = Get-ComponentLogText -Name $Name
+    if ($text -match 'BRIDGE_RUNNER_WRAPPER_EXIT code=(\d+)') {
+        return [int]$matches[1]
+    }
+    return $null
+}
+
+function Get-CommandFileContent {
+    param([string]$Path)
+    if (-not $Path -or -not (Test-Path -LiteralPath $Path)) {
+        return @()
+    }
+    try {
+        return @(Get-Content -LiteralPath $Path)
+    }
+    catch {
+        return @()
+    }
+}
+
+function Find-CommandFileSyntaxErrorLine {
+    param([string]$Path)
+    $lines = Get-CommandFileContent -Path $Path
+    foreach ($line in $lines) {
+        if ($line -match '(?i)^\s*if\s*\(\s*$') {
+            return $line
+        }
+        if ($line -match '(?i)^\s*.*(?:&&|\|\|)\s*$') {
+            return $line
+        }
+        if ($line -match '(?i)^\s*call\s+"[^"]*"\s*$') {
+            continue
+        }
+    }
+    if ($lines.Count -gt 0) {
+        return $lines[0]
+    }
+    return ""
+}
+
+function Find-FatalLogEntryFromText {
+    param([string]$Text)
+    foreach ($line in ($Text -split "`r?`n")) {
+        $severity = Get-LogSeverity -Line $line
+        if ($severity.Severity -eq "FATAL") {
+            return $severity
+        }
+    }
+    return $null
+}
+
 function Get-ProcessCommandLine {
     param([int]$ProcessId)
     try {
@@ -145,12 +237,35 @@ function Update-ComponentProcessTree {
     }
     $entry = $script:Managed[$Name]
     $desc = @(Get-DescendantProcesses -RootPid $entry.RootPid)
-    $entry.DescendantPids = @($desc | ForEach-Object { [int]$_.ProcessId })
+    $currentDescendantPids = @($desc | ForEach-Object { [int]$_.ProcessId } | Sort-Object -Unique)
+    $lastKnownDescendantPids = @()
+    if ($entry.PSObject.Properties.Name -contains "LastKnownDescendantPids" -and $entry.LastKnownDescendantPids) {
+        $lastKnownDescendantPids = @($entry.LastKnownDescendantPids)
+    }
+    $addedDescendants = @($currentDescendantPids | Where-Object { $_ -notin $lastKnownDescendantPids })
+    $removedDescendants = @($lastKnownDescendantPids | Where-Object { $_ -notin $currentDescendantPids })
+    $entry.DescendantPids = $currentDescendantPids
+    $entry.LastKnownDescendantPids = $currentDescendantPids
+    $entry.AllSeenDescendantPids = @(@($entry.AllSeenDescendantPids) + $currentDescendantPids) | Sort-Object -Unique
     $entry.CommandLines = @(
         "root=$($entry.CommandLine)"
         $desc | ForEach-Object { "pid=$($_.ProcessId) $($_.CommandLine)" }
     )
-    Write-LauncherLog "COMPONENT_PROCESS_STARTED name=$Name root_pid=$($entry.RootPid) descendants=[$(($entry.DescendantPids) -join ',')]"
+    if ($entry.PSObject.Properties.Name -contains "StdoutLog" -and $entry.StdoutLog -and $entry.StderrLog -and $entry.CombinedLog) {
+        try {
+            Merge-BridgeLogs -StdoutPath $entry.StdoutLog -StderrPath $entry.StderrLog -CombinedPath $entry.CombinedLog
+        }
+        catch {
+            Write-LauncherLog "bridge_log_merge_warning message=$($_.Exception.Message)"
+        }
+    }
+    if (-not ($entry.PSObject.Properties.Name -contains "ProcessTreeStartedLogged") -or -not $entry.ProcessTreeStartedLogged) {
+        $entry.ProcessTreeStartedLogged = $true
+        Write-LauncherLog "COMPONENT_PROCESS_STARTED name=$Name root_pid=$($entry.RootPid) descendants=[$(($entry.DescendantPids) -join ',')]"
+    }
+    elseif (($addedDescendants.Count -gt 0) -or ($removedDescendants.Count -gt 0)) {
+        Write-LauncherLog "COMPONENT_PROCESS_TREE_UPDATED name=$Name added=[$(($addedDescendants) -join ',')] removed=[$(($removedDescendants) -join ',')] current=[$(($entry.DescendantPids) -join ',')]"
+    }
 }
 
 function Save-Manifest {
@@ -161,7 +276,13 @@ function Save-Manifest {
         $components[$name] = @{
             root_pid = $entry.RootPid
             descendant_pids = $entry.DescendantPids
+            last_known_descendant_pids = if ($entry.PSObject.Properties.Name -contains "LastKnownDescendantPids") { $entry.LastKnownDescendantPids } else { $null }
+            all_seen_descendant_pids = if ($entry.PSObject.Properties.Name -contains "AllSeenDescendantPids") { $entry.AllSeenDescendantPids } else { $null }
             log = $entry.Log
+            stdout_log = if ($entry.PSObject.Properties.Name -contains "StdoutLog") { $entry.StdoutLog } else { $null }
+            stderr_log = if ($entry.PSObject.Properties.Name -contains "StderrLog") { $entry.StderrLog } else { $null }
+            combined_log = if ($entry.PSObject.Properties.Name -contains "CombinedLog") { $entry.CombinedLog } else { $null }
+            command_file = if ($entry.PSObject.Properties.Name -contains "CommandFile") { $entry.CommandFile } else { $null }
             command_line = $entry.CommandLine
         }
     }
@@ -278,7 +399,10 @@ function Start-ManagedCommand {
         Process = $process
         RootPid = [int]$process.Id
         DescendantPids = @()
+        LastKnownDescendantPids = @()
+        AllSeenDescendantPids = @()
         CommandLines = @()
+        ProcessTreeStartedLogged = $false
         Log = $logFile
         Script = $scriptPath
         CommandLine = Get-ProcessCommandLine -ProcessId ([int]$process.Id)
@@ -287,6 +411,48 @@ function Start-ManagedCommand {
     Update-ComponentProcessTree -Name $Name
     Save-Manifest
     Write-LauncherLog "started name=$Name pid=$($process.Id) log=$logFile"
+    return $process
+}
+
+function Start-ManagedBridgeRunner {
+    Assert-PathExists -Path $BridgeRunnerScript -Label "Bridge runner script"
+    $arguments = @("-NoProfile", "-ExecutionPolicy", "Bypass", "-File", $BridgeRunnerScript, "-EnableHardwareMotion", "-LogDirectory", $LogDir, "-CommandFilePath", $BridgeCommandFile, "-Ros2WrapperPath", $Ros2Wrapper, "-Ros2WorkspacePath", $Ros2Ws)
+    Write-LauncherLog "BRIDGE_PROCESS_COMMAND executable=powershell.exe argument_list=$($arguments -join ' ')"
+    Write-LauncherLog "BRIDGE_PROCESS_WORKING_DIRECTORY $ProjectRoot"
+    Write-LauncherLog "BRIDGE_STDOUT_LOG $BridgeStdoutLog"
+    Write-LauncherLog "BRIDGE_STDERR_LOG $BridgeStderrLog"
+    Write-LauncherLog "BRIDGE_COMBINED_LOG $BridgeCombinedLog"
+    Write-LauncherLog "BRIDGE_COMMAND_FILE $BridgeCommandFile"
+    Write-LauncherLog "BRIDGE_RMW_IMPLEMENTATION rmw_zenoh_cpp"
+    $process = Start-Process `
+        -FilePath "powershell.exe" `
+        -ArgumentList $arguments `
+        -WorkingDirectory $ProjectRoot `
+        -RedirectStandardOutput $BridgeStdoutLog `
+        -RedirectStandardError $BridgeStderrLog `
+        -PassThru `
+        -WindowStyle Hidden
+    $script:Managed["bridge"] = [pscustomobject]@{
+        Name = "bridge"
+        Process = $process
+        RootPid = [int]$process.Id
+        DescendantPids = @()
+        LastKnownDescendantPids = @()
+        AllSeenDescendantPids = @()
+        CommandLines = @()
+        ProcessTreeStartedLogged = $false
+        Log = $BridgeCombinedLog
+        StdoutLog = $BridgeStdoutLog
+        StderrLog = $BridgeStderrLog
+        CombinedLog = $BridgeCombinedLog
+        CommandFile = $BridgeCommandFile
+        Script = $BridgeRunnerScript
+        CommandLine = Get-ProcessCommandLine -ProcessId ([int]$process.Id)
+        Command = "powershell.exe $($arguments -join ' ')"
+    }
+    Update-ComponentProcessTree -Name "bridge"
+    Save-Manifest
+    Write-LauncherLog "started name=bridge pid=$($process.Id) stdout=$BridgeStdoutLog stderr=$BridgeStderrLog"
     return $process
 }
 
@@ -332,13 +498,23 @@ function Get-ManagedExitCode {
         return $null
     }
     $proc = $script:Managed[$Name].Process
+    $deadline = (Get-Date).AddMilliseconds(1000)
     try {
-        $proc.Refresh()
-        if ($proc.HasExited) {
-            return $proc.ExitCode
+        while ((Get-Date) -lt $deadline) {
+            $proc.Refresh()
+            if ($proc.HasExited) {
+                return $proc.ExitCode
+            }
+            Start-Sleep -Milliseconds 50
         }
     }
     catch {
+    }
+    if ($Name -eq "bridge") {
+        $reported = Get-BridgeReportedExitCode -Name $Name
+        if ($null -ne $reported) {
+            return $reported
+        }
     }
     return $null
 }
@@ -394,12 +570,69 @@ function Test-LogHasFatal {
     return Find-FatalLogEntry -Path $Path
 }
 
+function Get-BridgeFailureClassification {
+    param([string]$Text, [bool]$TimedOut = $false)
+    if ($Text -notmatch "BRIDGE_RUNNER_STARTED") {
+        return [pscustomobject]@{ Stage = "bridge_spawn"; Reason = "bridge_runner_failed_before_start" }
+    }
+    if ($Text -match '(?i)(The syntax of the command is incorrect\.|The filename, directory name, or volume label syntax is incorrect\.|was unexpected at this time\.|is not recognized as an internal or external command\.)') {
+        return [pscustomobject]@{ Stage = "bridge_command_file"; Reason = "cmd_syntax_error" }
+    }
+    if ($Text -match "(?i)(ParameterBindingException|A positional parameter cannot be found|Cannot bind parameter|BRIDGE_RUNNER_EXCEPTION|The term '.+' is not recognized)") {
+        return [pscustomobject]@{ Stage = "bridge_wrapper"; Reason = "bridge_wrapper_exited" }
+    }
+    if ($Text -match "(?i)(InvalidLaunchFileError|launch\.invalid_launch_file_error|PermissionError|Launch file may have a syntax error)") {
+        return [pscustomobject]@{ Stage = "bridge_launch"; Reason = "ros2_launch_failed" }
+    }
+    if (($Text -match "mvp_hardware_bridge_node.*process started with pid") -and ($Text -match "(?i)(process has died|process exited with code|BRIDGE_RUNNER_WRAPPER_EXIT code=[1-9])")) {
+        return [pscustomobject]@{ Stage = "bridge_node"; Reason = "bridge_process_exited" }
+    }
+    if (($Text -match "BRIDGE_RUNNER_WRAPPER_EXIT code=[1-9]") -or ($Text -match "Traceback \(most recent call last\):")) {
+        return [pscustomobject]@{ Stage = "bridge_wrapper"; Reason = "bridge_wrapper_exited" }
+    }
+    if ($TimedOut) {
+        return [pscustomobject]@{ Stage = "bridge_tcp"; Reason = "bridge_tcp_timeout" }
+    }
+    return [pscustomobject]@{ Stage = "bridge_wrapper"; Reason = "bridge_wrapper_exited" }
+}
+
+function Wait-BridgeRunnerStarted {
+    $deadline = (Get-Date).AddSeconds(5.0)
+    while ((Get-Date) -lt $deadline) {
+        Update-ComponentProcessTree -Name "bridge"
+        $text = Get-ComponentLogText -Name "bridge"
+        if ($text -match "BRIDGE_RUNNER_STARTED") {
+            return
+        }
+        if (-not (Test-ManagedAlive "bridge")) {
+            $classification = Get-BridgeFailureClassification -Text $text
+            Write-ComponentFailure -Stage $classification.Stage -Reason $classification.Reason -Name "bridge"
+            throw "$($classification.Stage) $($classification.Reason)"
+        }
+        Start-Sleep -Milliseconds 200
+    }
+    $text = Get-ComponentLogText -Name "bridge"
+    $classification = Get-BridgeFailureClassification -Text $text
+    Write-ComponentFailure -Stage $classification.Stage -Reason $classification.Reason -Name "bridge"
+    throw "$($classification.Stage) $($classification.Reason)"
+}
+
 function Write-ComponentFailure {
     param([string]$Stage, [string]$Reason, [string]$Name, [object]$FatalEntry = $null)
     $entry = if ($script:Managed.Contains($Name)) { $script:Managed[$Name] } else { $null }
     $rootPid = if ($entry) { $entry.RootPid } else { $null }
     $desc = if ($entry) { ($entry.DescendantPids -join ",") } else { "" }
     $exitCode = if ($entry) { Get-ManagedExitCode -Name $Name } else { $null }
+    $runnerExitCode = if ($Name -eq "bridge") { Get-BridgeReportedExitCode -Name $Name } else { $null }
+    if ($null -eq $exitCode -and $null -ne $runnerExitCode) {
+        $exitCode = $runnerExitCode
+    }
+    elseif (($null -ne $exitCode) -and ($null -ne $runnerExitCode) -and ($exitCode -ne $runnerExitCode) -and $Name -eq "bridge") {
+        Write-Step "BRIDGE_EXIT_CODE_MISMATCH process_exit_code=$exitCode runner_reported_code=$runnerExitCode"
+    }
+    elseif (($null -eq $exitCode) -and ($null -eq $runnerExitCode) -and $Name -eq "bridge") {
+        Write-Step "BRIDGE_EXIT_CODE_RECOVERY_FAILED process_exit_code=null runner_reported_code=null"
+    }
     $logFile = if ($entry) { $entry.Log } else { "" }
     $empty = $true
     if ($logFile -and (Test-Path -LiteralPath $logFile)) {
@@ -413,6 +646,49 @@ function Write-ComponentFailure {
     Write-Step "EXIT_CODE $exitCode"
     Write-Step "LOG_FILE $logFile"
     Write-Step ("{0}_LOG_EMPTY {1}" -f $Name.ToUpperInvariant(), $empty.ToString().ToLowerInvariant())
+    if ($Name -eq "bridge") {
+        if ($null -ne $runnerExitCode) {
+            Write-Step "BRIDGE_RUNNER_REPORTED_EXIT_CODE $runnerExitCode"
+        }
+        $commandFile = if ($entry -and ($entry.PSObject.Properties.Name -contains "CommandFile")) { $entry.CommandFile } else { "" }
+        if ($commandFile) {
+            Write-Step "COMMAND_FILE $commandFile"
+            Write-Step "COMMAND_FILE_CONTENT_BEGIN"
+            foreach ($line in Get-CommandFileContent -Path $commandFile) {
+                Write-LauncherLog $line
+                Write-Host $line
+            }
+            Write-Step "COMMAND_FILE_CONTENT_END"
+            if ($Stage -eq "bridge_command_file" -or $Reason -eq "cmd_syntax_error") {
+                $cmdErrorLine = Find-CommandFileSyntaxErrorLine -Path $commandFile
+                if ($cmdErrorLine) {
+                    Write-Step "CMD_ERROR_LINE $cmdErrorLine"
+                }
+            }
+        }
+    }
+    if ($entry -and ($entry.PSObject.Properties.Name -contains "StdoutLog")) {
+        $stdoutLog = $entry.StdoutLog
+        $stderrLog = $entry.StderrLog
+        $combinedLog = $entry.CombinedLog
+        $stdoutEmpty = -not (Test-Path -LiteralPath $stdoutLog) -or ((Get-Item -LiteralPath $stdoutLog).Length -eq 0)
+        $stderrEmpty = -not (Test-Path -LiteralPath $stderrLog) -or ((Get-Item -LiteralPath $stderrLog).Length -eq 0)
+        Write-Step "BRIDGE_STDOUT_LOG $stdoutLog"
+        Write-Step "BRIDGE_STDERR_LOG $stderrLog"
+        Write-Step "BRIDGE_COMBINED_LOG $combinedLog"
+        Write-Step ("BRIDGE_STDOUT_EMPTY {0}" -f $stdoutEmpty.ToString().ToLowerInvariant())
+        Write-Step ("BRIDGE_STDERR_EMPTY {0}" -f $stderrEmpty.ToString().ToLowerInvariant())
+        Write-Host "BRIDGE_STDOUT_TAIL_BEGIN"
+        foreach ($line in Get-LogTail -Path $stdoutLog -Lines 100) {
+            Write-Host $line
+        }
+        Write-Host "BRIDGE_STDOUT_TAIL_END"
+        Write-Host "BRIDGE_STDERR_TAIL_BEGIN"
+        foreach ($line in Get-LogTail -Path $stderrLog -Lines 100) {
+            Write-Host $line
+        }
+        Write-Host "BRIDGE_STDERR_TAIL_END"
+    }
     if ($FatalEntry) {
         Write-Step "FATAL_PATTERN $($FatalEntry.Pattern)"
         Write-Step "FATAL_LINE $($FatalEntry.Line)"
@@ -437,19 +713,31 @@ function Wait-ComponentLogPattern {
     while ((Get-Date) -lt $deadline) {
         Update-ComponentProcessTree -Name $Name
         if (-not (Test-ManagedProcessTreeAlive -Name $Name -RequireDescendant ($Name -eq "bridge"))) {
+            if ($Name -eq "bridge") {
+                $text = Get-ComponentLogText -Name $Name
+                $classification = Get-BridgeFailureClassification -Text $text
+                Write-ComponentFailure -Stage $classification.Stage -Reason $classification.Reason -Name $Name
+                throw "$($classification.Stage) $($classification.Reason)"
+            }
             Write-ComponentFailure -Stage $FailedStage -Reason "${Name}_process_exited" -Name $Name
             throw "$FailedStage ${Name}_process_exited"
         }
-        $fatal = Find-FatalLogEntry -Path $logFile
+        $text = Get-ComponentLogText -Name $Name
+        $fatal = Find-FatalLogEntryFromText -Text $text
         if ($fatal) {
             Write-ComponentFailure -Stage $FailedStage -Reason "${Name}_fatal_log" -Name $Name -FatalEntry $fatal
             throw "$FailedStage ${Name}_fatal_log:$($fatal.Pattern)"
         }
-        $text = Read-TextFileLive -Path $logFile
         if ($text -match [regex]::Escape($Pattern)) {
             return
         }
         Start-Sleep -Milliseconds 200
+    }
+    if ($Name -eq "bridge") {
+        $text = Get-ComponentLogText -Name $Name
+        $classification = Get-BridgeFailureClassification -Text $text -TimedOut $true
+        Write-ComponentFailure -Stage $classification.Stage -Reason $classification.Reason -Name $Name
+        throw "$($classification.Stage) $($classification.Reason)"
     }
     Write-ComponentFailure -Stage $FailedStage -Reason "timeout waiting_for=$Pattern" -Name $Name
     throw "$FailedStage timeout waiting_for=$Pattern"
@@ -526,6 +814,12 @@ function Wait-Ros2TopicPattern {
     while ((Get-Date) -lt $deadline) {
         foreach ($name in $script:Managed.Keys) {
             if (-not (Test-ManagedProcessTreeAlive -Name $name -RequireDescendant ($name -eq "bridge"))) {
+                if ($name -eq "bridge") {
+                    $text = Get-ComponentLogText -Name $name
+                    $classification = Get-BridgeFailureClassification -Text $text
+                    Write-ComponentFailure -Stage $classification.Stage -Reason $classification.Reason -Name $name
+                    throw "$($classification.Stage) $($classification.Reason)"
+                }
                 Write-ComponentFailure -Stage $FailedStage -Reason "${name}_process_exited" -Name $name
                 throw "$FailedStage ${name}_process_exited"
             }
@@ -585,7 +879,7 @@ function Stop-OwnedProcessTree {
     }
     Update-ComponentProcessTree -Name $Name
     $entry = $script:Managed[$Name]
-    $pids = @($entry.DescendantPids + @($entry.RootPid)) | Sort-Object -Descending -Unique
+    $pids = @($entry.DescendantPids + @($entry.AllSeenDescendantPids) + @($entry.RootPid)) | Sort-Object -Descending -Unique
     foreach ($pidValue in $pids) {
         $proc = Get-Process -Id $pidValue -ErrorAction SilentlyContinue
         if ($proc) {
@@ -663,8 +957,18 @@ function Start-Server {
 
 function Start-Bridge {
     Write-Step "[3/5] Starting ROS2 bridge..."
-    $bridgeCommand = "cd /d $Ros2Ws && call install\local_setup.bat && if /I not `"%RMW_IMPLEMENTATION%`"==`"rmw_zenoh_cpp`" (echo BRIDGE_RMW_MISMATCH actual=%RMW_IMPLEMENTATION% && exit /b 121) && echo BRIDGE_RMW_IMPLEMENTATION %RMW_IMPLEMENTATION% && ros2 launch so101_mvp_bringup mvp_hardware_bridge_motion_enabled.launch.py enable_hardware_motion:=true"
-    Start-ManagedCommand -Name "bridge" -LogName "bridge.log" -Command "& `"$Ros2Wrapper`" -Command `"$bridgeCommand`"" | Out-Null
+    try {
+        Start-ManagedBridgeRunner | Out-Null
+    }
+    catch {
+        Write-Step "FAILED_STAGE bridge_spawn"
+        Write-Step "FAILED_REASON bridge_runner_spawn_failed"
+        Write-Step "BRIDGE_STDOUT_LOG $BridgeStdoutLog"
+        Write-Step "BRIDGE_STDERR_LOG $BridgeStderrLog"
+        Write-Step "LOG_DIR $LogDir"
+        throw "bridge_spawn bridge_runner_spawn_failed"
+    }
+    Wait-BridgeRunnerStarted
     Write-Step "[3/5] Bridge process started"
     Write-Step "[3/5] Waiting for TCP connection..."
     Wait-ComponentLogPattern -Name "bridge" -Pattern "BRIDGE_TCP_CONNECTED" -TimeoutSec 15.0 -FailedStage "bridge_tcp"

@@ -70,6 +70,17 @@ The launcher treats these Windows/ROS2 setup messages as non-fatal warnings:
 
 You do not need an Administrator PowerShell. Acceptance is blocked only by a real fatal log line such as `[ERROR]`, `[FATAL]`, a Python `Traceback`, a component process exit, or a Bridge TCP connection timeout.
 
+Bridge failures are classified separately as:
+
+- `bridge_spawn`: the dedicated bridge runner never prints `BRIDGE_RUNNER_STARTED`.
+- `bridge_command_file`: the generated `.cmd` file has a Windows batch syntax error. `cmd.exe` prints `The syntax of the command is incorrect.` and the wrapper can still return `255`.
+- `bridge_wrapper`: the runner starts, but the wrapper exits before ROS2 launch can stay up.
+- `bridge_launch`: ROS2 launch file loading or argument parsing fails.
+- `bridge_node`: the bridge node process starts, then dies.
+- `bridge_tcp`: the runner and bridge node stay alive, but TCP never becomes ready before timeout.
+
+When Bridge fails with an empty `bridge.log` and a nonzero root exit code, the launcher now checks `bridge.stdout.log` and `bridge.stderr.log` separately. That usually indicates a startup or wrapper problem, not a TCP timeout. If stdout contains `The syntax of the command is incorrect.` together with `BRIDGE_RUNNER_WRAPPER_EXIT code=255`, treat it as `bridge_command_file`, not TCP.
+
 Pass criteria remain unchanged:
 
 - FlexiTac source is `direct_serial` on `COM8`.

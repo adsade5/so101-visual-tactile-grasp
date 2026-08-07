@@ -58,12 +58,16 @@ cd /d "$PixiWorkspace"
 if exist "$vsSetup" call "$vsSetup" -arch=x64 -host_arch=x64
 call "$setupBat"
 set "CMAKE_GENERATOR=Ninja"
+if not defined ROS_HOME set "ROS_HOME=$projectRoot\.ros"
+if not defined ROS_LOG_DIR set "ROS_LOG_DIR=$projectRoot\logs\ros2"
 if not defined RMW_IMPLEMENTATION set "RMW_IMPLEMENTATION=rmw_zenoh_cpp"
 if /I not "%ROS_DISTRO%"=="lyrical" (
   echo ERROR: expected ROS_DISTRO=lyrical but got ROS_DISTRO=%ROS_DISTRO%
   exit /b 120
 )
 echo ROS_DISTRO=%ROS_DISTRO%
+echo ROS_HOME=%ROS_HOME%
+echo ROS_LOG_DIR=%ROS_LOG_DIR%
 echo RMW_IMPLEMENTATION=%RMW_IMPLEMENTATION%
 echo ROS_PYTHON=%CONDA_PREFIX%\python.exe
 where cl 2>NUL
