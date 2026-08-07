@@ -1,3 +1,13 @@
+# =============================================================================
+# DEPRECATED_FOR_FINAL_ACCEPTANCE
+#
+# This one-launch orchestrator introduced unnecessary Windows/PowerShell/ROS2
+# process-management complexity. Final MVP-4E acceptance uses the previously
+# validated manual multi-terminal startup via scripts/open_mvp4e_terminals.ps1.
+#
+# This file is retained only for historical debugging.
+# =============================================================================
+
 param(
     [Parameter(Mandatory = $true)]
     [ValidateSet("TactileTest", "PlanOnly", "FinalAcceptance")]

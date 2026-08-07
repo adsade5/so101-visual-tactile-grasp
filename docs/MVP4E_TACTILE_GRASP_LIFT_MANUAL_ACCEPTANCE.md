@@ -1,127 +1,128 @@
-# MVP-4E One-Launch Manual Acceptance
+# MVP-4E Final Manual Acceptance (Simplified Multi-Terminal)
 
-Use one PowerShell entry point for normal acceptance. It starts Zenoh, the LeRobot server, the ROS2 hardware bridge, visual nodes when needed, the action command, and then shuts down only the child processes it created.
+## A. Single Helper Command
 
-## 1. Normal Commands
-
-First retest only the static tactile path:
+Open 4 independent terminals at once:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File scripts\launch_mvp4e_system.ps1 -Mode TactileTest
+powershell -ExecutionPolicy Bypass -File .\scripts\open_mvp4e_terminals.ps1
 ```
 
-Only after `TactileTest` starts all required components, completes FlexiTac baseline, and reports static tactile pass, run final acceptance:
+This is NOT a supervisor. It only opens windows. You inspect each terminal by eye.
+
+## B. Four Terminals
+
+| Terminal | Title | What runs |
+|----------|-------|-----------|
+| 0 | `MVP4E - 0 Zenoh` | Zenoh router (`ros2 run rmw_zenoh_cpp rmw_zenohd`) |
+| 1 | `MVP4E - 1 Server COM4 COM8` | LeRobot server: COM4 follower, COM8 FlexiTac, TCP server |
+| 2 | `MVP4E - 2 ROS2 Bridge` | ROS2 hardware bridge (sole TCP client) |
+| 3 | `MVP4E - 3 Vision` | Visual perception / pregrasp preview nodes |
+
+## C. Ready Signs (Read Each Terminal by Eye)
+
+**Terminal 0 — Zenoh:**
+Zenoh router prints its normal startup banner. If the terminal hangs at startup, Zenoh is not ready.
+
+**Terminal 1 — Server:**
+You MUST see ALL of these lines:
+- `TACTILE_SERIAL_OPENED port=COM8`
+- `TACTILE_BASELINE_COMPLETED`
+- `TACTILE_READY true`
+- `ROBOT_CONNECTED port=COM4`
+- `TCP_SERVER_LISTENING`
+
+**Terminal 2 — Bridge:**
+You MUST see:
+- Bridge node initializes without crash
+- `BRIDGE_TCP_CONNECTED` (or equivalent TCP connected message)
+- `BRIDGE_TCP_READY true`
+
+**Terminal 3 — Vision:**
+You MUST see:
+- Object pose publishing repeatedly (`/object_pose_base` or similar)
+- No fatal errors in the node output
+
+**Do NOT proceed to plan-only until ALL four terminals show their ready signs.**
+
+## D. Tactile Test (Optional)
+
+Only after Terminals 0, 1, and 2 are healthy (vision not required):
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File scripts\launch_mvp4e_system.ps1 -Mode FinalAcceptance
+cd E:\PycharmProjects\Embodied_AI\LeRobot_Project\so101_visual_tactile_grasp
+
+& ".\audit\run_in_ros2_lyrical.ps1" `
+  -Command "cd /d E:\PycharmProjects\Embodied_AI\LeRobot_Project\so101_visual_tactile_grasp\ros2_ws && call install\local_setup.bat && cd /d E:\PycharmProjects\Embodied_AI\LeRobot_Project\so101_visual_tactile_grasp && python scripts\mvp_visual_grasp.py --tactile-test"
 ```
 
-Optional planning-only diagnosis:
+## E. Plan-Only
+
+Only after ALL four ready signs are confirmed:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File scripts\launch_mvp4e_system.ps1 -Mode PlanOnly
+cd E:\PycharmProjects\Embodied_AI\LeRobot_Project\so101_visual_tactile_grasp
+
+& ".\audit\run_in_ros2_lyrical.ps1" `
+  -Command "cd /d E:\PycharmProjects\Embodied_AI\LeRobot_Project\so101_visual_tactile_grasp\ros2_ws && call install\local_setup.bat && cd /d E:\PycharmProjects\Embodied_AI\LeRobot_Project\so101_visual_tactile_grasp && python scripts\mvp_visual_grasp.py --plan-only"
 ```
 
-`FinalAcceptance` runs:
+Expected output:
+- `success=true`
+- `waypoint_count=7`
+- `lift_waypoint_count=3`
+- `hardware_command_sent=false`
 
-```text
-start Zenoh
-start mvp_so101_server.py
-wait TACTILE_SERIAL_OPENED port=COM8, TACTILE_BASELINE_COMPLETED, TACTILE_READY true, ROBOT_CONNECTED port=COM4, TCP_SERVER_LISTENING
-start ROS2 hardware bridge
-wait BRIDGE_TCP_CONNECTED, /mvp/tcp_connected=true, fresh JointState, tactile_ready=true
-start visual launch
-wait /object_pose_base
-run python scripts\mvp_visual_grasp.py --plan-only
-prompt Type VISUAL_GRASP to execute
-run python scripts\mvp_visual_grasp.py --execute --confirm VISUAL_GRASP only on exact confirmation
-cleanup action, visual nodes, bridge, server, Zenoh
-```
+**If plan-only fails, stop. Do not proceed to execute.**
 
-Plan-only failure or any confirmation text other than exactly `VISUAL_GRASP` cancels execution and reports `hardware_command_sent=false`.
+## F. Execute
 
-Runtime logs are written under:
+**Only after plan-only PASS.** Keep the object and camera stationary.
 
-```text
-logs\runtime\<timestamp>\
-```
-
-Expected files:
-
-```text
-zenoh.log
-server.log
-bridge.log
-vision.log
-action.log
-launcher.log
-```
-
-Failure output prints the failing component, exit code when available, and the last 100 log lines. The most useful files are:
-
-- `logs/runtime/<timestamp>/launcher.log`: launcher state machine, owned PIDs, cleanup order, and failed stage.
-- `logs/runtime/<timestamp>/zenoh.log`: ROS2 wrapper and Zenoh startup output.
-- `logs/runtime/<timestamp>/server.log`: LeRobot server, COM8 FlexiTac, baseline, COM4 robot, and TCP listener startup output.
-
-The launcher treats these Windows/ROS2 setup messages as non-fatal warnings:
-
-- `RTI Connext DDS environment script not found`. MVP-4E uses `rmw_zenoh_cpp`, so missing RTI Connext setup does not block acceptance.
-- `WinError 1314` / `Cannot create a symlink to latest log directory`. This only means a normal user PowerShell cannot create the optional ROS `latest` log symlink; timestamped ROS logs are still written.
-
-You do not need an Administrator PowerShell. Acceptance is blocked only by a real fatal log line such as `[ERROR]`, `[FATAL]`, a Python `Traceback`, a component process exit, or a Bridge TCP connection timeout.
-
-Bridge failures are classified separately as:
-
-- `bridge_spawn`: the dedicated bridge runner never prints `BRIDGE_RUNNER_STARTED`.
-- `bridge_command_file`: the generated `.cmd` file has a Windows batch syntax error. `cmd.exe` prints `The syntax of the command is incorrect.` and the wrapper can still return `255`.
-- `bridge_wrapper`: the runner starts, but the wrapper exits before ROS2 launch can stay up.
-- `bridge_launch`: ROS2 launch file loading or argument parsing fails.
-- `bridge_node`: the bridge node process starts, then dies.
-- `bridge_tcp`: the runner and bridge node stay alive, but TCP never becomes ready before timeout.
-
-When Bridge fails with an empty `bridge.log` and a nonzero root exit code, the launcher now checks `bridge.stdout.log` and `bridge.stderr.log` separately. That usually indicates a startup or wrapper problem, not a TCP timeout. If stdout contains `The syntax of the command is incorrect.` together with `BRIDGE_RUNNER_WRAPPER_EXIT code=255`, treat it as `bridge_command_file`, not TCP.
-
-Pass criteria remain unchanged:
-
-- FlexiTac source is `direct_serial` on `COM8`.
-- Follower remains on `COM4`.
-- Baseline completes before tactile use.
-- Plan-only reports `success=true`, `waypoint_count=7`, `lift_waypoint_count=3`, and `hardware_command_sent=false`.
-- Execute first moves to pregrasp, descends 7 waypoints, opens the gripper from `g0` to `g0 + 10`, closes with `stop_gripper_on_tactile_contact=true`, and lifts only after tactile contact.
-- No contact means no lift.
-- No automatic retry, no automatic return, and no automatic placement.
-
-## 2. Advanced Troubleshooting
-
-Manual multi-terminal startup is retained only for debugging logs and should not be used for normal acceptance.
-
-Terminal 0:
+You MUST type this command manually:
 
 ```powershell
-& ".\audit\run_in_ros2_lyrical.ps1" -Command "ros2 run rmw_zenoh_cpp rmw_zenohd"
+cd E:\PycharmProjects\Embodied_AI\LeRobot_Project\so101_visual_tactile_grasp
+
+& ".\audit\run_in_ros2_lyrical.ps1" `
+  -Command "cd /d E:\PycharmProjects\Embodied_AI\LeRobot_Project\so101_visual_tactile_grasp\ros2_ws && call install\local_setup.bat && cd /d E:\PycharmProjects\Embodied_AI\LeRobot_Project\so101_visual_tactile_grasp && python scripts\mvp_visual_grasp.py --execute --confirm VISUAL_GRASP"
 ```
 
-Terminal 1:
+No script will type this for you.
 
-```powershell
-python scripts\mvp_so101_server.py --config config\mvp_hardware.json --enable-hardware-motion
-```
+## G. Final PASS Criteria
 
-Terminal 2:
+| # | Criterion |
+|---|-----------|
+| 1 | COM8 tactile ready |
+| 2 | COM4 robot connected |
+| 3 | Bridge TCP connected |
+| 4 | Visual object pose normal |
+| 5 | plan-only `success=true` |
+| 6 | `waypoint_count=7` |
+| 7 | `lift_waypoint_count=3` |
+| 8 | `hardware_command_sent=false` in plan-only |
+| 9 | Execute reaches pregrasp |
+| 10 | 7-segment descent completes |
+| 11 | Tactile contact stops further gripper closing |
+| 12 | 3-segment lift after contact (+1 cm, +2 cm, +3 cm) |
+| 13 | Object physically leaves the table |
+| 14 | No contact → no lift |
+| 15 | No automatic retry |
+| 16 | No automatic return |
+| 17 | No automatic place |
 
-```powershell
-& ".\audit\run_in_ros2_lyrical.ps1" -Command "cd /d E:\PycharmProjects\Embodied_AI\LeRobot_Project\so101_visual_tactile_grasp\ros2_ws && call install\local_setup.bat && ros2 launch so101_mvp_bringup mvp_hardware_bridge_motion_enabled.launch.py enable_hardware_motion:=true"
-```
+## H. Ctrl+C Shutdown Order
 
-Terminal 3:
+1. Wait for action to finish
+2. Terminal 3 (Vision) — Ctrl+C
+3. Terminal 2 (Bridge) — Ctrl+C
+4. Terminal 1 (Server) — Ctrl+C
+5. Terminal 0 (Zenoh) — Ctrl+C
+6. Follower power off
 
-```powershell
-& ".\audit\run_in_ros2_lyrical.ps1" -Command "cd /d E:\PycharmProjects\Embodied_AI\LeRobot_Project\so101_visual_tactile_grasp\ros2_ws && call install\local_setup.bat && ros2 launch so101_mvp_bringup mvp_pregrasp_preview.launch.py"
-```
+Do NOT use an automated process killer.
 
-Terminal 4:
+---
 
-```powershell
-python scripts\mvp_visual_grasp.py --plan-only
-python scripts\mvp_visual_grasp.py --execute --confirm VISUAL_GRASP
-```
+> **Legacy note:** The complex one-launch scripts (`scripts/launch_mvp4e_system.ps1`, `scripts/run_mvp4e_bridge.ps1`) are retained only for historical debugging and are NOT part of final MVP-4E acceptance. They are marked `DEPRECATED_FOR_FINAL_ACCEPTANCE`.

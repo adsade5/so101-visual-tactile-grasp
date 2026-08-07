@@ -1,0 +1,22 @@
+{
+  "stage": "MVP-4E-FINAL-SIMPLIFICATION-AND-FREEZE",
+  "complex_one_launch_deprecated": true,
+  "manual_multi_terminal_restored": true,
+  "helper_script": "scripts/open_mvp4e_terminals.ps1",
+  "helper_script_is_supervisor": false,
+  "helper_script_manages_pids": false,
+  "helper_script_parses_logs": false,
+  "helper_script_auto_executes_motion": false,
+  "tcp_architecture_modified": false,
+  "visual_modified": false,
+  "fk_modified": false,
+  "ik_modified": false,
+  "descent_modified": false,
+  "lift_modified": false,
+  "tactile_stop_modified": false,
+  "robot_port": "COM4",
+  "tactile_port": "COM8",
+  "ros2_build_result": "PASS",
+  "final_manual_acceptance_document": "docs/MVP4E_TACTILE_GRASP_LIFT_MANUAL_ACCEPTANCE.md",
+  "final_status": "READY_FOR_FINAL_MANUAL_GRASP_ACCEPTANCE"
+}

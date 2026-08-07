@@ -1,3 +1,13 @@
+# =============================================================================
+# DEPRECATED_FOR_FINAL_ACCEPTANCE
+#
+# This dedicated bridge runner was part of the complex one-launch orchestrator.
+# Final MVP-4E acceptance uses the direct ros2 launch command in a standalone
+# terminal opened by scripts/open_mvp4e_terminals.ps1.
+#
+# This file is retained only for historical debugging.
+# =============================================================================
+
 param(
     [switch]$EnableHardwareMotion,
     [switch]$TestCommandFile,
