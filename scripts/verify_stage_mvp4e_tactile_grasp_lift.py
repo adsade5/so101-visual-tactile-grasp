@@ -125,7 +125,7 @@ def main() -> int:
     cases.append(case("visual_contact_lost_abort", "tactile_contact_lost_during_lift" in visual))
     cases.append(case("visual_all_motion_count_12", "all_motion_waypoint_count" in visual))
     cases.append(case("manual_doc_two_major_steps", doc.count("## ") == 2))
-    cases.append(case("manual_doc_uses_single_script", doc.count("mvp_visual_grasp.py") >= 3 and "mvp_gripper_open_close_test.py" not in doc))
+    cases.append(case("manual_doc_uses_single_launcher", "scripts\\launch_mvp4e_system.ps1" in doc and "mvp_gripper_open_close_test.py" not in doc))
     cases.append(case("grasp_yaml_contains_lift_fields", "lift_waypoint_rise_m" in grasp_config_text and "tactile_stop_enabled" in grasp_config_text))
 
     if len(cases) != 53:

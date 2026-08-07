@@ -709,6 +709,9 @@ class MvpTcpServer:
         self.get_state_request_count = 0
         self.move_request_received_count = 0
         self.move_request_executed_count = 0
+        self.active_client_id: int | None = None
+        self.active_client_lock = threading.Lock()
+        self.client_threads: list[threading.Thread] = []
 
     def serve_forever(self) -> None:
         self.backend.connect()
@@ -727,16 +730,28 @@ class MvpTcpServer:
                         continue
                     self.next_client_id += 1
                     client_id = self.next_client_id
-                    print(f"TCP_CLIENT_CONNECTED id={client_id} address={addr}", flush=True)
-                    try:
-                        self._serve_client(conn, client_id)
-                    finally:
-                        try:
-                            conn.close()
-                        except OSError:
-                            pass
-                        print(f"TCP_CLIENT_DISCONNECTED id={client_id}", flush=True)
+                    with self.active_client_lock:
+                        active_client_id = self.active_client_id
+                        if active_client_id is None:
+                            self.active_client_id = client_id
+                    if active_client_id is not None:
+                        print(
+                            f"TCP_CLIENT_REJECTED id={client_id} peer={addr} reason=active_client_exists active_id={active_client_id}",
+                            flush=True,
+                        )
+                        conn.close()
+                        continue
+                    print(f"TCP_CLIENT_CONNECTED id={client_id} peer={addr}", flush=True)
+                    thread = threading.Thread(
+                        target=self._client_thread,
+                        args=(conn, client_id),
+                        daemon=True,
+                    )
+                    self.client_threads.append(thread)
+                    thread.start()
             finally:
+                for thread in self.client_threads:
+                    thread.join(timeout=1.0)
                 self.backend.close()
                 print("SERVER COUNTERS", flush=True)
                 print(json.dumps(self.counters(), sort_keys=True), flush=True)
@@ -762,6 +777,7 @@ class MvpTcpServer:
         detected_usb_serial = getattr(self.backend, "detected_usb_serial", "")
         if detected_usb_serial:
             print(f"detected_usb_serial={detected_usb_serial}", flush=True)
+        print(f"TCP_SERVER_LISTENING host={self.host} port={self.port}", flush=True)
         print(f"TCP_LISTENING host={self.host} port={self.port} single_client=true", flush=True)
 
     def shutdown(self) -> None:
@@ -772,14 +788,32 @@ class MvpTcpServer:
         except OSError:
             pass
 
-    def _serve_client(self, conn: socket.socket, client_id: int) -> None:
-        conn.settimeout(20.0)
+    def _client_thread(self, conn: socket.socket, client_id: int) -> None:
+        disconnect_reason = "normal"
+        try:
+            disconnect_reason = self._serve_client(conn, client_id)
+        finally:
+            try:
+                conn.close()
+            except OSError:
+                pass
+            with self.active_client_lock:
+                if self.active_client_id == client_id:
+                    self.active_client_id = None
+            print(
+                f"TCP_CLIENT_DISCONNECTED id={client_id} reason={disconnect_reason}",
+                flush=True,
+            )
+
+    def _serve_client(self, conn: socket.socket, client_id: int) -> str:
+        conn.settimeout(None)
         with conn.makefile("rwb") as stream:
             while not self.stop_event.is_set():
                 try:
                     line = stream.readline()
                     if not line:
-                        return
+                        print(f"TCP_CLIENT_EOF id={client_id}", flush=True)
+                        return "eof"
                     result = self.handle_line(line.decode("utf-8", errors="replace"), client_id)
                     payload = self.to_jsonable(result)
                     stream.write((json.dumps(payload, separators=(",", ":")) + "\n").encode("utf-8"))
@@ -787,10 +821,11 @@ class MvpTcpServer:
                     self._log_response(client_id, payload)
                 except Exception as exc:
                     print(
-                        f"TCP_CLIENT_ERROR id={client_id} type={type(exc).__name__} message={exc}",
+                        f"TCP_SERVER_ERROR error_type={type(exc).__name__} error={exc}",
                         flush=True,
                     )
-                    return
+                    return f"{type(exc).__name__}:{exc}"
+        return "server_stop"
 
     def handle_line(self, line: str, client_id: int = 0) -> dict[str, Any]:
         try:
@@ -806,7 +841,9 @@ class MvpTcpServer:
         if command == "get_state":
             self.get_state_request_count += 1
             try:
-                return self.backend.get_state()
+                result = self.backend.get_state()
+                result.setdefault("command", "get_state")
+                return result
             except Exception as exc:
                 return self._application_error(client_id, exc, "server_state_error")
         if command == "move_joints_sequential":
@@ -816,10 +853,16 @@ class MvpTcpServer:
         return response(False, "unknown_command")
 
     def _log_request(self, request: dict[str, Any] | None, client_id: int) -> None:
-        del request, client_id
+        command = "malformed" if request is None else str(request.get("command", "missing"))
+        print(f"TCP_REQUEST_RECEIVED command={command} id={client_id}", flush=True)
 
     def _log_response(self, client_id: int, result: dict[str, Any]) -> None:
-        del client_id, result
+        command = str(result.get("command", "unknown"))
+        reason = str(result.get("reason", "missing_reason"))
+        print(
+            f"TCP_RESPONSE_SENT command={command} id={client_id} success={bool_text(bool(result.get('success', False)))} reason={reason}",
+            flush=True,
+        )
 
     def _application_error(self, client_id: int, exc: Exception, prefix: str) -> dict[str, Any]:
         message = f"{prefix}:{type(exc).__name__}:{exc}"[:300]
@@ -902,6 +945,7 @@ class MvpTcpServer:
         except Exception as exc:
             return self._application_error(client_id, exc, "server_motion_error")
         duration = time.monotonic() - started
+        result.setdefault("command", "move_joints_sequential")
         if result.get("success"):
             self.move_request_executed_count += 1
             result.setdefault("reason", "motion_completed")

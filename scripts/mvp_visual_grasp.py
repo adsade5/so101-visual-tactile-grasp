@@ -77,6 +77,8 @@ class GraspConfig:
     speed_rad_s: float = 0.06
     max_speed_rad_s: float = 0.08
     execute_service_timeout_s: float = 120.0
+    tcp_ready_timeout_s: float = 8.0
+    tcp_status_max_age_s: float = 1.0
     inter_waypoint_hold_s: float = 0.3
     joint_state_max_age_s: float = 1.0
     object_pose_max_age_s: float = 2.0
@@ -90,7 +92,7 @@ class GraspConfig:
     gripper_only_motion_duration_s: float = 2.0
     gripper_open_ramp_fraction: tuple[float, ...] = (0.15, 0.30, 0.45, 0.60, 0.75, 0.90, 1.00)
     tactile_stop_enabled: bool = True
-    tactile_state_max_age_s: float = 0.5
+    tactile_state_max_age_s: float = 0.25
     tactile_require_clear_before_grasp: bool = True
     tactile_static_test_timeout_s: float = 30.0
     lift_enabled: bool = True
@@ -124,6 +126,10 @@ class StampedTactileState:
     state_age_s: float | None = None
     error: str | None = None
     frame_count: int = 0
+
+
+def log_event(message: str) -> None:
+    print(message, file=sys.stderr, flush=True)
 
 
 def parse_yaml_scalar(value: str) -> float | bool | None | str:
@@ -177,6 +183,8 @@ def load_grasp_config(path: Path | None = None) -> GraspConfig:
         speed_rad_s=float(values.get("speed_rad_s", 0.06)),
         max_speed_rad_s=float(values.get("max_speed_rad_s", 0.08)),
         execute_service_timeout_s=float(values.get("execute_service_timeout_s", 120.0)),
+        tcp_ready_timeout_s=float(values.get("tcp_ready_timeout_s", 8.0)),
+        tcp_status_max_age_s=float(values.get("tcp_status_max_age_s", 1.0)),
         inter_waypoint_hold_s=float(values.get("inter_waypoint_hold_s", 0.3)),
         joint_state_max_age_s=float(values.get("joint_state_max_age_s", 1.0)),
         object_pose_max_age_s=float(values.get("object_pose_max_age_s", 2.0)),
@@ -190,7 +198,7 @@ def load_grasp_config(path: Path | None = None) -> GraspConfig:
         gripper_only_motion_duration_s=float(values.get("gripper_only_motion_duration_s", 2.0)),
         gripper_open_ramp_fraction=tuple(float(v) for v in values.get("gripper_open_ramp_fraction", [0.15, 0.30, 0.45, 0.60, 0.75, 0.90, 1.00])),
         tactile_stop_enabled=bool(values.get("tactile_stop_enabled", True)),
-        tactile_state_max_age_s=float(values.get("tactile_state_max_age_s", 0.5)),
+        tactile_state_max_age_s=float(values.get("tactile_state_max_age_s", 0.25)),
         tactile_require_clear_before_grasp=bool(values.get("tactile_require_clear_before_grasp", True)),
         tactile_static_test_timeout_s=float(values.get("tactile_static_test_timeout_s", 30.0)),
         lift_enabled=bool(values.get("lift_enabled", True)),
@@ -643,6 +651,11 @@ def optional_status_int(value: str | None) -> int:
         return 0
 
 
+def tcp_status_is_connected(status: str) -> bool:
+    base = str(status).split(";", 1)[0].strip().lower()
+    return base == "connected"
+
+
 class VisualGraspNode:
     def __init__(self, config: GraspConfig) -> None:
         import rclpy
@@ -672,6 +685,10 @@ class VisualGraspNode:
         self.pregrasp_status = ""
         self.tcp_connected = False
         self.tcp_status = "unknown"
+        self.tcp_connected_received_monotonic_s: float | None = None
+        self.tcp_status_received_monotonic_s: float | None = None
+        self._last_logged_tcp_connected: bool | None = None
+        self._last_logged_tcp_status: str | None = None
         self.latest_tactile_ready = False
         self.latest_tactile_contact = False
         self.latest_tactile_score = 0.0
@@ -684,17 +701,28 @@ class VisualGraspNode:
         self.node.create_subscription(PoseStamped, "/mvp/pregrasp_pose", self._pregrasp_pose_cb, 10)
         self.node.create_subscription(Bool, "/mvp/pregrasp_valid", self._pregrasp_valid_cb, 10)
         self.node.create_subscription(String, "/mvp/pregrasp_status", self._pregrasp_status_cb, 10)
-        self.node.create_subscription(Bool, "/mvp/tcp_connected", self._tcp_connected_cb, 10)
-        self.node.create_subscription(String, "/mvp/tcp_status", self._tcp_status_cb, 10)
-        self.node.create_subscription(Bool, "/mvp/tactile_ready", self._tactile_ready_cb, 10)
-        self.node.create_subscription(Bool, "/mvp/tactile_contact", self._tactile_contact_cb, 10)
-        self.node.create_subscription(Float64, "/mvp/tactile_score", self._tactile_score_cb, 10)
-        self.node.create_subscription(String, "/mvp/tactile_status", self._tactile_status_cb, 10)
+        state_qos = self._state_qos_profile()
+        self.node.create_subscription(Bool, "/mvp/tcp_connected", self._tcp_connected_cb, state_qos)
+        self.node.create_subscription(String, "/mvp/tcp_status", self._tcp_status_cb, state_qos)
+        self.node.create_subscription(Bool, "/mvp/tactile_ready", self._tactile_ready_cb, state_qos)
+        self.node.create_subscription(Bool, "/mvp/tactile_contact", self._tactile_contact_cb, state_qos)
+        self.node.create_subscription(Float64, "/mvp/tactile_score", self._tactile_score_cb, state_qos)
+        self.node.create_subscription(String, "/mvp/tactile_status", self._tactile_status_cb, state_qos)
         self.arm_target_pub = self.node.create_publisher(JointState, "/mvp/joint_target", 10)
         self.gripper_target_pub = self.node.create_publisher(Float64, "/mvp/gripper_target", 10)
         self.stop_gripper_on_tactile_pub = self.node.create_publisher(Bool, "/mvp/stop_gripper_on_tactile_contact", 10)
         self.compute_client = self.node.create_client(Trigger, "/mvp/compute_pregrasp")
         self.execute_client = self.node.create_client(Trigger, "/mvp/execute_target")
+
+    def _state_qos_profile(self) -> Any:
+        from rclpy.qos import DurabilityPolicy, HistoryPolicy, QoSProfile, ReliabilityPolicy
+
+        return QoSProfile(
+            history=HistoryPolicy.KEEP_LAST,
+            depth=1,
+            reliability=ReliabilityPolicy.RELIABLE,
+            durability=DurabilityPolicy.TRANSIENT_LOCAL,
+        )
 
     def _joint_state_cb(self, msg: Any) -> None:
         from mvp_descend_from_pregrasp import StampedJointState
@@ -733,9 +761,23 @@ class VisualGraspNode:
 
     def _tcp_connected_cb(self, msg: Any) -> None:
         self.tcp_connected = bool(msg.data)
+        self.tcp_connected_received_monotonic_s = time.monotonic()
+        if self._last_logged_tcp_connected is None or self._last_logged_tcp_connected != self.tcp_connected:
+            self._last_logged_tcp_connected = self.tcp_connected
+            log_event(
+                "VISUAL_TCP_STATUS_RECEIVED "
+                f"connected={str(self.tcp_connected).lower()} age_s=0.000 status={self.tcp_status}"
+            )
 
     def _tcp_status_cb(self, msg: Any) -> None:
         self.tcp_status = str(msg.data)
+        self.tcp_status_received_monotonic_s = time.monotonic()
+        if self._last_logged_tcp_status != self.tcp_status:
+            self._last_logged_tcp_status = self.tcp_status
+            log_event(
+                "VISUAL_TCP_STATUS_RECEIVED "
+                f"connected={str(self.tcp_connected).lower()} age_s=0.000 status={self.tcp_status}"
+            )
 
     def _refresh_tactile_state(self) -> None:
         fields = parse_tactile_status_fields(self.latest_tactile_status)
@@ -776,6 +818,117 @@ class VisualGraspNode:
                 return True
         return False
 
+    def runtime_ready_diagnostics(self, *, execute_mode: bool) -> dict[str, Any]:
+        now = time.monotonic()
+        tcp_connected_age = (
+            None
+            if self.tcp_connected_received_monotonic_s is None
+            else now - self.tcp_connected_received_monotonic_s
+        )
+        tcp_status_age = (
+            None
+            if self.tcp_status_received_monotonic_s is None
+            else now - self.tcp_status_received_monotonic_s
+        )
+        joint_state_age = (
+            None
+            if self.latest_joint_state is None
+            else now - self.latest_joint_state.received_monotonic_s
+        )
+        gripper_state_age = (
+            None
+            if self.latest_gripper_state is None
+            else now - self.latest_gripper_state.received_monotonic_s
+        )
+        tactile_state_age = (
+            None
+            if self.latest_tactile_state is None
+            else now - self.latest_tactile_state.received_monotonic_s
+        )
+        joint_ok, joint_reason = validate_fresh_joint_state(
+            self.latest_joint_state,
+            now_monotonic_s=now,
+            max_age_s=self.config.joint_state_max_age_s,
+        )
+        tactile_ok = True
+        tactile_reason = "not_required"
+        if execute_mode:
+            tactile_ok, tactile_reason = validate_fresh_tactile_state(
+                self.latest_tactile_state,
+                now_monotonic_s=now,
+                max_age_s=self.config.tactile_state_max_age_s,
+                require_clear=self.config.tactile_require_clear_before_grasp,
+            )
+        tcp_connected_fresh = (
+            tcp_connected_age is not None
+            and tcp_connected_age <= self.config.tcp_status_max_age_s
+        )
+        tcp_status_fresh = (
+            tcp_status_age is not None
+            and tcp_status_age <= self.config.tcp_status_max_age_s
+        )
+        gripper_ok = (
+            self.latest_gripper_state is not None
+            and gripper_state_age is not None
+            and gripper_state_age <= self.config.gripper_state_max_age_s
+        )
+        checks = {
+            "tcp_connected_seen": self.tcp_connected_received_monotonic_s is not None,
+            "tcp_connected": bool(self.tcp_connected),
+            "tcp_connected_age_s": tcp_connected_age,
+            "tcp_status_seen": self.tcp_status_received_monotonic_s is not None,
+            "tcp_status": self.tcp_status,
+            "tcp_status_connected": tcp_status_is_connected(self.tcp_status),
+            "tcp_status_age_s": tcp_status_age,
+            "joint_state_seen": self.latest_joint_state is not None,
+            "joint_state_age_s": joint_state_age,
+            "joint_state_valid": bool(joint_ok),
+            "joint_state_reason": joint_reason,
+            "gripper_state_seen": self.latest_gripper_state is not None,
+            "gripper_state_age_s": gripper_state_age,
+            "gripper_state_valid": bool(gripper_ok),
+            "tactile_ready_seen": self.latest_tactile_state is not None,
+            "tactile_state_age_s": tactile_state_age,
+            "tactile_ready": None if self.latest_tactile_state is None else self.latest_tactile_state.ready,
+            "tactile_contact_detected": None
+            if self.latest_tactile_state is None
+            else self.latest_tactile_state.contact_detected,
+            "tactile_state_valid": bool(tactile_ok),
+            "tactile_reason": tactile_reason,
+        }
+        ready = (
+            checks["tcp_connected_seen"]
+            and checks["tcp_connected"]
+            and tcp_connected_fresh
+            and checks["tcp_status_seen"]
+            and checks["tcp_status_connected"]
+            and tcp_status_fresh
+            and joint_ok
+            and gripper_ok
+            and tactile_ok
+        )
+        reason = "ready"
+        if not checks["tcp_connected_seen"]:
+            reason = "tcp_connected_state_not_received"
+        elif not checks["tcp_connected"]:
+            reason = "tcp_connected_false"
+        elif not tcp_connected_fresh:
+            reason = "tcp_connected_state_stale"
+        elif not checks["tcp_status_seen"]:
+            reason = "tcp_status_not_received"
+        elif not checks["tcp_status_connected"]:
+            reason = "tcp_status_not_connected"
+        elif not tcp_status_fresh:
+            reason = "tcp_status_stale"
+        elif not joint_ok:
+            reason = joint_reason
+        elif not gripper_ok:
+            reason = "gripper_state_unavailable_or_stale"
+        elif not tactile_ok:
+            reason = tactile_reason
+        checks["runtime_ready"] = bool(ready)
+        checks["reason"] = reason
+        return checks
     def call_trigger(self, client: Any, timeout_s: float) -> tuple[bool, str]:
         if not client.wait_for_service(timeout_sec=3.0):
             return False, "service_unavailable"
@@ -812,6 +965,34 @@ class VisualGraspNode:
         self.node.destroy_node()
 
 
+def wait_for_mvp_runtime_ready(
+    node: VisualGraspNode,
+    config: GraspConfig,
+    *,
+    execute_mode: bool,
+) -> tuple[bool, dict[str, Any]]:
+    log_event(f"VISUAL_TCP_WAIT_STARTED timeout_s={config.tcp_ready_timeout_s}")
+    deadline = time.monotonic() + config.tcp_ready_timeout_s
+    diagnostics: dict[str, Any] = {}
+    while node.rclpy.ok() and time.monotonic() < deadline:
+        node.rclpy.spin_once(node.node, timeout_sec=0.05)
+        diagnostics = node.runtime_ready_diagnostics(execute_mode=execute_mode)
+        if diagnostics["runtime_ready"]:
+            log_event("VISUAL_TCP_READY true")
+            return True, diagnostics
+    diagnostics = node.runtime_ready_diagnostics(execute_mode=execute_mode)
+    log_event("VISUAL_TCP_READY false")
+    log_event(f"reason={diagnostics['reason']}")
+    log_event(
+        "tcp_connected_seen={tcp_connected_seen} tcp_status_seen={tcp_status_seen} "
+        "tcp_status_age_s={tcp_status_age_s} joint_state_seen={joint_state_seen} "
+        "joint_state_age_s={joint_state_age_s} tactile_ready_seen={tactile_ready_seen}".format(
+            **diagnostics
+        )
+    )
+    return False, diagnostics
+
+
 class TactileTestNode:
     def __init__(self) -> None:
         import rclpy
@@ -833,10 +1014,21 @@ class TactileTestNode:
         self.true_seen = False
         self.release_seen_after_true = False
         self.last_logged_contact: bool | None = None
-        self.node.create_subscription(Bool, "/mvp/tactile_ready", self._ready_cb, 10)
-        self.node.create_subscription(Bool, "/mvp/tactile_contact", self._contact_cb, 10)
-        self.node.create_subscription(Float64, "/mvp/tactile_score", self._score_cb, 10)
-        self.node.create_subscription(String, "/mvp/tactile_status", self._status_cb, 10)
+        qos = self._state_qos_profile()
+        self.node.create_subscription(Bool, "/mvp/tactile_ready", self._ready_cb, qos)
+        self.node.create_subscription(Bool, "/mvp/tactile_contact", self._contact_cb, qos)
+        self.node.create_subscription(Float64, "/mvp/tactile_score", self._score_cb, qos)
+        self.node.create_subscription(String, "/mvp/tactile_status", self._status_cb, qos)
+
+    def _state_qos_profile(self) -> Any:
+        from rclpy.qos import DurabilityPolicy, HistoryPolicy, QoSProfile, ReliabilityPolicy
+
+        return QoSProfile(
+            history=HistoryPolicy.KEEP_LAST,
+            depth=1,
+            reliability=ReliabilityPolicy.RELIABLE,
+            durability=DurabilityPolicy.TRANSIENT_LOCAL,
+        )
 
     def _record(self) -> None:
         fields = parse_tactile_status_fields(self.status)
@@ -946,61 +1138,22 @@ def run(args: argparse.Namespace) -> int:
     rclpy.init()
     node = VisualGraspNode(config)
     try:
-        if not node.spin_until(
-            lambda: validate_fresh_joint_state(
-                node.latest_joint_state,
-                now_monotonic_s=time.monotonic(),
-                max_age_s=config.joint_state_max_age_s,
-            )[0],
-            10.0,
-        ):
-            json_print({"success": False, "reason": "joint_state_unavailable_or_stale"})
-            return 3
-        if not node.spin_until(
-            lambda: node.latest_gripper_state is not None
-            and time.monotonic() - node.latest_gripper_state.received_monotonic_s <= config.gripper_state_max_age_s,
-            10.0,
-        ):
-            json_print({"success": False, "reason": "gripper_state_unavailable_or_stale"})
-            return 4
-        if not node.tcp_connected or node.tcp_status != "connected":
-            json_print({"success": False, "reason": "tcp_not_connected"})
+        runtime_ready, runtime_diagnostics = wait_for_mvp_runtime_ready(
+            node,
+            config,
+            execute_mode=bool(args.execute and not args.plan_only and config.tactile_stop_enabled),
+        )
+        if not runtime_ready:
+            json_print(
+                {
+                    "success": False,
+                    "reason": runtime_diagnostics["reason"],
+                    "mode": "plan_only" if args.plan_only or not args.execute else "execute",
+                    "hardware_command_sent": False,
+                    **runtime_diagnostics,
+                }
+            )
             return 5
-        if config.tactile_stop_enabled:
-            if not node.spin_until(
-                lambda: validate_fresh_tactile_state(
-                    node.latest_tactile_state,
-                    now_monotonic_s=time.monotonic(),
-                    max_age_s=config.tactile_state_max_age_s,
-                    require_clear=config.tactile_require_clear_before_grasp,
-                )[0],
-                10.0,
-            ):
-                tactile_ok, tactile_reason = validate_fresh_tactile_state(
-                    node.latest_tactile_state,
-                    now_monotonic_s=time.monotonic(),
-                    max_age_s=config.tactile_state_max_age_s,
-                    require_clear=config.tactile_require_clear_before_grasp,
-                )
-                del tactile_ok
-                json_print(
-                    {
-                        "success": False,
-                        "reason": tactile_reason,
-                        "mode": "plan_only" if args.plan_only or not args.execute else "execute",
-                        "tactile_source": None if node.latest_tactile_state is None else node.latest_tactile_state.source,
-                        "tactile_port": None if node.latest_tactile_state is None else node.latest_tactile_state.port,
-                        "tactile_ready": None if node.latest_tactile_state is None else node.latest_tactile_state.ready,
-                        "tactile_contact_detected": None if node.latest_tactile_state is None else node.latest_tactile_state.contact_detected,
-                        "tactile_contact_score": None if node.latest_tactile_state is None else node.latest_tactile_state.contact_score,
-                        "tactile_state_age_s": None if node.latest_tactile_state is None else node.latest_tactile_state.state_age_s,
-                        "tactile_error": None if node.latest_tactile_state is None else node.latest_tactile_state.error,
-                        "tactile_frame_count": None if node.latest_tactile_state is None else node.latest_tactile_state.frame_count,
-                        "tactile_status": None if node.latest_tactile_state is None else node.latest_tactile_state.status,
-                        "hardware_command_sent": False,
-                    }
-                )
-                return 5
         if not node.spin_until(
             lambda: node.latest_object_pose is not None
             and time.monotonic() - node.latest_object_pose_time <= config.object_pose_max_age_s,
@@ -1111,6 +1264,13 @@ def run(args: argparse.Namespace) -> int:
             },
         )
         if args.plan_only or not args.execute:
+            summary.update(
+                {
+                    "tcp_connected": bool(node.tcp_connected),
+                    "tcp_status": node.tcp_status,
+                    "tcp_status_age_s": runtime_diagnostics.get("tcp_status_age_s"),
+                }
+            )
             json_print(summary)
             return 0 if summary["success"] else 13
 

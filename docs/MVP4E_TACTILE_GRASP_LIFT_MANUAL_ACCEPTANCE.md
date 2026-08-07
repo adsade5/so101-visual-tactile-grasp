@@ -1,75 +1,103 @@
-# MVP-4E Direct COM8 Tactile Grasp Lift Manual Acceptance
+# MVP-4E One-Launch Manual Acceptance
 
-Long-running terminals:
+Use one PowerShell entry point for normal acceptance. It starts Zenoh, the LeRobot server, the ROS2 hardware bridge, visual nodes when needed, the action command, and then shuts down only the child processes it created.
 
-- Terminal 0: Zenoh.
-- Terminal 1: `scripts\mvp_so101_server.py`; this process owns SO-101 Follower `COM4` and FlexiTac `COM8`.
-- Terminal 2: ROS2 MVP hardware bridge.
+## 1. Normal Commands
 
-## 1. Tactile Static Test
-
-Keep the long-running terminals above active. Do not touch FlexiTac while Terminal 1 prints `DO_NOT_TOUCH_FLEXITAC_DURING_BASELINE`; wait until it prints `TACTILE_READY true`.
+Static tactile test:
 
 ```powershell
-python scripts\mvp_visual_grasp.py --tactile-test
+powershell -ExecutionPolicy Bypass -File scripts\launch_mvp4e_system.ps1 -Mode TactileTest
 ```
 
-Pass criteria:
+Plan only:
 
-- `success=true`
-- `reason=tactile_static_test_pass`
-- `tactile_source=direct_serial`
-- `tactile_port=COM8`
-- `tactile_ready_seen=true`
-- `tactile_false_seen=true`
-- `tactile_true_seen=true`
-- `tactile_release_seen_after_true=true`
-- `hardware_command_sent=false`
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\launch_mvp4e_system.ps1 -Mode PlanOnly
+```
 
-Expected status-change lines:
+Final acceptance:
+
+```powershell
+powershell -ExecutionPolicy Bypass -File scripts\launch_mvp4e_system.ps1 -Mode FinalAcceptance
+```
+
+`FinalAcceptance` runs:
 
 ```text
-TACTILE_TEST contact=false score=<value>
-TACTILE_TEST contact=true score=<value>
-TACTILE_TEST contact=false score=<value>
+start Zenoh
+start mvp_so101_server.py
+wait TCP_SERVER_LISTENING, TACTILE_SERIAL_OPENED port=COM8, TACTILE_BASELINE_COMPLETED, TACTILE_READY true
+start ROS2 hardware bridge
+wait BRIDGE_TCP_CONNECTED, /mvp/tcp_connected=true, fresh JointState, tactile_ready=true
+start visual launch
+wait /object_pose_base
+run python scripts\mvp_visual_grasp.py --plan-only
+prompt Type VISUAL_GRASP to execute
+run python scripts\mvp_visual_grasp.py --execute --confirm VISUAL_GRASP only on exact confirmation
+cleanup action, visual nodes, bridge, server, Zenoh
 ```
 
-## 2. Final Plan-Only And Execute
+Plan-only failure or any confirmation text other than exactly `VISUAL_GRASP` cancels execution and reports `hardware_command_sent=false`.
 
-Start the visual launch for object pose and pregrasp planning, then plan the full grasp without motion:
+Runtime logs are written under:
+
+```text
+logs\runtime\<timestamp>\
+```
+
+Expected files:
+
+```text
+zenoh.log
+server.log
+bridge.log
+vision.log
+action.log
+launcher.log
+```
+
+Pass criteria remain unchanged:
+
+- FlexiTac source is `direct_serial` on `COM8`.
+- Follower remains on `COM4`.
+- Baseline completes before tactile use.
+- Plan-only reports `success=true`, `waypoint_count=7`, `lift_waypoint_count=3`, and `hardware_command_sent=false`.
+- Execute first moves to pregrasp, descends 7 waypoints, opens the gripper from `g0` to `g0 + 10`, closes with `stop_gripper_on_tactile_contact=true`, and lifts only after tactile contact.
+- No contact means no lift.
+- No automatic retry, no automatic return, and no automatic placement.
+
+## 2. Advanced Troubleshooting
+
+Manual multi-terminal startup is retained only for debugging logs and should not be used for normal acceptance.
+
+Terminal 0:
+
+```powershell
+& ".\audit\run_in_ros2_lyrical.ps1" -Command "ros2 run rmw_zenoh_cpp rmw_zenohd"
+```
+
+Terminal 1:
+
+```powershell
+python scripts\mvp_so101_server.py --config config\mvp_hardware.json --enable-hardware-motion
+```
+
+Terminal 2:
+
+```powershell
+& ".\audit\run_in_ros2_lyrical.ps1" -Command "cd /d E:\PycharmProjects\Embodied_AI\LeRobot_Project\so101_visual_tactile_grasp\ros2_ws && call install\local_setup.bat && ros2 launch so101_mvp_bringup mvp_hardware_bridge_motion_enabled.launch.py enable_hardware_motion:=true"
+```
+
+Terminal 3:
+
+```powershell
+& ".\audit\run_in_ros2_lyrical.ps1" -Command "cd /d E:\PycharmProjects\Embodied_AI\LeRobot_Project\so101_visual_tactile_grasp\ros2_ws && call install\local_setup.bat && ros2 launch so101_mvp_bringup mvp_pregrasp_preview.launch.py"
+```
+
+Terminal 4:
 
 ```powershell
 python scripts\mvp_visual_grasp.py --plan-only
-```
-
-Pass criteria:
-
-- `success=true`
-- `tactile_stop_enabled=true`
-- `tactile_source=direct_serial`
-- `tactile_port=COM8`
-- `tactile_ready_before_motion=true`
-- `tactile_contact_before_motion=false`
-- `waypoint_count=7`
-- `lift_waypoint_count=3`
-- `all_lift_waypoints_valid=true`
-- `all_motion_waypoint_count=12`
-- `hardware_command_sent=false`
-
-Execute the full one-command grasp:
-
-```powershell
 python scripts\mvp_visual_grasp.py --execute --confirm VISUAL_GRASP
 ```
-
-Pass criteria:
-
-- Visual object detection and pregrasp happen before motion.
-- No live visual update is required after motion starts.
-- The gripper opens from `g0` to `g0 + 10`.
-- Final close requests `stop_gripper_on_tactile_contact=true`.
-- When tactile contact is confirmed, the gripper holds at the trigger position with zero preload.
-- The arm lifts in place through +1 cm, +2 cm, and +3 cm waypoints.
-- XY remains unchanged by the lift planner within tolerance.
-- The gripper target is held during all lift waypoints.
-- If contact is not detected before reaching `g0`, the command reports `gripper_closed_without_tactile_contact` and does not lift.

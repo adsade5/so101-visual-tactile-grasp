@@ -1,0 +1,430 @@
+{
+  "stage": "MVP-4E-TCP-READINESS-AND-ONE-LAUNCH-HOTFIX",
+  "observed_manual_failure": "plan-only succeeded, then execute reported TCP not connected before final grasp started",
+  "root_cause": "execute process read default TCP false before receiving latched/fresh bridge status; bridge status publication was not robust enough for new subscribers",
+  "failure_was_false_disconnect_report": true,
+  "failure_was_real_disconnect": false,
+  "tcp_server_owner": "mvp_so101_server",
+  "tcp_client_owner": "mvp_hardware_bridge_node",
+  "visual_script_opens_tcp": false,
+  "tcp_status_publish_rate_hz": 5.0,
+  "tcp_status_qos_reliability": "reliable",
+  "tcp_status_qos_durability": "transient_local",
+  "tcp_status_max_age_s": 1.0,
+  "execute_tcp_wait_timeout_s": 8.0,
+  "plan_only_closes_tcp": false,
+  "plan_only_affects_bridge": false,
+  "plan_then_execute_connection_generation": 1,
+  "motion_retry_after_disconnect": false,
+  "one_launch_entry": "scripts/launch_mvp4e_system.ps1",
+  "supported_modes": [
+    "TactileTest",
+    "PlanOnly",
+    "FinalAcceptance"
+  ],
+  "normal_manual_terminal_count": 1,
+  "advanced_manual_terminal_mode_retained": true,
+  "launcher_start_order": [
+    "zenoh",
+    "lerobot_server",
+    "ros2_bridge",
+    "visual_nodes",
+    "action"
+  ],
+  "launcher_ready_checks": [
+    "process_alive",
+    "TCP_SERVER_LISTENING",
+    "TACTILE_SERIAL_OPENED",
+    "TACTILE_BASELINE_COMPLETED",
+    "TACTILE_READY",
+    "BRIDGE_TCP_CONNECTED",
+    "/mvp/tcp_connected",
+    "/mvp/tactile_ready",
+    "/object_pose_base"
+  ],
+  "launcher_cleanup_order": [
+    "action",
+    "visual_nodes",
+    "ros2_bridge",
+    "lerobot_server",
+    "zenoh"
+  ],
+  "launcher_log_directory": "logs/runtime/<timestamp>",
+  "visual_algorithm_modified": false,
+  "ik_algorithm_modified": false,
+  "fk_algorithm_modified": false,
+  "descent_modified": false,
+  "lift_modified": false,
+  "tactile_stop_modified": false,
+  "tcp_offline_tests_passed": true,
+  "launcher_offline_tests_passed": true,
+  "legacy_regression_tests_passed": "4B_PASS;4C_SEGMENTED_PASS;4C_OCCLUSION_PASS;4C_OPTIONAL_FLOAT_PASS;4E_PASS;COM8_DIRECT_PASS;DATACLASS_IMPORT_PASS;4D_40_OF_44_PASS_WITH_SUPERSEDED_4E_STOP_LIFT_CHECKS",
+  "ros2_build_result": "PASS",
+  "opened_robot_com_port": false,
+  "opened_tactile_com_port": false,
+  "camera_opened": false,
+  "tcp_real_server_started": false,
+  "tcp_fake_server_started": true,
+  "goal_position_written": false,
+  "physical_motion_observed": false,
+  "manual_acceptance_document": "docs/MVP4E_TACTILE_GRASP_LIFT_MANUAL_ACCEPTANCE.md",
+  "git_commit": "PENDING_COMMIT",
+  "final_status": "READY_FOR_ONE_LAUNCH_FINAL_ACCEPTANCE_RETEST",
+  "passed": 61,
+  "total": 61,
+  "cases": [
+    {
+      "name": "bridge_is_only_tcp_client",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "visual_script_does_not_create_socket",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "plan_only_does_not_close_bridge",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "plan_only_does_not_send_shutdown",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "plan_only_exit_leaves_fake_connection_alive",
+      "passed": true,
+      "details": {
+        "first_success": true,
+        "second_success": true,
+        "plan_only_closed_tcp": false,
+        "accept_count": 1,
+        "generation_after_plan": 1,
+        "generation_after_execute": 1,
+        "same_generation": true,
+        "requests": [
+          "get_state",
+          "get_state"
+        ]
+      }
+    },
+    {
+      "name": "execute_new_process_receives_latched_connected_state",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "execute_waits_for_first_tcp_state",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "default_false_does_not_fail_immediately",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "tcp_connected_published_periodically",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "tcp_connected_qos_transient_local",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "tcp_connected_qos_reliable",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "tcp_status_qos_compatible",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "tactile_ready_qos_compatible",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "fresh_connected_state_accepted",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "stale_connected_state_rejected",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "missing_joint_state_waits",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "stale_joint_state_rejected",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "execute_wait_timeout_has_diagnostics",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "fake_plan_then_execute_same_bridge_connection",
+      "passed": true,
+      "details": {
+        "first_success": true,
+        "second_success": true,
+        "plan_only_closed_tcp": false,
+        "accept_count": 1,
+        "generation_after_plan": 1,
+        "generation_after_execute": 1,
+        "same_generation": true,
+        "requests": [
+          "get_state",
+          "get_state"
+        ]
+      }
+    },
+    {
+      "name": "no_second_tcp_connection_during_plan_execute",
+      "passed": true,
+      "details": {
+        "accept_count": 1,
+        "rejected_count": 1,
+        "single_generation": true
+      }
+    },
+    {
+      "name": "server_keeps_socket_during_idle",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "server_eof_logged_correctly",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "bridge_detects_real_disconnect",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "bridge_reconnects_only_before_motion",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "old_socket_closed_before_reconnect",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "reconnect_get_state_required_before_ready",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "disconnect_after_motion_send_returns_unknown",
+      "passed": true,
+      "details": {
+        "motion_result_unknown": true,
+        "motion_requests": 1,
+        "not_retried": true
+      }
+    },
+    {
+      "name": "disconnect_after_motion_send_not_retried",
+      "passed": true,
+      "details": {
+        "motion_result_unknown": true,
+        "motion_requests": 1,
+        "not_retried": true
+      }
+    },
+    {
+      "name": "server_stays_alive_after_client_disconnect",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "tactile_reader_not_restarted_on_tcp_reconnect",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "baseline_not_repeated_on_tcp_reconnect",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_com4_open",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_com8_open",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_goal_position_write",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_physical_motion",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "launcher_starts_zenoh_first",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "launcher_waits_for_zenoh",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "launcher_starts_server_second",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "launcher_waits_for_server_listening",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "launcher_waits_for_tactile_ready",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "launcher_starts_bridge_after_server",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "launcher_waits_for_tcp_connected",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "launcher_starts_vision_only_for_plan_and_final",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "tactile_test_does_not_start_vision",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "plan_only_never_executes_motion",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "final_acceptance_runs_plan_first",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "final_acceptance_rejects_failed_plan",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "final_acceptance_requires_exact_confirmation",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "final_acceptance_uses_same_bridge_process",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "final_acceptance_uses_same_tcp_connection",
+      "passed": true,
+      "details": {
+        "first_success": true,
+        "second_success": true,
+        "plan_only_closed_tcp": false,
+        "accept_count": 1,
+        "generation_after_plan": 1,
+        "generation_after_execute": 1,
+        "same_generation": true,
+        "requests": [
+          "get_state",
+          "get_state"
+        ]
+      }
+    },
+    {
+      "name": "child_failure_aborts_flow",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "ctrl_c_runs_cleanup",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "cleanup_order_correct",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "only_owned_pids_terminated",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "logs_created",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_fixed_sleep_only_readiness",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_com4_open_launcher_offline",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_com8_open_launcher_offline",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_camera_open",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_goal_position_write_launcher_offline",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_physical_motion_launcher_offline",
+      "passed": true,
+      "details": null
+    }
+  ]
+}

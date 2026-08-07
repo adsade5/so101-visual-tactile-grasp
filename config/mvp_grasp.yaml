@@ -18,6 +18,8 @@ arm_final_joint_tolerance_rad: 0.035
 speed_rad_s: 0.06
 max_speed_rad_s: 0.08
 execute_service_timeout_s: 120.0
+tcp_ready_timeout_s: 8.0
+tcp_status_max_age_s: 1.0
 inter_waypoint_hold_s: 0.3
 joint_state_max_age_s: 1.0
 object_pose_max_age_s: 2.0
@@ -38,7 +40,7 @@ gripper_open_ramp_fraction:
   - 0.90
   - 1.00
 tactile_stop_enabled: true
-tactile_state_max_age_s: 0.5
+tactile_state_max_age_s: 0.25
 tactile_require_clear_before_grasp: true
 tactile_static_test_timeout_s: 30.0
 lift_enabled: true

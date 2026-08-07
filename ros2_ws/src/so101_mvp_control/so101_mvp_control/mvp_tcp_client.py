@@ -130,17 +130,10 @@ class MvpTcpClient:
 
     def get_state(self) -> dict[str, Any]:
         with self._request_lock:
-            try:
-                return self._request_once(
-                    {"command": "get_state"},
-                    self.state_request_timeout_s,
-                )
-            except MvpTcpError:
-                self.close()
-                return self._request_once(
-                    {"command": "get_state"},
-                    self.state_request_timeout_s,
-                )
+            return self._request_once(
+                {"command": "get_state"},
+                self.state_request_timeout_s,
+            )
 
     def move_joints_sequential(
         self,
@@ -169,8 +162,7 @@ class MvpTcpClient:
             except MvpTcpError as exc:
                 if self._last_send_completed:
                     raise MvpTcpMotionResultUnknown(f"{exc.kind}: {exc}") from exc
-                self.close()
-                return self._request_once(payload, self.motion_request_timeout_s)
+                raise
 
     def request(self, payload: dict[str, Any]) -> dict[str, Any]:
         command = payload.get("command")

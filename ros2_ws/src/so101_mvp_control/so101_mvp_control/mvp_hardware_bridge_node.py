@@ -5,13 +5,17 @@ from typing import Any
 
 import rclpy
 from rclpy.node import Node
+from rclpy.qos import DurabilityPolicy
+from rclpy.qos import HistoryPolicy
+from rclpy.qos import QoSProfile
+from rclpy.qos import ReliabilityPolicy
 from sensor_msgs.msg import JointState
 from std_msgs.msg import Bool
 from std_msgs.msg import Float64
 from std_msgs.msg import String
 from std_srvs.srv import Trigger
 
-from so101_mvp_control.mvp_tcp_client import MvpTcpClient, MvpTcpError
+from so101_mvp_control.mvp_tcp_client import MvpTcpClient, MvpTcpError, MvpTcpMotionResultUnknown
 
 
 ARM_JOINT_NAMES = [
@@ -51,15 +55,18 @@ class MvpHardwareBridgeNode(Node):
         self.tcp_status = "disconnected"
         self.last_tcp_warning_time = 0.0
         self._motion_request_active = False
+        self.connection_generation = 0
+        self.reconnect_attempt = 0
 
         self.joint_pub = self.create_publisher(JointState, "/mvp/joint_states", 10)
         self.gripper_pub = self.create_publisher(Float64, "/mvp/gripper_state", 10)
-        self.tcp_connected_pub = self.create_publisher(Bool, "/mvp/tcp_connected", 10)
-        self.tcp_status_pub = self.create_publisher(String, "/mvp/tcp_status", 10)
-        self.tactile_ready_pub = self.create_publisher(Bool, "/mvp/tactile_ready", 10)
-        self.tactile_contact_pub = self.create_publisher(Bool, "/mvp/tactile_contact", 10)
-        self.tactile_score_pub = self.create_publisher(Float64, "/mvp/tactile_score", 10)
-        self.tactile_status_pub = self.create_publisher(String, "/mvp/tactile_status", 10)
+        state_qos = self.state_qos_profile()
+        self.tcp_connected_pub = self.create_publisher(Bool, "/mvp/tcp_connected", state_qos)
+        self.tcp_status_pub = self.create_publisher(String, "/mvp/tcp_status", state_qos)
+        self.tactile_ready_pub = self.create_publisher(Bool, "/mvp/tactile_ready", state_qos)
+        self.tactile_contact_pub = self.create_publisher(Bool, "/mvp/tactile_contact", state_qos)
+        self.tactile_score_pub = self.create_publisher(Float64, "/mvp/tactile_score", state_qos)
+        self.tactile_status_pub = self.create_publisher(String, "/mvp/tactile_status", state_qos)
         self.create_subscription(JointState, "/mvp/joint_target", self.handle_joint_target, 10)
         self.create_subscription(Float64, "/mvp/gripper_target", self.handle_gripper_target, 10)
         self.create_subscription(Bool, "/mvp/stop_gripper_on_tactile_contact", self.handle_stop_gripper_on_tactile_contact, 10)
@@ -75,8 +82,24 @@ class MvpHardwareBridgeNode(Node):
         self.publish_tcp_status(False, "disconnected")
         self.publish_tactile_state(False, False, 0.0, "unknown")
 
+    @staticmethod
+    def state_qos_profile() -> QoSProfile:
+        return QoSProfile(
+            history=HistoryPolicy.KEEP_LAST,
+            depth=1,
+            reliability=ReliabilityPolicy.RELIABLE,
+            durability=DurabilityPolicy.TRANSIENT_LOCAL,
+        )
+
     def get_client(self) -> MvpTcpClient:
         if self._client is None:
+            self.reconnect_attempt += 1
+            self.get_logger().info(
+                f"BRIDGE_TCP_CONNECTING host={self.host} port={self.port}"
+            )
+            self.get_logger().info(
+                f"BRIDGE_TCP_RECONNECTING attempt={self.reconnect_attempt}"
+            )
             self._client = MvpTcpClient(
                 self.host,
                 self.port,
@@ -93,13 +116,21 @@ class MvpHardwareBridgeNode(Node):
 
     def publish_tcp_status(self, connected: bool, status: str) -> None:
         self.tcp_connected = bool(connected)
-        self.tcp_status = str(status)
+        status_base = str(status).split(";", 1)[0].strip() or "unknown"
+        updated_unix_s = self.get_clock().now().nanoseconds / 1.0e9
+        self.tcp_status = (
+            f"{status_base};updated_unix_s={updated_unix_s:.3f};"
+            f"connection_generation={self.connection_generation}"
+        )
         connected_msg = Bool()
         connected_msg.data = self.tcp_connected
         self.tcp_connected_pub.publish(connected_msg)
         status_msg = String()
         status_msg.data = self.tcp_status
         self.tcp_status_pub.publish(status_msg)
+        self.get_logger().info(
+            f"BRIDGE_TCP_STATE connected={str(self.tcp_connected).lower()}"
+        )
 
     def publish_tactile_state(self, ready: bool, contact: bool, score: float, status: str) -> None:
         ready_msg = Bool()
@@ -130,23 +161,27 @@ class MvpHardwareBridgeNode(Node):
         now = self.get_clock().now().nanoseconds / 1.0e9
         should_log = self.tcp_connected or (now - self.last_tcp_warning_time) >= 2.0
         if should_log:
-            self.get_logger().warning(f"TCP_DISCONNECTED error_type={kind} error={message}")
+            self.get_logger().warning(f"BRIDGE_TCP_DISCONNECTED reason={kind}:{message}")
             self.last_tcp_warning_time = now
         self.publish_tcp_status(False, kind)
         self.reset_client()
 
     def poll_state_once(self) -> None:
         if self._motion_request_active:
+            self.publish_tcp_status(self.tcp_connected, self.tcp_status)
             return
         try:
+            self.get_logger().info("BRIDGE_TCP_REQUEST command=get_state")
             state = self.get_client().get_state()
         except Exception as exc:
             self.warn_tcp_failure(exc)
             return
+        self.get_logger().info("BRIDGE_TCP_RESPONSE command=get_state")
         if not state.get("success"):
             reason = str(state.get("reason", "missing_reason"))
             self.get_logger().warning(f"TCP get_state returned failure: {reason}")
             self.publish_tcp_status(False, f"server_rejected:{reason}")
+            self.reset_client()
             return
         try:
             names = list(state["joint_names"])
@@ -155,14 +190,17 @@ class MvpHardwareBridgeNode(Node):
         except (KeyError, TypeError, ValueError) as exc:
             self.get_logger().warning(f"Invalid TCP state payload: {exc}")
             self.publish_tcp_status(False, "protocol_error")
+            self.reset_client()
             return
         if names != ARM_JOINT_NAMES or len(positions) != len(ARM_JOINT_NAMES):
             self.get_logger().warning("Invalid joint order or length from TCP state")
             self.publish_tcp_status(False, "protocol_error")
+            self.reset_client()
             return
         if not all(math.isfinite(value) for value in positions):
             self.get_logger().warning("Non-finite joint position from TCP state")
             self.publish_tcp_status(False, "protocol_error")
+            self.reset_client()
             return
         tactile_ready = bool(state.get("tactile_ready", False))
         tactile_contact = bool(state.get("tactile_contact_detected", False))
@@ -184,7 +222,12 @@ class MvpHardwareBridgeNode(Node):
         self.publish_tactile_state(tactile_ready, tactile_contact, tactile_score, tactile_status)
 
         if not self.tcp_connected:
-            self.get_logger().info(f"TCP_CONNECTED host={self.host} port={self.port}")
+            self.connection_generation += 1
+            self.reconnect_attempt = 0
+            self.get_logger().info(
+                f"BRIDGE_TCP_CONNECTED connection_generation={self.connection_generation}"
+            )
+            self.get_logger().info("BRIDGE_TCP_READY true")
         self.publish_tcp_status(True, "connected")
 
         msg = JointState()
@@ -265,6 +308,10 @@ class MvpHardwareBridgeNode(Node):
             response.success = False
             response.message = "hardware_motion_disabled"
             return response
+        if not self.tcp_connected:
+            response.success = False
+            response.message = "tcp_not_ready"
+            return response
         if self.last_valid_target is None:
             response.success = False
             response.message = "no_valid_target"
@@ -279,6 +326,12 @@ class MvpHardwareBridgeNode(Node):
                 gripper_target_pos=self.fresh_gripper_target(),
                 stop_gripper_on_tactile_contact=self.fresh_stop_gripper_on_tactile_contact(),
             )
+        except MvpTcpMotionResultUnknown as exc:
+            self.get_logger().warning(f"TCP move_joints_sequential result unknown: {exc}")
+            self.warn_tcp_failure(exc)
+            response.success = False
+            response.message = self.service_error_message(exc)
+            return response
         except Exception as exc:
             self.get_logger().warning(f"TCP move_joints_sequential failed: {type(exc).__name__}: {exc}")
             self.warn_tcp_failure(exc)
