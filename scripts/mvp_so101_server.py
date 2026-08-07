@@ -595,23 +595,28 @@ class MotionFeetechBackend(ReadOnlyFeetechBackend):
         self.stop_requested = False
         threshold_rad = math.radians(float(self.executor.config["maximum_tracking_error_deg"]))
         bad_tracking_count = 0
-        gripper_only_duration_s = float(self.executor.config.get("gripper_only_motion_duration_s", 2.0))
         total_arm_delta = sum(abs(target_positions[name] - positions[name]) for name in ARM_JOINT_NAMES)
         total_steps = 0
+        gripper_only = False
         for index in joint_order:
             joint_name = ARM_JOINT_NAMES[index]
             distance = abs(target_positions[joint_name] - positions[joint_name])
             if distance > 1.0e-6:
                 total_steps += max(1, int(math.ceil(distance / (speed_rad_s / 20.0))))
-        if total_arm_delta <= 1.0e-9 and abs(target_gripper - gripper) > 1.0e-9:
-            total_steps = max(1, int(math.ceil(gripper_only_duration_s * 20.0)))
+        gripper_delta = abs(target_gripper - gripper)
+        if total_arm_delta <= 1.0e-9 and gripper_delta > 1.0e-9:
+            gripper_only = True
+            gripper_close_step_per_tick = float(
+                self.executor.config.get("gripper_close_step_per_tick", 0.5)
+            )
+            total_steps = max(1, int(math.ceil(gripper_delta / gripper_close_step_per_tick)))
             joint_order = [0]
         gripper_step_index = 0
         for index in joint_order:
             joint_name = ARM_JOINT_NAMES[index]
             target = target_positions[joint_name]
             while abs(positions[joint_name] - target) > 1.0e-6 or (
-                total_arm_delta <= 1.0e-9
+                gripper_only
                 and abs(target_gripper - gripper) > 1.0e-9
                 and gripper_step_index < total_steps
             ):
@@ -673,10 +678,11 @@ class MotionFeetechBackend(ReadOnlyFeetechBackend):
             return final_state
         if gripper_target_pos is not None and stop_gripper_on_tactile_contact:
             return response(
-                False,
-                "gripper_closed_without_tactile_contact",
+                True,
+                "motion_completed",
                 gripper_stop_triggered=False,
                 gripper_stop_position=float(target_gripper),
+                gripper_contact_preload_offset=0.0,
                 **self.tactile.snapshot().to_tcp_fields(),
             )
         return response(True, "motion_completed")

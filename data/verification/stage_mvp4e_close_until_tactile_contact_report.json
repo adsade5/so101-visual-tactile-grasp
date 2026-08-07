@@ -1,0 +1,343 @@
+{
+  "stage": "MVP-4E-CLOSE-UNTIL-TACTILE-CONTACT-HOTFIX",
+  "observed_real_failure": "gripper stopped near the original g0 reference without confirmed tactile contact and therefore did not lift",
+  "old_close_behavior": "close from g0+10 toward g0 and terminate around the original position",
+  "new_close_behavior": "continue incremental closing past g0 until tactile contact is confirmed or calibrated safe close limit is reached",
+  "gripper_close_direction": "decreasing",
+  "gripper_open_direction": "increasing",
+  "gripper_initial_position_is_close_limit": false,
+  "gripper_close_limit_source": "lerobot_calibration_gripper_range_0_100",
+  "gripper_safe_close_limit": 5.0,
+  "gripper_close_step": 2.0,
+  "g0_still_used_for_descent_reference": true,
+  "g0_used_as_close_termination": false,
+  "incremental_close": true,
+  "tactile_contact_is_primary_stop": true,
+  "safe_limit_is_secondary_stop": true,
+  "timeout_is_success_condition": false,
+  "tactile_algorithm_modified": false,
+  "visual_modified": false,
+  "fk_modified": false,
+  "ik_modified": false,
+  "descent_modified": false,
+  "lift_modified": false,
+  "tcp_modified": false,
+  "offline_tests_passed": 61,
+  "offline_tests_total": 61,
+  "offline_tests_failed": 0,
+  "offline_tests_all_pass": true,
+  "ros2_build_result": "PASSED",
+  "opened_robot_com_port": false,
+  "opened_tactile_com_port": false,
+  "goal_position_written": false,
+  "physical_motion_observed": false,
+  "git_commit": "",
+  "cases": [
+    {
+      "name": "compileall_core_files",
+      "passed": true,
+      "details": "ok"
+    },
+    {
+      "name": "config_gripper_close_step_present",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "config_gripper_safe_close_limit_present",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "config_gripper_close_incremental_true",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "config_gripper_close_timeout_s_present",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "dataclass_gripper_close_step",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "dataclass_gripper_safe_close_limit",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "dataclass_gripper_close_incremental",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "dataclass_gripper_close_timeout_s",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "gripper_close_step_positive",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "gripper_safe_close_limit_positive",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "gripper_safe_close_limit_lt_initial",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "gripper_close_incremental_true",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "gripper_close_timeout_s_reasonable",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "gripper_open_delta_positive",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "gripper_close_step_means_decrease",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "g0_not_close_termination",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "gripper_close_reference_g0_field_present",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "close_termination_reason_explicit",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "incremental_close_used",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "safe_close_limit_present",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "tactile_check_in_loop",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "timeout_check_present",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "stall_check_present",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "hold_position_stored",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "preload_zero_preserved",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "scenario_A_past_g0_without_contact",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "scenario_A_no_contact_after_g0_continues",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "scenario_A_reaches_safe_limit",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "scenario_B_tactile_contact_stops",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "scenario_B_contact_position_last",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "scenario_B_no_command_below_contact",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "scenario_C_safe_limit_stops_motion",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "scenario_C_safe_limit_without_contact",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "scenario_C_never_commands_beyond_safe",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "close_moves_in_correct_direction",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "close_target_decreases",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "stall_without_tactile_does_not_lift",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "stall_sets_possible_object_blocking",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "timeout_does_not_mean_success",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "server_tactile_contact_stop_present",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "server_no_auto_close_failure",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "server_gripper_close_step_per_tick",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "g0_still_used_for_descent_reference",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "descent_waypoints_7",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "total_descent_7cm",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "lift_waypoints_3",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "lift_total_3cm",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "arm_speed_006",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "arm_max_speed_008",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "visual_used_before_motion",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "visual_required_after_motion_false",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "fk_not_modified",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "ik_not_modified",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "COM4_unchanged",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "COM8_unchanged",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "plan_only_sends_no_hardware",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "gripper_calibration_found",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "gripper_calibration_has_range_min",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "gripper_calibration_has_range_max",
+      "passed": true,
+      "details": "None"
+    },
+    {
+      "name": "gripper_normalized_range_0_100",
+      "passed": true,
+      "details": "None"
+    }
+  ],
+  "final_status": "READY_FOR_FINAL_MANUAL_GRASP_RETEST"
+}

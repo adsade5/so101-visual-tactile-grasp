@@ -27,10 +27,16 @@ pregrasp_target_max_age_s: 2.0
 gripper_state_max_age_s: 1.0
 gripper_target_max_age_s: 2.0
 gripper_open_delta: 10.0
-gripper_close_target_source: initial_gripper_position
+gripper_close_target_source: safe_close_limit
 gripper_close_hold_s: 1.0
 gripper_interpolation_enabled: true
 gripper_only_motion_duration_s: 2.0
+gripper_close_step: 2.0
+gripper_safe_close_limit: 5.0
+gripper_close_incremental: true
+gripper_close_timeout_s: 30.0
+gripper_close_stall_threshold: 0.3
+gripper_close_stall_steps: 3
 gripper_open_ramp_fraction:
   - 0.15
   - 0.30

@@ -86,10 +86,16 @@ class GraspConfig:
     gripper_state_max_age_s: float = 1.0
     gripper_target_max_age_s: float = 2.0
     gripper_open_delta: float = 10.0
-    gripper_close_target_source: str = "initial_gripper_position"
+    gripper_close_target_source: str = "safe_close_limit"
     gripper_close_hold_s: float = 1.0
     gripper_interpolation_enabled: bool = True
     gripper_only_motion_duration_s: float = 2.0
+    gripper_close_step: float = 2.0
+    gripper_safe_close_limit: float = 5.0
+    gripper_close_incremental: bool = True
+    gripper_close_timeout_s: float = 30.0
+    gripper_close_stall_threshold: float = 0.3
+    gripper_close_stall_steps: int = 3
     gripper_open_ramp_fraction: tuple[float, ...] = (0.15, 0.30, 0.45, 0.60, 0.75, 0.90, 1.00)
     tactile_stop_enabled: bool = True
     tactile_state_max_age_s: float = 0.25
@@ -192,10 +198,16 @@ def load_grasp_config(path: Path | None = None) -> GraspConfig:
         gripper_state_max_age_s=float(values.get("gripper_state_max_age_s", 1.0)),
         gripper_target_max_age_s=float(values.get("gripper_target_max_age_s", 2.0)),
         gripper_open_delta=float(values.get("gripper_open_delta", 10.0)),
-        gripper_close_target_source=str(values.get("gripper_close_target_source", "initial_gripper_position")),
+        gripper_close_target_source=str(values.get("gripper_close_target_source", "safe_close_limit")),
         gripper_close_hold_s=float(values.get("gripper_close_hold_s", 1.0)),
         gripper_interpolation_enabled=bool(values.get("gripper_interpolation_enabled", True)),
         gripper_only_motion_duration_s=float(values.get("gripper_only_motion_duration_s", 2.0)),
+        gripper_close_step=float(values.get("gripper_close_step", 2.0)),
+        gripper_safe_close_limit=float(values.get("gripper_safe_close_limit", 5.0)),
+        gripper_close_incremental=bool(values.get("gripper_close_incremental", True)),
+        gripper_close_timeout_s=float(values.get("gripper_close_timeout_s", 30.0)),
+        gripper_close_stall_threshold=float(values.get("gripper_close_stall_threshold", 0.3)),
+        gripper_close_stall_steps=int(values.get("gripper_close_stall_steps", 3)),
         gripper_open_ramp_fraction=tuple(float(v) for v in values.get("gripper_open_ramp_fraction", [0.15, 0.30, 0.45, 0.60, 0.75, 0.90, 1.00])),
         tactile_stop_enabled=bool(values.get("tactile_stop_enabled", True)),
         tactile_state_max_age_s=float(values.get("tactile_state_max_age_s", 0.25)),
@@ -571,8 +583,15 @@ def build_integrated_plan_summary(
         "gripper_open_delta": float(config.gripper_open_delta),
         "gripper_open_target_position": open_target,
         "gripper_close_target_source": config.gripper_close_target_source,
-        "gripper_close_target_position": float(initial_gripper_position),
-        "gripper_close_target_equals_initial": True,
+        "gripper_close_target_position": float(config.gripper_safe_close_limit),
+        "gripper_close_target_equals_initial": False,
+        "gripper_close_reference_g0": float(initial_gripper_position),
+        "gripper_safe_close_limit": float(config.gripper_safe_close_limit),
+        "gripper_close_step": float(config.gripper_close_step),
+        "gripper_close_incremental": bool(config.gripper_close_incremental),
+        "gripper_close_mode": "incremental_until_tactile_contact",
+        "stop_gripper_on_tactile_contact": True,
+        "lift_requires_tactile_contact": True,
         "tactile_stop_enabled": bool(config.tactile_stop_enabled),
         "tactile_source": None if tactile_state is None else tactile_state.source,
         "tactile_port": None if tactile_state is None else tactile_state.port,
@@ -1323,36 +1342,106 @@ def run(args: argparse.Namespace) -> int:
         assert node.latest_joint_state is not None
         hold_arm = [float(value) for value in node.latest_joint_state.positions_rad]
         gripper_before_close = None if node.latest_gripper_state is None else float(node.latest_gripper_state.position)
+        gripper_close_start_position = gripper_before_close
+        gripper_close_reference_g0 = float(initial_gripper)
+        safe_close_limit = float(config.gripper_safe_close_limit)
+        gripper_close_step = float(config.gripper_close_step)
         node.publish_arm_target_once(hold_arm)
         arm_publish_count += 1
-        node.publish_gripper_target_once(initial_gripper)
-        gripper_publish_count += 1
         node.publish_stop_gripper_on_tactile_once(True)
         tactile_stop_publish_count += 1
-        close_success, close_message = node.call_trigger(node.execute_client, config.execute_service_timeout_s)
-        execute_count += 1
-        node.spin_until(
-            lambda: node.latest_gripper_state is not None
-            and time.monotonic() - node.latest_gripper_state.received_monotonic_s <= config.gripper_state_max_age_s,
-            2.0,
-        )
-        node.spin_until(
-            lambda: node.latest_tactile_state is not None
-            and time.monotonic() - node.latest_tactile_state.received_monotonic_s <= config.tactile_state_max_age_s,
-            2.0,
-        )
-        time.sleep(config.gripper_close_hold_s)
+        # ------------------------------------------------------------------
+        # Incremental close-until-tactile-contact loop
+        # ------------------------------------------------------------------
+        close_success = False
+        close_message = "close_not_started"
+        tactile_contact_confirmed = False
+        safe_close_limit_reached = False
+        gripper_motion_stalled = False
+        close_steps_commanded = 0
+        close_steps_completed = 0
+        close_termination_reason = "close_not_started"
+        close_start_time = time.monotonic()
+        gripper_close_contact_position: float | None = None
+        gripper_hold_position: float | None = None
+        stall_count = 0
+        previous_close_gripper = gripper_before_close
+        current_close_target = gripper_before_close
+        while True:
+            if time.monotonic() - close_start_time > config.gripper_close_timeout_s:
+                close_success = False
+                close_message = "gripper_close_timeout"
+                close_termination_reason = "close_timeout"
+                break
+            next_target = current_close_target - gripper_close_step
+            if next_target < safe_close_limit:
+                next_target = safe_close_limit
+            current_close_target = float(next_target)
+            close_steps_commanded += 1
+            node.publish_gripper_target_once(current_close_target)
+            gripper_publish_count += 1
+            step_success, step_message = node.call_trigger(node.execute_client, config.execute_service_timeout_s)
+            execute_count += 1
+            node.spin_until(
+                lambda: node.latest_gripper_state is not None
+                and time.monotonic() - node.latest_gripper_state.received_monotonic_s <= config.gripper_state_max_age_s,
+                2.0,
+            )
+            node.spin_until(
+                lambda: node.latest_tactile_state is not None
+                and time.monotonic() - node.latest_tactile_state.received_monotonic_s <= config.tactile_state_max_age_s,
+                2.0,
+            )
+            # --- primary stop: tactile contact confirmed ---
+            if node.latest_tactile_state is not None and node.latest_tactile_state.contact_detected:
+                tactile_contact_confirmed = True
+                close_success = True
+                close_message = "tactile_contact_stop"
+                close_termination_reason = "tactile_contact"
+                close_steps_completed = close_steps_commanded
+                gripper_hold_position = (
+                    None if node.latest_gripper_state is None
+                    else float(node.latest_gripper_state.position)
+                )
+                gripper_close_contact_position = gripper_hold_position
+                break
+            if not step_success:
+                close_success = False
+                close_message = step_message
+                close_termination_reason = "motion_error"
+                close_steps_completed = close_steps_commanded - 1
+                break
+            close_steps_completed = close_steps_commanded
+            # --- stall detection (diagnostic only, does not allow lift) ---
+            current_gripper = None if node.latest_gripper_state is None else float(node.latest_gripper_state.position)
+            if current_gripper is not None and previous_close_gripper is not None:
+                if abs(float(current_gripper) - float(previous_close_gripper)) < config.gripper_close_stall_threshold:
+                    stall_count += 1
+                else:
+                    stall_count = 0
+            previous_close_gripper = current_gripper
+            if stall_count >= config.gripper_close_stall_steps:
+                gripper_motion_stalled = True
+            # --- secondary stop: safe close limit reached ---
+            if abs(current_close_target - safe_close_limit) < 1e-6:
+                safe_close_limit_reached = True
+                close_success = False
+                close_message = "gripper_closed_without_tactile_contact"
+                close_termination_reason = "safe_close_limit_without_contact"
+                break
+            time.sleep(config.gripper_close_hold_s * 0.2)
+        # ------------------------------------------------------------------
+        # Post-close state
+        # ------------------------------------------------------------------
         gripper_final = None if node.latest_gripper_state is None else float(node.latest_gripper_state.position)
-        gripper_error = None if gripper_final is None else abs(gripper_final - initial_gripper)
-        tactile_contact_confirmed = bool(close_success and close_message == "tactile_contact_stop")
+        if gripper_hold_position is None:
+            gripper_hold_position = gripper_final
         lift_completed = False
         lift_failure_reason: str | None = None
-        if close_success and close_message == "gripper_closed_without_tactile_contact":
-            close_success = False
         if tactile_contact_confirmed:
             node.publish_stop_gripper_on_tactile_once(False)
             tactile_stop_publish_count += 1
-            held_gripper = gripper_final if gripper_final is not None else initial_gripper
+            held_gripper = gripper_hold_position if gripper_hold_position is not None else initial_gripper
             for lift_waypoint in summary["lift_waypoints"]:
                 if not node.spin_until(
                     lambda: node.latest_tactile_state is not None
@@ -1380,8 +1469,8 @@ def run(args: argparse.Namespace) -> int:
                 "success": bool(tactile_contact_confirmed and lift_completed),
                 "reason": "tactile_grasp_lift_completed"
                 if tactile_contact_confirmed and lift_completed
-                else close_message
-                if close_message == "gripper_closed_without_tactile_contact"
+                else close_termination_reason
+                if not tactile_contact_confirmed
                 else lift_failure_reason
                 if lift_failure_reason is not None
                 else "grasp_close_attempt_failed",
@@ -1394,16 +1483,28 @@ def run(args: argparse.Namespace) -> int:
                 "lift_execute_count": lift_execute_count,
                 "gripper_initial_position": initial_gripper,
                 "gripper_open_target_position": initial_gripper + config.gripper_open_delta,
+                "gripper_close_reference_g0": gripper_close_reference_g0,
+                "gripper_close_start_position": gripper_close_start_position,
+                "gripper_safe_close_limit": safe_close_limit,
+                "gripper_close_step": gripper_close_step,
+                "gripper_close_steps_commanded": close_steps_commanded,
+                "gripper_close_steps_completed": close_steps_completed,
                 "gripper_position_before_close": gripper_before_close,
-                "gripper_close_target_position": initial_gripper,
+                "gripper_close_target_position": current_close_target,
                 "gripper_final_position": gripper_final,
-                "gripper_final_error": gripper_error,
-                "gripper_close_command_completed": bool(close_success or tactile_contact_confirmed),
+                "gripper_final_error": None if gripper_final is None else abs(float(gripper_final) - float(gripper_close_reference_g0)),
+                "gripper_close_command_completed": bool(close_success),
                 "gripper_stop_triggered": bool(tactile_contact_confirmed),
-                "gripper_closed_without_tactile_contact": close_message == "gripper_closed_without_tactile_contact",
-                "gripper_close_target_reached": None if gripper_error is None else gripper_error <= 1.0,
-                "possible_object_blocking_gripper": bool(tactile_contact_confirmed),
+                "gripper_stopped_on_tactile_contact": bool(tactile_contact_confirmed),
+                "gripper_hold_position": gripper_hold_position,
+                "gripper_contact_preload_offset": 0.0,
+                "gripper_closed_without_tactile_contact": bool(safe_close_limit_reached and not tactile_contact_confirmed),
+                "gripper_close_target_reached": False if safe_close_limit_reached else bool(close_success),
+                "possible_object_blocking_gripper": bool(gripper_motion_stalled),
                 "object_may_be_grasped": bool(tactile_contact_confirmed),
+                "safe_close_limit_reached": bool(safe_close_limit_reached),
+                "gripper_motion_stalled": bool(gripper_motion_stalled),
+                "close_termination_reason": close_termination_reason,
                 "lift_completed": bool(lift_completed),
                 "lift_failure_reason": lift_failure_reason,
                 "lift_waypoints_executed": lift_execute_count,
