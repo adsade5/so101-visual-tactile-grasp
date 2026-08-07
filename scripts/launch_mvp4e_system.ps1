@@ -17,6 +17,7 @@ $TimeStamp = Get-Date -Format "yyyyMMdd_HHmmss"
 $LogDir = Join-Path $ProjectRoot "logs\runtime\$TimeStamp"
 $LauncherLog = Join-Path $LogDir "launcher.log"
 $ActionLog = Join-Path $LogDir "action.log"
+$RosLogDir = Join-Path $LogDir "ros2"
 
 $ZenohStartTimeoutS = 10.0
 $ZenohStabilityWindowS = 1.0
@@ -27,11 +28,20 @@ $RobotConnectTimeoutS = 30.0
 $TcpListenTimeoutS = 15.0
 
 $ZenohReadyMarkers = @("zenohd", "Started", "router", "listening", "scouting")
-$FatalPatterns = @("Traceback", "Fatal", "FATAL", "ERROR", "Error", "Address already in use", "bind failed", "panic")
+$ProjectFatalMarkers = @(
+    "BRIDGE_TCP_CONNECT_FAILED",
+    "BRIDGE_TCP_FATAL",
+    "BRIDGE_PROCESS_FAILED",
+    "TCP_PROTOCOL_FATAL",
+    "CONFIG_LOAD_FAILED",
+    "NODE_START_FAILED",
+    "BRIDGE_RMW_MISMATCH"
+)
 
 $script:Managed = [ordered]@{}
 
 New-Item -ItemType Directory -Force -Path $LogDir | Out-Null
+New-Item -ItemType Directory -Force -Path $RosLogDir | Out-Null
 New-Item -ItemType Directory -Force -Path (Split-Path -Parent $ActiveManifest) | Out-Null
 
 function Write-LauncherLog {
@@ -242,6 +252,8 @@ function New-ProcessScript {
 `$ErrorActionPreference = "Continue"
 Set-Location -LiteralPath "$ProjectRoot"
 `$env:PYTHONUNBUFFERED = "1"
+`$env:RMW_IMPLEMENTATION = "rmw_zenoh_cpp"
+`$env:ROS_LOG_DIR = "$RosLogDir"
 & {
 $Command
 } *> "$LogFile"
@@ -293,6 +305,27 @@ function Test-ManagedAlive {
     }
 }
 
+function Test-ManagedProcessTreeAlive {
+    param([string]$Name, [bool]$RequireDescendant = $false)
+    if (-not (Test-ManagedAlive $Name)) {
+        return $false
+    }
+    if (-not $RequireDescendant) {
+        return $true
+    }
+    Update-ComponentProcessTree -Name $Name
+    $entry = $script:Managed[$Name]
+    if (@($entry.DescendantPids).Count -eq 0) {
+        return $true
+    }
+    foreach ($pidValue in @($entry.DescendantPids)) {
+        if (Get-Process -Id $pidValue -ErrorAction SilentlyContinue) {
+            return $true
+        }
+    }
+    return $false
+}
+
 function Get-ManagedExitCode {
     param([string]$Name)
     if (-not $script:Managed.Contains($Name)) {
@@ -310,19 +343,59 @@ function Get-ManagedExitCode {
     return $null
 }
 
-function Test-LogHasFatal {
+function Get-LogSeverity {
+    param([string]$Line)
+    if ($Line -match '(?i)^\s*(?:\d{4}-\d{2}-\d{2}[^\[]*\s+)?(?:\[[^\]]+\]\s*)?\[(ERROR|FATAL)\]') {
+        return [pscustomobject]@{ Severity = "FATAL"; Pattern = "ros_error_level"; Line = $Line }
+    }
+    if ($Line -match '(?i)^\s*Traceback \(most recent call last\):') {
+        return [pscustomobject]@{ Severity = "FATAL"; Pattern = "python_traceback"; Line = $Line }
+    }
+    if ($Line -match '(?i)^\s*(ModuleNotFoundError|ImportError|SyntaxError):') {
+        return [pscustomobject]@{ Severity = "FATAL"; Pattern = "python_import_or_syntax_error"; Line = $Line }
+    }
+    if ($Line -match '(?i)^\s*Unhandled exception\b') {
+        return [pscustomobject]@{ Severity = "FATAL"; Pattern = "python_unhandled_exception"; Line = $Line }
+    }
+    foreach ($marker in $ProjectFatalMarkers) {
+        if ($Line -match ("^\s*" + [regex]::Escape($marker) + "\b")) {
+            return [pscustomobject]@{ Severity = "FATAL"; Pattern = "project_fatal_marker"; Line = $Line }
+        }
+    }
+    if ($Line -match '(?i)\b(required process has died|process has died|process exited with code)\b') {
+        return [pscustomobject]@{ Severity = "FATAL"; Pattern = "process_died"; Line = $Line }
+    }
+    if ($Line -match '(?i)\b(Address already in use|bind failed|panic)\b') {
+        return [pscustomobject]@{ Severity = "FATAL"; Pattern = "runtime_fatal_text"; Line = $Line }
+    }
+    if ($Line -match '(?i)(UserWarning:|\[warning\]|FutureWarning|DeprecationWarning|ResourceWarning|RuntimeWarning|WinError 1314|Cannot create a symlink to latest log directory|RTI Connext DDS will not be available at runtime)') {
+        return [pscustomobject]@{ Severity = "WARNING"; Pattern = "known_nonfatal_warning"; Line = $Line }
+    }
+    if ($Line -match '(?i)^\s*(?:\[[^\]]+\]\s*)?\[INFO\]') {
+        return [pscustomobject]@{ Severity = "INFO"; Pattern = "ros_info_level"; Line = $Line }
+    }
+    return [pscustomobject]@{ Severity = "INFO"; Pattern = "default_info"; Line = $Line }
+}
+
+function Find-FatalLogEntry {
     param([string]$Path)
     $text = Read-TextFileLive -Path $Path
-    foreach ($pattern in $FatalPatterns) {
-        if ($text -match [regex]::Escape($pattern)) {
-            return $pattern
+    foreach ($line in ($text -split "`r?`n")) {
+        $severity = Get-LogSeverity -Line $line
+        if ($severity.Severity -eq "FATAL") {
+            return $severity
         }
     }
     return $null
 }
 
+function Test-LogHasFatal {
+    param([string]$Path)
+    return Find-FatalLogEntry -Path $Path
+}
+
 function Write-ComponentFailure {
-    param([string]$Stage, [string]$Reason, [string]$Name)
+    param([string]$Stage, [string]$Reason, [string]$Name, [object]$FatalEntry = $null)
     $entry = if ($script:Managed.Contains($Name)) { $script:Managed[$Name] } else { $null }
     $rootPid = if ($entry) { $entry.RootPid } else { $null }
     $desc = if ($entry) { ($entry.DescendantPids -join ",") } else { "" }
@@ -340,6 +413,10 @@ function Write-ComponentFailure {
     Write-Step "EXIT_CODE $exitCode"
     Write-Step "LOG_FILE $logFile"
     Write-Step ("{0}_LOG_EMPTY {1}" -f $Name.ToUpperInvariant(), $empty.ToString().ToLowerInvariant())
+    if ($FatalEntry) {
+        Write-Step "FATAL_PATTERN $($FatalEntry.Pattern)"
+        Write-Step "FATAL_LINE $($FatalEntry.Line)"
+    }
     Write-Host "LOG_TAIL_BEGIN"
     foreach ($line in Get-LogTail -Path $logFile -Lines 100) {
         Write-Host $line
@@ -359,14 +436,14 @@ function Wait-ComponentLogPattern {
     $logFile = $script:Managed[$Name].Log
     while ((Get-Date) -lt $deadline) {
         Update-ComponentProcessTree -Name $Name
-        if (-not (Test-ManagedAlive $Name)) {
+        if (-not (Test-ManagedProcessTreeAlive -Name $Name -RequireDescendant ($Name -eq "bridge"))) {
             Write-ComponentFailure -Stage $FailedStage -Reason "${Name}_process_exited" -Name $Name
             throw "$FailedStage ${Name}_process_exited"
         }
-        $fatal = Test-LogHasFatal -Path $logFile
+        $fatal = Find-FatalLogEntry -Path $logFile
         if ($fatal) {
-            Write-ComponentFailure -Stage $FailedStage -Reason "${Name}_log_error:$fatal" -Name $Name
-            throw "$FailedStage ${Name}_log_error:$fatal"
+            Write-ComponentFailure -Stage $FailedStage -Reason "${Name}_fatal_log" -Name $Name -FatalEntry $fatal
+            throw "$FailedStage ${Name}_fatal_log:$($fatal.Pattern)"
         }
         $text = Read-TextFileLive -Path $logFile
         if ($text -match [regex]::Escape($Pattern)) {
@@ -388,10 +465,10 @@ function Wait-ZenohReady {
             Write-ComponentFailure -Stage "zenoh_start" -Reason "zenoh_process_exited" -Name "zenoh"
             throw "zenoh_process_exited"
         }
-        $fatal = Test-LogHasFatal -Path $logFile
+        $fatal = Find-FatalLogEntry -Path $logFile
         if ($fatal) {
-            Write-ComponentFailure -Stage "zenoh_start" -Reason "zenoh_log_error:$fatal" -Name "zenoh"
-            throw "zenoh_log_error:$fatal"
+            Write-ComponentFailure -Stage "zenoh_start" -Reason "zenoh_fatal_log" -Name "zenoh" -FatalEntry $fatal
+            throw "zenoh_fatal_log:$($fatal.Pattern)"
         }
         $text = Read-TextFileLive -Path $logFile
         foreach ($candidate in $ZenohReadyMarkers) {
@@ -448,7 +525,7 @@ function Wait-Ros2TopicPattern {
     $deadline = (Get-Date).AddSeconds($TimeoutSec)
     while ((Get-Date) -lt $deadline) {
         foreach ($name in $script:Managed.Keys) {
-            if (-not (Test-ManagedAlive $name)) {
+            if (-not (Test-ManagedProcessTreeAlive -Name $name -RequireDescendant ($name -eq "bridge"))) {
                 Write-ComponentFailure -Stage $FailedStage -Reason "${name}_process_exited" -Name $name
                 throw "$FailedStage ${name}_process_exited"
             }
@@ -586,8 +663,10 @@ function Start-Server {
 
 function Start-Bridge {
     Write-Step "[3/5] Starting ROS2 bridge..."
-    $bridgeCommand = "cd /d $Ros2Ws && call install\local_setup.bat && ros2 launch so101_mvp_bringup mvp_hardware_bridge_motion_enabled.launch.py enable_hardware_motion:=true"
+    $bridgeCommand = "cd /d $Ros2Ws && call install\local_setup.bat && if /I not `"%RMW_IMPLEMENTATION%`"==`"rmw_zenoh_cpp`" (echo BRIDGE_RMW_MISMATCH actual=%RMW_IMPLEMENTATION% && exit /b 121) && echo BRIDGE_RMW_IMPLEMENTATION %RMW_IMPLEMENTATION% && ros2 launch so101_mvp_bringup mvp_hardware_bridge_motion_enabled.launch.py enable_hardware_motion:=true"
     Start-ManagedCommand -Name "bridge" -LogName "bridge.log" -Command "& `"$Ros2Wrapper`" -Command `"$bridgeCommand`"" | Out-Null
+    Write-Step "[3/5] Bridge process started"
+    Write-Step "[3/5] Waiting for TCP connection..."
     Wait-ComponentLogPattern -Name "bridge" -Pattern "BRIDGE_TCP_CONNECTED" -TimeoutSec 15.0 -FailedStage "bridge_tcp"
     Wait-ComponentLogPattern -Name "bridge" -Pattern "BRIDGE_TCP_READY true" -TimeoutSec 5.0 -FailedStage "bridge_ready"
     Wait-Ros2TopicPattern -Topic "/mvp/tcp_connected" -ExpectedPattern "data:\s*true" -TimeoutSec 8.0 -FailedStage "tcp_connected_topic"

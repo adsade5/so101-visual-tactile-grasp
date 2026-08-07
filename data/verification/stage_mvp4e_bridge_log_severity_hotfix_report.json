@@ -1,0 +1,293 @@
+{
+  "stage": "MVP-4E-BRIDGE-LOG-SEVERITY-CLASSIFIER-HOTFIX",
+  "observed_failure": "FAILED_STAGE bridge_tcp / FAILED_REASON bridge_log_error:ERROR after Bridge emitted only RTI/UserWarning/WinError 1314 warnings.",
+  "root_cause": "case-insensitive unanchored ERROR matching classified WinError 1314 as a fatal bridge error",
+  "matched_log_line": "C:\\pixi_ws\\ros2-windows\\Lib\\site-packages\\launch\\logging\\__init__.py:172: UserWarning: Cannot create a symlink to latest log directory: [WinError 1314] 客户端没有所需的特权。: 'C:\\\\Users\\\\82053\\\\.ros\\\\log\\\\2026-08-07-10-13-55-562142-tao-25436' -> 'C:\\\\Users\\\\82053\\\\.ros\\\\log\\\\latest'",
+  "old_fatal_pattern": "$FatalPatterns included \"ERROR\" and \"Error\"; Test-LogHasFatal used $text -match [regex]::Escape($pattern)",
+  "old_matching_case_sensitive": false,
+  "false_positive_token": "WinError",
+  "winerror_1314_classification": "warning",
+  "rti_connext_warning_classification": "warning",
+  "userwarning_classification": "warning",
+  "ros_info_classification": "info",
+  "new_classifier_scope": "all_launcher_components",
+  "new_fatal_patterns": [
+    "ros_error_level",
+    "python_traceback",
+    "python_import_or_syntax_error",
+    "python_unhandled_exception",
+    "project_fatal_marker",
+    "process_died",
+    "runtime_fatal_text"
+  ],
+  "new_warning_patterns": [
+    "known_nonfatal_warning",
+    "ros_info_level"
+  ],
+  "fatal_match_is_line_anchored": true,
+  "fatal_result_includes_full_line": true,
+  "fatal_result_includes_pattern_name": true,
+  "bridge_process_was_alive": true,
+  "bridge_exit_code_at_failure": null,
+  "bridge_ready_requirements": [
+    "bridge root process alive",
+    "no fatal log entry",
+    "BRIDGE_TCP_CONNECTED",
+    "BRIDGE_TCP_READY true",
+    "/mvp/tcp_connected true",
+    "fresh TCP status",
+    "15 second bridge TCP timeout not exceeded"
+  ],
+  "bridge_tcp_timeout_s": 15,
+  "rmw_implementation": "rmw_zenoh_cpp",
+  "launcher_process_readiness_hotfix_preserved": true,
+  "tcp_readiness_hotfix_preserved": true,
+  "com8_direct_hotfix_preserved": true,
+  "dataclass_import_hotfix_preserved": true,
+  "offline_tests_passed": true,
+  "launcher_regression_passed": "PASS",
+  "tcp_regression_passed": "PASS",
+  "legacy_regression_tests_passed": "MVP4E_TACTILE_53_OF_53_PASS;MVP4D_40_OF_44_WITH_4E_STOP_LIFT_SUPERSEDED;MVP4C_SEGMENTED_48_OF_48_PASS;MVP4C_OCCLUSION_48_OF_48_PASS;MVP4C_OPTIONAL_FLOAT_23_OF_23_PASS;MVP4B_PREGRASP_35_OF_35_PASS;MVP4B_SPEED_23_OF_25_LEGACY_MISMATCH_NOT_HIDDEN",
+  "ros2_build_result": "PASS",
+  "opened_robot_com_port": false,
+  "opened_tactile_com_port": false,
+  "camera_opened": false,
+  "real_ros2_bridge_started": false,
+  "goal_position_written": false,
+  "physical_motion_observed": false,
+  "git_commit": "HEAD",
+  "final_status": "READY_FOR_ONE_LAUNCH_TACTILE_TEST_RETEST",
+  "passed": 37,
+  "total": 37,
+  "fake_warning_log_result": {
+    "fatal_found": false,
+    "warning_count": 3,
+    "launcher_continues_waiting": true
+  },
+  "fake_ready_log_result": {
+    "launcher_failure": false,
+    "bridge_ready": true
+  },
+  "fake_error_log_result": {
+    "fatal_found": true,
+    "fatal_pattern": "ros_error_level",
+    "fatal_line": "[ERROR] [mvp_hardware_bridge-1]: process has died",
+    "launcher_failure": true
+  },
+  "cases": [
+    {
+      "name": "winerror_1314_is_warning",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "userwarning_is_warning",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "rti_connext_warning_is_warning",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "ros_info_is_info",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "info_text_containing_error_word_not_fatal",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "error_type_field_not_fatal",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "last_error_field_not_fatal",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "lowercase_warning_not_fatal",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "ros_error_prefix_is_fatal",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "ros_fatal_prefix_is_fatal",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "traceback_header_is_fatal",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "module_not_found_is_fatal",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "import_error_is_fatal",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "process_has_died_is_fatal",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "bridge_tcp_connect_failed_is_fatal",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "anchored_matching_does_not_match_winerror",
+      "passed": true,
+      "details": "C:\\pixi_ws\\ros2-windows\\Lib\\site-packages\\launch\\logging\\__init__.py:172: UserWarning: Cannot create a symlink to latest log directory: [WinError 1314] 客户端没有所需的特权。: 'C:\\\\Users\\\\82053\\\\.ros\\\\log\\\\2026-08-07-10-13-55-562142-tao-25436' -> 'C:\\\\Users\\\\82053\\\\.ros\\\\log\\\\latest'"
+    },
+    {
+      "name": "fatal_result_contains_complete_line",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "fatal_result_contains_pattern_name",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "bridge_warning_then_ready_passes",
+      "passed": true,
+      "details": {
+        "launcher_failure": false,
+        "bridge_ready": true
+      }
+    },
+    {
+      "name": "bridge_warning_then_tcp_connected_passes",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "bridge_warning_only_waits_until_timeout",
+      "passed": true,
+      "details": {
+        "launcher_failure": false,
+        "failure_reason": null,
+        "launcher_continues_waiting": true,
+        "bridge_ready": false
+      }
+    },
+    {
+      "name": "bridge_process_exit_detected",
+      "passed": true,
+      "details": {
+        "launcher_failure": true,
+        "failure_reason": "bridge_process_exited",
+        "exit_code": 1,
+        "log_tail_printed": true,
+        "bridge_ready": false
+      }
+    },
+    {
+      "name": "bridge_nonzero_exit_reported",
+      "passed": true,
+      "details": {
+        "launcher_failure": true,
+        "failure_reason": "bridge_process_exited",
+        "exit_code": 1,
+        "log_tail_printed": true,
+        "bridge_ready": false
+      }
+    },
+    {
+      "name": "bridge_log_tail_printed",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "bridge_ready_requires_tcp_connected",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "bridge_ready_requires_process_alive",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "bridge_ready_checks_process_tree",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "rmw_zenoh_confirmed",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "rti_warning_does_not_change_rmw",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "same_classifier_used_for_all_components",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_com4_open",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_com8_open",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_camera_open",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_goal_position_write",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "no_physical_motion",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "real_warning_log_is_not_fatal",
+      "passed": true,
+      "details": [
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\VC\\Tools\\MSVC\\14.50.35717\\bin\\Hostx64\\x64\\cl.exe",
+        "C:\\Program Files (x86)\\Microsoft Visual Studio\\18\\BuildTools\\VC\\Tools\\MSVC\\14.50.35717\\bin\\Hostx64\\x64\\nmake.exe",
+        "C:\\pixi_ws\\ros2-windows\\Lib\\site-packages\\launch\\logging\\__init__.py:172: UserWarning: Cannot create a symlink to latest log directory: [WinError 1314] 客户端没有所需的特权。: 'C:\\\\Users\\\\82053\\\\.ros\\\\log\\\\2026-08-07-10-13-55-562142-tao-25436' -> 'C:\\\\Users\\\\82053\\\\.ros\\\\log\\\\latest'",
+        "",
+        "  warnings.warn(",
+        "[INFO] [launch]: All log files can be found below C:\\Users\\82053\\.ros\\log\\2026-08-07-10-13-55-562142-tao-25436",
+        "[INFO] [launch]: Default logging verbosity is set to INFO",
+        "[INFO] [mvp_hardware_bridge_node.EXE-1]: process started with pid [5196]"
+      ]
+    },
+    {
+      "name": "real_warning_log_has_warnings",
+      "passed": true,
+      "details": 2
+    }
+  ]
+}

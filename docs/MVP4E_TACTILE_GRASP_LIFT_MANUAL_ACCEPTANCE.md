@@ -63,6 +63,13 @@ Failure output prints the failing component, exit code when available, and the l
 - `logs/runtime/<timestamp>/zenoh.log`: ROS2 wrapper and Zenoh startup output.
 - `logs/runtime/<timestamp>/server.log`: LeRobot server, COM8 FlexiTac, baseline, COM4 robot, and TCP listener startup output.
 
+The launcher treats these Windows/ROS2 setup messages as non-fatal warnings:
+
+- `RTI Connext DDS environment script not found`. MVP-4E uses `rmw_zenoh_cpp`, so missing RTI Connext setup does not block acceptance.
+- `WinError 1314` / `Cannot create a symlink to latest log directory`. This only means a normal user PowerShell cannot create the optional ROS `latest` log symlink; timestamped ROS logs are still written.
+
+You do not need an Administrator PowerShell. Acceptance is blocked only by a real fatal log line such as `[ERROR]`, `[FATAL]`, a Python `Traceback`, a component process exit, or a Bridge TCP connection timeout.
+
 Pass criteria remain unchanged:
 
 - FlexiTac source is `direct_serial` on `COM8`.
