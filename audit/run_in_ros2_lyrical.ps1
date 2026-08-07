@@ -73,8 +73,30 @@ Set-Content -LiteralPath $tempCmd -Value $batch -Encoding ASCII
 
 try {
     Push-Location -LiteralPath $PixiWorkspace
-    & $pixiExe run cmd /d /s /c "call `"$tempCmd`""
-    $exitCode = $LASTEXITCODE
+    $previousErrorActionPreference = $ErrorActionPreference
+    $previousNativeErrorPreference = $null
+    try {
+        if (Get-Variable -Name PSNativeCommandUseErrorActionPreference -Scope Global -ErrorAction SilentlyContinue) {
+            $previousNativeErrorPreference = $Global:PSNativeCommandUseErrorActionPreference
+            $Global:PSNativeCommandUseErrorActionPreference = $false
+        }
+        $ErrorActionPreference = "Continue"
+        & $pixiExe run cmd /d /s /c "call `"$tempCmd`"" 2>&1 | ForEach-Object {
+            if ($_ -is [System.Management.Automation.ErrorRecord]) {
+                Write-Output ([string]$_.Exception.Message)
+            }
+            else {
+                Write-Output $_
+            }
+        }
+        $exitCode = $LASTEXITCODE
+    }
+    finally {
+        $ErrorActionPreference = $previousErrorActionPreference
+        if ($null -ne $previousNativeErrorPreference) {
+            $Global:PSNativeCommandUseErrorActionPreference = $previousNativeErrorPreference
+        }
+    }
 }
 finally {
     Pop-Location

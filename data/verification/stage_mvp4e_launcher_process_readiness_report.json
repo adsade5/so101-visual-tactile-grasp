@@ -96,10 +96,10 @@
   "real_tcp_server_started": false,
   "goal_position_written": false,
   "physical_motion_observed": false,
-  "git_commit": "PENDING_COMMIT",
+  "git_commit": "HEAD",
   "final_status": "READY_FOR_ONE_LAUNCH_TACTILE_TEST_RETEST",
-  "passed": 44,
-  "total": 44,
+  "passed": 47,
+  "total": 47,
   "cases": [
     {
       "name": "zenoh_not_ready_immediately_after_spawn",
@@ -188,6 +188,21 @@
     },
     {
       "name": "incremental_log_write_supported",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "live_log_reader_disposes_handles",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "ros2_wrapper_native_stderr_stringified",
+      "passed": true,
+      "details": null
+    },
+    {
+      "name": "ros2_wrapper_preserves_native_exit_code",
       "passed": true,
       "details": null
     },

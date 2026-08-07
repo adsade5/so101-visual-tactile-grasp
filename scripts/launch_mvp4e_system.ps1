@@ -58,12 +58,24 @@ function Read-TextFileLive {
     if (-not (Test-Path -LiteralPath $Path)) {
         return ""
     }
+    $stream = $null
+    $reader = $null
     try {
-        return [System.IO.File]::ReadAllText($Path, [System.Text.Encoding]::UTF8)
+        $stream = [System.IO.File]::Open($Path, [System.IO.FileMode]::Open, [System.IO.FileAccess]::Read, [System.IO.FileShare]::ReadWrite)
+        $reader = New-Object System.IO.StreamReader($stream, [System.Text.Encoding]::UTF8, $true)
+        return $reader.ReadToEnd()
     }
     catch {
         Write-LauncherLog "log_read_retry path=$Path message=$($_.Exception.Message)"
         return ""
+    }
+    finally {
+        if ($reader) {
+            $reader.Dispose()
+        }
+        elseif ($stream) {
+            $stream.Dispose()
+        }
     }
 }
 
