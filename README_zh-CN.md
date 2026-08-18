@@ -12,7 +12,11 @@
 
 ## 演示
 
-**SO-101 视觉-触觉抓取与抬升演示：** [查看完整演示视频](./demo.mp4)
+**SO-101 视觉-触觉抓取与抬升演示：** 
+
+https://github.com/user-attachments/assets/086691be-ef0c-4581-b68e-2dcf8e61e5f0
+
+
 
 ## 核心证据
 
