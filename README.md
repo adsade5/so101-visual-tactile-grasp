@@ -6,25 +6,27 @@ A ROS2-based visual-tactile grasping system for the SO-101 robot arm, integratin
 
 ---
 
-## Demo
-
-Final real-robot visual-tactile grasp-and-lift demonstration:
-
-https://github.com/user-attachments/assets/105ebd97-62c5-49ac-87d6-486f709dba7b
-
-
-
 ## Final Result
 
 **Final Hardware Acceptance: PASS**
+
+## Key Evidence
+
+| Item | Evidence |
+|---|---|
+| Robot | SO-101 6-DOF follower arm |
+| Middleware | ROS2 Lyrical with `rmw_zenoh_cpp` |
+| Perception | OpenCV ArUco object localization and workspace-to-base transform |
+| IK / Planning | 5-joint damped least-squares IK, multiseed fallback, pregrasp, 7-segment Cartesian descent |
+| Tactile | FlexiTac 12x32 array via direct serial reader at 2 Mbaud |
+| Hardware Result | Real-robot visual-tactile grasp-and-lift pipeline accepted as PASS |
+| Demo | Visual pose -> coordinate transform -> IK/planning -> tactile contact stop -> lift |
 
 The end-to-end visual-tactile grasp-and-lift pipeline has been validated on real hardware:
 
 > Visual pose → +20 mm forward X correction → 5-joint IK → pregrasp → 7-segment descent → incremental gripper closing → tactile contact stop → 3-segment lift
 
 All core behaviors are frozen and verified.
-
-*Demo media can be added here.*
 
 ---
 
