@@ -12,7 +12,11 @@ A ROS2-based visual-tactile grasping system for the SO-101 robot arm, integratin
 
 ## Demo
 
-**Real-robot visual-tactile grasp-and-lift demo:** [Watch the full demo video](./demo.mp4)
+**Real-robot visual-tactile grasp-and-lift demo:** 
+
+https://github.com/user-attachments/assets/491f7e95-7728-4012-add1-917474178b6e
+
+
 
 ## Key Evidence
 
