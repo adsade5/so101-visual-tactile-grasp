@@ -10,6 +10,10 @@ A ROS2-based visual-tactile grasping system for the SO-101 robot arm, integratin
 
 **Final Hardware Acceptance: PASS**
 
+## Demo
+
+**Real-robot visual-tactile grasp-and-lift demo:** [Watch the full demo video](./demo.mp4)
+
 ## Key Evidence
 
 | Item | Evidence |
@@ -20,7 +24,7 @@ A ROS2-based visual-tactile grasping system for the SO-101 robot arm, integratin
 | IK / Planning | 5-joint damped least-squares IK, multiseed fallback, pregrasp, 7-segment Cartesian descent |
 | Tactile | FlexiTac 12x32 array via direct serial reader at 2 Mbaud |
 | Hardware Result | Real-robot visual-tactile grasp-and-lift pipeline accepted as PASS |
-| Demo | Visual pose -> coordinate transform -> IK/planning -> tactile contact stop -> lift |
+| Demo | [Full demo video](./demo.mp4): visual pose -> coordinate transform -> IK/planning -> tactile contact stop -> lift |
 
 The end-to-end visual-tactile grasp-and-lift pipeline has been validated on real hardware:
 
